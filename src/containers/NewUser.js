@@ -11,11 +11,35 @@ import {
 } from 'react-bootstrap';
 
 
-const PAGE_SIZE = 10;
-
-class CreateUser extends Component {
+class NewUser extends Component {
     constructor(props, context) {
         super(props, context);
+
+        this.state = {
+            userRoles : [
+                {
+                    id: 1,
+                    name: 'Admin'
+                },
+                {
+                    id: 2,
+                    name: 'Staff'
+                },
+                {
+                    id: 3,
+                    name: 'Student'
+                },
+                {
+                    id: 4,
+                    name: 'Counselor'
+                },
+                {
+                    id: 5,
+                    name: 'Facilities'
+                }
+            ],
+            selectedUserRole: ''
+        }
     }
 
     onSubmit(event) {
@@ -32,18 +56,17 @@ class CreateUser extends Component {
 
 
         const newUser = {
-            firstName: form.userFirstName.value,
-            lastName: form.userLastName.value,
+            // firstName: form.userFirstName.value,
+            // lastName: form.userLastName.value,
             email: form.userEmail.value,
             role: form.userRole.value,
-            creationDate: new Date(),
+            // creationDate: new Date(),
 
         };
 
 
-
         console.log(newUser);
-        fetch('/http://localhost:3001/api/users', {
+        fetch('http://localhost:3001/api/users', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newUser),
@@ -66,76 +89,88 @@ class CreateUser extends Component {
         });
     }
 
+    onUserRoleSelected = (event) => {
+        event.preventDefault();
+        console.log('Change happened');
+        console.log(event.target.value);
+        const selectedUserRole = this.state.userRoles.filter(function (obj) {
+            return obj.id == event.target.value;
+        });
+        console.log(selectedUserRole[0]);
+        this.setState({selectedUserRole: selectedUserRole[0]});
+        console.log("Selected user role: " + this.state.selectedUserRole.name);
+    };
 
     render() {
+
+
+        const roles = this.state.userRoles.map(roles =>
+            <option value={roles.id}>{roles.name}</option>
+        );
+
+        const tabsInstance = (
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/request">Request</Link></li>
+                    <li><Link to="/activities">Activities</Link></li>
+                    <li><Link to="/stats">Stats</Link></li>
+                    <li><Link to="/admin">Admin</Link></li>
+                </ul>
+            </div>
+        );
 
         return (
             <div className="container">
                 {/*<Jumbotron><h3>Request New Activity</h3></Jumbotron>*/}
-                <ol className="breadcrumb">
-                    <li/>
-                    <li ><Link to={`/admin`}>Admin Panel</Link></li>
-                    <li ><Link to={`/admin/users`}>Users</Link></li>
-                    <li className="active">Create New User</li>
-                </ol>
-                <Col md={3}>
-                    <Panel header='Instructions'>
-                        {/*<td><Link to={`/activities/1`}>Hello</Link></td>*/}
 
-                        <p>User Role</p>
-                        <p>User First Name</p>
-                        <p>User Last Name</p>
-                        <p>User Email</p>
-                        {/*<p>User Password</p>*/}
 
-                    </Panel>
+                <Col md={2}>
+                        {tabsInstance}
                 </Col>
 
-                <Col md={9}>
-                    {/*<div onClick={this.onSubmit}><Button>Request</Button></div>*/}
-                    <Panel header="Create New User">
-                        <Form horizontal onSubmit={this.onSubmit} name="newUser">
-                            <FormGroup>
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Role</Col>
-                                    <FormControl name="userRole"/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>First Name</Col>
-                                    <FormControl name="userFirstName"/>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Last Name</Col>
-                                    <FormControl name="userLastName"/>
-                                </Col>
-                            </FormGroup>
+                <Col md={10}>
+                    <ol className="breadcrumb">
+                        <li/>
+                        <li><Link to={`/admin`}>Admin Panel</Link></li>
+                        <li><Link to={`/admin/users`}>Users</Link></li>
+                        <li className="active">Create New User</li>
+                    </ol>
 
-                            <FormGroup>
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Email</Col>
-                                    <FormControl name="userEmail"/>
-                                </Col>
-                            </FormGroup>
-                            {/*<FormGroup>*/}
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Password</Col>*/}
-                            {/*<FormControl name="userPassword"/>*/}
-                            {/*</Col>*/}
-                            {/*</FormGroup>*/}
+                    <Col md={9}>
+                        <Panel header="Create New User">
+                            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+                                <FormGroup>
+                                    <Col sm={4}>
+                                        <Col componentClass={ControlLabel}>Role</Col>
+                                        <FormControl componentClass="select" name="userRole"
+                                                     onChange={this.onUserRoleSelected}
 
-                            <ButtonToolbar>
-                                <Col md={6}>
-                                    <Button bsStyle="primary" type="submit">
-                                        Submit </Button>
-                                </Col>
-                            </ButtonToolbar>
-                        </Form>
-                    </Panel>
+                                                     placeholder="select" required>
+                                            <option>select</option>
+                                            {roles}
+                                        </FormControl>
+
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col sm={4}>
+                                        <Col componentClass={ControlLabel}>Email</Col>
+                                        <FormControl name="userEmail"/>
+                                    </Col>
+                                </FormGroup>
+                                <ButtonToolbar>
+                                    <Col md={6}>
+                                        <Button bsStyle="primary" type="submit">
+                                            Submit </Button>
+                                    </Col>
+                                </ButtonToolbar>
+                            </Form>
+                        </Panel>
+                    </Col>
                 </Col>
+
                 <Col md={2}></Col>
             </div>
         )
@@ -143,8 +178,8 @@ class CreateUser extends Component {
 }
 
 
-CreateUser.contextTypes = {
+NewUser.contextTypes = {
     initialState: React.PropTypes.object,
 };
 
-export default CreateUser;
+export default NewUser;

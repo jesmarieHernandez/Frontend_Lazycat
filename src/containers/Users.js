@@ -4,8 +4,8 @@
 import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
-import {Button, Glyphicon, Table, Panel, Pagination, Col, Jumbotron} from 'react-bootstrap';
-
+import {Button, Row, Glyphicon, Table, Panel, Pagination, Col, Jumbotron} from 'react-bootstrap';
+import ReactCenter from "react-center"
 const PAGE_SIZE = 10;
 
 class Users extends Component {
@@ -17,7 +17,7 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        fetch('/http://localhost:3001/api/users').then(response => {
+        fetch('http://localhost:3001/api/users').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
@@ -40,37 +40,56 @@ class Users extends Component {
 
             <Col md={12}>
 
-                <Panel collapsible header={users.firstName + ' ' + users.lastName}>
+                <Panel collapsible header={users.email}>
                     <p>Role: {users.role}</p>
                     <p>Email: {users.email}</p>
-                    <p>Creation Date: {users.creationDate}</p>
+                    {/*<p>Creation Date: {users.creationDate}</p>*/}
                     <Link to={`/admin/users/${users._id}`}><Button className="btn btn-primary">Details</Button></Link>
                 </Panel>
 
             </Col>
         );
+
+        const tabsInstance = (
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/request">Request</Link></li>
+                    <li><Link to="/activities">Activities</Link></li>
+                    <li><Link to="/stats">Stats</Link></li>
+                    <li><Link to="/admin">Admin</Link></li>
+                </ul>
+            </div>
+        );
         return (
             <div className="container">
-                <ol className="breadcrumb">
-                    <li/>
-                    <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                    <li className="active">Users</li>
-                </ol>
-                <Col md={3}>
-                    <Panel header='Manage Users'>
-                        <ul>
-                            <li><Link to={`/admin/users/create`}>Create New User</Link></li>
-                            <li>Edit Existing User</li>
-                        </ul>
-                    </Panel>
-                </Col>
-                <Col md={6}>
-                    <Panel header='Users'>
 
-                    </Panel>
+                <Col md={2}>
+                        {tabsInstance}
+                </Col>
+
+                <Col md={10}>
+                    <Col className="breadcrumb">
+                        <li/>
+                        <li><Link to={`/admin/`}>Admin Panel</Link></li>
+                        <li className="active">Users</li>
+                    </Col>
+
+
+                <Col md={9}>
+                    {/*<Panel header='Users'>*/}
+
+                    {/*</Panel>*/}
                     {users}
 
                 </Col>
+                    <Col md={3}>
+                        <Panel>
+                            <ReactCenter><Button bsSize="medium"><Link to="/admin/users/create">New User</Link></Button></ReactCenter>
+                        </Panel>
+                    </Col>
+                </Col>
+
 
             </div>
         )

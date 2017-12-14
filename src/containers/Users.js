@@ -85,7 +85,7 @@ class Users extends Component {
                 </Col>
                     <Col md={3}>
                         <Panel>
-                            <ReactCenter><Button bsSize="medium"><Link to="/admin/users/create">New User</Link></Button></ReactCenter>
+                            <ReactCenter><Link to="/admin/users/create"><Button bsSize="medium">New User</Button></Link></ReactCenter>
                         </Panel>
                     </Col>
                 </Col>

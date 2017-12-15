@@ -3,7 +3,8 @@ import {Route, Switch, Router} from "react-router-dom";
 import AppliedRoute from "./components/AppliedRoute";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
-import AdminRoute from "./components/AdminRoute"
+import AdminRoute from "./components/AdminRoute";
+import StudentRoute from "./components/StudentRoute";
 
 import Home from "./containers/Home";
 import Login from "./containers/Login";
@@ -21,6 +22,9 @@ import OrganizationDetail from "./containers/OrganizationDetail";
 import Users from "./containers/Users";
 import NewUser from "./containers/NewUser";
 import UserDetail from "./containers/UserDetail";
+import StudentRequest from "./containers/StudentRequest";
+import StudentActivities from "./containers/StudentRequest";
+
 import NotFound from "./containers/NotFound";
 
 export default ({childProps}) =>
@@ -42,6 +46,10 @@ export default ({childProps}) =>
         <AdminRoute path="/admin/users/" exact component={Users} props={childProps}/>
         <AdminRoute path="/admin/users/create" exact component={NewUser} props={childProps}/>
         <AdminRoute path="/admin/users/:id" exact component={UserDetail} props={childProps}/>
+        <StudentRoute path="/student/request/" exact component={StudentRequest} props={childProps}/>
+        <StudentRoute path="/student/activities/" exact component={StudentActivities} props={childProps}/>
+
+
         {/*
          */}
         {/*

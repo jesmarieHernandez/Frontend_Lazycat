@@ -36,7 +36,7 @@ class OrganizationDetail extends Component {
     componentDidMount() {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
-        fetch(`/http://localhost:3001/api/organizations/${id}`).then(response => {
+        fetch(`http://localhost:3001/api/organizations/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({organization: data});
@@ -75,16 +75,32 @@ class OrganizationDetail extends Component {
             </Col>
         );
 
+        const tabsInstance = (
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/request">Request</Link></li>
+                    <li><Link to="/activities">Activities</Link></li>
+                    <li><Link to="/stats">Stats</Link></li>
+                    <li><Link to="/admin">Admin</Link></li>
+                </ul>
+            </div>
+        );
+
         return (
             <div className="container">
-                <ol className="breadcrumb">
-                    <li/>
-                    <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                    <li><Link to={`/admin/organizations`}>Organizations</Link></li>
-                    <li className="active">Organization Details</li>
-                </ol>
+                <Col md={2}>
+                    {tabsInstance}
+                </Col>
 
-                <Col md={12}>
+                <Col md={10}>
+                    <ol className="breadcrumb">
+                        <li/>
+                        <li><Link to={`/admin/`}>Admin Panel</Link></li>
+                        <li><Link to={`/admin/organizations`}>Organizations</Link></li>
+                        <li className="active">Organization Details</li>
+                    </ol>
+
                     <Panel  header={this.state.organization.name}>
                         <p>Organization Name: {this.state.organization.name}</p>
                         <p>Organization Initials: {this.state.organization.initials}</p>
@@ -103,7 +119,7 @@ class OrganizationDetail extends Component {
                     </Panel>
                 </Col>
 
-                <Col md={12}>
+                <Col md={10}>
                     <Panel header="Recent Activities">
                         {organizationActivities}
                     </Panel>

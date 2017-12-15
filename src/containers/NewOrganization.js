@@ -74,26 +74,32 @@ class CreateOrganization extends Component {
 
 
     render() {
+        const tabsInstance = (
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/request">Request</Link></li>
+                    <li><Link to="/activities">Activities</Link></li>
+                    <li><Link to="/stats">Stats</Link></li>
+                    <li><Link to="/admin">Admin</Link></li>
+                </ul>
+            </div>
+        );
 
         return (
             <div className="container">
-                <ol className="breadcrumb">
-                    <li/>
-                    <li ><Link to={`/admin`}>Admin Panel</Link></li>
-                    <li ><Link to={`/admin/organizations`}>Organizations</Link></li>
-                    <li className="active">Create New Organization</li>
-                </ol>
-                <Col md={3}>
-                    <Panel header='Instructions'>
-                        <p>Organization Name</p>
-                        <p>Organization Type</p>
-                        <p>Counselor Name</p>
-                        <p>Counselor Email</p>
-
-                    </Panel>
+                <Col md={2}>
+                    {tabsInstance}
                 </Col>
 
-                <Col md={9}>
+                <Col md={10}>
+                    <ol className="breadcrumb">
+                        <li/>
+                        <li ><Link to={`/admin`}>Admin Panel</Link></li>
+                        <li ><Link to={`/admin/organizations`}>Organizations</Link></li>
+                        <li className="active">Create New Organization</li>
+                    </ol>
+
                     <Panel header="Create New Organization">
                         <Form horizontal onSubmit={this.onSubmit} name="newOrganization">
                             <FormGroup>
@@ -165,7 +171,6 @@ class CreateOrganization extends Component {
                         </Form>
                     </Panel>
                 </Col>
-                <Col md={2}></Col>
             </div>
         )
     }

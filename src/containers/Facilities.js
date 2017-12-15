@@ -84,6 +84,10 @@ class Facilities extends Component {
                         <li className="active">Facilities</li>
                     </ol>
 
+                    <Col md={9}>
+                        {facilities}
+                    </Col>
+
                     <Col md={3}>
                         <Panel collapse header='Manage Facilities'>
                             <ul>
@@ -93,12 +97,6 @@ class Facilities extends Component {
                         </Panel>
                     </Col>
 
-                    <Col md={6}>
-                        <Panel collapse header='Facilities'>
-
-                        </Panel>
-                        {facilities}
-                    </Col>
                 </Col>
             </div>
         )

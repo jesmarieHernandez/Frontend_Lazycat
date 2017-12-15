@@ -93,34 +93,33 @@ class CreateFacilities extends Component {
     }
 
     render() {
-        let alertOptions = {
-            offset: 14,
-            position: 'top-right',
-            theme: 'light',
-            time: 5000,
-            transition: 'scale'
-        }
+
+        const tabsInstance = (
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/request">Request</Link></li>
+                    <li><Link to="/activities">Activities</Link></li>
+                    <li><Link to="/stats">Stats</Link></li>
+                    <li><Link to="/admin">Admin</Link></li>
+                </ul>
+            </div>
+        );
 
         return (
             <div className="container">
-                {/*<Jumbotron><h3>Request New Activity</h3></Jumbotron>*/}
-                <ol className="breadcrumb">
-                    <li/>
-                    <li ><Link to={`/admin`}>Admin Panel</Link></li>
-                    <li ><Link to={`/admin/facilities`}>Facilities</Link></li>
-                    <li className="active">Create New Facilities</li>
-                </ol>
-                {/*                <Col md={3}>
-                 <Panel header='Instructions'>
-                 /!*<td><Link to={`/activities/1`}>Hello</Link></td>*!/
+                <Col md={2}>
+                    {tabsInstance}
+                </Col>
 
-                 <p>Facilities Name</p>
-                 <p>Facilities Manager</p>
-                 <p>Facilities Manager Email</p>
-                 </Panel>
-                 </Col>*/}
+                <Col md={10}>
+                    <ol className="breadcrumb">
+                        <li/>
+                        <li ><Link to={`/admin`}>Admin Panel</Link></li>
+                        <li ><Link to={`/admin/facilities`}>Facilities</Link></li>
+                        <li className="active">Create New Facilities</li>
+                    </ol>
 
-                <Col md={12}>
                     <Panel header="Create New Facilities">
                         <Form horizontal onSubmit={this.onSubmit} name="newFacilities">
                             <FormGroup>
@@ -149,7 +148,7 @@ class CreateFacilities extends Component {
 
                             <ButtonToolbar>
                                 <Col md={6}>
-                                    <AlertContainer ref={a => this.msg = a} {...alertOptions} />
+                                    <AlertContainer ref={a => this.msg = a} />
 
                                     <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
                                         Submit </Button>

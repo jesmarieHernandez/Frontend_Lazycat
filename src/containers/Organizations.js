@@ -19,7 +19,7 @@ class Organizations extends Component {
     }
 
     componentDidMount() {
-        fetch('/http://localhost:3001/api/organizations').then(response => {
+        fetch('http://localhost:3001/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({organizations: results});
@@ -38,7 +38,6 @@ class Organizations extends Component {
         const organizations = this.state.organizations.map(organization =>
 
             <Col md={12}>
-
                 <Panel collapsible header={organization.name}>
                     <p><Link to={`/admin/organizations/${organization._id}`}>{organization.name}</Link></p>
                     <p>Type: {organization.type}</p>
@@ -50,32 +49,46 @@ class Organizations extends Component {
 
             </Col>
         );
+
+        const tabsInstance = (
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/request">Request</Link></li>
+                    <li><Link to="/activities">Activities</Link></li>
+                    <li><Link to="/stats">Stats</Link></li>
+                    <li><Link to="/admin">Admin</Link></li>
+                </ul>
+            </div>
+        );
+
         return (
             <div className="container">
-                {/*<Jumbotron><h3>Admin Panel</h3></Jumbotron>*/}
-                <ol className="breadcrumb">
+
+                <Col md={2}>
+                    {tabsInstance}
+                </Col>
+
+                <Col md={10}>
+                    <ol className="breadcrumb">
                     <li/>
                     <li><Link to={`/admin/`}>Admin Panel</Link></li>
                     <li className="active">Organizations</li>
-                </ol>
-                <Col md={3}>
-                    <Panel collapse header='Manage Organizations'>
-                        <ul>
-                            <li><Link to={`/admin/organizations/create/`}>Create New Organization</Link></li>
-                            <li>Edit Existing Organization</li>
-                        </ul>
-                    </Panel>
-                </Col>
-                <Col md={6}>
-                    <Panel collapse header='Organizations'>
+                    </ol>
 
-                    </Panel>
+                    <Col md={9}>
                     {organizations}
+                    </Col>
 
+                    <Col md={3}>
+                        <Panel collapse header='Manage Organizations'>
+                            <ul>
+                                <li><Link to={`/admin/organizations/create/`}>Create New Organization</Link></li>
+                                <li>Edit Existing Organization</li>
+                            </ul>
+                        </Panel>
+                    </Col>
                 </Col>
-                <Col md={3}></Col>
-
-
             </div>
         )
     }

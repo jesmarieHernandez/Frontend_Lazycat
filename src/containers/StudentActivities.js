@@ -59,11 +59,9 @@ class StudentActivities extends Component {
         const tabsInstance = (
             <div>
                 <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
+                    <li><Link to="/student/activities">Activities</Link></li>
+                    <li><Link to="/student/request">Request</Link></li>
+
                 </ul>
             </div>
         );

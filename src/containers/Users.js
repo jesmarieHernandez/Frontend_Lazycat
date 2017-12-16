@@ -69,14 +69,15 @@ class Users extends Component {
                 </Col>
 
                 <Col md={10}>
+
+
+
+                <Col md={9}>
                     <Col className="breadcrumb">
                         <li/>
                         <li><Link to={`/admin/`}>Admin Panel</Link></li>
                         <li className="active">Users</li>
                     </Col>
-
-
-                <Col md={9}>
                     {/*<Panel header='Users'>*/}
 
                     {/*</Panel>*/}

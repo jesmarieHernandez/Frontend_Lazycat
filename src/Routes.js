@@ -5,6 +5,9 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import AdminRoute from "./components/AdminRoute";
 import StudentRoute from "./components/StudentRoute";
+import CounselorRoute from "./components/CounselorRoute";
+import ManagerRoute from "./components/ManagerRoute";
+import StaffRoute from "./components/StaffRoute"
 
 import Home from "./containers/Home";
 import Login from "./containers/Login";
@@ -24,6 +27,10 @@ import NewUser from "./containers/NewUser";
 import UserDetail from "./containers/UserDetail";
 import StudentRequest from "./containers/StudentRequest";
 import StudentActivities from "./containers/StudentRequest";
+import CounselorActivities from "./containers/CounselorActivities";
+import ManagerActivities from "./containers/ManagerActivities";
+import StaffActivities from "./containers/StaffActivities"
+import StaffStatistics from "./containers/StaffStatistics";
 
 import NotFound from "./containers/NotFound";
 
@@ -48,6 +55,10 @@ export default ({childProps}) =>
         <AdminRoute path="/admin/users/:id" exact component={UserDetail} props={childProps}/>
         <StudentRoute path="/student/request/" exact component={StudentRequest} props={childProps}/>
         <StudentRoute path="/student/activities/" exact component={StudentActivities} props={childProps}/>
+        <CounselorRoute path="/counselor/activities" exact component={CounselorActivities} props={childProps}/>
+        <ManagerRoute path="/manager/activities" exact component={ManagerActivities} props={childProps}/>
+        <StaffRoute path="/staff/activities" exact component={StaffActivities} props={childProps}/>
+        <StaffRoute path="/staff/statistics" exact component={StaffStatistics} props={childProps}/>
 
 
         {/*

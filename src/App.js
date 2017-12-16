@@ -78,7 +78,7 @@ class App extends Component {
             getUserEmail: this.getUserEmail,
             isAuthenticated: this.state.isAuthenticated,
             userHasAuthenticated: this.userHasAuthenticated,
-            getUserRole: this.getUserRole
+            getUserRole: this.getUserRole,
         };
         console.log('The email: ');
         console.log(this.state.userEmail);
@@ -104,7 +104,8 @@ class App extends Component {
                                                 <GoogleLogout
                                                     buttonText="Logout"
                                                     onLogoutSuccess={this.logout}
-                                                    style={{width: 100,}}
+                                                    style={{width: 100}}
+
                                                 >
                                                 </GoogleLogout>
 

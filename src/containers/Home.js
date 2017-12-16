@@ -34,20 +34,13 @@ export default class Home extends Component {
         };
     }
 
-    async componentDidMount() {
-        console.log('Los props: ');
-        console.log(this.props);
-        if (!this.props.isAuthenticated) {
+     componentDidMount() {
+         if (!this.props.isAuthenticated) {
             this.props.history.push("/login");
             return;
         }
 
-        try {
-            const results = await this.notes();
-            this.setState({notes: results});
-        } catch (e) {
-            //alert(e);
-        }
+
 
         this.setState({isLoading: false});
     }
@@ -62,6 +55,31 @@ export default class Home extends Component {
         console.log('USER ROLE: ');
         console.log(this.props.getUserRole());
 
+        if (this.props.getUserRole() === '1') {
+            this.props.history.push("/home/");
+            return;
+        }
+
+        if (this.props.getUserRole() === '2') {
+            this.props.history.push("/staff/activities");
+            return;
+        }
+
+        if (this.props.getUserRole() === '3') {
+            this.props.history.push("/student/activities");
+            return;
+        }
+
+        if (this.props.getUserRole() === '4') {
+            this.props.history.push("/counselor/activities");
+            return;
+        }
+
+        if (this.props.getUserRole() === '5') {
+            this.props.history.push("/manager/activities");
+            return;
+        }
+
         const tabsInstance = (
 
             <div>
@@ -71,6 +89,7 @@ export default class Home extends Component {
                     <li><Link to="/activities">Activities</Link></li>
                     <li><Link to="/stats">Stats</Link></li>
                     <li><Link to="/admin">Admin</Link></li>
+                    <li><Link to="/counselor/activities">Counselor Activities</Link></li>
                 </ul>
             </div>
         );

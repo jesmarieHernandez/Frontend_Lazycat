@@ -70,28 +70,23 @@ class Users extends Component {
                 </Col>
 
                 <Col md={10}>
-
-
                     <Col md={9}>
                         <Col className="breadcrumb">
                             <li/>
                             <li><Link to={`/admin/`}>Admin Panel</Link></li>
                             <li className="active">Users</li>
                         </Col>
-                        {/*<Panel header='Users'>*/}
 
-                        {/*</Panel>*/}
                         {users}
-
                     </Col>
+
                     <Col md={3}>
                         <Panel>
                             <ReactCenter><Link to="/admin/users/create"><Button bsSize="medium">New User</Button></Link></ReactCenter>
                         </Panel>
                     </Col>
+
                 </Col>
-
-
             </div>
         )
     }

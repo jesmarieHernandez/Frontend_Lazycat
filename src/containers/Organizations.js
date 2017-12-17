@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
 import {Button, Glyphicon, Table, Panel, Pagination, Col, Jumbotron} from 'react-bootstrap';
+import ReactCenter from "react-center"
 
 const PAGE_SIZE = 10;
 
@@ -69,25 +70,22 @@ class Organizations extends Component {
                     {tabsInstance}
                 </Col>
 
-                <Col md={10}>
+                <Col md={7}>
                     <ol className="breadcrumb">
                     <li/>
                     <li><Link to={`/admin/`}>Admin Panel</Link></li>
                     <li className="active">Organizations</li>
                     </ol>
 
-                    <Col md={9}>
+                    <Col md={12}>
                     {organizations}
                     </Col>
+                </Col>
 
-                    <Col md={3}>
-                        <Panel collapse header='Manage Organizations'>
-                            <ul>
-                                <li><Link to={`/admin/organizations/create/`}>Create New Organization</Link></li>
-                                <li>Edit Existing Organization</li>
-                            </ul>
-                        </Panel>
-                    </Col>
+                <Col md={3}>
+                    <Panel>
+                        <ReactCenter><Link to="/admin/organizations/create"><Button bsSize="medium">New Organization</Button></Link></ReactCenter>
+                    </Panel>
                 </Col>
             </div>
         )

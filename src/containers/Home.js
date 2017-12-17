@@ -19,10 +19,13 @@ import {
     Tab,
     Nav,
     NavItem,
+    Navbar,
     Alert
 } from "react-bootstrap";
 import {invokeApig} from '../libs/awsLib';
 import "./Home.css";
+import ReactCenter from "react-center"
+
 
 export default class Home extends Component {
     constructor(props) {
@@ -35,8 +38,6 @@ export default class Home extends Component {
     }
 
      componentDidMount() {
-
-
 
          console.log('USER ROLE: ');
          console.log(this.props.getUserRole());
@@ -82,30 +83,24 @@ export default class Home extends Component {
 
         const tabsInstance = (
 
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                    <li><Link to="/counselor/activities">Counselor Activities</Link></li>
-                </ul>
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                    </Nav>
             </div>
         );
 
 
         return (
             <div className="container">
-
-
-                {/*{this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}*/}
-                    {/*<Jumbotron><h3>Activities</h3></Jumbotron>*/}
-
-
                     <Col md={2}>
                         {tabsInstance}
                     </Col>
+
                     <Col md={10}>
                         {/*<div>{activities}</div>*/}
                         <Row>
@@ -117,6 +112,7 @@ export default class Home extends Component {
                             </Col>
                         </Row>
                         <Row>
+
                             <Col md={12}>
                                 <Panel header="Request Title">
                                     <td>Request Title</td>
@@ -126,6 +122,7 @@ export default class Home extends Component {
                                     <p>Status: Pending</p>
                                 </Panel>
                             </Col>
+
                         </Row>
 
                     </Col>

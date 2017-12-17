@@ -5,6 +5,8 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
 import {Button, Glyphicon, Table, Panel, Pagination, Col, Jumbotron} from 'react-bootstrap';
+import ReactCenter from "react-center";
+
 
 const PAGE_SIZE = 10;
 
@@ -77,27 +79,33 @@ class Facilities extends Component {
                     {tabsInstance}
                 </Col>
 
-                <Col md={10}>
+                <Col md={7}>
                     <ol className="breadcrumb">
                         <li/>
                         <li><Link to={`/admin/`}>Admin Panel</Link></li>
                         <li className="active">Facilities</li>
                     </ol>
 
-                    <Col md={9}>
+                    <Col md={12}>
                         {facilities}
                     </Col>
-
-                    <Col md={3}>
-                        <Panel collapse header='Manage Facilities'>
-                            <ul>
-                                <li><Link to={`/admin/facilities/create/`}>Create New Facilities</Link></li>
-                                <li>Edit Existing Facilities</li>
-                            </ul>
-                        </Panel>
-                    </Col>
-
                 </Col>
+
+               {/* <Col md={3}>
+                    <Panel collapse header='Manage Facilities'>
+                        <ul>
+                            <li><Link to={`/admin/facilities/create/`}>Create New Facilities</Link></li>
+                            <li>Edit Existing Facilities</li>
+                        </ul>
+                    </Panel>
+                </Col>*/}
+
+                <Col md={3}>
+                    <Panel>
+                        <ReactCenter><Link to="/admin/facilities/create"><Button bsSize="medium">New Facility</Button></Link></ReactCenter>
+                    </Panel>
+                </Col>
+
             </div>
         )
     }

@@ -98,6 +98,11 @@ export default class Login extends Component {
             <div className="Login">
 
                 <Col md="12">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
                 <Row>
                     <ReactCenter>
                     <img src={sampLogo} style={{height: 175}}/>
@@ -109,7 +114,8 @@ export default class Login extends Component {
                     <Row>
                         <ReactCenter>
 
-                            <Row></Row>
+                                <br/>
+                                <br/>
                     <GoogleLogin
                         clientId="760181217472-pgvc9b39vgvurcksmbi781jflfb0sts6.apps.googleusercontent.com"
                         buttonText="Login"

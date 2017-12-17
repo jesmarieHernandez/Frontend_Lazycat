@@ -59,11 +59,7 @@ class ManagerActivities extends Component {
         const tabsInstance = (
             <div>
                 <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
+                    <li><Link to="/manager/activities">Activities</Link></li>
                 </ul>
             </div>
         );

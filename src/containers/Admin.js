@@ -5,8 +5,8 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
 import {Button, Glyphicon, Table, Panel, Pagination, Col, Jumbotron} from 'react-bootstrap';
-
-const PAGE_SIZE = 10;
+import Icon from 'react-icons-kit';
+import { lock } from 'react-icons-kit/fa/lock';
 
 class Admin extends Component {
 
@@ -39,7 +39,7 @@ class Admin extends Component {
                         <li className="active">Admin Panel</li>
                     </ol>
 
-                    <Col md={12}>
+                    <Col md={9}>
                         <Panel collapse header='Admin Panel'>
                             <ul>
                                 <li ><Link to={`/admin/organizations`}>Manage Organizations</Link></li>
@@ -47,6 +47,9 @@ class Admin extends Component {
                                 <li ><Link to={`/admin/users`}>Manage Users</Link></li>
                             </ul>
                         </Panel>
+                    </Col>
+                    <Col>
+                        <div><Icon size={64} icon={lock}/></div>
                     </Col>
                 </Col>
             </div>

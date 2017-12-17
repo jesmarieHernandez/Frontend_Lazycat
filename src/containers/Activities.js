@@ -6,6 +6,7 @@ import {
     BreadcrumbItem
 } from 'react-bootstrap';
 import Select from 'react-select';
+import ReactCenter from 'react-center';
 
 class Activities extends Component {
 
@@ -72,13 +73,13 @@ class Activities extends Component {
 
             <Col md={12}>
 
-            <Panel  header={activity.requestTitle}>
-                <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
-                <p>Description: {activity.activityDescription}</p>
-                <p>Organization: {activity.organization.name}</p>
-                <p>Facility: {activity.facilities.name}</p>
-                <p>Status: {activity.status}</p>
-            </Panel>
+                <Panel header={activity.requestTitle}>
+                    <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
+                    <p>Description: {activity.activityDescription}</p>
+                    <p>Organization: {activity.organization.name}</p>
+                    <p>Facility: {activity.facilities.name}</p>
+                    <p>Status: {activity.status}</p>
+                </Panel>
 
             </Col>
         );
@@ -91,25 +92,25 @@ class Activities extends Component {
 
                 <Col md={10}>
 
-                <ol className="breadcrumb">
-                    <li/>
-                    <li className="active">Activities</li>
-                </ol>
 
-                <Col md={7}>
-                    <div>{activities}</div>
-                </Col>
+                    <Col md={9}>
+                        <ol className="breadcrumb">
+                            <li/>
+                            <li className="active">Activities</li>
+                        </ol>
+                        {activities}
+                    </Col>
 
-                <Col md={5}>
-                    <Panel header='Search Activities'>
-                            <Select.Async
-                                instanceId="search" placeholder="Search ..." autoload={false} cache={false}
-                            />
-                            <Checkbox><p>Organization Acronym</p></Checkbox>
+                    <Col md={3}>
+                        <Panel header='Activities'>
+                            <ReactCenter><Link to="/request"><Button bsSize="medium">New
+                                Request</Button></Link></ReactCenter>
                             <Checkbox><p>Request Title</p></Checkbox>
                             <Checkbox><p>Request Description</p></Checkbox>
-                    </Panel>
-                </Col>
+                        </Panel>
+
+
+                    </Col>
                 </Col>
             </div>
         )

@@ -25,43 +25,43 @@ class Stats extends Component {
 
     componentDidMount() {
         fetch('/api/pending').then(response => {
-            if (response.ok) {
-                response.json().then(count => {
-                    this.setState({pending: count});
-                });
-            } else {
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
+            // if (response.ok) {
+            //     response.json().then(count => {
+            //         this.setState({pending: count});
+            //     });
+            // } else {
+            //     // response.json().then(error => {
+            //     //     this.props.showError(`Failed to add issue: ${error.message}`);
+            //     // });
+            // }
         }).catch(err => {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
         fetch('/api/cancelled').then(response => {
-            if (response.ok) {
-                response.json().then(count => {
-                    this.setState({cancelled: count});
-                });
-            } else {
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
+            // if (response.ok) {
+            //     response.json().then(count => {
+            //         this.setState({cancelled: count});
+            //     });
+            // } else {
+            //     // response.json().then(error => {
+            //     //     this.props.showError(`Failed to add issue: ${error.message}`);
+            //     // });
+            // }
         }).catch(err => {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
         fetch('/api/celebrated').then(response => {
-            if (response.ok) {
-                response.json().then(count => {
-                    this.setState({celebrated: count});
-                });
-            } else {
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
+            // if (response.ok) {
+            //     response.json().then(count => {
+            //         this.setState({celebrated: count});
+            //     });
+            // } else {
+            //     // response.json().then(error => {
+            //     //     this.props.showError(`Failed to add issue: ${error.message}`);
+            //     // });
+            // }
         }).catch(err => {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });

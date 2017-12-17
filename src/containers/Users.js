@@ -6,6 +6,7 @@ import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
 import {Button, Row, Glyphicon, Table, Panel, Pagination, Col, Jumbotron} from 'react-bootstrap';
 import ReactCenter from "react-center"
+
 const PAGE_SIZE = 10;
 
 class Users extends Component {
@@ -65,25 +66,24 @@ class Users extends Component {
             <div className="container">
 
                 <Col md={2}>
-                        {tabsInstance}
+                    {tabsInstance}
                 </Col>
 
                 <Col md={10}>
 
 
+                    <Col md={9}>
+                        <Col className="breadcrumb">
+                            <li/>
+                            <li><Link to={`/admin/`}>Admin Panel</Link></li>
+                            <li className="active">Users</li>
+                        </Col>
+                        {/*<Panel header='Users'>*/}
 
-                <Col md={9}>
-                    <Col className="breadcrumb">
-                        <li/>
-                        <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                        <li className="active">Users</li>
+                        {/*</Panel>*/}
+                        {users}
+
                     </Col>
-                    {/*<Panel header='Users'>*/}
-
-                    {/*</Panel>*/}
-                    {users}
-
-                </Col>
                     <Col md={3}>
                         <Panel>
                             <ReactCenter><Link to="/admin/users/create"><Button bsSize="medium">New User</Button></Link></ReactCenter>

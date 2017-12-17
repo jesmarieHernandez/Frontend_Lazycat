@@ -84,8 +84,7 @@ class App extends Component {
         console.log(this.state.userEmail);
         return (
             !this.state.isAuthenticating &&
-            <div className="App container">
-                <div className="container">
+                <div >
                     <Col md={12}>
                         <Navbar fluid collapseOnSelect>
                             <Navbar.Header>
@@ -116,7 +115,6 @@ class App extends Component {
                             </Navbar.Collapse>
                         </Navbar>
                     </Col>
-                </div>
 
                 <Routes childProps={childProps}/>
             </div>

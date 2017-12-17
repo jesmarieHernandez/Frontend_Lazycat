@@ -48,17 +48,23 @@ class CreateFacilities extends Component {
 
 
         const newFacilities = {
-            name: form.facilitiesName.value,
-            building: form.buildingName.value,
-            creationDate: new Date(),
-            managerName: form.facilitiesManagerName.value,
-            managerEmail: form.facilitiesManagerEmail.value,
+            building: 'Chardon',
+            space: 'La placita',
+            facilityDepartment_code: 1,
         };
+
+        // const newFacilities = {
+        //     name: form.facilitiesName.value,
+        //     building: form.buildingName.value,
+        //     creationDate: new Date(),
+        //     managerName: form.facilitiesManagerName.value,
+        //     managerEmail: form.facilitiesManagerEmail.value,
+        // };
 
 
 
         console.log(newFacilities);
-        fetch('http://localhost:3001/api/facilities', {
+        fetch('http://localhost:8000/api/facilities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),
@@ -67,12 +73,12 @@ class CreateFacilities extends Component {
                 console.log(response);
                 response.json().then(createdFacilities => {
                     console.log('New facilities were created successfully!');
-                    console.log('Facilities ID: ' + createdFacilities._id);
+                    console.log(createdFacilities);
 
                     /*
                      this.props.router.push(`/admin/facilities/${createdFacilities._id}/`);
                      */
-                    this.props.router.push(`/facilities/${createdFacilities._id}/`);
+                    this.props.router.push(`/facilities/${createdFacilities.id}/`);
 
                 })
             } else {
@@ -83,6 +89,8 @@ class CreateFacilities extends Component {
         }).catch(err => {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
+
+
     }
 
 
@@ -124,36 +132,41 @@ class CreateFacilities extends Component {
                         <Form horizontal onSubmit={this.onSubmit} name="newFacilities">
                             <FormGroup>
                                 <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Facilities Name</Col>
-                                    <FormControl name="facilitiesName"/>
+                                    <Col componentClass={ControlLabel}>Building</Col>
+                                    <FormControl name="building"/>
                                 </Col>
 
                                 <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Building Name</Col>
-                                    <FormControl name="buildingName"/>
+                                    <Col componentClass={ControlLabel}>Space</Col>
+                                    <FormControl name="space"/>
                                 </Col>
                             </FormGroup>
 
-                            <FormGroup>
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Manager Name</Col>
-                                    <FormControl name="facilitiesManagerName"/>
-                                </Col>
+                            {/*<FormGroup>*/}
+                                {/*<Col sm={4}>*/}
+                                    {/*<Col componentClass={ControlLabel}>Manager Name</Col>*/}
+                                    {/*<FormControl name="facilitiesManagerName"/>*/}
+                                {/*</Col>*/}
 
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Manager Email</Col>
-                                    <FormControl name="facilitiesManagerEmail"/>
-                                </Col>
-                            </FormGroup>
+                                {/*<Col sm={4}>*/}
+                                    {/*<Col componentClass={ControlLabel}>Manager Email</Col>*/}
+                                    {/*<FormControl name="facilitiesManagerEmail"/>*/}
+                                {/*</Col>*/}
 
-                            <ButtonToolbar>
-                                <Col md={6}>
-                                    <AlertContainer ref={a => this.msg = a} />
+                                {/*<Col sm={4}>*/}
+                                    {/*<Col componentClass={ControlLabel}>Space</Col>*/}
+                                    {/*<FormControl name="space"/>*/}
+                                {/*</Col>*/}
+                            {/*</FormGroup>*/}
 
-                                    <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
-                                        Submit </Button>
-                                </Col>
-                            </ButtonToolbar>
+                            {/*<ButtonToolbar>*/}
+                                {/*<Col md={6}>*/}
+                                    {/*<AlertContainer ref={a => this.msg = a} />*/}
+
+                                    {/*<Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>*/}
+                                        {/*Submit </Button>*/}
+                                {/*</Col>*/}
+                            {/*</ButtonToolbar>*/}
                         </Form>
                     </Panel>
                 </Col>

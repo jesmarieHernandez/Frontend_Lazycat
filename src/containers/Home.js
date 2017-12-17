@@ -35,10 +35,7 @@ export default class Home extends Component {
     }
 
      componentDidMount() {
-         if (!this.props.isAuthenticated) {
-            this.props.history.push("/login");
-            return;
-        }
+
 
 
 
@@ -54,9 +51,13 @@ export default class Home extends Component {
     render() {
         console.log('USER ROLE: ');
         console.log(this.props.getUserRole());
+        if (!this.props.isAuthenticated) {
+            this.props.history.push("/login");
+            return;
+        }
 
         if (this.props.getUserRole() === '1') {
-            this.props.history.push("/home/");
+            this.props.history.push("/");
             return;
         }
 

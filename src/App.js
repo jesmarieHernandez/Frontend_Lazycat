@@ -103,14 +103,12 @@ class App extends Component {
                                                 <GoogleLogout
                                                     buttonText="Logout"
                                                     onLogoutSuccess={this.logout}
-                                                    style={{width: 100}}
+                                                    style={{fontFamily: 'Helvetica',height:25, width: 100}}
 
                                                 >
                                                 </GoogleLogout>
-
                                             </NavItem>
-                                        : <div><NavItem>                                <Navbar.Brand>
-                                            Login</Navbar.Brand></NavItem></div>}
+                                        : null}
                                 </Nav>
                             </Navbar.Collapse>
                         </Navbar>

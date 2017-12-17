@@ -109,12 +109,13 @@ export default class Login extends Component {
                     <Row>
                         <ReactCenter>
 
+                            <Row></Row>
                     <GoogleLogin
                         clientId="760181217472-pgvc9b39vgvurcksmbi781jflfb0sts6.apps.googleusercontent.com"
                         buttonText="Login"
                         onSuccess={this.responseGoogle}
                         onFailure={this.responseGoogle}
-                        style={{fontFamily: 'Helvetica',heigth:50}}
+                        style={{fontFamily: 'Helvetica',height:50, width: 125}}
                     />
                         </ReactCenter>
                 </Row>

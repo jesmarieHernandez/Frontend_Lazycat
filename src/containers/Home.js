@@ -38,48 +38,47 @@ export default class Home extends Component {
 
 
 
+         console.log('USER ROLE: ');
+         console.log(this.props.getUserRole());
+         if (!this.props.isAuthenticated) {
+             this.props.history.push("/login");
+             return;
+         }
 
-        this.setState({isLoading: false});
+         if (this.props.getUserRole() === '1') {
+             this.props.history.push("/");
+             return;
+         }
+
+         if (this.props.getUserRole() === '2') {
+             this.props.history.push("/staff/activities");
+             return;
+         }
+
+         if (this.props.getUserRole() === '3') {
+             this.props.history.push("/student/activities");
+             return;
+         }
+
+         if (this.props.getUserRole() === '4') {
+             this.props.history.push("/counselor/activities");
+             return;
+         }
+
+         if (this.props.getUserRole() === '5') {
+             this.props.history.push("/manager/activities");
+             return;
+         }
+        // this.setState({isLoading: false});
     }
 
     gotoActivities = () => {
         this.props.history.push("/activities");
-
     }
 
 
     render() {
-        console.log('USER ROLE: ');
-        console.log(this.props.getUserRole());
-        if (!this.props.isAuthenticated) {
-            this.props.history.push("/login");
-            return;
-        }
 
-        if (this.props.getUserRole() === '1') {
-            this.props.history.push("/");
-            return;
-        }
-
-        if (this.props.getUserRole() === '2') {
-            this.props.history.push("/staff/activities");
-            return;
-        }
-
-        if (this.props.getUserRole() === '3') {
-            this.props.history.push("/student/activities");
-            return;
-        }
-
-        if (this.props.getUserRole() === '4') {
-            this.props.history.push("/counselor/activities");
-            return;
-        }
-
-        if (this.props.getUserRole() === '5') {
-            this.props.history.push("/manager/activities");
-            return;
-        }
 
         const tabsInstance = (
 

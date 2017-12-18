@@ -119,8 +119,9 @@ class OrganizationDetail extends Component {
                             <p>Counselor Office Number: {this.state.organization.counselorOfficeNumber}</p>
                             <Row>
                                 <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Back</Button></Link></Col>
-                                <Col md="1"><Button className="btn-success">Contact</Button></Col>
-                                <Col md="1"><Link to={`/home/`}><Button className="btn-warning">Edit</Button></Link></Col>
+                                <Col md="1"><Link to={`/`}><Button className="btn-success">Contact</Button></Link></Col>
+                                <Col md="1"><Link to={`/`}><Button className="btn-warning">Edit</Button></Link></Col>
+                                <Col md="1"><Link to={`/`}><Button className="btn-success">Add Member</Button></Link></Col>
                             </Row>
                         </Panel>
                     </Col>

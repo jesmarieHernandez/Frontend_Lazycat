@@ -16,7 +16,7 @@ class NewUser extends Component {
         super(props, context);
 
         this.state = {
-            userRoles : [
+            userRoles: [
                 {
                     id: 1,
                     name: 'Admin'
@@ -35,7 +35,7 @@ class NewUser extends Component {
                 },
                 {
                     id: 5,
-                    name: 'Facilities'
+                    name: 'Facilities Manager'
                 }
             ],
             selectedUserRole: ''
@@ -54,15 +54,47 @@ class NewUser extends Component {
         // }
         const form = document.forms.newUser;
 
+        let newUser;
+        if(this.state.selectedUserRole === 'Admin'){
+           newUser = {
+                role: form.userRole.value,
+                requesterName: form.requesterName.value,
+                studentIdentificationNumber: form.studentIdentificationNumber.value,
+                studentRole: form.studentRole.value,
+                studentAddress1: form.studentAddress1.value,
+                studentAddressCity: form.studentAddressCity.value,
+                studentAddressState: form.studentAddressState.value,
+                studentAddressCountry: form.studentAddressCountry.value,
+                studentAddressZipCode: form.studentAddressZipCode.value,
+                studentTelephone: form.studentTelephone.value,
+                userEmail: form.userEmail.value,
+            };
+        } else if (this.state.selectedUserRole === 'Staff') {
 
-        const newUser = {
-            // firstName: form.userFirstName.value,
-            // lastName: form.userLastName.value,
-            email: form.userEmail.value,
+        } else if (this.state.selectedUserRole === 'Student') {
+
+        } else if (this.state.selectedUserRole === 'Counselor') {
+
+        } else if (this.state.selectedUserRole === 'Facilities Manager') {
+
+            newUser = {
+                role: form.userRole.value,
+                managerEmail: form.managerEmail.value
+            }
+        }
+
+        const newStaffUser = {
             role: form.userRole.value,
-            // creationDate: new Date(),
+            staffEmail: form.staffEmail.value
+        };
+
+        const newAdminUser = {
 
         };
+
+        const newCounselorUser = {
+
+        }
 
 
         console.log(newUser);
@@ -125,13 +157,131 @@ class NewUser extends Component {
             </div>
         );
 
+
+        const adminFields = (
+            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+
+                <FormGroup>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Email</Col>
+                        <FormControl name="userEmail" required/>
+                    </Col>
+                </FormGroup>
+            </Form>
+
+        )
+
+        const staffFields = (
+            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+
+                <FormGroup>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Email</Col>
+                        <FormControl name="userEmail" required/>
+                    </Col>
+                </FormGroup>
+            </Form>
+        )
+
+        const studentFields = (
+            <div>
+                    <FormGroup>
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Full Name</Col>
+                            <FormControl name="requesterName" required/>
+                        </Col>
+
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Identification Number</Col>
+                            <FormControl name="studentIdentificationNumber" required/>
+                        </Col>
+
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>Role</Col>
+                            <FormControl name="studentRole" required/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={10}>
+                            <Col componentClass={ControlLabel}>Address</Col>
+                            <FormControl name="studentAddress1" required/>
+                        </Col>
+
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>City</Col>
+                            <FormControl name="studentAddressCity" required/>
+                        </Col>
+
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>State</Col>
+                            <FormControl name="studentAddressState" required/>
+                        </Col>
+
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>Country</Col>
+                            <FormControl name="studentAddressCountry" required/>
+                        </Col>
+
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>Zip Code</Col>
+                            <FormControl name="studentAddressZipCode" required/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Telephone</Col>
+                            <FormControl name="studentTelephone" required/>
+                        </Col>
+
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Email</Col>
+                            <FormControl name="userEmail" required/>
+                        </Col>
+                    </FormGroup>
+            </div>
+        )
+
+        const counselorFields = (
+            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+
+                <FormGroup>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel} required>Email</Col>
+                        <FormControl name="userEmail"/>
+                    </Col>
+                </FormGroup>
+            </Form>
+        )
+
+        const facilitiesManagerFields = (
+            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+
+                <FormGroup>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel} required>Full Name</Col>
+                        <FormControl name="managerName"/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel} required>Email</Col>
+                        <FormControl name="userEmail"/>
+                    </Col>
+                </FormGroup>
+
+
+            </Form>
+        )
+
+        console.log(this.state.selectedUserRole);
         return (
             <div className="container">
-                {/*<Jumbotron><h3>Request New Activity</h3></Jumbotron>*/}
-
-
                 <Col md={2}>
-                        {tabsInstance}
+                    {tabsInstance}
                 </Col>
 
                 <Col md={10}>
@@ -142,7 +292,7 @@ class NewUser extends Component {
                         <li className="active">Create New User</li>
                     </ol>
 
-                    <Col md={9}>
+                    <Col md={12}>
                         <Panel header="Create New User">
                             <Form horizontal onSubmit={this.onSubmit} name="newUser">
                                 <FormGroup>
@@ -158,13 +308,12 @@ class NewUser extends Component {
 
                                     </Col>
                                 </FormGroup>
+                                {this.state.selectedUserRole.name === 'Admin' ? adminFields : null }
+                                {this.state.selectedUserRole.name === 'Student' ? studentFields : null }
+                                {this.state.selectedUserRole.name === 'Staff' ? staffFields : null }
+                                {this.state.selectedUserRole.name === 'Counselor' ? counselorFields : null }
+                                {this.state.selectedUserRole.name === 'Facilities Manager' ? facilitiesManagerFields : null }
 
-                                <FormGroup>
-                                    <Col sm={4}>
-                                        <Col componentClass={ControlLabel}>Email</Col>
-                                        <FormControl name="userEmail"/>
-                                    </Col>
-                                </FormGroup>
                                 <ButtonToolbar>
                                     <Col md={6}>
                                         <Button bsStyle="primary" type="submit">

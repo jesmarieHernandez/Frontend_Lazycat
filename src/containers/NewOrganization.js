@@ -100,7 +100,7 @@ class CreateOrganization extends Component {
                     <Panel header="Create New Organization">
                         <Form horizontal onSubmit={this.onSubmit} name="newOrganization">
                             <FormGroup>
-                                <Col sm={5}>
+                                <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Organization Name</Col>
                                     <FormControl name="organizationName"/>
                                 </Col>
@@ -110,7 +110,7 @@ class CreateOrganization extends Component {
                                     <FormControl name="organizationType"/>
                                 </Col>
 
-                                <Col sm={3}>
+                                <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Organization Initials</Col>
                                     <FormControl name="organizationInitials"/>
                                 </Col>
@@ -121,16 +121,12 @@ class CreateOrganization extends Component {
                                     <Col componentClass={ControlLabel}>Counselor Name</Col>
                                     <FormControl name="organizationCounselorName"/>
                                 </Col>
-                            </FormGroup>
 
-                            <FormGroup>
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Counselor Email</Col>
                                     <FormControl name="organizationCounselorEmail"/>
                                 </Col>
-                            </FormGroup>
 
-                            <FormGroup>
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Counselor Telephone</Col>
                                     <FormControl name="organizationCounselorTelephone"/>
@@ -142,28 +138,26 @@ class CreateOrganization extends Component {
                                     <Col componentClass={ControlLabel}>Counselor Faculty</Col>
                                     <FormControl name="organizationCounselorFaculty"/>
                                 </Col>
-                            </FormGroup>
 
-                            <FormGroup>
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Counselor Department</Col>
                                     <FormControl name="organizationCounselorDepartment"/>
                                 </Col>
-                            </FormGroup>
 
-                            <FormGroup>
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Counselor Office Number</Col>
                                     <FormControl name="organizationCounselorOfficeNumber"/>
                                 </Col>
                             </FormGroup>
 
+                            <ReactCenter>
                             <ButtonToolbar>
                                 <Col md={6}>
                                     <Button bsStyle="primary" type="button" onClick={this.onSubmit}>
                                         Submit </Button>
                                 </Col>
                             </ButtonToolbar>
+                            </ReactCenter>
 
                         </Form>
                     </Panel>

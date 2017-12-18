@@ -7,8 +7,10 @@ import 'isomorphic-fetch';
 import {Link} from 'react-router';
 */
 import {Link} from "react-router-dom";
-import {Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col} from 'react-bootstrap';
+import {Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Nav, NavItem} from 'react-bootstrap';
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
+import ReactCenter from 'react-center';
+
 
 const PAGE_SIZE = 10;
 
@@ -88,14 +90,15 @@ class Stats extends Component {
 
     render() {
         const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                </ul>
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                </Nav>
             </div>
         );
 

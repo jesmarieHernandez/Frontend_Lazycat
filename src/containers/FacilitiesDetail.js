@@ -7,8 +7,10 @@ import {Link, Router, Route} from 'react-router-dom';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem
 } from 'react-bootstrap';
+import ReactCenter from "react-center"
+
 
 
 const PAGE_SIZE = 10;
@@ -19,11 +21,8 @@ class FacilitiesDetail extends Component {
         this.state = {
             facilities: {
                 _id: 0,
-                name: '',
-                creationDate: '',
-                managerName: '',
-                managerEmail: '',
-                building: ''
+                building: '',
+                space: ''
             }
         }
     }
@@ -34,7 +33,7 @@ class FacilitiesDetail extends Component {
         console.log("The ID: ");
         console.log(id);
 
-        fetch(`http://localhost:3001/api/facilities/${id}`).then(response => {
+        fetch(`http://localhost:3001/api/admin/facilities/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({facilities: data});
@@ -48,16 +47,16 @@ class FacilitiesDetail extends Component {
 
 
     render() {
-
         const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                </ul>
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                </Nav>
             </div>
         );
 
@@ -79,11 +78,8 @@ class FacilitiesDetail extends Component {
 
                     <Panel  header={this.state.facilities.name}>
                         {/*<td><Link to={`/activities/${this.state.activity._id}`}>{this.state.activity.requestTitle}</Link></td>*/}
-                        <p>Facilities Name: {this.state.facilities.name}</p>
                         <p>Building Name: {this.state.facilities.building}</p>
-                        <p>Creation Date: {this.state.facilities.creationDate}</p>
-                        <p>Manager Name: {this.state.facilities.managerName}</p>
-                        <p>Manager Email: {this.state.facilities.managerEmail}</p>
+                        <p>Space Name: {this.state.facilities.space}</p>
 
                         <Row>
                             <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Back</Button></Link></Col>

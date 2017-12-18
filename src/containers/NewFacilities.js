@@ -5,8 +5,9 @@ import AlertContainer from 'react-alert';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem
 } from 'react-bootstrap';
+import ReactCenter from "react-center"
 
 
 const PAGE_SIZE = 10;
@@ -34,37 +35,21 @@ class CreateFacilities extends Component {
         // };
     }
 
-    onSubmit(event) {
+    onSubmit = (event) => {
         event.preventDefault();
 
         console.log('Form was submitted');
 
-        //this.showValidation();
-
-        // if (Object.keys(this.state.invalidFields).length !== 0) {
-        //     return;
-        // }
         const form = document.forms.newFacilities;
 
 
         const newFacilities = {
-            building: 'Chardon',
-            space: 'La placita',
-            facilityDepartment_code: 1,
+            building: form.building.value,
+            space: form.space.value
         };
 
-        // const newFacilities = {
-        //     name: form.facilitiesName.value,
-        //     building: form.buildingName.value,
-        //     creationDate: new Date(),
-        //     managerName: form.facilitiesManagerName.value,
-        //     managerEmail: form.facilitiesManagerEmail.value,
-        // };
-
-
-
         console.log(newFacilities);
-        fetch('http://localhost:8000/api/facilities', {
+        fetch('http://localhost:3001/api/admin/facilities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),
@@ -78,7 +63,7 @@ class CreateFacilities extends Component {
                     /*
                      this.props.router.push(`/admin/facilities/${createdFacilities._id}/`);
                      */
-                    this.props.router.push(`/facilities/${createdFacilities.id}/`);
+                    this.props.history.push(`/admin/facilities/`);
 
                 })
             } else {
@@ -101,16 +86,20 @@ class CreateFacilities extends Component {
     }
 
     render() {
-
         const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                </ul>
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link
+                        to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                </Nav>
             </div>
         );
 
@@ -142,30 +131,42 @@ class CreateFacilities extends Component {
                                 </Col>
                             </FormGroup>
 
+
+                            <ReactCenter>
+                                <ButtonToolbar>
+                                    <Col md={6}>
+                                        <AlertContainer ref={a => this.msg = a}/>
+
+                                        <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
+                                            Submit </Button>
+                                    </Col>
+                                </ButtonToolbar>
+                            </ReactCenter>
+
                             {/*<FormGroup>*/}
-                                {/*<Col sm={4}>*/}
-                                    {/*<Col componentClass={ControlLabel}>Manager Name</Col>*/}
-                                    {/*<FormControl name="facilitiesManagerName"/>*/}
-                                {/*</Col>*/}
+                            {/*<Col sm={4}>*/}
+                            {/*<Col componentClass={ControlLabel}>Manager Name</Col>*/}
+                            {/*<FormControl name="facilitiesManagerName"/>*/}
+                            {/*</Col>*/}
 
-                                {/*<Col sm={4}>*/}
-                                    {/*<Col componentClass={ControlLabel}>Manager Email</Col>*/}
-                                    {/*<FormControl name="facilitiesManagerEmail"/>*/}
-                                {/*</Col>*/}
+                            {/*<Col sm={4}>*/}
+                            {/*<Col componentClass={ControlLabel}>Manager Email</Col>*/}
+                            {/*<FormControl name="facilitiesManagerEmail"/>*/}
+                            {/*</Col>*/}
 
-                                {/*<Col sm={4}>*/}
-                                    {/*<Col componentClass={ControlLabel}>Space</Col>*/}
-                                    {/*<FormControl name="space"/>*/}
-                                {/*</Col>*/}
+                            {/*<Col sm={4}>*/}
+                            {/*<Col componentClass={ControlLabel}>Space</Col>*/}
+                            {/*<FormControl name="space"/>*/}
+                            {/*</Col>*/}
                             {/*</FormGroup>*/}
 
                             {/*<ButtonToolbar>*/}
-                                {/*<Col md={6}>*/}
-                                    {/*<AlertContainer ref={a => this.msg = a} />*/}
+                            {/*<Col md={6}>*/}
+                            {/*<AlertContainer ref={a => this.msg = a} />*/}
 
-                                    {/*<Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>*/}
-                                        {/*Submit </Button>*/}
-                                {/*</Col>*/}
+                            {/*<Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>*/}
+                            {/*Submit </Button>*/}
+                            {/*</Col>*/}
                             {/*</ButtonToolbar>*/}
                         </Form>
                     </Panel>

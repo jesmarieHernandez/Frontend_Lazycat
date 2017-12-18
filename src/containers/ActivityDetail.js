@@ -7,8 +7,10 @@ import {Link} from 'react-router-dom';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem
 } from 'react-bootstrap';
+import ReactCenter from "react-center";
+
 
 
 const PAGE_SIZE = 10;
@@ -36,7 +38,6 @@ class ActivityDetail extends Component {
                 studentIdentificationNumber: '',
                 studentRole: '',
                 studentAddress1: '',
-                studentAddress2: '',
                 studentAddressCity: '',
                 studentAddressState: '',
                 studentAddressCountry: '',
@@ -219,18 +220,33 @@ class ActivityDetail extends Component {
             <option value={option}>{option}</option>
         );
 
+        const tabsInstance = (
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                </Nav>
+            </div>
+        );
+
         console.log(this.state.activity.status);
         return (
             <div className="container">
-                {/*<Jumbotron><h3>Activity Details</h3></Jumbotron>*/}
-                <ol className="breadcrumb">
-                    <li/>
-                    <li ><Link to={`/activities/`}>Activities</Link></li>
-                    <li className="active">Activity Details</li>
-                </ol>
                 <Col md={2}>
+                    {tabsInstance}
                 </Col>
-                <Col md={12}>
+
+                <Col md={10}>
+
+                    <ol className="breadcrumb">
+                        <li/>
+                        <li ><Link to={`/activities/`}>Activities</Link></li>
+                        <li className="active">Activity Details</li>
+                    </ol>
 
                     <Panel  header={this.state.activity.requestTitle}>
                         {/*<td><Link to={`/activities/${this.state.activity._id}`}>{this.state.activity.requestTitle}</Link></td>*/}
@@ -249,7 +265,7 @@ class ActivityDetail extends Component {
                         <p><b>Requester Name:</b> {this.state.activity.requesterName}</p>
                         <p><b>Requester Identification Number:</b> {this.state.activity.studentIdentificationNumber}</p>
                         <p><b>Requester Role:</b> {this.state.activity.studentRole}</p>
-                        <p><b>Requester Address:</b> {this.state.activity.studentAddress1} {this.state.activity.studentAddress2} {this.state.activity.studentAddressCity} {this.state.activity.studentAddressState} {this.state.activity.studentAddressCountry} {this.state.activity.studentAddressZipCode}</p>
+                        <p><b>Requester Address:</b> {this.state.activity.studentAddress1} {this.state.activity.studentAddressCity} {this.state.activity.studentAddressState} {this.state.activity.studentAddressCountry} {this.state.activity.studentAddressZipCode}</p>
                         <p><b>Requester Telephone:</b> {this.state.activity.studentTelephone}</p>
                         <br/>
                         <p><b>Counselor Name:</b> {this.state.activity.counselorName}</p>

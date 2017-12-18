@@ -4,10 +4,11 @@
 import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
+import ReactCenter from "react-center"
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem
 } from 'react-bootstrap';
 
 
@@ -19,8 +20,6 @@ class UserDetail extends Component {
         this.state = {
             user: {
                 _id: 0,
-                firstName: '',
-                lastName: '',
                 email: '',
                 role: ''
             }
@@ -30,7 +29,7 @@ class UserDetail extends Component {
     componentDidMount() {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
-        fetch(`/http://localhost:3001/api/users/${id}`).then(response => {
+        fetch(`http://localhost:3001/api/admin/users/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({user: data});
@@ -48,37 +47,51 @@ class UserDetail extends Component {
 
 
     render() {
+        const tabsInstance = (
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link
+                        to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                </Nav>
+            </div>
+        );
 
         return (
             <div className="container">
-                <ol className="breadcrumb">
-                    <li/>
-                    <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                    <li><Link to={`/admin/users`}>Users</Link></li>
-                    <li className="active">User Details</li>
-                </ol>
                 <Col md={2}>
+                    {tabsInstance}
                 </Col>
-                <Col md={12}>
 
-                    <Panel  header={this.state.user.firstName + ' ' +  this.state.user.lastName}>
+                <Col md={10}>
+                    <ol className="breadcrumb">
+                        <li/>
+                        <li><Link to={`/admin/`}>Admin Panel</Link></li>
+                        <li><Link to={`/admin/users`}>Users</Link></li>
+                        <li className="active">User Details</li>
+                    </ol>
+
+                    <Panel  header={this.state.user.email}>
                         {/*<td><Link to={`/activities/${this.state.activity._id}`}>{this.state.activity.requestTitle}</Link></td>*/}
-                        <p>Role: {this.state.user.role}</p>
-                        <p>Creation Date: {this.state.user.creationDate}</p>
                         <p>Email: {this.state.user.email}</p>
+                        <p>Role: {this.state.user.role}</p>
 
 
                         <Row>
                             <Col md="1"><Link to={`/admin/users/`}><Button className="btn btn-primary">Back</Button></Link></Col>
-                            <Col md="1"><Button className="btn-success">Contact</Button></Col>
                             <Col md="1"><Button className="btn-warning">Edit</Button></Col>
                         </Row>
 
 
                     </Panel>
                 </Col>
-
-                <Col md={2}></Col>
             </div>
         )
     }

@@ -8,8 +8,10 @@ import {Link} from 'react-router-dom';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem
 } from 'react-bootstrap';
+import ReactCenter from "react-center"
+
 
 
 const PAGE_SIZE = 10;
@@ -19,16 +21,11 @@ class CreateOrganization extends Component {
         super(props, context);
     }
 
-    onSubmit(event) {
+    onSubmit = (event) => {
         event.preventDefault();
 
         console.log('Form was submitted');
 
-        //this.showValidation();
-
-        // if (Object.keys(this.state.invalidFields).length !== 0) {
-        //     return;
-        // }
         const form = document.forms.newOrganization;
 
 
@@ -46,10 +43,8 @@ class CreateOrganization extends Component {
 
         };
 
-
-
         console.log(newOrganization);
-        fetch('/http://localhost:3001/api/organizations', {
+        fetch('http://localhost:3001/api/admin/organizations', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),
@@ -60,7 +55,8 @@ class CreateOrganization extends Component {
                     console.log('New organization was created successfully!');
                     console.log('Organization ID: ' + createdOrganization._id);
 
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    this.props.history.push(`/admin/organizations/`);
+                    // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
                 })
             } else {
                 response.json().then(error => {
@@ -75,14 +71,15 @@ class CreateOrganization extends Component {
 
     render() {
         const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                </ul>
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                </Nav>
             </div>
         );
 
@@ -163,7 +160,7 @@ class CreateOrganization extends Component {
 
                             <ButtonToolbar>
                                 <Col md={6}>
-                                    <Button bsStyle="primary" type="submit">
+                                    <Button bsStyle="primary" type="button" onClick={this.onSubmit}>
                                         Submit </Button>
                                 </Col>
                             </ButtonToolbar>

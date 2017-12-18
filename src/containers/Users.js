@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
-import {Button, Row, Glyphicon, Table, Panel, Pagination, Col, Jumbotron} from 'react-bootstrap';
+import {Button, Row, Glyphicon, Table, Panel, Pagination, Col, Jumbotron, Nav, NavItem} from 'react-bootstrap';
 import ReactCenter from "react-center"
 
 const PAGE_SIZE = 10;
@@ -18,7 +18,7 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/users').then(response => {
+        fetch('http://localhost:3001/api/admin/users').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
@@ -52,16 +52,22 @@ class Users extends Component {
         );
 
         const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                </ul>
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link
+                        to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                </Nav>
             </div>
         );
+
         return (
             <div className="container">
 

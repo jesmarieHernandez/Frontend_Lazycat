@@ -79,8 +79,6 @@ export default class Home extends Component {
 
 
     render() {
-
-
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>
@@ -93,7 +91,6 @@ export default class Home extends Component {
                     </Nav>
             </div>
         );
-
 
         return (
             <div className="container">

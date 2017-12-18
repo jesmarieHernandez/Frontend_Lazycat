@@ -7,9 +7,9 @@ import {Link} from 'react-router-dom';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem
 } from 'react-bootstrap';
-
+import ReactCenter from "react-center"
 
 class NewUser extends Component {
     constructor(props, context) {
@@ -42,7 +42,7 @@ class NewUser extends Component {
         }
     }
 
-    onSubmit(event) {
+    onSubmit = (event) => {
         event.preventDefault();
 
         console.log('Form was submitted');
@@ -66,7 +66,7 @@ class NewUser extends Component {
 
 
         console.log(newUser);
-        fetch('http://localhost:3001/api/users', {
+        fetch('http://localhost:3001/api/admin/users', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newUser),
@@ -77,7 +77,7 @@ class NewUser extends Component {
                     console.log('New user was created successfully!');
                     console.log('User ID: ' + createdUser._id);
 
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    this.props.history.push(`/admin/users/`);
                 })
             } else {
                 response.json().then(error => {
@@ -109,14 +109,19 @@ class NewUser extends Component {
         );
 
         const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                </ul>
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link
+                        to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                </Nav>
             </div>
         );
 

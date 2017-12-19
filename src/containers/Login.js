@@ -75,7 +75,7 @@ export default class Login extends Component {
 
                                 <Row></Row>
                                 <GoogleLogin
-                                    clientId="760181217472-pgvc9b39vgvurcksmbi781jflfb0sts6.apps.googleusercontent.com"
+                                    clientId="69967073186-499q68bjvucrhn2ke7kufru0ltb0k307.apps.googleusercontent.com"
                                     buttonText="Login"
                                     onSuccess={this.responseGoogle}
                                     hostedDomain='upr.edu'

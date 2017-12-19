@@ -66,17 +66,33 @@ class App extends Component {
                         <Navbar.Collapse>
                             <Nav pullRight>
 
+
+
+                                {this.state.cookies.get('signedIn') === 'true'
+                                    ?
+                                    <NavItem>
+                                        {/*<GoogleLogout*/}
+                                        {/*buttonText="Logout"*/}
+                                        {/*onLogoutSuccess={this.logout}*/}
+                                        {/*style={{fontFamily: 'Helvetica',height:25, width: 100}}*/}
+                                        {/*>*/}
+                                        {/*</GoogleLogout>*/}
+                                        <Navbar.Brand>
+                                            {this.state.authentication.email}
+                                        </Navbar.Brand>
+                                    </NavItem>
+                                    : null}
                                 {this.state.cookies.get('signedIn') === 'true'
                                     ?
                                     <NavItem onClick={this.logout.bind(this)}>
                                         {/*<GoogleLogout*/}
-                                            {/*buttonText="Logout"*/}
-                                            {/*onLogoutSuccess={this.logout}*/}
-                                            {/*style={{fontFamily: 'Helvetica',height:25, width: 100}}*/}
+                                        {/*buttonText="Logout"*/}
+                                        {/*onLogoutSuccess={this.logout}*/}
+                                        {/*style={{fontFamily: 'Helvetica',height:25, width: 100}}*/}
                                         {/*>*/}
                                         {/*</GoogleLogout>*/}
                                         <Navbar.Brand>
-                                                Logout
+                                            Logout
                                         </Navbar.Brand>
                                     </NavItem>
                                     : null}

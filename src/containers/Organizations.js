@@ -39,7 +39,7 @@ class Organizations extends Component {
         const organizations = this.state.organizations.map(organization =>
 
             <Col md={12}>
-                <Panel collapsible header={organization.name}>
+                <Panel collapsible header={organization.name} style={{fontFamily: 'Helvetica'}}>
                     <p><Link to={`/admin/organizations/${organization._id}`}>{organization.name}</Link></p>
                     <p>Type: {organization.type}</p>
                     <p>Creation Date: {organization.creationDate}</p>

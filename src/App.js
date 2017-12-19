@@ -19,88 +19,41 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            userEmail: "",
-            userRole: "",
-            isAuthenticated: false,
-            isAuthenticating: true
-        };
-    }
-
-    async componentDidMount() {
         const { cookies } = this.props;
-        // cookies.set('role', '1', { path: '/' });
-        // cookies.set('email', 'jesse.villafane@upr.edu', { path: '/' });
-        // cookies.set('signedIn', 'true', { path: '/' });
+        this.state = {
+            authentication: {
+                role: cookies.get('role'),
+                email: cookies.get('email'),
+                signedIn: cookies.get('signedIn')
+            },
+            cookies: cookies
+        };
+
+        console.log(this.props);
+        console.log(this.state);
 
         console.log('cookie role: ' + cookies.get('role'));
 
-        this.setState({authentication: {
-            role: cookies.get('role'),
-            email: cookies.get('email'),
-            signedIn: cookies.get('signedIn')
-        }});
-
-        this.setState({
-            cookies: cookies
-        });
-
-        this.userHasAuthenticated(false);
-        this.setState({isAuthenticating: false});
     }
 
-    userHasAuthenticated = authenticated => {
-        this.setState({isAuthenticated: authenticated});
-    }
 
-    handleLogout = event => {
-        // signOutUser();
+    logout()  {
+        console.log('putoooo');
+        this.props.cookies.remove('role', { path: '/' });
+        this.props.cookies.remove('email', { path: '/' });
+        this.props.cookies.remove('signedIn', { path: '/' });
 
-        this.userHasAuthenticated(false);
         this.props.history.push("/login");
-    }
-
-
-    logout = () => {
-        console.log('Hello');
-        this.userHasAuthenticated(false);
-        this.props.history.push("/login");
-    }
-
-    setUserEmail = userEmail => {
-        this.setState({userEmail: userEmail})
-    }
-
-    getUserEmail = () => {
-        return this.state.userEmail
-    }
-
-    getUserRole = () => {
-        return this.state.userRole
-    }
-
-    setUserRole = userRole => {
-        this.setState({userRole: userRole})
-    }
+    };
 
     render() {
-        console.log(this.props);
         const childProps = {
-            setUserEmail: this.setUserEmail,
-            setUserRole: this.setUserRole,
-            userEmail: this.userEmail,
-            getUserEmail: this.getUserEmail,
-            isAuthenticated: this.state.isAuthenticated,
-            userHasAuthenticated: this.userHasAuthenticated,
-            getUserRole: this.getUserRole,
             authentication: this.state.authentication,
-            cookies: this.state.cookies
+            cookies: this.state.cookies,
+            signedIn: this.state.authentication.signedIn
         };
-        console.log('The email: ');
-        console.log(this.state.userEmail);
+
         return (
-            !this.state.isAuthenticating &&
             <div >
                 <Col md={12}>
                     <Navbar fluid collapseOnSelect>
@@ -113,15 +66,18 @@ class App extends Component {
                         <Navbar.Collapse>
                             <Nav pullRight>
 
-                                {this.state.authentication.signedIn
+                                {this.state.cookies.get('signedIn') === 'true'
                                     ?
-                                    <NavItem>
-                                        <GoogleLogout
-                                            buttonText="Logout"
-                                            onLogoutSuccess={this.logout}
-                                            style={{fontFamily: 'Helvetica',height:25, width: 100}}
-                                        >
-                                        </GoogleLogout>
+                                    <NavItem onClick={this.logout.bind(this)}>
+                                        {/*<GoogleLogout*/}
+                                            {/*buttonText="Logout"*/}
+                                            {/*onLogoutSuccess={this.logout}*/}
+                                            {/*style={{fontFamily: 'Helvetica',height:25, width: 100}}*/}
+                                        {/*>*/}
+                                        {/*</GoogleLogout>*/}
+                                        <Navbar.Brand>
+                                                Logout
+                                        </Navbar.Brand>
                                     </NavItem>
                                     : null}
                             </Nav>

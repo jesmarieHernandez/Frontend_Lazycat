@@ -4,8 +4,7 @@ import {
     AuthenticationDetails,
     CognitoUser
 } from "amazon-cognito-identity-js";
-import {FormGroup, FormControl, ControlLabel, Col, Row, Jumbotron} from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
+import {Col, Row} from "react-bootstrap";
 import config from "../config";
 import "./Login.css";
 import GoogleLogin from 'react-google-login';
@@ -41,15 +40,6 @@ export default class Login extends Component {
         );
     }
 
-    validateForm() {
-        return this.state.email.length > 0 && this.state.password.length > 0;
-    }
-
-    handleChange = event => {
-        this.setState({
-            [event.target.id]: event.target.value
-        });
-    }
 
     handleSubmit = async event => {
         event.preventDefault();
@@ -75,11 +65,15 @@ export default class Login extends Component {
         fetch(`http://localhost:3001/api/users/${response.w3.U3}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
-                    console.log('pepe :D');
-                    console.log(results);
-                    this.props.setUserRole(results.role);
-                    // this.setState({activities: results});
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    // console.log('pepe :D');
+                    // console.log(results);
+                    // console.log(this.props);
+                    // this.props.setUserRole(results.role);
+
+
+                    this.props.cookies.set('role', results.role, { path: '/' });
+                    this.props.cookies.set('email', results.email, { path: '/' });
+                    this.props.cookies.set('signedIn', 'true', { path: '/' });
                 });
             } else {
                 // response.json().then(error => {
@@ -95,39 +89,34 @@ export default class Login extends Component {
         return (
             <div className="container">
 
-            <div className="Login">
+                <div className="Login">
 
-                <Col md="12">
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                <Row>
-                    <ReactCenter>
-                    <img src={sampLogo} style={{height: 175}}/>
-                    </ReactCenter>
-                </Row>
-                    <Row>
-                        <ReactCenter><h3 style={{fontFamily: 'Helvetica'}}>Socio-Cultural Activities Management Platform</h3></ReactCenter>
-                    </Row>
-                    <Row>
-                        <ReactCenter>
+                    <Col md="12">
+                        <Row>
+                            <ReactCenter>
+                                <img src={sampLogo} style={{height: 175}}/>
+                            </ReactCenter>
+                        </Row>
+                        <Row>
+                            <ReactCenter><h3 style={{fontFamily: 'Helvetica'}}>Socio-Cultural Activities Management Platform</h3></ReactCenter>
+                        </Row>
+                        <Row>
+                            <ReactCenter>
 
-                                <br/>
-                                <br/>
-                    <GoogleLogin
-                        clientId="760181217472-pgvc9b39vgvurcksmbi781jflfb0sts6.apps.googleusercontent.com"
-                        buttonText="Login"
-                        onSuccess={this.responseGoogle}
-                        onFailure={this.responseGoogle}
-                        style={{fontFamily: 'Helvetica',height:50, width: 125}}
-                    />
-                        </ReactCenter>
-                </Row>
-                </Col>
+                                <Row></Row>
+                                <GoogleLogin
+                                    clientId="760181217472-pgvc9b39vgvurcksmbi781jflfb0sts6.apps.googleusercontent.com"
+                                    buttonText="Login"
+                                    onSuccess={this.responseGoogle}
+                                    hostedDomain='upr.edu'
+                                    onFailure={this.responseGoogle}
+                                    style={{fontFamily: 'Helvetica',height:50, width: 125}}
+                                />
+                            </ReactCenter>
+                        </Row>
+                    </Col>
 
-            </div>
+                </div>
             </div>
         );
     }

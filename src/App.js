@@ -7,9 +7,16 @@ import RouteNavItem from "./components/RouteNavItem";
 import "./App.css";
 import {GoogleLogout} from 'react-google-login';
 import sampLogo from "./containers/samp_logo.png"
+import {withCookies, Cookies} from 'react-cookie';
+import {instanceOf} from 'prop-types';
 
 
 class App extends Component {
+
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     constructor(props) {
         super(props);
 
@@ -22,17 +29,24 @@ class App extends Component {
     }
 
     async componentDidMount() {
-        // try {
-        //   if (await authUser()) {
-        //     this.userHasAuthenticated(true);
-        //   }
-        // }
-        // catch(e) {
-        //   alert(e);
-        // }
+        const { cookies } = this.props;
+        // cookies.set('role', '1', { path: '/' });
+        // cookies.set('email', 'jesse.villafane@upr.edu', { path: '/' });
+        // cookies.set('signedIn', 'true', { path: '/' });
+
+        console.log('cookie role: ' + cookies.get('role'));
+
+        this.setState({authentication: {
+            role: cookies.get('role'),
+            email: cookies.get('email'),
+            signedIn: cookies.get('signedIn')
+        }});
+
+        this.setState({
+            cookies: cookies
+        });
+
         this.userHasAuthenticated(false);
-
-
         this.setState({isAuthenticating: false});
     }
 
@@ -71,6 +85,7 @@ class App extends Component {
     }
 
     render() {
+        console.log(this.props);
         const childProps = {
             setUserEmail: this.setUserEmail,
             setUserRole: this.setUserRole,
@@ -79,40 +94,40 @@ class App extends Component {
             isAuthenticated: this.state.isAuthenticated,
             userHasAuthenticated: this.userHasAuthenticated,
             getUserRole: this.getUserRole,
+            authentication: this.state.authentication,
+            cookies: this.state.cookies
         };
         console.log('The email: ');
         console.log(this.state.userEmail);
         return (
             !this.state.isAuthenticating &&
-                <div>
-                    <Col md={12}>
-                        <Navbar fluid collapseOnSelect>
-                            <Navbar.Header>
-                                <Navbar.Brand>
-                                    <Link to="/"><img src={sampLogo} style={{height: 30}} /></Link>
-                                </Navbar.Brand>
-                                <Navbar.Toggle/>
-                            </Navbar.Header>
-                            <Navbar.Collapse>
-                                <Nav pullRight>
+            <div >
+                <Col md={12}>
+                    <Navbar fluid collapseOnSelect>
+                        <Navbar.Header>
+                            <Navbar.Brand>
+                                <Link to="/"><img src={sampLogo} style={{height: 30}} /></Link>
+                            </Navbar.Brand>
+                            <Navbar.Toggle/>
+                        </Navbar.Header>
+                        <Navbar.Collapse>
+                            <Nav pullRight>
 
-                                    {this.state.isAuthenticated
-                                        ?
-
-                                            <NavItem>
-                                                <GoogleLogout
-                                                    buttonText="Logout"
-                                                    onLogoutSuccess={this.logout}
-                                                    style={{fontFamily: 'Helvetica',height:25, width: 100}}
-
-                                                >
-                                                </GoogleLogout>
-                                            </NavItem>
-                                        : null}
-                                </Nav>
-                            </Navbar.Collapse>
-                        </Navbar>
-                    </Col>
+                                {this.state.authentication.signedIn
+                                    ?
+                                    <NavItem>
+                                        <GoogleLogout
+                                            buttonText="Logout"
+                                            onLogoutSuccess={this.logout}
+                                            style={{fontFamily: 'Helvetica',height:25, width: 100}}
+                                        >
+                                        </GoogleLogout>
+                                    </NavItem>
+                                    : null}
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Navbar>
+                </Col>
 
                 <Routes childProps={childProps}/>
             </div>
@@ -120,4 +135,4 @@ class App extends Component {
     }
 }
 
-export default withRouter(App);
+export default withRouter(withCookies(App));

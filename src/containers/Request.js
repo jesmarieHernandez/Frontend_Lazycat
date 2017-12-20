@@ -5,7 +5,13 @@ import TimePicker from 'react-bootstrap-time-picker';
 import {Link} from "react-router-dom";
 import {Modal} from 'react-bootstrap'
 import AlertContainer from 'react-alert';
-import ReactCenter from "react-center"
+import ReactCenter from "react-center";
+import Icon from 'react-icons-kit';
+import { statsDots } from 'react-icons-kit/icomoon/statsDots';
+import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
+import { home } from 'react-icons-kit/icomoon/home';
+import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
+import { userTie } from 'react-icons-kit/icomoon/userTie';
 
 
 import {
@@ -78,7 +84,6 @@ class Request extends Component {
     componentDidMount() {
         console.log('Ok?');
         fetch('http://localhost:3001/api/admin/organizations').then(response => {
-            console.log('Cool...');
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({organizations: results});
@@ -312,13 +317,13 @@ class Request extends Component {
     }
 
 
-    getValidationState = () => {
-        const length = this.state.titleValue.length;
-
-        if (length > 20) {
-            return 'error'
-        }
-    }
+    // getValidationState = () => {
+    //     const length = this.state.titleValue.length;
+    //
+    //     if (length > 20) {
+    //         return 'error'
+    //     }
+    // }
 
     handleChangeTitle(e) {
         this.setState({titleValue: e.target.value})
@@ -355,15 +360,11 @@ class Request extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link
-                        to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
-                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter><Icon icon={home} style={{paddingRight: "45px"}} />Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter> <Icon icon={fileText2} style={{paddingRight: "30px"}} />Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter><Icon icon={iosPaw} style={{paddingRight: "30px"}}/>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter><Icon icon={statsDots} style={{paddingRight: "30px"}}/>Statistics</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter><Icon icon={userTie} style={{paddingRight: "45px"}}/>Admin</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
         );
@@ -444,7 +445,7 @@ class Request extends Component {
                                 <br/>
 
                                 <Panel header="Activity Information">
-                                    <FormGroup validationState={this.getValidationState()}>
+                                    <FormGroup>
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Title</Col>
                                             <FormControl name="requestTitle" value={this.state.titleValue}
@@ -610,13 +611,14 @@ class Request extends Component {
 
                                 </Panel>
 
-                                <Col md={6}>
+                                <Col md={12}>
 
                                     <AlertContainer ref={a => this.msg = a}/>
 
+                                    <ReactCenter>
+                                        <Button bsStyle="primary" type="submit">Submit</Button>
+                                    </ReactCenter>
 
-                                    <Button bsStyle="primary" type="submit">Submit</Button>
-                                    {/*<Button bsStyle="primary" type="button" onClick={this.open}>Submit</Button>*/}
                                     <Modal show={this.state.showModal} onHide={this.close}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>Submit request?</Modal.Title>
@@ -630,6 +632,7 @@ class Request extends Component {
                                             <Button onClick={this.close}>Cancel</Button>
                                         </Modal.Footer>
                                     </Modal>
+
                                 </Col>
                                 <br />
                                 <br />

@@ -3,11 +3,20 @@ import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
 import AlertContainer from 'react-alert';
 
+
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
     Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem
 } from 'react-bootstrap';
-import ReactCenter from "react-center"
+import ReactCenter from "react-center";
+import {Modal} from 'react-bootstrap';
+import Icon from 'react-icons-kit';
+import { statsDots } from 'react-icons-kit/icomoon/statsDots';
+import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
+import { home } from 'react-icons-kit/icomoon/home';
+import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
+import { userTie } from 'react-icons-kit/icomoon/userTie';
+
 
 
 const PAGE_SIZE = 10;
@@ -16,6 +25,11 @@ class CreateFacilities extends Component {
 
     constructor(props, context) {
         super(props, context);
+
+        this.state = {
+            showModal: false,
+            buildingValue: '',
+        }
 
         // this.state = {
         //     eventDate: value,
@@ -38,10 +52,11 @@ class CreateFacilities extends Component {
     onSubmit = (event) => {
         event.preventDefault();
 
+        this.showSuccessAlert();
+
         console.log('Form was submitted');
 
         const form = document.forms.newFacilities;
-
 
         const newFacilities = {
             building: form.building.value,
@@ -78,10 +93,44 @@ class CreateFacilities extends Component {
 
     }
 
+    open = (event) => {
+        event.preventDefault();
+        console.log(isNaN(this.state.orgNameValue));
+        console.log(isNaN(this.state.orgTypeValue) );
+        console.log(isNaN(this.state.orgInitialsValue));
+        console.log(isNaN(this.state.counselorNameValue));
+        console.log(isNaN(this.state.counselorEmailValue));
+        console.log(!isNaN(this.state.counselorTelephoneValue));
+        console.log(isNaN(this.state.counselorFacultyValue));
+        console.log(isNaN(this.state.counselorDepartmentValue));
+
+        if (isNaN(this.state.building))
+        {
+            console.log("In herreeeeeee")
+            this.setState({showModal: true});
+        }
+
+        else {
+            this.showErrorAlert("Form filled incorrectly.")
+        }
+    }
+
+    getInitialState = () => {
+        return {showModal: false};
+    }
+
+    handleBuildingValue = (e) => {
+        this.setState({buildingValue: e.target.value})
+    }
+
+    close = () => {
+        this.setState({showModal: false});
+    }
+
 
     showSuccessAlert = () => {
         console.log("Success Alert");
-        this.msg.success('Success! New facility created.', {time: 5000, type: 'success'});
+        this.msg.success('Success! New facility created.', {time: 10000000, type: 'success'});
         console.log("Success Alert 2");
     }
 
@@ -90,15 +139,11 @@ class CreateFacilities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link
-                        to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
-                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter><Icon icon={home} style={{paddingRight: "45px"}} />Home</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter> <Icon icon={fileText2} style={{paddingRight: "30px"}} />Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter><Icon icon={iosPaw} style={{paddingRight: "30px"}}/>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter><Icon icon={statsDots} style={{paddingRight: "30px"}}/>Statistics</ReactCenter></Link></NavItem>
+                    <NavItem> <Link to="/admin"><ReactCenter><Icon icon={userTie} style={{paddingRight: "45px"}}/>Admin</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
         );
@@ -118,16 +163,16 @@ class CreateFacilities extends Component {
                     </ol>
 
                     <Panel header="Create New Facilities">
-                        <Form horizontal onSubmit={this.onSubmit} name="newFacilities">
+                        <Form horizontal onSubmit={this.open} name="newFacilities">
                             <FormGroup>
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Building</Col>
-                                    <FormControl name="building"/>
+                                    <FormControl name="building" onChange={this.handleBuildingValue} required/>
                                 </Col>
 
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Space</Col>
-                                    <FormControl name="space"/>
+                                    <FormControl name="space" required/>
                                 </Col>
                             </FormGroup>
 
@@ -137,11 +182,28 @@ class CreateFacilities extends Component {
                                     <Col md={6}>
                                         <AlertContainer ref={a => this.msg = a}/>
 
-                                        <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
+{/*                                        <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
+                                            Submit </Button>*/}
+
+                                        <Button bsStyle="primary" type="submit">
                                             Submit </Button>
                                     </Col>
                                 </ButtonToolbar>
                             </ReactCenter>
+
+                            <Modal show={this.state.showModal} onHide={this.close}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Submit facility?</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <h4>Are you sure you want to submit the facility?</h4>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button onClick={this.onSubmit} bsStyle="primary"
+                                            type="button">Ok</Button>
+                                    <Button onClick={this.close}>Cancel</Button>
+                                </Modal.Footer>
+                            </Modal>
 
                             {/*<FormGroup>*/}
                             {/*<Col sm={4}>*/}

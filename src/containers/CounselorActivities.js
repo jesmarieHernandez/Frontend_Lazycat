@@ -3,9 +3,11 @@ import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
     Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
-    BreadcrumbItem
+    BreadcrumbItem, Nav, NavItem
 } from 'react-bootstrap';
 import Select from 'react-select';
+import ReactCenter from "react-center"
+
 
 class CounselorActivities extends Component {
 
@@ -56,13 +58,23 @@ class CounselorActivities extends Component {
 
     render() {
 
-        const tabsInstance = (
+/*        const tabsInstance = (
             <div>
                 <ul>
                     <li><Link to="/counselor/activities">Activities</Link></li>
                     <li><Link to="">My Info</Link></li>
 
                 </ul>
+            </div>
+        );*/
+
+        const tabsInstance = (
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/counselor/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                </Nav>
             </div>
         );
 

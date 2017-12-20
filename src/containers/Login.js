@@ -75,7 +75,6 @@ export default class Login extends Component {
         fetch(`http://localhost:3001/api/users/${response.w3.U3}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
-                    console.log('pepe :D');
                     console.log(results);
                     this.props.setUserRole(results.role);
                     // this.setState({activities: results});

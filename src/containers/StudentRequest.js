@@ -5,6 +5,7 @@ import TimePicker from 'react-bootstrap-time-picker';
 import {Link} from "react-router-dom";
 import {Modal} from 'react-bootstrap'
 import AlertContainer from 'react-alert';
+import ReactCenter from "react-center"
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
@@ -349,7 +350,7 @@ class Request extends Component {
             <option value={option}>{option}</option>
         );
 
-        const tabsInstance = (
+/*        const tabsInstance = (
             <div>
                 <ul>
                     <li><Link to="/">Home</Link></li>
@@ -358,6 +359,18 @@ class Request extends Component {
                     <li><Link to="/stats">Stats</Link></li>
                     <li><Link to="/admin">Admin</Link></li>
                 </ul>
+            </div>
+        );*/
+
+        const tabsInstance = (
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/student/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/student/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                </Nav>
             </div>
         );
 

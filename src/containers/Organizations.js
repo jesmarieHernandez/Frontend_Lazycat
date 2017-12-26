@@ -20,9 +20,10 @@ class Organizations extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/organizations').then(response => {
+        fetch('http://localhost:8000/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {
+                    console.log(results);
                     this.setState({organizations: results});
                 });
             } else {
@@ -39,11 +40,11 @@ class Organizations extends Component {
         const organizations = this.state.organizations.map(organization =>
 
             <Col md={12}>
-                <Panel collapsible header={organization.name} style={{fontFamily: 'Helvetica'}}>
-                    <p><Link to={`/admin/organizations/${organization._id}`}>{organization.name}</Link></p>
-                    <p>Type: {organization.type}</p>
-                    <p>Creation Date: {organization.creationDate}</p>
-                    <p>Counselor Name: {organization.counselorName}</p>
+                <Panel collapsible header={organization.organizationName} style={{fontFamily: 'Helvetica'}}>
+                    <p><Link to={`/admin/organizations/${organization.id}`}>{organization.organizationName}</Link></p>
+                    <p>Type: {organization.description}</p>
+                    <p>Creation Date: {organization.created_at}</p>
+                    <p>Counselor Name: {organization.fullName}</p>
                     <p>Counselor Email: {organization.counselorEmail}</p>
                     <Link to={`/admin/organizations/${organization._id}`}><Button className="btn btn-primary">Details</Button></Link>
                 </Panel>

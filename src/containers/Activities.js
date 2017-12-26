@@ -32,7 +32,7 @@ class Activities extends Component {
                 // });
             }
         }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
         fetch('http://localhost:3001/api/pending').then(response => {
@@ -51,7 +51,7 @@ class Activities extends Component {
                 // });
             }
         }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
     }
 

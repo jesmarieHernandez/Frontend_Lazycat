@@ -76,9 +76,7 @@ class Request extends Component {
     }
 
     componentDidMount() {
-        console.log('Ok?');
-        fetch('http://localhost:3001/api/admin/organizations').then(response => {
-            console.log('Cool...');
+        fetch('http://localhost:3001/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({organizations: results});
@@ -94,7 +92,7 @@ class Request extends Component {
             // this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch(`http://localhost:3001/api/admin/facilities/`).then(response => {
+        fetch(`http://localhost:3001/api/facilities/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);

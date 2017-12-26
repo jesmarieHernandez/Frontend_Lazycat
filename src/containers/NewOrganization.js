@@ -19,6 +19,53 @@ const PAGE_SIZE = 10;
 class CreateOrganization extends Component {
     constructor(props, context) {
         super(props, context);
+
+        this.state = {
+            organizationTypes: [],
+            selectedOrganizationType: {}
+        }
+
+        this.onOrganizationTypeSelected = this.onOrganizationTypeSelected.bind(this);
+
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:8000/api/organization_types/').then(response => {
+            if (response.ok) {
+                response.json().then(results => {
+                    console.log("Organization Types");
+                    console.log(results);
+                    this.setState({organizationTypes: results});
+                    console.log(this.state.organizationTypes);
+                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                });
+            } else {
+                // response.json().then(error => {
+                //     this.props.showError(`Failed to add issue: ${error.message}`);
+                // });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+    }
+    onOrganizationTypeSelected(event) {
+        // event.preventDefault();
+        const selectedOrganizationType = this.state.organizationTypes.filter(function (obj) {
+
+            console.log('Current object code' + obj.code);
+            console.log('Event target value' + event.target.value);
+
+            console.log(obj.code == event.target.value);
+            return obj.code == event.target.value;
+        });
+        // console.log("Selected organization type: " + selectedOrganizationType[0]);
+        console.log(this.state.selectedOrganizationType);
+        this.setState({selectedOrganizationType: selectedOrganizationType[0]});
+        console.log('Shiiiittt');
+        console.log(this.state.selectedOrganizationType);
+
+        // console.log("Selected organization type: " + this.state.selectedOrganizationType);
     }
 
     onSubmit = (event) => {
@@ -30,21 +77,21 @@ class CreateOrganization extends Component {
 
 
         const newOrganization = {
-            name: form.organizationName.value,
-            type: form.organizationType.value,
-            initials: form.organizationInitials.value,
-            creationDate: new Date(),
-            counselorName: form.organizationCounselorName.value,
+            organizationName: form.organizationName.value,
+            organizationType_code: form.organizationType.value,
+            organizationInitials: form.organizationInitials.value,
+            organizationStatus_code: 1,
+            fullName: form.organizationCounselorName.value,
             counselorEmail: form.organizationCounselorEmail.value,
-            counselorTelephone: form.organizationCounselorTelephone.value,
+            counselorPhone: form.organizationCounselorTelephone.value,
             counselorFaculty: form.organizationCounselorFaculty.value,
             counselorDepartment: form.organizationCounselorDepartment.value,
-            counselorOfficeNumber: form.organizationCounselorOfficeNumber.value
+            counselorOffice: form.organizationCounselorOfficeNumber.value
 
         };
 
         console.log(newOrganization);
-        fetch('http://localhost:3001/api/admin/organizations', {
+        fetch('http://localhost:8000/api/organizations', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),
@@ -74,13 +121,16 @@ class CreateOrganization extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
                     <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
+        );
+
+        const organizationTypes = this.state.organizationTypes.map(option =>
+            <option value={option.code}>{option.description}</option>
         );
 
         return (
@@ -105,9 +155,20 @@ class CreateOrganization extends Component {
                                     <FormControl name="organizationName"/>
                                 </Col>
 
-                                <Col sm={4}>
+                                {/*<Col sm={4}>*/}
+                                    {/*<Col componentClass={ControlLabel}>Organization Type</Col>*/}
+                                    {/*<FormControl name="organizationType"/>*/}
+                                {/*</Col>*/}
+
+                                <Col md={4}>
                                     <Col componentClass={ControlLabel}>Organization Type</Col>
-                                    <FormControl name="organizationType"/>
+
+                                    <FormControl componentClass="select" name="organizationType"
+                                                 onChange={this.onOrganizationTypeSelected}
+                                                 placeholder="select" required>
+                                        <option>select</option>
+                                        {organizationTypes}
+                                    </FormControl>
                                 </Col>
 
                                 <Col sm={4}>

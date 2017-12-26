@@ -25,7 +25,7 @@ class Facilities extends Component {
 /*
         let id = this.props.params.id;
 */
-        fetch(`http://localhost:3001/api/admin/facilities/`).then(response => {
+        fetch(`http://localhost:3001/api/facilities/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);

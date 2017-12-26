@@ -2,8 +2,6 @@ import React, {Component} from "react";
 import {Link, withRouter} from "react-router-dom";
 import {Nav, NavItem, Navbar, Col} from "react-bootstrap";
 import Routes from "./Routes";
-import {authUser, signOutUser} from "./libs/awsLib";
-import RouteNavItem from "./components/RouteNavItem";
 import "./App.css";
 import {GoogleLogout} from 'react-google-login';
 import sampLogo from "./containers/samp_logo.png"
@@ -38,7 +36,6 @@ class App extends Component {
 
 
     logout()  {
-        console.log('putoooo');
         this.props.cookies.remove('role', { path: '/' });
         this.props.cookies.remove('email', { path: '/' });
         this.props.cookies.remove('signedIn', { path: '/' });
@@ -70,6 +67,8 @@ class App extends Component {
 
                                 {this.state.cookies.get('signedIn') === 'true'
                                     ?
+                                    <Navbar.Header>
+
                                     <NavItem>
                                         {/*<GoogleLogout*/}
                                         {/*buttonText="Logout"*/}
@@ -81,9 +80,13 @@ class App extends Component {
                                             {this.state.authentication.email}
                                         </Navbar.Brand>
                                     </NavItem>
-                                    : null}
+                                    </Navbar.Header>
+
+                                        : null}
                                 {this.state.cookies.get('signedIn') === 'true'
                                     ?
+                                    <Navbar.Header>
+
                                     <NavItem onClick={this.logout.bind(this)}>
                                         {/*<GoogleLogout*/}
                                         {/*buttonText="Logout"*/}
@@ -95,7 +98,9 @@ class App extends Component {
                                             Logout
                                         </Navbar.Brand>
                                     </NavItem>
-                                    : null}
+                                    </Navbar.Header>
+
+                                        : null}
                             </Nav>
                         </Navbar.Collapse>
                     </Navbar>

@@ -3,9 +3,11 @@ import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
     Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
-    BreadcrumbItem
+    BreadcrumbItem, Nav, NavItem
 } from 'react-bootstrap';
 import Select from 'react-select';
+import ReactCenter from "react-center"
+
 
 class ManagerActivities extends Component {
 
@@ -56,13 +58,24 @@ class ManagerActivities extends Component {
 
     render() {
 
-        const tabsInstance = (
+/*        const tabsInstance = (
             <div>
                 <ul>
                     <li><Link to="/manager/activities">Activities</Link></li>
                 </ul>
             </div>
+        );*/
+
+        const tabsInstance = (
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/manager/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                </Nav>
+            </div>
         );
+
 
         const activities = this.state.activities.map(activity =>
 

@@ -7,6 +7,7 @@ import {Modal} from 'react-bootstrap'
 import AlertContainer from 'react-alert';
 import ReactCenter from 'react-center';
 
+
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
     Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Tab, Tow, Nav, Row, NavItem,
@@ -351,13 +352,24 @@ class Request extends Component {
         );
 
         const tabsInstance = (
-
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     {/*<NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>*/}
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><ReactCenter>Request</ReactCenter></Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><ReactCenter>Activities</ReactCenter></Link></NavItem>
 
+                </Nav>
+            </div>
+        );*/
+
+        const tabsInstance = (
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/student/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/student/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
         );

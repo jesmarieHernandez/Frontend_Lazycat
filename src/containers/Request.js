@@ -5,7 +5,13 @@ import TimePicker from 'react-bootstrap-time-picker';
 import {Link} from "react-router-dom";
 import {Modal} from 'react-bootstrap'
 import AlertContainer from 'react-alert';
-import ReactCenter from "react-center"
+import ReactCenter from "react-center";
+import Icon from 'react-icons-kit';
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
+import {userTie} from 'react-icons-kit/icomoon/userTie';
 
 
 import {
@@ -35,9 +41,9 @@ class Request extends Component {
             facilities: [],
             selectedOrganization: {},
             selectedDate: value,
-            selectedStartTime: '',
+            selectedStartTime: '0',
             startTime: '',
-            selectedEndTime: '',
+            selectedEndTime: '1',
             endTime: '',
             selectedFacilities: {},
             statusOptions: ['pending', 'approved', 'denied'],
@@ -77,6 +83,7 @@ class Request extends Component {
 
     componentDidMount() {
         fetch('http://localhost:3001/api/organizations').then(response => {
+
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({organizations: results});
@@ -233,20 +240,12 @@ class Request extends Component {
 
     onStartTimeSelected(event) {
         this.setState({startTimePicked: true});
-        console.log("Event: " + event);
-
         var date = new Date(null);
-        console.log("Date 1: " + date);
         date.setSeconds(event); // Set event (in seconds) on the newly created date
-        console.log("Date 2: " + date);
-
-
         var res = date.getTimezoneOffset() / 60;
-
         var newDate = new Date(date.getTime() + res * 3600000);
-        console.log("Date 3: " + newDate);
         var result = newDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-        console.log("Result: " + result);
+        console.log("Start Time Result: " + result);
         this.setState({selectedStartTime: result});
         this.setState({startTime: event});
 
@@ -260,14 +259,14 @@ class Request extends Component {
         var res = date.getTimezoneOffset() / 60; //Gives me the hours to offset the time
         var newDate = new Date(date.getTime() + res * 3600000);
         var result = newDate.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
-        console.log("Result: " + result);
+        console.log("End Time Result: " + result);
         this.setState({selectedEndTime: result});
         this.setState({endTime: event});
     }
 
     onDateSelected(event) {
+        console.log("DAAAAAATE: " + event);
         this.setState({datePicked: true});
-        console.log();
         console.log("Type Of: " + typeof(event));
         var editedDate = event.substr(0, 10);
         console.log("editedDate: " + editedDate);
@@ -284,18 +283,21 @@ class Request extends Component {
 
     open = (event) => {
         event.preventDefault();
-        console.log("Opeeeen");
-        console.log(isNaN(this.state.guestValue));
-        console.log(typeof(this.state.attendanceValue));
-        console.log(this.state.attendanceValue > 0);
+        console.log("Results: " + this.state.attendanceValue);
+        /*
+         console.log(isNaN(this.state.guestValue));
+         console.log(typeof(this.state.attendanceValue));
+         console.log(this.state.attendanceValue > 0);
+         */
 
-        if (this.state.titleValue.length > 0 &&
+        if (this.state.titleValue.length > 0 && this.state.titleValue.length < 20 &&
             this.state.descriptionValue.length > 0 &&
             (this.state.guestValue.length > 0 && isNaN(this.state.guestValue)) &&
             (this.state.attendanceValue > 1) &&
             this.state.datePicked === true &&
             this.state.startTimePicked === true &&
-            this.state.endTimePicked === true) {
+            this.state.endTimePicked === true &&
+            this.state.facilityPicked === true) {
             this.setState({showModal: true});
         }
 
@@ -310,13 +312,13 @@ class Request extends Component {
     }
 
 
-    getValidationState = () => {
-        const length = this.state.titleValue.length;
-
-        if (length > 20) {
-            return 'error'
-        }
-    }
+    // getValidationState = () => {
+    //     const length = this.state.titleValue.length;
+    //
+    //     if (length > 20) {
+    //         return 'error'
+    //     }
+    // }
 
     handleChangeTitle(e) {
         this.setState({titleValue: e.target.value})
@@ -353,15 +355,14 @@ class Request extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    {/*<NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link*/}
-                        {/*to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>*/}
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link
-                        to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
-                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
+                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
+                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
+                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie}
+                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -442,19 +443,48 @@ class Request extends Component {
                                 <br/>
 
                                 <Panel header="Activity Information">
-                                    <FormGroup validationState={this.getValidationState()}>
+                                    <FormGroup>
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Title</Col>
-                                            <FormControl name="requestTitle" value={this.state.titleValue}
-                                                         placeholder="Ex. Venta de Mantecados" type="text"
-                                                         onChange={this.handleChangeTitle} required/></Col>
+                                            {
+                                                (this.state.titleValue.length > 10) ?
+                                                    (<div>
+                                                        <FormControl name="requestTitle" value={this.state.titleValue}
+                                                                     validationState='error'
+                                                                     placeholder="Ex. Venta de Mantecados" type="text"
+                                                                     onChange={this.handleChangeTitle} required/>
+                                                        <HelpBlock>Title too long</HelpBlock>
+                                                    </div>)
+                                                    :
+                                                    (<div>
+                                                        <FormControl name="requestTitle" value={this.state.titleValue}
+                                                                     placeholder="Ex. Venta de Mantecados" type="text"
+                                                                     onChange={this.handleChangeTitle} required/>
+                                                    </div>)
+
+                                            }
+                                        </Col>
 
                                         <Col sm={9}>
                                             <Col componentClass={ControlLabel}>Description</Col>
-                                            <FormControl name="activityDescription"
-                                                         value={this.state.activityDescription}
-                                                         placeholder="Ex. Recaudacion de fondos" type="text"
-                                                         onChange={this.handleChangeDescription} required/>
+                                            {
+                                                (this.state.descriptionValue.length > 50) ?
+
+                                                    (<div>
+                                                        <FormControl name="activityDescription"
+                                                                     value={this.state.activityDescription}
+                                                                     placeholder="Ex. Recaudacion de fondos" type="text"
+                                                                     onChange={this.handleChangeDescription} required/>
+                                                        <HelpBlock>Description too long</HelpBlock>
+                                                    </div>)
+                                                    :
+                                                    (<div>
+                                                        <FormControl name="activityDescription"
+                                                                     value={this.state.activityDescription}
+                                                                     placeholder="Ex. Recaudacion de fondos" type="text"
+                                                                     onChange={this.handleChangeDescription} required/>
+                                                    </div>)
+                                            }
                                         </Col>
 
                                     </FormGroup>
@@ -462,28 +492,46 @@ class Request extends Component {
                                     <FormGroup>
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Guests</Col>
-                                            <FormControl name="activityGuest" value={this.state.activityDescription}
-                                                         placeholder="Ex. None" type="text"
-                                                         onChange={this.handleChangeGuest} required/>
+                                            {
+                                                (this.state.guestValue.length > 50 && !isNaN(this.state.guestValue)) ?
+
+                                                    (<div>
+                                                        <FormControl name="activityGuest"
+                                                                     value={this.state.activityGuest}
+                                                                     placeholder="Ex. None" type="text"
+                                                                     onChange={this.handleChangeGuest} required/>
+                                                        <HelpBlock>Only enter text.</HelpBlock>
+                                                    </div>)
+                                                    :
+                                                    (<div>
+                                                        <FormControl name="activityGuest"
+                                                                     value={this.state.activityGuest}
+                                                                     placeholder="Ex. None" type="text"
+                                                                     onChange={this.handleChangeGuest} required/>
+                                                    </div>)
+                                            }
+
                                         </Col>
 
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Attendants</Col>
-                                            <FormControl name="activityAssistant" value={this.state.activityAssistant}
+                                            <FormControl name="activityAssistant"
+                                                         value={this.state.activityAssistant}
                                                          type="number" min="1" start="1"
                                                          onChange={this.handleChangeAttendance} required/>
                                         </Col>
 
                                         <Col md={3}>
                                             <Col componentClass={ControlLabel}>Facility Name</Col>
+                                            <div>
+                                                <FormControl componentClass="select" name="selectFacilities"
+                                                             onChange={this.onFacilitiesSelected}
 
-                                            <FormControl componentClass="select" name="selectFacilities"
-                                                         onChange={this.onFacilitiesSelected}
-
-                                                         placeholder="select">
-                                                <option>select</option>
-                                                {facilitiesOptions}
-                                            </FormControl>
+                                                             placeholder="select">
+                                                    <option>select</option>
+                                                    {facilitiesOptions}
+                                                </FormControl>
+                                            </div>
                                         </Col>
 
                                         <Col md={3}>
@@ -501,21 +549,41 @@ class Request extends Component {
                                             <DatePicker id="example-datepicker" name="selectedDate"
                                                         onChange={this.onDateSelected}
                                                         value={this.state.selectedDate}
+                                                        minDate={(new Date()).toISOString()}
                                                         required/>
                                         </Col>
 
                                         <Col md={4}>
                                             <Col componentClass={ControlLabel}>Start Time</Col>
-                                            <TimePicker name="startTime" start="7:00" end="24:00" step={30}
-                                                        onChange={this.onStartTimeSelected}
-                                                        value={this.state.startTime} required/>
+                                            <div>
+                                                <TimePicker name="startTime" start="7:00" end="24:00" step={30}
+                                                            onChange={this.onStartTimeSelected}
+                                                            value={this.state.startTime} required/>
+                                            </div>
+
                                         </Col>
 
                                         <Col md={4}>
                                             <Col componentClass={ControlLabel}>End Time</Col>
-                                            <TimePicker name="endTime" start="7:00" end="24:00" step={30}
-                                                        onChange={this.onEndTimeSelected} value={this.state.endTime}
-                                                        required/>
+                                            {
+                                                (this.state.selectedStartTime > this.state.selectedEndTime || this.state.selectedStartTime === this.state.selectedEndTime ) ?
+                                                    (<div>
+                                                        <TimePicker name="endTime" start="8:00" end="24:00" step={30}
+                                                                    onChange={this.onEndTimeSelected}
+                                                                    value={this.state.endTime}
+                                                                    required/>
+                                                        <HelpBlock>Start time should be earlier than end
+                                                            time.</HelpBlock>
+                                                    </div>)
+                                                    :
+                                                    (<div>
+                                                        <TimePicker name="endTime" start="8:00" end="24:00" step={30}
+                                                                    onChange={this.onEndTimeSelected}
+                                                                    value={this.state.endTime}
+                                                                    required/>
+                                                    </div>)
+
+                                            }
                                         </Col>
                                     </FormGroup>
                                 </Panel>
@@ -608,13 +676,14 @@ class Request extends Component {
 
                                 </Panel>
 
-                                <Col md={6}>
+                                <Col md={12}>
 
                                     <AlertContainer ref={a => this.msg = a}/>
 
+                                    <ReactCenter>
+                                        <Button bsStyle="primary" type="submit">Submit</Button>
+                                    </ReactCenter>
 
-                                    <Button bsStyle="primary" type="submit">Submit</Button>
-                                    {/*<Button bsStyle="primary" type="button" onClick={this.open}>Submit</Button>*/}
                                     <Modal show={this.state.showModal} onHide={this.close}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>Submit request?</Modal.Title>
@@ -628,6 +697,7 @@ class Request extends Component {
                                             <Button onClick={this.close}>Cancel</Button>
                                         </Modal.Footer>
                                     </Modal>
+
                                 </Col>
                                 <br />
                                 <br />

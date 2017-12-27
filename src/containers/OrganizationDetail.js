@@ -9,7 +9,13 @@ import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
     Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem
 } from 'react-bootstrap';
-import ReactCenter from "react-center"
+import ReactCenter from "react-center";
+import Icon from 'react-icons-kit';
+import { statsDots } from 'react-icons-kit/icomoon/statsDots';
+import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
+import { home } from 'react-icons-kit/icomoon/home';
+import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
+import { userTie } from 'react-icons-kit/icomoon/userTie';
 
 
 const PAGE_SIZE = 10;
@@ -79,15 +85,10 @@ class OrganizationDetail extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    {/*<NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link*/}
-                        {/*to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>*/}
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link
-                        to="/stats"><ReactCenter>Stats</ReactCenter></Link></NavItem>
-                    <NavItem> <Link to="/admin"><ReactCenter>Admin</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );

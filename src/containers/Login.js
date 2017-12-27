@@ -43,7 +43,6 @@ export default class Login extends Component {
                     this.props.cookies.set('email', results.email, { path: '/' });
                     this.props.cookies.set('signedIn', 'true', { path: '/' });
                     this.props.history.push("/");
-
                 });
             } else {
                 // response.json().then(error => {

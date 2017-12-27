@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
-    Button, Panel, Col, Nav, NavItem
+    Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
+    BreadcrumbItem, Nav, NavItem
 } from 'react-bootstrap';
-import ReactCenter from 'react-center';
+import Select from 'react-select';
+import ReactCenter from "react-center";
 
 
 class StudentActivities extends Component {
@@ -55,15 +57,25 @@ class StudentActivities extends Component {
     }
 
     render() {
-
         const tabsInstance = (
-
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     {/*<NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>*/}
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><ReactCenter>Request</ReactCenter></Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><ReactCenter>Activities</ReactCenter></Link></NavItem>
 
+                </Nav>
+            </div>
+        );*/
+
+        const tabsInstance = (
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/student/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/student/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
         );

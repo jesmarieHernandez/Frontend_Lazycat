@@ -24,16 +24,25 @@ import {
 import {invokeApig} from '../libs/awsLib';
 import "./Home.css";
 
+import ReactCenter from "react-center";
+import Icon from 'react-icons-kit';
+import { statsDots } from 'react-icons-kit/icomoon/statsDots';
+import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
+import { home } from 'react-icons-kit/icomoon/home';
+import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
+import { userTie } from 'react-icons-kit/icomoon/userTie';
+
 export default class Home extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             isLoading: true,
-            notes: []
+            notes: [],
+            activities: []
         };
     }
-
+  
     componentDidMount() {
         console.log('Yauco');
         console.log(this.props);
@@ -63,6 +72,7 @@ export default class Home extends Component {
             this.props.history.push("/manager/activities");
             return;
         }
+
         // this.setState({isLoading: false});
     }
 
@@ -75,18 +85,13 @@ export default class Home extends Component {
 
 
         const tabsInstance = (
-
-            <div>
-                <ul>
-                    {/*<li><Link to="/">Home</Link></li>*/}
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                    <li><Link to="/counselor/activities">Counselor Activities</Link></li>
-                    <li><Link to="/student/activities">Counselor Activities</Link></li>
-                    <li><Link to="/student/request">Counselor Activities</Link></li>
-                </ul>
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
+                    </Nav>
             </div>
         );
 

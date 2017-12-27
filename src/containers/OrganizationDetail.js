@@ -43,11 +43,10 @@ class OrganizationDetail extends Component {
     componentDidMount() {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
-        fetch(`http://localhost:3001/api/admin/organizations/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/organizations/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
-                this.setState({organization: data});
-                console.log(this.state.organization._id);
+                this.setState({organization: data[0]});
             }).catch(err => {
                 console.log(err)
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
@@ -108,16 +107,16 @@ class OrganizationDetail extends Component {
                             <li className="active">Organization Details</li>
                         </ol>
 
-                        <Panel header={this.state.organization.name}>
-                            <p>Organization Name: {this.state.organization.name}</p>
-                            <p>Organization Initials: {this.state.organization.initials}</p>
-                            <p>Creation Date: {this.state.organization.creationDate}</p>
-                            <p>Counselor Name: {this.state.organization.counselorName}</p>
+                        <Panel header={this.state.organization.organizationName}>
+                            <p>Organization Name: {this.state.organization.organizationName}</p>
+                            <p>Organization Initials: {this.state.organization.organizationInitials}</p>
+                            <p>Creation Date: {this.state.organization.created_at}</p>
+                            <p>Counselor Name: {this.state.organization.fullName}</p>
                             <p>Counselor Email: {this.state.organization.counselorEmail}</p>
-                            <p>Counselor Telephone: {this.state.organization.counselorTelephone}</p>
+                            <p>Counselor Telephone: {this.state.organization.counselorPhone}</p>
                             <p>Counselor Faculty: {this.state.organization.counselorFaculty}</p>
                             <p>Counselor Department: {this.state.organization.counselorDepartment}</p>
-                            <p>Counselor Office Number: {this.state.organization.counselorOfficeNumber}</p>
+                            <p>Counselor Office Number: {this.state.organization.counselorOffice}</p>
                             <Row>
                                 <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Back</Button></Link></Col>
                                 <Col md="1"><Link to={`/`}><Button className="btn-success">Contact</Button></Link></Col>

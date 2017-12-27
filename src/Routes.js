@@ -1,6 +1,5 @@
 import React from "react";
 import {Route, Switch, Router} from "react-router-dom";
-import AppliedRoute from "./components/AppliedRoute";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -26,7 +25,7 @@ import Users from "./containers/Users";
 import NewUser from "./containers/NewUser";
 import UserDetail from "./containers/UserDetail";
 import StudentRequest from "./containers/StudentRequest";
-import StudentActivities from "./containers/StudentRequest";
+import StudentActivities from "./containers/StudentActivities";
 import CounselorActivities from "./containers/CounselorActivities";
 import ManagerActivities from "./containers/ManagerActivities";
 import StaffActivities from "./containers/StaffActivities"
@@ -35,6 +34,7 @@ import StaffStatistics from "./containers/StaffStatistics";
 import NotFound from "./containers/NotFound";
 
 export default ({childProps}) =>
+
     <Switch>
         {/*<AppliedRoute path="/" exact component={Home} props={childProps}/>*/}
         <AuthenticatedRoute path="/" exact component={Home} props={childProps}/>

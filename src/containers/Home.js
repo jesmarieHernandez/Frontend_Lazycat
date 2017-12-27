@@ -19,11 +19,11 @@ import {
     Tab,
     Nav,
     NavItem,
-    Navbar,
     Alert
 } from "react-bootstrap";
 import {invokeApig} from '../libs/awsLib';
 import "./Home.css";
+
 import ReactCenter from "react-center";
 import Icon from 'react-icons-kit';
 import { statsDots } from 'react-icons-kit/icomoon/statsDots';
@@ -42,40 +42,37 @@ export default class Home extends Component {
             activities: []
         };
     }
+  
+    componentDidMount() {
+        console.log('Yauco');
+        console.log(this.props);
+        // if (this.props.authentication.isSignedIn === 'false') {
+        //     this.props.history.push("/login");
+        // }
+        //
+        if (this.props.authentication.role === '1') {
+            this.props.history.push("/activities");
+        }
+        //
+        if (this.props.authentication.role === '2') {
+            this.props.history.push("/staff/activities");
+            return;
+        }
+        //
+        if (this.props.authentication.role === '3') {
+            this.props.history.push("/student/activities");
+        }
+        //
+        if (this.props.authentication.role === '4') {
+            this.props.history.push("/counselor/activities");
+            return;
+        }
+        //
+        if (this.props.authentication.role === '5') {
+            this.props.history.push("/manager/activities");
+            return;
+        }
 
-     componentDidMount() {
-
-         console.log('USER ROLE: ');
-         console.log(this.props.getUserRole());
-         if (!this.props.isAuthenticated) {
-             this.props.history.push("/login");
-             return;
-         }
-
-         if (this.props.getUserRole() === '1') {
-             this.props.history.push("/activities");
-             return;
-         }
-
-         if (this.props.getUserRole() === '2') {
-             this.props.history.push("/staff/activities");
-             return;
-         }
-
-         if (this.props.getUserRole() === '3') {
-             this.props.history.push("/student/activities");
-             return;
-         }
-
-         if (this.props.getUserRole() === '4') {
-             this.props.history.push("/counselor/activities");
-             return;
-         }
-
-         if (this.props.getUserRole() === '5') {
-             this.props.history.push("/manager/activities");
-             return;
-         }
         // this.setState({isLoading: false});
     }
 
@@ -85,8 +82,9 @@ export default class Home extends Component {
 
 
     render() {
-        const tabsInstance = (
 
+
+        const tabsInstance = (
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
@@ -97,39 +95,46 @@ export default class Home extends Component {
             </div>
         );
 
+        console.log('Props Nuevos');
+        console.log(this.props);
+
+
         return (
             <div className="container">
-                    <Col md={2}>
-                        {tabsInstance}
-                    </Col>
 
-                    <Col md={10}>
-                        {/*<div>{activities}</div>*/}
-                        <Row>
-                            <Col md={12}>
-                                <ol className="breadcrumb">
-                                    <li/>
-                                    <li className="active">Activities</li>
-                                </ol>
-                            </Col>
-                        </Row>
-                        <Row>
 
-                            <Col md={12}>
-                                <Panel header="Request Title">
-                                    <td>Request Title</td>
-                                    <p>Description: Venta de Hotdogs</p>
-                                    <p>Organization: IEEE</p>
-                                    <p>Facility: Stefani</p>
-                                    <p>Status: Pending</p>
-                                </Panel>
-                            </Col>
+                {/*{this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}*/}
+                {/*<Jumbotron><h3>Activities</h3></Jumbotron>*/}
 
-                        </Row>
 
-                    </Col>
+                <Col md={2}>
+                    {tabsInstance}
+                </Col>
+                <Col md={10}>
+                    {/*<div>{activities}</div>*/}
+                    <Row>
+                        <Col md={12}>
+                            <ol className="breadcrumb">
+                                <li/>
+                                <li className="active">Activities</li>
+                            </ol>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
+                            <Panel header="Request Title">
+                                <td>Request Title</td>
+                                <p>Description: Venta de Hotdogs</p>
+                                <p>Organization: IEEE</p>
+                                <p>Facility: Stefani</p>
+                                <p>Status: Pending</p>
+                            </Panel>
+                        </Col>
+                    </Row>
 
-                </div>
+                </Col>
+
+            </div>
         );
     }
 }

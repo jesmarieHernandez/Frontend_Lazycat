@@ -8,6 +8,7 @@ import {
 import Select from 'react-select';
 import ReactCenter from "react-center";
 
+
 class StudentActivities extends Component {
 
 
@@ -56,14 +57,14 @@ class StudentActivities extends Component {
     }
 
     render() {
+        const tabsInstance = (
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    {/*<NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>*/}
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><ReactCenter>Activities</ReactCenter></Link></NavItem>
 
-/*        const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/student/activities">Activities</Link></li>
-                    <li><Link to="/student/request">Request</Link></li>
-
-                </ul>
+                </Nav>
             </div>
         );*/
 
@@ -78,7 +79,6 @@ class StudentActivities extends Component {
                 </Nav>
             </div>
         );
-
         const activities = this.state.activities.map(activity =>
 
             <Col md={12}>
@@ -94,6 +94,7 @@ class StudentActivities extends Component {
             </Col>
         );
 
+
         return (
             <div className="container">
                 <Col md={2}>
@@ -102,26 +103,23 @@ class StudentActivities extends Component {
 
                 <Col md={10}>
 
-                <ol className="breadcrumb">
-                    <li/>
-                    <li>Student</li>
-                    <li className="active">Activities</li>
-                </ol>
 
-                <Col md={7}>
-                    <div>{activities}</div>
-                </Col>
+                    <Col md={9}>
+                        <ol className="breadcrumb">
+                            <li/>
+                            <li className="active">Activities</li>
+                        </ol>
+                        {activities}
+                    </Col>
 
-                <Col md={5}>
-                    <Panel header='Search Activities'>
-                            <Select.Async
-                                instanceId="search" placeholder="Search ..." autoload={false} cache={false}
-                            />
-                            <Checkbox><p>Organization Acronym</p></Checkbox>
-                            <Checkbox><p>Request Title</p></Checkbox>
-                            <Checkbox><p>Request Description</p></Checkbox>
-                    </Panel>
-                </Col>
+                    <Col md={3}>
+                        <Panel header='Activities'>
+                            <ReactCenter><Link to="/student/request"><Button bsSize="medium">New
+                                Request</Button></Link></ReactCenter>
+                        </Panel>
+
+
+                    </Col>
                 </Col>
             </div>
         )

@@ -5,11 +5,12 @@ import TimePicker from 'react-bootstrap-time-picker';
 import {Link} from "react-router-dom";
 import {Modal} from 'react-bootstrap'
 import AlertContainer from 'react-alert';
-import ReactCenter from "react-center"
+import ReactCenter from 'react-center';
+
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Tab, Tow, Nav, NavItem, Row
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Tab, Tow, Nav, Row, NavItem,
 } from 'react-bootstrap';
 
 
@@ -350,15 +351,14 @@ class Request extends Component {
             <option value={option}>{option}</option>
         );
 
-/*        const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Request</Link></li>
-                    <li><Link to="/activities">Activities</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                </ul>
+        const tabsInstance = (
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    {/*<NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>*/}
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+
+                </Nav>
             </div>
         );*/
 

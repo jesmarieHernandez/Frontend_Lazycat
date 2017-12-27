@@ -26,7 +26,7 @@ class Activities extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:3001/api/activities').then(response => {
+        fetch('http://localhost:8000/api/activities').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
@@ -38,27 +38,27 @@ class Activities extends Component {
                 // });
             }
         }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:3001/api/pending').then(response => {
-            if (response.ok) {
-                console.log('/api/pending! :D');
-                response.json().then(results => {
-                    console.log('Total pending activities: ' + results);
-
-                    //console.log(this.state.activities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                console.log('Unable to fetch pending activities')
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+        // fetch('http://localhost:3001/api/pending').then(response => {
+        //     if (response.ok) {
+        //         console.log('/api/pending! :D');
+        //         response.json().then(results => {
+        //             console.log('Total pending activities: ' + results);
+        //
+        //             //console.log(this.state.activities);
+        //             //this.props.router.push(`/activities/${createdRequest._id}`);
+        //         });
+        //     } else {
+        //         console.log('Unable to fetch pending activities')
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     //this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
     }
 
     render() {
@@ -78,12 +78,12 @@ class Activities extends Component {
 
             <Col md={12}>
 
-                <Panel header={activity.requestTitle}>
-                    <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
+                <Panel header={activity.activityName}>
+                    <td><Link to={`/activities/${activity._id}`}>{activity.activityName}</Link></td>
                     <p>Description: {activity.activityDescription}</p>
-                    <p>Organization: {activity.organization.name}</p>
-                    <p>Facility: {activity.facilities.name}</p>
-                    <p>Status: {activity.status}</p>
+                    <p>Organization: {activity.organization.organizationName}</p>
+                    <p>Facility: {activity.facility.space}</p>
+                    <p>Status: {activity.activityStatus_code}</p>
                 </Panel>
 
             </Col>

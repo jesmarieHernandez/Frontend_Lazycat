@@ -38,7 +38,7 @@ class CreateOrganization extends Component {
             counselorTelephoneValue: '',
             counselorFacultyValue: '',
             counselorDepartmentValue: '',
-            counselorOfficeValue: ''
+            counselorOfficeValue: '',
             organizationTypes: [],
             selectedOrganizationType: {}
         }
@@ -48,7 +48,8 @@ class CreateOrganization extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8000/api/organization_types/').then(response => {
+        // fetch('http://localhost:8000/api/organization_types/').then(response => {
+        fetch('http://192.168.99.100/api/organization_types').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Organization Types");
@@ -112,7 +113,8 @@ class CreateOrganization extends Component {
         };
 
         console.log(newOrganization);
-        fetch('http://localhost:8000/api/organizations', {
+        // fetch('http://localhost:8000/api/organizations', {
+        fetch('http://192.168.99.100/api/organizations', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),
@@ -147,8 +149,7 @@ class CreateOrganization extends Component {
         console.log(isNaN(this.state.counselorFacultyValue));
         console.log(isNaN(this.state.counselorDepartmentValue));
 
-        if (isNaN(this.state.orgNameValue) &&
-            isNaN(this.state.orgTypeValue) &&
+        if (isNaN(this.state.orgNameValue) &
             isNaN(this.state.orgInitialsValue) &&
             isNaN(this.state.counselorNameValue) &&
             isNaN(this.state.counselorEmailValue) &&

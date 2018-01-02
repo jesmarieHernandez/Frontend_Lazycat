@@ -351,16 +351,6 @@ class Request extends Component {
             <option value={option}>{option}</option>
         );
 
-        const tabsInstance = (
-            <div style={{backgroundColor: '#F8F8F8'}}>
-                <Nav fluid>
-                    {/*<NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter>Home</ReactCenter></Link></NavItem>*/}
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><ReactCenter>Request</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><ReactCenter>Activities</ReactCenter></Link></NavItem>
-
-                </Nav>
-            </div>
-        );*/
 
         const tabsInstance = (
 

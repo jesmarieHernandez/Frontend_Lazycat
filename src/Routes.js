@@ -33,8 +33,19 @@ import StaffStatistics from "./containers/StaffStatistics";
 
 import NotFound from "./containers/NotFound";
 
-export default ({childProps}) =>
+export default ({childProps}) => {
 
+    console.log('Route Changed');
+    console.log(childProps);
+    let auth2;
+    try {
+         auth2 = window.gapi.auth2.getAuthInstance();
+         console.log(auth2);
+
+    } catch (error) {
+        console.log('Error')
+    }
+    return (
     <Switch>
         {/*<AppliedRoute path="/" exact component={Home} props={childProps}/>*/}
         <AuthenticatedRoute path="/" exact component={Home} props={childProps}/>
@@ -60,7 +71,6 @@ export default ({childProps}) =>
         <StaffRoute path="/staff/activities" exact component={StaffActivities} props={childProps}/>
         <StaffRoute path="/staff/statistics" exact component={StaffStatistics} props={childProps}/>
 
-
         {/*
          */}
         {/*
@@ -70,4 +80,8 @@ export default ({childProps}) =>
         {/*<AuthenticatedRoute path="/notes/:id" exact component={Notes} props={childProps}/>*/}
         {/* Finally, catch all unmatched routes */}
         <Route component={NotFound}/>
-    </Switch>;
+    </Switch>
+    )
+}
+
+

@@ -38,7 +38,7 @@ class CreateOrganization extends Component {
             counselorTelephoneValue: '',
             counselorFacultyValue: '',
             counselorDepartmentValue: '',
-            counselorOfficeValue: ''
+            counselorOfficeValue: '',
             organizationTypes: [],
             selectedOrganizationType: {}
         }
@@ -102,7 +102,7 @@ class CreateOrganization extends Component {
             organizationType_code: form.organizationType.value,
             organizationInitials: form.organizationInitials.value,
             organizationStatus_code: 1,
-            fullName: form.organizationCounselorName.value,
+            counselorName: form.organizationCounselorName.value,
             counselorEmail: form.organizationCounselorEmail.value,
             counselorPhone: form.organizationCounselorTelephone.value,
             counselorFaculty: form.organizationCounselorFaculty.value,

@@ -6,17 +6,16 @@ import AlertContainer from 'react-alert';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem, HelpBlock
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
 import {Modal} from 'react-bootstrap';
 import Icon from 'react-icons-kit';
-import { statsDots } from 'react-icons-kit/icomoon/statsDots';
-import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
-import { home } from 'react-icons-kit/icomoon/home';
-import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
-import { userTie } from 'react-icons-kit/icomoon/userTie';
-
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
+import {userTie} from 'react-icons-kit/icomoon/userTie';
 
 
 const PAGE_SIZE = 10;
@@ -29,6 +28,7 @@ class CreateFacilities extends Component {
         this.state = {
             showModal: false,
             buildingValue: '',
+            spaceValue: ''
         }
 
         // this.state = {
@@ -96,17 +96,8 @@ class CreateFacilities extends Component {
 
     open = (event) => {
         event.preventDefault();
-        console.log(isNaN(this.state.orgNameValue));
-        console.log(isNaN(this.state.orgTypeValue) );
-        console.log(isNaN(this.state.orgInitialsValue));
-        console.log(isNaN(this.state.counselorNameValue));
-        console.log(isNaN(this.state.counselorEmailValue));
-        console.log(!isNaN(this.state.counselorTelephoneValue));
-        console.log(isNaN(this.state.counselorFacultyValue));
-        console.log(isNaN(this.state.counselorDepartmentValue));
 
-        if (isNaN(this.state.building))
-        {
+        if (isNaN(this.state.building)) {
             console.log("In herreeeeeee")
             this.setState({showModal: true});
         }
@@ -122,6 +113,10 @@ class CreateFacilities extends Component {
 
     handleBuildingValue = (e) => {
         this.setState({buildingValue: e.target.value})
+    }
+
+    handleSpaceValue = (e) => {
+        this.setState({spaceValue: e.target.value})
     }
 
     close = () => {
@@ -140,10 +135,14 @@ class CreateFacilities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
-                    <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
+                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
+                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
+                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie}
+                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -166,13 +165,38 @@ class CreateFacilities extends Component {
                         <Form horizontal onSubmit={this.open} name="newFacilities">
                             <FormGroup>
                                 <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Building</Col>
-                                    <FormControl name="building" onChange={this.handleBuildingValue} required/>
+                                    <Col componentClass={ControlLabel}>Edificio</Col>
+                                    {
+                                        (this.state.buildingValue.length > 20) ?
+                                            (<div>
+                                                <FormControl name="building" placeholder="Ex. Luis A. Stefani"
+                                                             onChange={this.handleBuildingValue} required/>
+                                                <HelpBlock>Building name too long</HelpBlock>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="building" placeholder="Ex. Luis A. Stefani"
+                                                             onChange={this.handleBuildingValue} required/>
+                                            </div>)
+                                    }
                                 </Col>
 
                                 <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Space</Col>
-                                    <FormControl name="space" required/>
+                                    <Col componentClass={ControlLabel}>Sal&oacute;n/Espacio</Col>
+                                    {
+                                        (this.state.spaceValue.length > 20) ?
+                                            (<div>
+                                                <FormControl name="space" placeholder="Ex. S-113"
+                                                             onChange={this.handleSpaceValue} required/>
+                                                <HelpBlock>Space name too long</HelpBlock>
+
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="space" placeholder="Ex. S-113"
+                                                             onChange={this.handleSpaceValue} required/>
+                                            </div>)
+                                    }
                                 </Col>
                             </FormGroup>
 
@@ -182,8 +206,8 @@ class CreateFacilities extends Component {
                                     <Col md={6}>
                                         <AlertContainer ref={a => this.msg = a}/>
 
-{/*                                        <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
-                                            Submit </Button>*/}
+                                        {/*                                        <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
+                                         Submit </Button>*/}
 
                                         <Button bsStyle="primary" type="submit">
                                             Submit </Button>

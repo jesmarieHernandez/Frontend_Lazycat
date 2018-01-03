@@ -96,8 +96,7 @@ class CreateOrganization extends Component {
 
         console.log("Adentro de submit");
 
-        if(this.state.orgTypePicked === '')
-        {
+        if (this.state.orgTypePicked === '') {
             this.setState({orgTypePicked: '1'});
         }
 
@@ -171,8 +170,7 @@ class CreateOrganization extends Component {
         }
 
         else {
-            if(this.state.orgTypePicked === '')
-            {
+            if (this.state.orgTypePicked === '') {
                 this.setState({orgTypePicked: '1'});
             }
             this.showErrorAlert("Form filled incorrectly.")
@@ -222,7 +220,11 @@ class CreateOrganization extends Component {
 
     showSuccessAlert = () => {
         console.log("Success Alert");
-        this.msg.success('Success! New facility created.', {time: 10000000, type: 'success', position: 'bottom center'});
+        this.msg.success('Success! New facility created.', {
+            time: 10000000,
+            type: 'success',
+            position: 'bottom center'
+        });
         console.log("Success Alert 2");
     }
 
@@ -253,6 +255,20 @@ class CreateOrganization extends Component {
             <option value={option.code}>{option.description}</option>
         );
 
+        var errorFormStyle = {
+            borderColor: '#B74442',
+            boxShadow: "0px 0px 8px #B74442"
+        };
+
+        var errorHelpBlockStyle = {
+            color: '#B74442'
+        };
+
+        var successFormStyle = {
+            borderColor: '#3C765B',
+            boxShadow: "0px 0px 8px #3C765B"
+        };
+
         return (
             <div className="container">
                 <Col md={2}>
@@ -278,45 +294,84 @@ class CreateOrganization extends Component {
                                         (this.state.orgNameValue.length >= 100) ?
                                             (<div>
                                                 <FormControl name="organizationName" onChange={this.handleOrgNameValue}
-                                                             placeholder="Ex. Association for Computing Machinery" style={{backgroundColor: '#F8F8F8'}}
-                                                             required/>
-                                                <HelpBlock>Name too long</HelpBlock>
-                                            </div>)
-                                            :
-                                            (<div>
-                                                <FormControl name="organizationName" onChange={this.handleOrgNameValue}
                                                              placeholder="Ex. Association for Computing Machinery"
+                                                             style={errorFormStyle}
                                                              required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>El nombre es demasiado
+                                                    largo</HelpBlock>
                                             </div>)
+                                                :
+                                            (this.state.orgNameValue.length <= 5 && this.state.orgNameValue.length !=0 ) ?
+                                                (<div>
+                                                    <FormControl name="organizationName" onChange={this.handleOrgNameValue}
+                                                                 placeholder="Ex. Association for Computing Machinery"
+                                                                 style={errorFormStyle}
+                                                                 required/>
+                                                    <HelpBlock style={errorHelpBlockStyle}>El nombre es muy pequeno</HelpBlock>
+                                                </div>)
+                                            :
+                                            (/^[0-9]+$/.test(this.state.orgNameValue) === true) ?
+                                                (<div>
+                                                    <FormControl name="organizationName"
+                                                                 onChange={this.handleOrgNameValue}
+                                                                 placeholder="Ex. Association for Computing Machinery"
+                                                                 style={errorFormStyle}
+                                                                 required/>
+                                                    <HelpBlock style={errorHelpBlockStyle}>El nombre de la organizacion
+                                                        no puede ser un numero</HelpBlock>
+
+                                                </div>)
+                                                :
+                                                (/^[0-9]+$/.test(this.state.orgNameValue) === false && this.state.orgNameValue != 0) ?
+                                                    (<div>
+                                                        <FormControl name="organizationName"
+                                                                     onChange={this.handleOrgNameValue}
+                                                                     placeholder="Ex. Association for Computing Machinery"
+                                                                     style={successFormStyle}
+                                                                     required/>
+                                                    </div>)
+                                                    :
+                                                    (<div>
+                                                        <FormControl name="organizationName"
+                                                                     onChange={this.handleOrgNameValue}
+                                                                     placeholder="Ex. Association for Computing Machinery"
+                                                                     required/>
+                                                    </div>)
                                     }
                                 </Col>
-
-                                {/*<Col sm={4}>*/}
-                                {/*<Col componentClass={ControlLabel}>Organization Type</Col>*/}
-                                {/*<FormControl name="organizationType"/>*/}
-                                {/*</Col>*/}
 
                                 <Col md={4}>
                                     <Col componentClass={ControlLabel}>Tipo</Col>
                                     {
                                         (this.state.orgTypePicked != '1') ?
-                                            (<div>
-                                                <FormControl componentClass="select" name="organizationType"
-                                                             onChange={this.onOrganizationTypeSelected}
-                                                             placeholder="select" required>
-                                                    <option>select</option>
-                                                    {organizationTypes}
-                                                </FormControl>
-                                            </div>)
+                                            (this.state.orgTypePicked === '2') ?
+                                                (<div>
+                                                    <FormControl componentClass="select" name="organizationType"
+                                                                 onChange={this.onOrganizationTypeSelected}
+                                                                 placeholder="select" style={successFormStyle} required>
+                                                        <option>select</option>
+                                                        {organizationTypes}
+                                                    </FormControl>
+                                                </div>)
+                                                :
+                                                (<div>
+                                                    <FormControl componentClass="select" name="organizationType"
+                                                                 onChange={this.onOrganizationTypeSelected}
+                                                                 placeholder="select" required>
+                                                        <option>select</option>
+                                                        {organizationTypes}
+                                                    </FormControl>
+                                                </div>)
                                             :
                                             (<div>
                                                 <FormControl componentClass="select" name="organizationType"
                                                              onChange={this.onOrganizationTypeSelected}
-                                                             placeholder="select" required>
+                                                             placeholder="select" style={errorFormStyle} required>
                                                     <option>select</option>
                                                     {organizationTypes}
                                                 </FormControl>
-                                                <HelpBlock>Pick a type</HelpBlock>
+                                                <HelpBlock style={errorHelpBlockStyle}>Escoja el tipo de la
+                                                    organización</HelpBlock>
                                             </div>)
                                     }
 
@@ -328,16 +383,48 @@ class CreateOrganization extends Component {
                                         (this.state.orgInitialsValue.length > 20) ?
                                             (<div>
                                                 <FormControl name="organizationInitials" placeholder="Ex. ACM"
-                                                             onChange={this.handleOrgInitialsValue} style={{borderColor: '#ff0000', }}
+                                                             onChange={this.handleOrgInitialsValue}
+                                                             style={errorFormStyle}
                                                              required/>
-                                                <HelpBlock>Initials too long</HelpBlock>
+                                                <HelpBlock style={errorHelpBlockStyle}>El numero de siglas es muy
+                                                    grande</HelpBlock>
                                             </div>)
                                             :
-                                            (<div>
-                                                <FormControl name="organizationInitials" placeholder="Ex. ACM"
-                                                             onChange={this.handleOrgInitialsValue}
-                                                             required/>
-                                            </div>)
+                                            (this.state.orgInitialsValue.length === 1) ?
+                                                (<div>
+                                                    <FormControl name="organizationInitials" placeholder="Ex. ACM"
+                                                                 onChange={this.handleOrgInitialsValue}
+                                                                 style={errorFormStyle}
+                                                                 required/>
+                                                    <HelpBlock style={errorHelpBlockStyle}>El numero de siglas es muy
+                                                        pequeno</HelpBlock>
+                                                </div>)
+                                                :
+                                                (/^[0-9]+$/.test(this.state.orgInitialsValue) === true) ?
+                                                    (<div>
+                                                        <FormControl name="organizationInitials" placeholder="Ex. ACM"
+                                                                     onChange={this.handleOrgInitialsValue}
+                                                                     style={errorFormStyle}
+                                                                     required/>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Las siglas
+                                                            no pueden ser un numero</HelpBlock>
+                                                    </div>)
+                                                    :
+                                                    (/^[0-9]+$/.test(this.state.orgInitialsValue) === false && this.state.orgInitialsValue.length > 2) ?
+                                                        (<div>
+                                                            <FormControl name="organizationInitials"
+                                                                         placeholder="Ex. ACM"
+                                                                         onChange={this.handleOrgInitialsValue}
+                                                                         style={successFormStyle}
+                                                                         required/>
+                                                        </div>)
+                                                        :
+                                                        (<div>
+                                                            <FormControl name="organizationInitials"
+                                                                         placeholder="Ex. ACM"
+                                                                         onChange={this.handleOrgInitialsValue}
+                                                                         required/>
+                                                        </div>)
 
                                     }
                                 </Col>
@@ -347,59 +434,103 @@ class CreateOrganization extends Component {
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Nombre del Consejero</Col>
                                     {
-                                        (this.state.counselorNameValue.length >= 50) ?
+                                        (/^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === false && this.state.counselorNameValue.length != 0) ?
                                             (<div>
                                                 <FormControl name="organizationCounselorName"
                                                              placeholder="Ex. Raymond Lopez"
-                                                             onChange={this.handleCounselorNameValue} required/>
-                                                <HelpBlock>Name too long</HelpBlock>
+                                                             onChange={this.handleCounselorNameValue} style={errorFormStyle} required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre con los dos
+                                                    apellidos</HelpBlock>
                                             </div>)
                                             :
-                                            (<div>
-                                                <FormControl name="organizationCounselorName"
-                                                             placeholder="Ex. Raymond Lopez"
-                                                             onChange={this.handleCounselorNameValue} required/>
-                                            </div>)
+                                            (this.state.counselorNameValue.length < 50 && /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === true) ?
+                                                (<div>
+                                                    <FormControl name="organizationCounselorName"
+                                                                 placeholder="Ex. Raymond Lopez"
+                                                                 onChange={this.handleCounselorNameValue} style={successFormStyle} required/>
+                                                </div>)
+                                                :
+                                                (
+                                                    (this.state.counselorNameValue.length > 50) ?
+                                                        (<div>
+                                                            <FormControl name="organizationCounselorName"
+                                                                         placeholder="Ex. Raymond Lopez"
+                                                                         onChange={this.handleCounselorNameValue}
+                                                                         style={{
+                                                                             borderColor: '#B74442',
+                                                                             boxShadow: "0px 0px 8px #B74442"
+                                                                         }}
+                                                                         required/>
+                                                            <HelpBlock style={{color: '#B74442'}}>Nombre muy
+                                                                largo</HelpBlock>
+
+                                                        </div>)
+                                                        :
+                                                        (<div>
+                                                            <FormControl name="organizationCounselorName"
+                                                                         placeholder="Ex. Raymond Lopez"
+                                                                         onChange={this.handleCounselorNameValue}
+                                                                         required/>
+                                                        </div>)
+                                                )
                                     }
                                 </Col>
 
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Correo Electrónico</Col>
                                     {
-                                        (this.state.counselorEmailValue.indexOf('@upr.edu') === -1 && this.state.counselorEmailValue.length != 0) ?
+                                        (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.counselorEmailValue) === false && this.state.counselorEmailValue.length != 0) ?
                                             (<div>
                                                 <FormControl name="organizationCounselorEmail"
                                                              placeholder="Ex. raymond.lopez@upr.edu"
-                                                             onChange={this.handleCounselorEmailValue} required/>
-                                                <HelpBlock>Email must be @upr.edu</HelpBlock>
+                                                             onChange={this.handleCounselorEmailValue} style={errorFormStyle} required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                                    @upr.edu</HelpBlock>
                                             </div>)
                                             :
-                                            (<div>
-                                                <FormControl name="organizationCounselorEmail"
-                                                             placeholder="Ex. raymond.lopez@upr.edu"
-                                                             onChange={this.handleCounselorEmailValue} required/>
-                                            </div>)
+                                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.counselorEmailValue) === true) ?
+                                                (<div>
+                                                    <FormControl name="organizationCounselorEmail"
+                                                                 placeholder="Ex. raymond.lopez@upr.edu"
+                                                                 onChange={this.handleCounselorEmailValue} style={successFormStyle} required/>
+                                                </div>)
+                                                :
+                                                (<div>
+                                                    <FormControl name="organizationCounselorEmail"
+                                                                 placeholder="Ex. raymond.lopez@upr.edu"
+                                                                 onChange={this.handleCounselorEmailValue} required/>
+                                                </div>)
                                     }
                                 </Col>
 
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Extensión de Teléfono</Col>
                                     {
-                                        (this.state.counselorTelephoneValue.length < 4 && this.state.counselorTelephoneValue.length != 0) ?
+                                        (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.counselorTelephoneValue) === false && this.state.counselorTelephoneValue.length != 0) ?
                                             (<div>
                                                 <FormControl name="organizationCounselorTelephone" type="text"
                                                              placeholder="Ex. 7266"
                                                              onChange={this.handleCounselorTelephoneValue}
+                                                             style={errorFormStyle}
                                                              required/>
-                                                <HelpBlock>Must be 4 digits (extension) or more.</HelpBlock>
+                                                <HelpBlock style={errorHelpBlockStyle}>Solo extension (4 digitos) o
+                                                    numero completo (10 digitos)</HelpBlock>
                                             </div>)
                                             :
-                                            (<div>
-                                                <FormControl name="organizationCounselorTelephone" type="text"
-                                                             placeholder="Ex. 7266"
-                                                             onChange={this.handleCounselorTelephoneValue}
-                                                             required/>
-                                            </div>)
+                                            (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.counselorTelephoneValue) === true) ?
+                                                (<div>
+                                                    <FormControl name="organizationCounselorTelephone" type="text"
+                                                                 placeholder="Ex. 7266"
+                                                                 onChange={this.handleCounselorTelephoneValue} style={successFormStyle}
+                                                                 required/>
+                                                </div>)
+                                                :
+                                                (<div>
+                                                    <FormControl name="organizationCounselorTelephone" type="text"
+                                                                 placeholder="Ex. 7266"
+                                                                 onChange={this.handleCounselorTelephoneValue}
+                                                                 required/>
+                                                </div>)
                                     }
                                 </Col>
                             </FormGroup>
@@ -412,8 +543,9 @@ class CreateOrganization extends Component {
                                             (<div>
                                                 <FormControl name="organizationCounselorFaculty"
                                                              placeholder="Ex. Ingenieria"
-                                                             onChange={this.handleCounselorFacultyValue} required/>
-                                                <HelpBlock>Faculty name too long</HelpBlock>
+                                                             onChange={this.handleCounselorFacultyValue} style={errorFormStyle} required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>Nombre de la facultad muy
+                                                    largo</HelpBlock>
                                             </div>)
                                             :
                                             (<div>
@@ -430,15 +562,16 @@ class CreateOrganization extends Component {
                                         (this.state.counselorDepartmentValue.length >= 50) ?
                                             (<div>
                                                 <FormControl name="organizationCounselorDepartment"
-                                                             placeholder="Ingenieria de Computadoras"
-                                                             onChange={this.handleCounselorDepartmentValue} required/>
-                                                <HelpBlock>Department name too long</HelpBlock>
+                                                             placeholder="Ex. Ingenieria de Computadoras"
+                                                             onChange={this.handleCounselorDepartmentValue} style={errorFormStyle} required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>Nombre del departamento muy
+                                                    largo</HelpBlock>
 
                                             </div>)
                                             :
                                             (<div>
                                                 <FormControl name="organizationCounselorDepartment"
-                                                             placeholder="Ingenieria de Computadoras"
+                                                             placeholder="Ex. Ingenieria de Computadoras"
                                                              onChange={this.handleCounselorDepartmentValue} required/>
                                             </div>)
                                     }
@@ -451,8 +584,9 @@ class CreateOrganization extends Component {
                                             (<div>
                                                 <FormControl name="organizationCounselorOfficeNumber"
                                                              placeholder="Ex. S-113"
-                                                             onChange={this.handleCounselorOfficeNumberValue} required/>
-                                                <HelpBlock>Office number too long</HelpBlock>
+                                                             onChange={this.handleCounselorOfficeNumberValue} style={errorFormStyle} required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>Numero de oficina muy
+                                                    largo</HelpBlock>
 
                                             </div>)
                                             :

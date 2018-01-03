@@ -140,7 +140,7 @@ class CreateFacilities extends Component {
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
                                                                                                       style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estadi</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -161,7 +161,7 @@ class CreateFacilities extends Component {
                         <li className="active">Create New Facilities</li>
                     </ol>
 
-                    <Panel header="Create New Facilities">
+                    <Panel header="Crear una Nueva Facilidad">
                         <Form horizontal onSubmit={this.open} name="newFacilities">
                             <FormGroup>
                                 <Col sm={4}>
@@ -170,8 +170,8 @@ class CreateFacilities extends Component {
                                         (this.state.buildingValue.length > 20) ?
                                             (<div>
                                                 <FormControl name="building" placeholder="Ex. Luis A. Stefani"
-                                                             onChange={this.handleBuildingValue} required/>
-                                                <HelpBlock>Building name too long</HelpBlock>
+                                                             onChange={this.handleBuildingValue} style={{borderColor: '#B74442', boxShadow: "0px 0px 8px #B74442"}} required/>
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre del edifico muy largo</HelpBlock>
                                             </div>)
                                             :
                                             (<div>
@@ -187,8 +187,8 @@ class CreateFacilities extends Component {
                                         (this.state.spaceValue.length > 20) ?
                                             (<div>
                                                 <FormControl name="space" placeholder="Ex. S-113"
-                                                             onChange={this.handleSpaceValue} required/>
-                                                <HelpBlock>Space name too long</HelpBlock>
+                                                             onChange={this.handleSpaceValue} style={{borderColor: '#B74442', boxShadow: "0px 0px 8px #B74442"}} required/>
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre del sal&oacute;n/espacio muy largo</HelpBlock>
 
                                             </div>)
                                             :

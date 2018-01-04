@@ -10,6 +10,8 @@ import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
 import { home } from 'react-icons-kit/icomoon/home';
 import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
 import { userTie } from 'react-icons-kit/icomoon/userTie';
+import DatePicker from 'react-bootstrap-date-picker';
+import TimePicker from 'react-bootstrap-time-picker';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
@@ -25,11 +27,12 @@ class ActivityDetail extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
+            activity: [],
             typeOptions: ['Social', 'Religious', 'Sale', 'Artistic', 'Academic', 'Educational', 'Professional', 'Civic', 'Sports', 'Political'],
             selectedType: {},
             commentary: '',
 
-            activity: {
+/*            activity: {
                 _id: 0,
                 requestTitle: '',
                 activityDescription: '',
@@ -61,8 +64,27 @@ class ActivityDetail extends Component {
                 facilityManagerDecision: '',
                 counselorDecision: '',
                 dscaDecision: ''
+            }*/
+            activity: {
+                id:  '',
+                activityName: '',
+                activityDescription: '',
+                attendantsNumber: '',
+                activityDate: '',
+                activityStart: '',
+                activityEnd: '',
+                activityStatus_code: '',
+                hasFood: '',
+                guestName: '',
+                counselorStatus_code: '',
+                managerStatus_code: '',
+                activityType_code: '',
+                student: {
+                    fullName: ''
+                }
             }
         }
+
         this.onApproval = this.onApproval.bind(this);
         this.onDenied = this.onDenied.bind(this);
         this.onTypeSelected = this.onTypeSelected.bind(this);
@@ -72,11 +94,13 @@ class ActivityDetail extends Component {
     componentDidMount() {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
-        fetch(`http://localhost:3001/api/activities/${id}`).then(response => {
+        console.log("The id: " + id);
+        // fetch(`http://localhost:3001/api/activities/${id}`).then(response => {
+        fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
-                this.setState({activity: data});
-                console.log(this.state.activity._id);
+                this.setState({activity: data[0]});
+                console.log(this.state.activity.id);
             }).catch(err => {
                 console.log(err)
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
@@ -238,8 +262,7 @@ class ActivityDetail extends Component {
             </div>
         );
 
-        console.log(this.state.activity.status);
-        return (
+        /*        return (
             <div className="container">
                 <Col md={2}>
                     {tabsInstance}
@@ -254,7 +277,7 @@ class ActivityDetail extends Component {
                     </ol>
 
                     <Panel  header={this.state.activity.requestTitle}>
-                        {/*<td><Link to={`/activities/${this.state.activity._id}`}>{this.state.activity.requestTitle}</Link></td>*/}
+                        {/!*<td><Link to={`/activities/${this.state.activity._id}`}>{this.state.activity.requestTitle}</Link></td>*!/}
                         <p><b>Organization Name:</b> {this.state.activity.organization.name}</p>
                         <p><b>Organization Initials:</b> {this.state.activity.organizationInitials}</p>
                         <br/>
@@ -327,7 +350,228 @@ class ActivityDetail extends Component {
                     </Panel>
                 </Col>
             </div>
-        )
+        )*/
+
+        return (
+            <div className="container">
+
+                <Col md={2}>
+                    {tabsInstance}
+                </Col>
+
+                <Col md={10}>
+                    <ol className="breadcrumb">
+                        <li/>
+                        <li ><Link to={`/activities/`}>Activities</Link></li>
+                        <li className="active">Activity Details</li>
+                    </ol>
+
+                    <Row>
+                        <Col md={12}>
+                            <Panel header="Student Information">
+                                <FormGroup>
+                                    <Col sm={4}>
+                                        <Col componentClass={ControlLabel}>Full Name</Col>
+                                        <FormControl name="requesterName" disabled/>
+                                    </Col>
+
+                                    <Col sm={4}>
+                                        <Col componentClass={ControlLabel}>Identification Number</Col>
+                                        <FormControl name="studentIdentificationNumber" disabled/>
+                                    </Col>
+
+                                    <Col sm={3}>
+                                        <Col componentClass={ControlLabel}>Role</Col>
+                                        <FormControl name="studentRole" disabled/>
+                                    </Col>
+                                </FormGroup>
+                                <br/>
+                                <br/>
+
+                                <FormGroup>
+                                    <Col sm={10}>
+                                        <Col componentClass={ControlLabel}>Address</Col>
+                                        <FormControl name="studentAddress1" disabled/>
+                                    </Col>
+
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col sm={3}>
+                                        <Col componentClass={ControlLabel}>City</Col>
+                                        <FormControl name="studentAddressCity" disabled/>
+                                    </Col>
+
+                                    <Col sm={3}>
+                                        <Col componentClass={ControlLabel}>Country</Col>
+                                        <FormControl name="studentAddressCountry" disabled/>
+                                    </Col>
+
+                                    <Col sm={3}>
+                                        <Col componentClass={ControlLabel}>Zip Code</Col>
+                                        <FormControl name="studentAddressZipCode" disabled/>
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col sm={4}>
+                                        <Col componentClass={ControlLabel}>Telephone</Col>
+                                        <FormControl name="studentTelephone" disabled/>
+                                    </Col>
+                                </FormGroup>
+                            </Panel>
+                            <br/>
+                            <br/>
+
+                            <Panel header="Activity Information">
+                                <FormGroup>
+                                    <Col sm={3}>
+                                        <Col componentClass={ControlLabel}>Activity Title</Col>
+                                            <FormControl name="requestTitle" disabled/>
+                                    </Col>
+
+                                    <Col sm={9}>
+                                         <Col componentClass={ControlLabel}>Description</Col>
+                                            <FormControl name="activityDescription" disabled/>
+                                    </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col sm={3}>
+                                        <Col componentClass={ControlLabel}>Guests</Col>
+                                            <FormControl name="activityGuest" disabled/>
+                                    </Col>
+
+                                    <Col sm={3}>
+                                        <Col componentClass={ControlLabel}>Attendants</Col>
+                                            <FormControl name="activityAssistant" disabled/>
+                                    </Col>
+
+                                    <Col md={3}>
+                                        <Col componentClass={ControlLabel}>Facility Name</Col>
+                                            <FormControl name="selectFacilities" disabled/>
+                                    </Col>
+
+                                    <Col md={3}>
+                                        <Col componentClass={ControlLabel}>Building</Col>
+                                            <FormControl name="facilityBuilding" disabled/>
+                                        </Col>
+                                </FormGroup>
+
+                                <FormGroup>
+                                    <Col md={4}>
+                                        <Col componentClass={ControlLabel}>Date</Col>
+                                            <DatePicker id="example-datepicker" name="selectedDate" disabled/>
+                                        </Col>
+
+                                    <Col md={4}>
+                            <Col componentClass={ControlLabel}>Start Time</Col>
+                            <TimePicker name="startTime" disabled/>
+                        </Col>
+
+                        <Col md={4}>
+                            <Col componentClass={ControlLabel}>End Time</Col>
+                            <TimePicker name="endTime" disabled/>
+                        </Col>
+                    </FormGroup>
+                </Panel>
+                <br/>
+                <br/>
+
+                <Panel header="Organization Information">
+                    <FormGroup>
+                        <Col md={4}>
+                            <Col componentClass={ControlLabel}>Organization</Col>
+                            <FormControl name="selectOrganization" disabled/>
+                        </Col>
+
+                        <Col sm={2}>
+                            <Col componentClass={ControlLabel}>Initials</Col>
+                            <FormControl name="organizationInitials" disabled/>
+                        </Col>
+                    </FormGroup>
+                </Panel>
+                <br/>
+                <br/>
+
+                <Panel header="Counselor Information">
+                    <FormGroup>
+                        <Col md={4}>
+                            <Col componentClass={ControlLabel}>Name</Col>
+                            <FormControl name="counselorName" disabled/>
+                        </Col>
+
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Telephone</Col>
+                            <FormControl name="counselorTelephone" disabled/>
+                        </Col>
+
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Email</Col>
+                            <FormControl name="counselorEmail" disabled/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>Faculty</Col>
+                            <FormControl name="counselorFaculty" disabled/>
+                        </Col>
+
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>Department</Col>
+                            <FormControl name="counselorDepartment" disabled/>
+                        </Col>
+
+                        <Col sm={2}>
+                            <Col componentClass={ControlLabel}>Office Number</Col>
+                            <FormControl name="counselorOfficeNumber" disabled/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col md={4}>
+                            <Col componentClass={ControlLabel}>Status</Col>
+                            <FormControl name="selectStatus" disabled/>
+                        </Col>
+                    </FormGroup>
+
+                </Panel>
+
+                <Row>
+                    <Col sm={3}>
+                        <Col componentClass={ControlLabel}>Category: </Col>
+                        <FormControl componentClass="select" name="selectType"
+                                     onChange={this.onTypeSelected}
+                                     placeholder="select">
+                            <option>select</option>
+                            {typeOptions}
+
+                        </FormControl>
+                    </Col>
+                </Row>
+                <br />
+
+                <Row>
+                    <Col sm={3}>
+                        <Col componentClass={ControlLabel}>Commentary: </Col>
+                        <FormControl componentClass="textarea" name="commentary"/>
+                    </Col>
+                </Row>
+                <br />
+
+                <Row>
+                    <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Back</Button></Link></Col>
+                    <Col md="1"><Button className="btn-success" onClick={this.onApproval}>Approve</Button></Col>
+                    <Col md="1"><Button className="btn-danger"  onClick={this.onDenied}>Decline</Button></Col>
+                </Row>
+
+            </Col>
+    </Row>
+    </Col>
+    </div>
+    )
+
     }
 }
 

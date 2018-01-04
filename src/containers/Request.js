@@ -494,6 +494,16 @@ class Request extends Component {
                                                             long</HelpBlock>
                                                     </div>)
                                                     :
+                                                    (/^[^0-9]+$/.test(this.state.titleValue) === true) ?
+                                                        (<div>
+                                                            <FormControl name="requestTitle" value={this.state.titleValue}
+                                                                         validationState='error'
+                                                                         placeholder="Ex. Venta de Mantecados" type="text"
+                                                                         style={errorFormStyle}
+                                                                         onChange={this.handleChangeTitle} required/>
+                                                            <HelpBlock stule={errorHelpBlockStyle}>Title can't be just numbers</HelpBlock>
+                                                        </div>)
+                                                        :
                                                     (this.state.titleValue.length <= 20 && this.state.titleValue.length != 0) ?
                                                         (<div>
                                                             <FormControl name="requestTitle"
@@ -698,7 +708,7 @@ class Request extends Component {
                                                             <TimePicker name="startTime" start="8:00" end="24:00"
                                                                         step={30}
                                                                         onChange={this.onStartTimeSelected}
-                                                                        value={this.state.Startime}
+                                                                        value={this.state.startTime}
                                                                         style={errorFormStyle}
                                                                         required/>
                                                             <HelpBlock style={errorHelpBlockStyle}>Start time should be
@@ -747,8 +757,7 @@ class Request extends Component {
                                                                         style={errorFormStyle}
                                                                         required/>
                                                             <HelpBlock style={errorHelpBlockStyle}>End time should be
-                                                                later than start tine
-                                                                time</HelpBlock>
+                                                                later than start time</HelpBlock>
                                                         </div>)
                                                         :
                                                         (this.state.startTime < this.state.endTime && this.state.endTimePicked === '2') ?

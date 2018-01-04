@@ -27,11 +27,11 @@ class Request extends Component {
         super(props, context);
 
         let value = new Date().toISOString();
-        let valueDate = false;
-        let valueStartTime = false;
-        let valueEndTime = false;
-        let valueFacility = false;
-        let valueOrganization = false;
+        let valueDate = '';
+        let valueStartTime = '';
+        let valueEndTime = '';
+        let valueFacility = '';
+        let valueOrganization = '';
         /*
          let valueForm = false;
          */
@@ -201,7 +201,7 @@ class Request extends Component {
     }
 
     onOrganizationSelected(event) {
-        this.setState({organizationPicked: true});
+        this.setState({organizationPicked: '2'});
         event.preventDefault();
         console.log('Change happened');
         console.log(event.target.value);
@@ -216,7 +216,7 @@ class Request extends Component {
     }
 
     onFacilitiesSelected(event) {
-        this.setState({facilityPicked: true});
+        this.setState({facilityPicked: '2'});
         event.preventDefault();
         console.log('Change happened');
         console.log(event.target.value);
@@ -239,7 +239,8 @@ class Request extends Component {
     }
 
     onStartTimeSelected(event) {
-        this.setState({startTimePicked: true});
+        console.log("Start time: " + event);
+        this.setState({startTimePicked: '2'});
         var date = new Date(null);
         date.setSeconds(event); // Set event (in seconds) on the newly created date
         var res = date.getTimezoneOffset() / 60;
@@ -252,8 +253,8 @@ class Request extends Component {
     }
 
     onEndTimeSelected(event) {
-        this.setState({endTimePicked: true});
-
+        console.log("End time: " + event);
+        this.setState({endTimePicked: '2'});
         var date = new Date(null);
         date.setSeconds(event); // specify value for SECONDS here
         var res = date.getTimezoneOffset() / 60; //Gives me the hours to offset the time
@@ -266,7 +267,7 @@ class Request extends Component {
 
     onDateSelected(event) {
         console.log("DAAAAAATE: " + event);
-        this.setState({datePicked: true});
+        this.setState({datePicked: '2'});
         console.log("Type Of: " + typeof(event));
         var editedDate = event.substr(0, 10);
         console.log("editedDate: " + editedDate);
@@ -294,11 +295,32 @@ class Request extends Component {
             this.state.descriptionValue.length > 0 &&
             (this.state.guestValue.length > 0 && isNaN(this.state.guestValue)) &&
             (this.state.attendanceValue > 1) &&
-            this.state.datePicked === true &&
-            this.state.startTimePicked === true &&
-            this.state.endTimePicked === true &&
-            this.state.facilityPicked === true) {
+            this.state.datePicked === "2" &&
+            this.state.startTimePicked === "2" &&
+            this.state.endTimePicked === "2" &&
+            this.state.facilityPicked === "2" &&
+            this.state.organizationPicked === "2") {
             this.setState({showModal: true});
+        }
+
+        if (this.state.organizationPicked === '') {
+            this.setState({organizationPicked: '1'});
+        }
+
+        if (this.state.facilityPicked === '') {
+            this.setState({facilityPicked: '1'});
+        }
+
+        if (this.state.startTimePicked === '') {
+            this.setState({startTimePicked: '1'});
+        }
+
+        if (this.state.endTimePicked === '') {
+            this.setState({endTimePicked: '1'});
+        }
+
+        if (this.state.datePicked === '') {
+            this.setState({datePicked: '1'});
         }
 
         else {
@@ -366,6 +388,20 @@ class Request extends Component {
                 </Nav>
             </div>
         );
+
+        var errorFormStyle = {
+            borderColor: '#B74442',
+            boxShadow: "0px 0px 8px #B74442"
+        };
+
+        var errorHelpBlockStyle = {
+            color: '#B74442'
+        };
+
+        var successFormStyle = {
+            borderColor: '#3C765B',
+            boxShadow: "0px 0px 8px #3C765B"
+        };
 
         return (
             <div className="container">
@@ -447,20 +483,44 @@ class Request extends Component {
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Title</Col>
                                             {
-                                                (this.state.titleValue.length > 10) ?
+                                                (this.state.titleValue.length > 20) ?
                                                     (<div>
                                                         <FormControl name="requestTitle" value={this.state.titleValue}
                                                                      validationState='error'
                                                                      placeholder="Ex. Venta de Mantecados" type="text"
+                                                                     style={errorFormStyle}
                                                                      onChange={this.handleChangeTitle} required/>
-                                                        <HelpBlock>Title too long</HelpBlock>
+                                                        <HelpBlock stule={errorHelpBlockStyle}>Title too
+                                                            long</HelpBlock>
                                                     </div>)
                                                     :
-                                                    (<div>
-                                                        <FormControl name="requestTitle" value={this.state.titleValue}
-                                                                     placeholder="Ex. Venta de Mantecados" type="text"
-                                                                     onChange={this.handleChangeTitle} required/>
-                                                    </div>)
+                                                    (/^[^0-9]+$/.test(this.state.titleValue) === true) ?
+                                                        (<div>
+                                                            <FormControl name="requestTitle" value={this.state.titleValue}
+                                                                         validationState='error'
+                                                                         placeholder="Ex. Venta de Mantecados" type="text"
+                                                                         style={errorFormStyle}
+                                                                         onChange={this.handleChangeTitle} required/>
+                                                            <HelpBlock stule={errorHelpBlockStyle}>Title can't be just numbers</HelpBlock>
+                                                        </div>)
+                                                        :
+                                                    (this.state.titleValue.length <= 20 && this.state.titleValue.length != 0) ?
+                                                        (<div>
+                                                            <FormControl name="requestTitle"
+                                                                         value={this.state.titleValue}
+                                                                         validationState='error'
+                                                                         placeholder="Ex. Venta de Mantecados"
+                                                                         type="text" style={successFormStyle}
+                                                                         onChange={this.handleChangeTitle} required/>
+                                                        </div>)
+                                                        :
+                                                        (<div>
+                                                            <FormControl name="requestTitle"
+                                                                         value={this.state.titleValue}
+                                                                         placeholder="Ex. Venta de Mantecados"
+                                                                         type="text"
+                                                                         onChange={this.handleChangeTitle} required/>
+                                                        </div>)
 
                                             }
                                         </Col>
@@ -468,22 +528,36 @@ class Request extends Component {
                                         <Col sm={9}>
                                             <Col componentClass={ControlLabel}>Description</Col>
                                             {
-                                                (this.state.descriptionValue.length > 50) ?
+                                                (this.state.descriptionValue.length > 100) ?
 
                                                     (<div>
                                                         <FormControl name="activityDescription"
                                                                      value={this.state.activityDescription}
                                                                      placeholder="Ex. Recaudacion de fondos" type="text"
+                                                                     style={errorFormStyle}
                                                                      onChange={this.handleChangeDescription} required/>
-                                                        <HelpBlock>Description too long</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Description too
+                                                            long</HelpBlock>
                                                     </div>)
                                                     :
-                                                    (<div>
-                                                        <FormControl name="activityDescription"
-                                                                     value={this.state.activityDescription}
-                                                                     placeholder="Ex. Recaudacion de fondos" type="text"
-                                                                     onChange={this.handleChangeDescription} required/>
-                                                    </div>)
+                                                    (this.state.descriptionValue.length <= 100 && this.state.descriptionValue.length != 0) ?
+                                                        (<div>
+                                                            <FormControl name="activityDescription"
+                                                                         value={this.state.activityDescription}
+                                                                         placeholder="Ex. Recaudacion de fondos"
+                                                                         type="text" style={successFormStyle}
+                                                                         onChange={this.handleChangeDescription}
+                                                                         required/>
+                                                        </div>)
+                                                        :
+                                                        (<div>
+                                                            <FormControl name="activityDescription"
+                                                                         value={this.state.activityDescription}
+                                                                         placeholder="Ex. Recaudacion de fondos"
+                                                                         type="text"
+                                                                         onChange={this.handleChangeDescription}
+                                                                         required/>
+                                                        </div>)
                                             }
                                         </Col>
 
@@ -493,22 +567,33 @@ class Request extends Component {
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Guests</Col>
                                             {
-                                                (this.state.guestValue.length > 50 && !isNaN(this.state.guestValue)) ?
+                                                (this.state.guestValue.length > 50) ?
 
                                                     (<div>
                                                         <FormControl name="activityGuest"
                                                                      value={this.state.activityGuest}
                                                                      placeholder="Ex. None" type="text"
+                                                                     style={errorFormStyle}
                                                                      onChange={this.handleChangeGuest} required/>
-                                                        <HelpBlock>Only enter text.</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Text too long</HelpBlock>
                                                     </div>)
                                                     :
-                                                    (<div>
-                                                        <FormControl name="activityGuest"
-                                                                     value={this.state.activityGuest}
-                                                                     placeholder="Ex. None" type="text"
-                                                                     onChange={this.handleChangeGuest} required/>
-                                                    </div>)
+                                                    (this.state.guestValue.length <= 50 && this.state.guestValue.length != 0) ?
+
+                                                        (<div>
+                                                            <FormControl name="activityGuest"
+                                                                         value={this.state.activityGuest}
+                                                                         placeholder="Ex. None" type="text"
+                                                                         style={successFormStyle}
+                                                                         onChange={this.handleChangeGuest} required/>
+                                                        </div>)
+                                                        :
+                                                        (<div>
+                                                            <FormControl name="activityGuest"
+                                                                         value={this.state.activityGuest}
+                                                                         placeholder="Ex. None" type="text"
+                                                                         onChange={this.handleChangeGuest} required/>
+                                                        </div>)
                                             }
 
                                         </Col>
@@ -523,15 +608,43 @@ class Request extends Component {
 
                                         <Col md={3}>
                                             <Col componentClass={ControlLabel}>Facility Name</Col>
-                                            <div>
-                                                <FormControl componentClass="select" name="selectFacilities"
-                                                             onChange={this.onFacilitiesSelected}
+                                            {
+                                                (this.state.facilityPicked === '1') ?
+                                                    (<div>
+                                                        <FormControl componentClass="select" name="selectFacilities"
+                                                                     onChange={this.onFacilitiesSelected}
+                                                                     style={errorFormStyle}
 
-                                                             placeholder="select">
-                                                    <option>select</option>
-                                                    {facilitiesOptions}
-                                                </FormControl>
-                                            </div>
+                                                                     placeholder="select">
+                                                            <option>select</option>
+                                                            {facilitiesOptions}
+                                                        </FormControl>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Pick a
+                                                            facility</HelpBlock>
+                                                    </div>)
+                                                    :
+                                                    (this.state.facilityPicked === '2') ?
+                                                        (<div>
+                                                            <FormControl componentClass="select" name="selectFacilities"
+                                                                         onChange={this.onFacilitiesSelected}
+                                                                         style={successFormStyle}
+
+                                                                         placeholder="select">
+                                                                <option>select</option>
+                                                                {facilitiesOptions}
+                                                            </FormControl>
+                                                        </div>)
+                                                        :
+                                                        (<div>
+                                                            <FormControl componentClass="select" name="selectFacilities"
+                                                                         onChange={this.onFacilitiesSelected}
+
+                                                                         placeholder="select">
+                                                                <option>select</option>
+                                                                {facilitiesOptions}
+                                                            </FormControl>
+                                                        </div>)
+                                            }
                                         </Col>
 
                                         <Col md={3}>
@@ -546,43 +659,124 @@ class Request extends Component {
 
                                             <Col componentClass={ControlLabel}>Date</Col>
 
-                                            <DatePicker id="example-datepicker" name="selectedDate"
-                                                        onChange={this.onDateSelected}
-                                                        value={this.state.selectedDate}
-                                                        minDate={(new Date()).toISOString()}
-                                                        required/>
+                                            {
+                                                (this.state.datePicked === '1') ?
+                                                    (<div>
+                                                        <DatePicker id="example-datepicker" name="selectedDate"
+                                                                    onChange={this.onDateSelected}
+                                                                    value={this.state.selectedDate}
+                                                                    style={errorFormStyle}
+                                                                    minDate={(new Date()).toISOString()}
+                                                                    required/>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Pick a date</HelpBlock>
+                                                    </div>)
+                                                    :
+                                                    (this.state.datePicked === '2') ?
+                                                        (<div>
+                                                            <DatePicker id="example-datepicker" name="selectedDate"
+                                                                        onChange={this.onDateSelected}
+                                                                        value={this.state.selectedDate}
+                                                                        style={successFormStyle}
+                                                                        minDate={(new Date()).toISOString()}
+                                                                        required/>
+                                                        </div>)
+                                                        :
+                                                        (<div>
+                                                            <DatePicker id="example-datepicker" name="selectedDate"
+                                                                        onChange={this.onDateSelected}
+                                                                        value={this.state.selectedDate}
+                                                                        minDate={(new Date()).toISOString()}
+                                                                        required/>
+                                                        </div>)
+                                            }
                                         </Col>
 
                                         <Col md={4}>
                                             <Col componentClass={ControlLabel}>Start Time</Col>
-                                            <div>
-                                                <TimePicker name="startTime" start="7:00" end="24:00" step={30}
-                                                            onChange={this.onStartTimeSelected}
-                                                            value={this.state.startTime} required/>
-                                            </div>
+                                            {
+                                                (this.state.startTimePicked === '1') ?
+                                                    <div>
+                                                        <TimePicker name="startTime" start="7:00" end="24:00" step={30}
+                                                                    onChange={this.onStartTimeSelected}
+                                                                    style={errorFormStyle}
+                                                                    value={this.state.startTime} required/>
+                                                        <HelpBlock>Pick a start time</HelpBlock>
+                                                    </div>
+                                                    :
+                                                    (this.state.startTime > this.state.endTime || this.state.startTime === this.state.endTime && this.state.startTimePicked != '' ) ?
+                                                        (<div>
+                                                            <TimePicker name="startTime" start="8:00" end="24:00"
+                                                                        step={30}
+                                                                        onChange={this.onStartTimeSelected}
+                                                                        value={this.state.startTime}
+                                                                        style={errorFormStyle}
+                                                                        required/>
+                                                            <HelpBlock style={errorHelpBlockStyle}>Start time should be
+                                                                earlier than end
+                                                                time</HelpBlock>
+                                                        </div>)
+                                                        :
+                                                    (this.state.startTime < this.state.endTime && this.state.startTimePicked === '2') ?
+                                                        <div>
+                                                            <TimePicker name="startTime" start="7:00" end="24:00"
+                                                                        step={30}
+                                                                        onChange={this.onStartTimeSelected}
+                                                                        style={successFormStyle}
+                                                                        value={this.state.startTime} required/>
+                                                        </div>
+                                                        :
+                                                        <div>
+                                                            <TimePicker name="startTime" start="7:00" end="24:00"
+                                                                        step={30}
+                                                                        onChange={this.onStartTimeSelected}
+                                                                        value={this.state.startTime} required/>
+                                                        </div>
+                                            }
 
                                         </Col>
 
                                         <Col md={4}>
                                             <Col componentClass={ControlLabel}>End Time</Col>
                                             {
-                                                (this.state.selectedStartTime > this.state.selectedEndTime || this.state.selectedStartTime === this.state.selectedEndTime ) ?
+                                                (this.state.endTimePicked === '1') ?
                                                     (<div>
                                                         <TimePicker name="endTime" start="8:00" end="24:00" step={30}
                                                                     onChange={this.onEndTimeSelected}
-                                                                    value={this.state.endTime}
+                                                                    value={this.state.endTime} style={errorFormStyle}
                                                                     required/>
-                                                        <HelpBlock>Start time should be earlier than end
-                                                            time.</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Pick an end
+                                                            time</HelpBlock>
                                                     </div>)
                                                     :
-                                                    (<div>
-                                                        <TimePicker name="endTime" start="8:00" end="24:00" step={30}
-                                                                    onChange={this.onEndTimeSelected}
-                                                                    value={this.state.endTime}
-                                                                    required/>
-                                                    </div>)
-
+                                                    (this.state.startTime > this.state.endTime || this.state.startTime === this.state.endTime && this.state.endTimePicked != '' ) ?
+                                                        (<div>
+                                                            <TimePicker name="endTime" start="8:00" end="24:00"
+                                                                        step={30}
+                                                                        onChange={this.onEndTimeSelected}
+                                                                        value={this.state.endTime}
+                                                                        style={errorFormStyle}
+                                                                        required/>
+                                                            <HelpBlock style={errorHelpBlockStyle}>End time should be
+                                                                later than start time</HelpBlock>
+                                                        </div>)
+                                                        :
+                                                        (this.state.startTime < this.state.endTime && this.state.endTimePicked === '2') ?
+                                                            (<div>
+                                                                <TimePicker name="endTime" start="7:00" end="24:00"
+                                                                            step={30}
+                                                                            onChange={this.onEndTimeSelected}
+                                                                            value={this.state.endTime}
+                                                                            style={successFormStyle}
+                                                                            required/>
+                                                            </div>)
+                                                            :
+                                                            (<div>
+                                                                <TimePicker name="endTime" start="8:00" end="24:00"
+                                                                            step={30}
+                                                                            onChange={this.onEndTimeSelected}
+                                                                            value={this.state.endTime}
+                                                                            required/>
+                                                            </div>)
                                             }
                                         </Col>
                                     </FormGroup>
@@ -594,13 +788,43 @@ class Request extends Component {
                                     <FormGroup>
                                         <Col md={4}>
                                             <Col componentClass={ControlLabel}>Organization</Col>
+                                            {
+                                                (this.state.organizationPicked === '1') ?
+                                                    (<div>
+                                                        <FormControl componentClass="select" name="selectOrganization"
+                                                                     onChange={this.onOrganizationSelected}
+                                                                     style={errorFormStyle}
+                                                                     placeholder="select" required>
+                                                            <option>select</option>
+                                                            {organizationOptions}
+                                                        </FormControl>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Pick an
+                                                            organization</HelpBlock>
+                                                    </div>)
+                                                    :
+                                                    (this.state.organizationPicked === '2') ?
+                                                        (<div>
+                                                            <FormControl componentClass="select"
+                                                                         name="selectOrganization"
+                                                                         onChange={this.onOrganizationSelected}
+                                                                         style={successFormStyle}
+                                                                         placeholder="select" required>
+                                                                <option>select</option>
+                                                                {organizationOptions}
+                                                            </FormControl>
+                                                        </div>)
+                                                        :
+                                                        (<div>
+                                                            <FormControl componentClass="select"
+                                                                         name="selectOrganization"
+                                                                         onChange={this.onOrganizationSelected}
+                                                                             placeholder="select" required>
+                                                                <option>select</option>
+                                                                {organizationOptions}
+                                                            </FormControl>
+                                                        </div>)
+                                            }
 
-                                            <FormControl componentClass="select" name="selectOrganization"
-                                                         onChange={this.onOrganizationSelected}
-                                                         placeholder="select" required>
-                                                <option>select</option>
-                                                {organizationOptions}
-                                            </FormControl>
                                         </Col>
 
                                         <Col sm={2}>

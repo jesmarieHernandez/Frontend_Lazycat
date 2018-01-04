@@ -44,6 +44,14 @@ class NewUser extends Component {
                     name: 'Facilities Manager'
                 }
             ],
+            adminNameValue: '',
+            adminEmailValue: '',
+            adminTelephoneValue: '',
+            staffNameValue: '',
+            staffEmailValue: '',
+            staffTelephoneValue: '',
+            requesterNameValue: '',
+            studentIdentificationNumberValue: '',
             selectedUserRole: ''
         }
     }

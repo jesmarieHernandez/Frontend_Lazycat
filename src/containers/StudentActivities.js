@@ -57,7 +57,6 @@ class StudentActivities extends Component {
     }
 
     render() {
-
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>

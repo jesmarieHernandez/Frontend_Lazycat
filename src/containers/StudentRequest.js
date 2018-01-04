@@ -407,7 +407,6 @@ class Request extends Component {
             <option value={option}>{option}</option>
         );
 
-
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>

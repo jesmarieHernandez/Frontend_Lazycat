@@ -26,7 +26,8 @@ class Activities extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:8000/api/activities').then(response => {
+        // fetch('http://localhost:8000/api/activities').then(response => {
+        fetch('http://192.168.99.100/api/activities').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
@@ -79,11 +80,12 @@ class Activities extends Component {
             <Col md={12}>
 
                 <Panel header={activity.activityName}>
-                    <td><Link to={`/activities/${activity._id}`}>{activity.activityName}</Link></td>
-                    <p>Description: {activity.activityDescription}</p>
-                    <p>Organization: {activity.organization.organizationName}</p>
-                    <p>Facility: {activity.facility.space}</p>
-                    <p>Status: {activity.activityStatus_code}</p>
+                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                    <br/>
+                    <p><b>Description:</b> {activity.activityDescription}</p>
+                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                    <p><b>Facility:</b> {activity.facility.space}</p>
+                    <p><b>Status:</b> {activity.status.description}</p>
                 </Panel>
 
             </Col>

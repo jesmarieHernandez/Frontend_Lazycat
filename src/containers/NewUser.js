@@ -58,10 +58,14 @@ class NewUser extends Component {
         // if (Object.keys(this.state.invalidFields).length !== 0) {
         //     return;
         // }
-        const form = document.forms.newUser;
 
-        let newUser;
-        if (this.state.selectedUserRole === 'Admin') {
+        console.log('El puto role');
+        console.log(document.forms);
+        console.log(this.state.selectedUserRole);
+        if (this.state.selectedUserRole.name === 'Admin') {
+            const form = document.forms.newAdmin;
+
+            let newUser;
             newUser = {
                 role: form.userRole.value,
                 adminName: form.adminName.value,
@@ -69,72 +73,151 @@ class NewUser extends Component {
                 adminTelephone: form.adminTelephone.value
             }
 
-        } else if (this.state.selectedUserRole === 'Staff') {
+        } else if (this.state.selectedUserRole.name === 'Staff') {
+
+            const form = document.forms.newStaff;
+            let newUser;
             newUser = {
-                role: form.userRole.value,
                 staffName: form.staffName.value,
                 staffEmail: form.staffEmail.value,
-                staffTelephone: form.staffTelephone.value
+                staffPhone: form.staffTelephone.value
             }
 
-        } else if (this.state.selectedUserRole === 'Student') {
+            fetch('http://localhost:8000/api/staff', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(newUser),
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Culiooooooooo');
+                    console.log(response);
+                    response.json().then(createdUser => {
+                        console.log('New user was created successfully!');
+                        console.log('User ID: ' + createdUser._id);
+
+                        this.props.history.push(`/admin/users/`);
+                    })
+                } else {
+                    response.json().then(error => {
+                        //this.props.showError(`Failed to create request: ${error.message}`);
+                    });
+                }
+            }).catch(err => {
+                //this.props.showError(`Error in sending data to server: ${err.message}`);
+            });
+
+        } else if (this.state.selectedUserRole.name === 'Student') {
+            console.log('puasdas');
+
+            const form = document.forms.newStudent;
+            let newUser;
             newUser = {
-                role: form.userRole.value,
-                requesterName: form.requesterName.value,
-                studentIdentificationNumber: form.studentIdentificationNumber.value,
-                studentRole: form.studentRole.value,
-                studentAddress1: form.studentAddress1.value,
-                studentAddressCity: form.studentAddressCity.value,
-                studentAddressState: form.studentAddressState.value,
-                studentAddressCountry: form.studentAddressCountry.value,
-                studentAddressZipCode: form.studentAddressZipCode.value,
-                studentTelephone: form.studentTelephone.value,
+                studentName: form.requesterName.value,
+                studentNo: form.studentIdentificationNumber.value,
+                studentAddress: form.studentAddress1.value,
+                studentCity: form.studentAddressCity.value,
+                studentCountry: form.studentAddressCountry.value,
+                studentZipCode: form.studentAddressZipCode.value,
+                studentPhone: form.studentTelephone.value,
                 studentEmail: form.studentEmail.value
             }
 
-        } else if (this.state.selectedUserRole === 'Counselor') {
+            fetch('http://localhost:8000/api/students', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(newUser),
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Culiooooooooo');
+                    console.log(response);
+                    response.json().then(createdUser => {
+                        console.log('New user was created successfully!');
+                        console.log('User ID: ' + createdUser._id);
+
+                        this.props.history.push(`/admin/users/`);
+                    })
+                } else {
+                    response.json().then(error => {
+                        //this.props.showError(`Failed to create request: ${error.message}`);
+                    });
+                }
+            }).catch(err => {
+                //this.props.showError(`Error in sending data to server: ${err.message}`);
+            });
+
+        } else if (this.state.selectedUserRole.name === 'Counselor') {
+            const form = document.forms.newCounselor;
+            let newUser;
             newUser = {
-                role: form.userRole.value,
                 counselorName: form.counselorName.value,
                 counselorEmail: form.counselorEmail.value,
                 counselorDepartment: form.counselorDepartment.value,
                 counselorFaculty: form.counselorFaculty.value,
-                counselorOfficeNumber: form.counselorOfficeNumber.value,
-                counselorTelephone: form.counselorTelephone.value
+                counselorOffice: form.counselorOfficeNumber.value,
+                counselorPhone: form.counselorTelephone.value
             }
 
-        } else if (this.state.selectedUserRole === 'Facilities Manager') {
+            fetch('http://localhost:8000/api/counselors', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(newUser),
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Culiooooooooo');
+                    console.log(response);
+                    response.json().then(createdUser => {
+                        console.log('New user was created successfully!');
+                        console.log('User ID: ' + createdUser._id);
 
-            newUser = {
-                role: form.userRole.value,
-                managerName: form.managerName.value,
-                managerEmail: form.managerEmail.value,
-                managerTelephone: form.managerTelephone.value
-            }
+                        this.props.history.push(`/admin/users/`);
+                    })
+                } else {
+                    response.json().then(error => {
+                        //this.props.showError(`Failed to create request: ${error.message}`);
+                    });
+                }
+            }).catch(err => {
+                //this.props.showError(`Error in sending data to server: ${err.message}`);
+            });
+
         }
 
-        console.log(newUser);
-        fetch('http://localhost:3001/api/admin/users', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(newUser),
-        }).then(response => {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(createdUser => {
-                    console.log('New user was created successfully!');
-                    console.log('User ID: ' + createdUser._id);
-
-                    this.props.history.push(`/admin/users/`);
-                })
-            } else {
-                response.json().then(error => {
-                    //this.props.showError(`Failed to create request: ${error.message}`);
-                });
+        else if (this.state.selectedUserRole.name === 'Facilities Manager') {
+            const form = document.forms.newFacilitiesManager;
+            let newUser;
+            newUser = {
+                managerName: form.managerName.value,
+                managerEmail: form.managerEmail.value,
+                managerPhone: form.managerTelephone.value
             }
-        }).catch(err => {
-            //this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+
+            console.log('El gallo claudio');
+            console.log(newUser);
+            fetch('http://localhost:8000/api/managers', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(newUser),
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Culiooooooooo');
+                    console.log(response);
+                    response.json().then(createdUser => {
+                        console.log('New user was created successfully!');
+                        console.log('User ID: ' + createdUser._id);
+
+                        this.props.history.push(`/admin/users/`);
+                    })
+                } else {
+                    response.json().then(error => {
+                        //this.props.showError(`Failed to create request: ${error.message}`);
+                    });
+                }
+            }).catch(err => {
+                //this.props.showError(`Error in sending data to server: ${err.message}`);
+            });
+        }
+
+
     }
 
     onUserRoleSelected = (event) => {
@@ -170,7 +253,7 @@ class NewUser extends Component {
 
 
         const adminFields = (
-            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+            <Form horizontal onSubmit={this.onSubmit} name="newAdmin">
 
                 <FormGroup>
                     <Col sm={4}>
@@ -192,7 +275,7 @@ class NewUser extends Component {
         )
 
         const staffFields = (
-            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+            <Form horizontal onSubmit={this.onSubmit} name="newStaff">
 
                 <FormGroup>
 
@@ -216,7 +299,7 @@ class NewUser extends Component {
 
         const studentFields = (
             <div>
-                <Form horizontal onSubmit={this.onSubmit} name="newUser">
+                <Form horizontal onSubmit={this.onSubmit} name="newStudent">
                     <FormGroup>
                         <Col sm={4}>
                             <Col componentClass={ControlLabel}>Full Name</Col>
@@ -228,10 +311,6 @@ class NewUser extends Component {
                             <FormControl name="studentIdentificationNumber" required/>
                         </Col>
 
-                        <Col sm={3}>
-                            <Col componentClass={ControlLabel}>Role</Col>
-                            <FormControl name="studentRole" required/>
-                        </Col>
                     </FormGroup>
 
                     <FormGroup>
@@ -280,7 +359,7 @@ class NewUser extends Component {
         )
 
         const counselorFields = (
-            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+            <Form horizontal onSubmit={this.onSubmit} name="newCounselor">
 
                 <FormGroup>
                     <Col sm={4}>
@@ -319,7 +398,7 @@ class NewUser extends Component {
         )
 
         const facilitiesManagerFields = (
-            <Form horizontal onSubmit={this.onSubmit} name="newUser">
+            <Form horizontal onSubmit={this.onSubmit} name="newFacilitiesManager">
 
                 <FormGroup>
                     <Col sm={4}>
@@ -347,14 +426,15 @@ class NewUser extends Component {
                 </Col>
 
                 <Col md={10}>
-                    <ol className="breadcrumb">
-                        <li/>
-                        <li><Link to={`/admin`}>Admin Panel</Link></li>
-                        <li><Link to={`/admin/users`}>Users</Link></li>
-                        <li className="active">Create New User</li>
-                    </ol>
 
-                    <Col md={12}>
+
+                    <Col md={9}>
+                        <ol className="breadcrumb">
+                            <li/>
+                            <li><Link to={`/admin`}>Admin Panel</Link></li>
+                            <li><Link to={`/admin/users`}>Users</Link></li>
+                            <li className="active">Create New User</li>
+                        </ol>
                         <Panel header="Create New User">
                             <Form horizontal onSubmit={this.onSubmit} name="newUser">
                                 <FormGroup>

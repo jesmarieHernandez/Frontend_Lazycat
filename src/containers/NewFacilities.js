@@ -60,11 +60,13 @@ class CreateFacilities extends Component {
 
         const newFacilities = {
             building: form.building.value,
-            space: form.space.value
+            space: form.space.value,
+            facilityDepartment_code: 1,
+            isActive: 1
         };
 
         console.log(newFacilities);
-        fetch('http://localhost:3001/api/admin/facilities', {
+        fetch('http://localhost:8000/api/facilities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),
@@ -95,14 +97,14 @@ class CreateFacilities extends Component {
 
     open = (event) => {
         event.preventDefault();
-        console.log(isNaN(this.state.orgNameValue));
-        console.log(isNaN(this.state.orgTypeValue) );
-        console.log(isNaN(this.state.orgInitialsValue));
-        console.log(isNaN(this.state.counselorNameValue));
-        console.log(isNaN(this.state.counselorEmailValue));
-        console.log(!isNaN(this.state.counselorTelephoneValue));
-        console.log(isNaN(this.state.counselorFacultyValue));
-        console.log(isNaN(this.state.counselorDepartmentValue));
+        // console.log(isNaN(this.state.orgNameValue));
+        // console.log(isNaN(this.state.orgTypeValue) );
+        // console.log(isNaN(this.state.orgInitialsValue));
+        // console.log(isNaN(this.state.counselorNameValue));
+        // console.log(isNaN(this.state.counselorEmailValue));
+        // console.log(!isNaN(this.state.counselorTelephoneValue));
+        // console.log(isNaN(this.state.counselorFacultyValue));
+        // console.log(isNaN(this.state.counselorDepartmentValue));
 
         if (isNaN(this.state.building))
         {
@@ -173,6 +175,28 @@ class CreateFacilities extends Component {
                                     <Col componentClass={ControlLabel}>Space</Col>
                                     <FormControl name="space" required/>
                                 </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Department</Col>
+                                    <FormControl name="facilitiesDepartmentCode" required/>
+                                </Col>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Manager Email</Col>
+                                    <FormControl name="facilitiesManagerEmail"/>
+                                </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Manager Name</Col>
+                                    <FormControl name="facilitiesManagerName"/>
+                                </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Space</Col>
+                                    <FormControl name="space"/>
+                                </Col>
                             </FormGroup>
 
 
@@ -204,22 +228,7 @@ class CreateFacilities extends Component {
                                 </Modal.Footer>
                             </Modal>
 
-                            {/*<FormGroup>*/}
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Manager Name</Col>*/}
-                            {/*<FormControl name="facilitiesManagerName"/>*/}
-                            {/*</Col>*/}
 
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Manager Email</Col>*/}
-                            {/*<FormControl name="facilitiesManagerEmail"/>*/}
-                            {/*</Col>*/}
-
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Space</Col>*/}
-                            {/*<FormControl name="space"/>*/}
-                            {/*</Col>*/}
-                            {/*</FormGroup>*/}
 
                             {/*<ButtonToolbar>*/}
                             {/*<Col md={6}>*/}

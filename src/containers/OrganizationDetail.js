@@ -111,7 +111,7 @@ class OrganizationDetail extends Component {
                             <p>Organization Name: {this.state.organization.organizationName}</p>
                             <p>Organization Initials: {this.state.organization.organizationInitials}</p>
                             <p>Creation Date: {this.state.organization.created_at}</p>
-                            <p>Counselor Name: {this.state.organization.fullName}</p>
+                            <p>Counselor Name: {this.state.organization.counselorName}</p>
                             <p>Counselor Email: {this.state.organization.counselorEmail}</p>
                             <p>Counselor Telephone: {this.state.organization.counselorPhone}</p>
                             <p>Counselor Faculty: {this.state.organization.counselorFaculty}</p>

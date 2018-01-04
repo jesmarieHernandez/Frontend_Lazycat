@@ -60,10 +60,13 @@ class CreateFacilities extends Component {
 
         const newFacilities = {
             building: form.building.value,
-            space: form.space.value
+            space: form.space.value,
+            facilityDepartment_code: 1,
+            isActive: 1
         };
 
         console.log(newFacilities);
+
         // fetch('http://localhost:3001/api/admin/facilities', {
         fetch('http://192.168.99.100/api/admin/facilities', {
             method: 'POST',
@@ -198,6 +201,28 @@ class CreateFacilities extends Component {
                                             </div>)
                                     }
                                 </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Department</Col>
+                                    <FormControl name="facilitiesDepartmentCode" required/>
+                                </Col>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Manager Email</Col>
+                                    <FormControl name="facilitiesManagerEmail"/>
+                                </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Manager Name</Col>
+                                    <FormControl name="facilitiesManagerName"/>
+                                </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Space</Col>
+                                    <FormControl name="space"/>
+                                </Col>
                             </FormGroup>
 
 
@@ -229,22 +254,7 @@ class CreateFacilities extends Component {
                                 </Modal.Footer>
                             </Modal>
 
-                            {/*<FormGroup>*/}
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Manager Name</Col>*/}
-                            {/*<FormControl name="facilitiesManagerName"/>*/}
-                            {/*</Col>*/}
 
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Manager Email</Col>*/}
-                            {/*<FormControl name="facilitiesManagerEmail"/>*/}
-                            {/*</Col>*/}
-
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Space</Col>*/}
-                            {/*<FormControl name="space"/>*/}
-                            {/*</Col>*/}
-                            {/*</FormGroup>*/}
 
                             {/*<ButtonToolbar>*/}
                             {/*<Col md={6}>*/}

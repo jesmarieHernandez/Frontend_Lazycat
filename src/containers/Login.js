@@ -1,11 +1,5 @@
 import React, {Component} from "react";
-import {
-    CognitoUserPool,
-    AuthenticationDetails,
-    CognitoUser
-} from "amazon-cognito-identity-js";
 import {Col, Row} from "react-bootstrap";
-import config from "../config";
 import "./Login.css";
 import GoogleLogin from 'react-google-login';
 import sampLogo from "./samp_logo.png"
@@ -27,20 +21,20 @@ export default class Login extends Component {
     responseGoogle = (response) => {
         console.log(response.w3.U3);
         console.log(response);
-        fetch(`http://localhost:3001/api/users/${response.w3.U3}`).then(response => {
+        fetch(`http://localhost:8000/api/users/${response.w3.U3}`).then(response => {
 
-            console.log("heeyyyyy");
+            console.log("Luis, it is your fault...");
             if (response.ok) {
                 response.json().then(results => {
                     // console.log('pepe :D');
                     // console.log(results);
                     // console.log(this.props);
                     // this.props.setUserRole(results.role);
-
                     console.log('Shit happened');
+                    console.log(results);
                     console.log(this.props);
-                    this.props.cookies.set('role', results.role, { path: '/' });
-                    this.props.cookies.set('email', results.email, { path: '/' });
+                    this.props.cookies.set('role', results.userType_code, { path: '/' });
+                    this.props.cookies.set('email', results.userEmail, { path: '/' });
                     this.props.cookies.set('signedIn', 'true', { path: '/' });
                     this.props.history.push("/");
                 });

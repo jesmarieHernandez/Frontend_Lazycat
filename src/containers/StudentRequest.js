@@ -56,6 +56,20 @@ class Request extends Component {
 /*
             formValidated: valueForm
 */
+
+            studentInfo: {
+                id: '',
+                isActive : '',
+                studentAddress: '',
+                studentCity: '',
+                studentCountry: '',
+                studentEmail: '',
+                studentName: '',
+                studentNo: '',
+                studentPhone: '',
+                studentZipCode: '',
+                user_id: ''
+            }
         }
 
         this.onOrganizationSelected = this.onOrganizationSelected.bind(this);
@@ -78,7 +92,7 @@ class Request extends Component {
 
     componentDidMount() {
         console.log('Ok?');
-        fetch('http://localhost:3001/api/organizations').then(response => {
+        fetch(`http://localhost:8000/api/userOrganizations/${this.state.studentInfo.email}`).then(response => {
             console.log('Cool...');
             if (response.ok) {
                 response.json().then(results => {
@@ -95,12 +109,31 @@ class Request extends Component {
             // this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch(`http://localhost:3001/api/facilities/`).then(response => {
+        fetch(`http://localhost:8000/api/facilities/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
                     this.setState({facilities: results});
                     console.log(this.state.facilities);
+                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                });
+            } else {
+                console.log('Not ok');
+                // response.json().then(error => {
+                //     this.props.showError(`Failed to add issue: ${error.message}`);
+                // });
+            }
+        }).catch(err => {
+            console.log(err);
+            // this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+
+        fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
+            if (response.ok) {
+                response.json().then(results => {
+                    this.setState({studentInfo: results.students[0]});
+                    console.log(this.state.studentInfo);
                     //this.props.router.push(`/activities/${createdRequest._id}`);
                 });
             } else {
@@ -132,41 +165,61 @@ class Request extends Component {
         const form = document.forms.activityRequest;
 
         const activityRequest = {
-            requestTitle: form.requestTitle.value,
+            student_id: this.state.studentInfo.id,
+            organization_id: this.state.selectedOrganization.id,
+            facility_id: this.state.selectedFacilities.id,
+            staff_id: null,
+            activityName: form.requestTitle.value,
             activityDescription: form.activityDescription.value,
-            activityGuest: form.activityGuest.value,
-            activityAssistant: form.activityAssistant.value,
-            selectedDate: this.state.selectedDate,
-            startTime: this.state.selectedStartTime,
-            endTime: this.state.selectedEndTime,
-            organizationInitials: form.organizationInitials.value,
-            requesterName: form.requesterName.value,
-            studentIdentificationNumber: form.studentIdentificationNumber.value,
-            studentRole: form.studentRole.value,
-            studentAddress1: form.studentAddress1.value,
-            studentAddress2: form.studentAddress2.value,
-            studentAddressCity: form.studentAddressCity.value,
-            studentAddressState: form.studentAddressState.value,
-            studentAddressCountry: form.studentAddressCountry.value,
-            studentAddressZipCode: form.studentAddressZipCode.value,
-            studentTelephone: form.studentTelephone.value,
-            counselorName: form.counselorName.value,
-            counselorTelephone: form.counselorTelephone.value,
-            counselorFaculty: form.counselorFaculty.value,
-            counselorDepartment: form.counselorDepartment.value,
-            counselorOfficeNumber: form.counselorOfficeNumber.value,
-            counselorEmail: form.counselorEmail.value,
-            requestDate: new Date(),
-            building: form.facilityBuilding.value,
-            organization: this.state.selectedOrganization,
-            facilities: this.state.selectedFacilities,
-            status: this.state.selectedStatus,
-            facilityManagerDecision: 'approved',
-            counselorDecision: 'approved',
-            dscaDecision: 'pending'
+            attendantsNUmber: form.activityAssistant.value,
+            activityDate: this.state.selectedDate,
+            activityStart: this.state.selectedStartTime,
+            activityEnd: this.state.selectedEndTime,
+            hasFood: null,
+            guestName: form.activityGuest.value,
+            activityStatus_code: 1,
+            counselorStatus_code: 1,
+            managerStatus_code: 1,
+            activityType_code: 1
+
+            // requestTitle: form.requestTitle.value,
+            // activityDescription: form.activityDescription.value,
+            // activityGuest: form.activityGuest.value,
+            // activityAssistant: form.activityAssistant.value,
+            // selectedDate: this.state.selectedDate,
+            // startTime: this.state.selectedStartTime,
+            // endTime: this.state.selectedEndTime,
+            // organizationInitials: form.organizationInitials.value,
+            // requesterName: form.requesterName.value,
+            // studentIdentificationNumber: form.studentIdentificationNumber.value,
+            // studentRole: form.studentRole.value,
+            // studentAddress1: form.studentAddress1.value,
+            // studentAddress2: form.studentAddress2.value,
+            // studentAddressCity: form.studentAddressCity.value,
+            // studentAddressState: form.studentAddressState.value,
+            // studentAddressCountry: form.studentAddressCountry.value,
+            // studentAddressZipCode: form.studentAddressZipCode.value,
+            // studentTelephone: form.studentTelephone.value,
+            // counselorName: form.counselorName.value,
+            // counselorTelephone: form.counselorTelephone.value,
+            // counselorFaculty: form.counselorFaculty.value,
+            // counselorDepartment: form.counselorDepartment.value,
+            // counselorOfficeNumber: form.counselorOfficeNumber.value,
+            // counselorEmail: form.counselorEmail.value,
+            // requestDate: new Date(),
+            // building: form.facilityBuilding.value,
+            // organization: this.state.selectedOrganization,
+            // facilities: this.state.selectedFacilities,
+            // status: this.state.selectedStatus,
+            // facilityManagerDecision: 'approved',
+            // counselorDecision: 'approved',
+            // dscaDecision: 'pending',
+            // studentInfo: {
+            //
+            // }
         };
         console.log(activityRequest);
-        fetch('http://localhost:3001/api/activities', {
+        fetch('http://localhost:8000/api/activities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityRequest),
@@ -190,6 +243,7 @@ class Request extends Component {
         }).catch(err => {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
+
     }
 
     onOrganizationSelected(event) {
@@ -200,8 +254,8 @@ class Request extends Component {
         const selectedOrganization = this.state.organizations.filter(function (organization) {
             console.log(organization);
             console.log(event.target.value);
-            console.log(organization._id === event.target.value);
-            return organization._id === event.target.value;
+            console.log(organization.id === event.target.value);
+            return organization.id === event.target.value;
         });
         console.log(selectedOrganization);
         this.setState({selectedOrganization: selectedOrganization[0]});
@@ -213,7 +267,7 @@ class Request extends Component {
         console.log('Change happened');
         console.log(event.target.value);
         const selectedFacilities = this.state.facilities.filter(function (obj) {
-            return obj._id == event.target.value;
+            return obj.id == event.target.value;
         });
         console.log(selectedFacilities[0]);
         this.setState({selectedFacilities: selectedFacilities[0]});
@@ -338,13 +392,15 @@ class Request extends Component {
     }
 
     render() {
-        console.log(this.state.selectedOrganization._id);
+
+        console.log('Selected Facilities');
+        console.log(this.state.selectedFacilities);
         const organizationOptions = this.state.organizations.map(organization =>
-            <option value={organization._id}>{organization.name}</option>
+            <option value={organization.id}>{organization.organizationName}</option>
         );
 
         const facilitiesOptions = this.state.facilities.map(facilities =>
-            <option value={facilities._id}>{facilities.name}</option>
+            <option value={facilities.id}>{facilities.space}</option>
         );
 
         const statusOptions = this.state.statusOptions.map(option =>
@@ -391,58 +447,54 @@ class Request extends Component {
                                     <FormGroup id="needs-validation">
                                         <Col sm={4}>
                                             <Col componentClass={ControlLabel} for="validationCustom01">Full Name</Col>
-                                            <FormControl name="requesterName" />
+                                            <FormControl name="requesterName"  value={this.state.studentInfo.studentName} disabled={true}/>
                                         </Col>
 
                                         <Col sm={4}>
                                             <Col componentClass={ControlLabel}>Identification Number</Col>
-                                            <FormControl name="studentIdentificationNumber" />
+                                            <FormControl name="studentIdentificationNumber" value={this.state.studentInfo.studentNo} disabled={true}/>
                                         </Col>
 
-                                        <Col sm={3}>
+                                        <Col sm={4}>
                                             <Col componentClass={ControlLabel}>Role</Col>
-                                            <FormControl name="studentRole" />
+                                            <FormControl name="studentRole" value={this.state.studentInfo.studentNo} disabled={true}/>
                                         </Col>
                                     </FormGroup>
 
                                     <FormGroup>
-                                        <Col sm={6}>
+                                        <Col sm={12}>
                                             <Col componentClass={ControlLabel}>Address 1</Col>
-                                            <FormControl name="studentAddress1" />
+                                            <FormControl name="studentAddress1"  value={this.state.studentInfo.studentAddress} disabled={true}/>
                                         </Col>
 
-                                        <Col sm={6}>
-                                            <Col componentClass={ControlLabel}>Address 2</Col>
-                                            <FormControl name="studentAddress2" />
-                                        </Col>
                                     </FormGroup>
 
                                     <FormGroup>
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>City</Col>
-                                            <FormControl name="studentAddressCity" />
+                                            <FormControl name="studentAddressCity" value={this.state.studentInfo.studentCity} disabled={true}/>
                                         </Col>
 
-                                        <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>State</Col>
-                                            <FormControl name="studentAddressState"/>
-                                        </Col>
 
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Country</Col>
-                                            <FormControl name="studentAddressCountry" />
+                                            <FormControl name="studentAddressCountry" value={this.state.studentInfo.studentCountry} disabled={true}/>
                                         </Col>
 
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Zip Code</Col>
-                                            <FormControl name="studentAddressZipCode" />
+                                            <FormControl name="studentAddressZipCode" value={this.state.studentInfo.studentZipCode} disabled={true}/>
                                         </Col>
+
+                                        <Col sm={3}>
+                                        </Col>
+
                                     </FormGroup>
 
                                     <FormGroup>
                                         <Col sm={4}>
                                             <Col componentClass={ControlLabel}>Telephone</Col>
-                                            <FormControl name="studentTelephone" />
+                                            <FormControl name="studentTelephone" value={this.state.studentInfo.studentPhone} disabled={true}/>
                                         </Col>
                                     </FormGroup>
                                 </Panel>
@@ -535,7 +587,7 @@ class Request extends Component {
                                         <Col sm={2}>
                                             <Col componentClass={ControlLabel}>Initials</Col>
                                             <FormControl name="organizationInitials"
-                                                         value={this.state.selectedOrganization.initials} required/>
+                                                         value={this.state.selectedOrganization.organizationInitials} required disable={true}/>
                                         </Col>
                                     </FormGroup>
                                 </Panel>

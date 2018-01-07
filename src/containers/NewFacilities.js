@@ -68,7 +68,7 @@ class CreateFacilities extends Component {
         console.log(newFacilities);
 
         // fetch('http://localhost:3001/api/admin/facilities', {
-        fetch('http://192.168.99.100/api/admin/facilities', {
+        fetch('http://localhost:8000/api/admin/facilities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),

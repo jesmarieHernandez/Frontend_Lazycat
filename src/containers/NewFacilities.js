@@ -6,17 +6,16 @@ import AlertContainer from 'react-alert';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem, HelpBlock
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
 import {Modal} from 'react-bootstrap';
 import Icon from 'react-icons-kit';
-import { statsDots } from 'react-icons-kit/icomoon/statsDots';
-import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
-import { home } from 'react-icons-kit/icomoon/home';
-import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
-import { userTie } from 'react-icons-kit/icomoon/userTie';
-
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
+import {userTie} from 'react-icons-kit/icomoon/userTie';
 
 
 const PAGE_SIZE = 10;
@@ -29,6 +28,7 @@ class CreateFacilities extends Component {
         this.state = {
             showModal: false,
             buildingValue: '',
+            spaceValue: ''
         }
 
         // this.state = {
@@ -60,11 +60,15 @@ class CreateFacilities extends Component {
 
         const newFacilities = {
             building: form.building.value,
-            space: form.space.value
+            space: form.space.value,
+            facilityDepartment_code: 1,
+            isActive: 1
         };
 
         console.log(newFacilities);
-        fetch('http://localhost:3001/api/admin/facilities', {
+
+        // fetch('http://localhost:3001/api/admin/facilities', {
+        fetch('http://localhost:8000/api/admin/facilities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),
@@ -95,17 +99,8 @@ class CreateFacilities extends Component {
 
     open = (event) => {
         event.preventDefault();
-        console.log(isNaN(this.state.orgNameValue));
-        console.log(isNaN(this.state.orgTypeValue) );
-        console.log(isNaN(this.state.orgInitialsValue));
-        console.log(isNaN(this.state.counselorNameValue));
-        console.log(isNaN(this.state.counselorEmailValue));
-        console.log(!isNaN(this.state.counselorTelephoneValue));
-        console.log(isNaN(this.state.counselorFacultyValue));
-        console.log(isNaN(this.state.counselorDepartmentValue));
 
-        if (isNaN(this.state.building))
-        {
+        if (isNaN(this.state.building)) {
             console.log("In herreeeeeee")
             this.setState({showModal: true});
         }
@@ -121,6 +116,10 @@ class CreateFacilities extends Component {
 
     handleBuildingValue = (e) => {
         this.setState({buildingValue: e.target.value})
+    }
+
+    handleSpaceValue = (e) => {
+        this.setState({spaceValue: e.target.value})
     }
 
     close = () => {
@@ -139,11 +138,14 @@ class CreateFacilities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter><Icon icon={home} style={{paddingRight: "45px"}} />Home</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter> <Icon icon={fileText2} style={{paddingRight: "30px"}} />Request</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter><Icon icon={iosPaw} style={{paddingRight: "30px"}}/>Activities</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter><Icon icon={statsDots} style={{paddingRight: "30px"}}/>Statistics</ReactCenter></Link></NavItem>
-                    <NavItem> <Link to="/admin"><ReactCenter><Icon icon={userTie} style={{paddingRight: "45px"}}/>Admin</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
+                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
+                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
+                                                                                                  style={{paddingRight: "20px"}}/>Estadi</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie}
+                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -162,17 +164,64 @@ class CreateFacilities extends Component {
                         <li className="active">Create New Facilities</li>
                     </ol>
 
-                    <Panel header="Create New Facilities">
+                    <Panel header="Crear una Nueva Facilidad">
                         <Form horizontal onSubmit={this.open} name="newFacilities">
                             <FormGroup>
                                 <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Building</Col>
-                                    <FormControl name="building" onChange={this.handleBuildingValue} required/>
+                                    <Col componentClass={ControlLabel}>Edificio</Col>
+                                    {
+                                        (this.state.buildingValue.length > 20) ?
+                                            (<div>
+                                                <FormControl name="building" placeholder="Ex. Luis A. Stefani"
+                                                             onChange={this.handleBuildingValue} style={{borderColor: '#B74442', boxShadow: "0px 0px 8px #B74442"}} required/>
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre del edifico muy largo</HelpBlock>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="building" placeholder="Ex. Luis A. Stefani"
+                                                             onChange={this.handleBuildingValue} required/>
+                                            </div>)
+                                    }
+                                </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Sal&oacute;n/Espacio</Col>
+                                    {
+                                        (this.state.spaceValue.length > 20) ?
+                                            (<div>
+                                                <FormControl name="space" placeholder="Ex. S-113"
+                                                             onChange={this.handleSpaceValue} style={{borderColor: '#B74442', boxShadow: "0px 0px 8px #B74442"}} required/>
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre del sal&oacute;n/espacio muy largo</HelpBlock>
+
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="space" placeholder="Ex. S-113"
+                                                             onChange={this.handleSpaceValue} required/>
+                                            </div>)
+                                    }
+                                </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Department</Col>
+                                    <FormControl name="facilitiesDepartmentCode" required/>
+                                </Col>
+                            </FormGroup>
+
+                            <FormGroup>
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Manager Email</Col>
+                                    <FormControl name="facilitiesManagerEmail"/>
+                                </Col>
+
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Manager Name</Col>
+                                    <FormControl name="facilitiesManagerName"/>
                                 </Col>
 
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Space</Col>
-                                    <FormControl name="space" required/>
+                                    <FormControl name="space"/>
                                 </Col>
                             </FormGroup>
 
@@ -182,8 +231,8 @@ class CreateFacilities extends Component {
                                     <Col md={6}>
                                         <AlertContainer ref={a => this.msg = a}/>
 
-{/*                                        <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
-                                            Submit </Button>*/}
+                                        {/*                                        <Button bsStyle="primary" type="submit" onClick={this.showSuccessAlert}>
+                                         Submit </Button>*/}
 
                                         <Button bsStyle="primary" type="submit">
                                             Submit </Button>
@@ -205,22 +254,7 @@ class CreateFacilities extends Component {
                                 </Modal.Footer>
                             </Modal>
 
-                            {/*<FormGroup>*/}
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Manager Name</Col>*/}
-                            {/*<FormControl name="facilitiesManagerName"/>*/}
-                            {/*</Col>*/}
 
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Manager Email</Col>*/}
-                            {/*<FormControl name="facilitiesManagerEmail"/>*/}
-                            {/*</Col>*/}
-
-                            {/*<Col sm={4}>*/}
-                            {/*<Col componentClass={ControlLabel}>Space</Col>*/}
-                            {/*<FormControl name="space"/>*/}
-                            {/*</Col>*/}
-                            {/*</FormGroup>*/}
 
                             {/*<ButtonToolbar>*/}
                             {/*<Col md={6}>*/}

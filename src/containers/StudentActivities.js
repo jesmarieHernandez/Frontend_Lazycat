@@ -8,6 +8,7 @@ import {
 import Select from 'react-select';
 import ReactCenter from "react-center";
 
+
 class StudentActivities extends Component {
 
 
@@ -20,10 +21,14 @@ class StudentActivities extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:3001/api/activities').then(response => {
+        fetch(`http://localhost:8000/api/activity/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
+                console.log('Colon');
                 response.json().then(results => {
+                    console.log(':)');
+                    console.log(results);
                     this.setState({activities: results});
+                    console.log(this.state.activities);
                     //this.props.router.push(`/activities/${createdRequest._id}`);
                 });
             } else {
@@ -56,17 +61,6 @@ class StudentActivities extends Component {
     }
 
     render() {
-
-/*        const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/student/activities">Activities</Link></li>
-                    <li><Link to="/student/request">Request</Link></li>
-
-                </ul>
-            </div>
-        );*/
-
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>
@@ -78,21 +72,21 @@ class StudentActivities extends Component {
                 </Nav>
             </div>
         );
-
         const activities = this.state.activities.map(activity =>
 
             <Col md={12}>
 
-            <Panel  header={activity.requestTitle}>
-                <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
+            <Panel  header={activity.activityName}>
+                <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
                 <p>Description: {activity.activityDescription}</p>
-                <p>Organization: {activity.organization.name}</p>
-                <p>Facility: {activity.facilities.name}</p>
-                <p>Status: {activity.status}</p>
+                <p>Organization: {activity.organization.organizationName}</p>
+                <p>Facility: {activity.facility.building + '-' + activity.facility.space}</p>
+                <p>Status: {activity.status.description}</p>
             </Panel>
 
             </Col>
         );
+
 
         return (
             <div className="container">
@@ -102,26 +96,23 @@ class StudentActivities extends Component {
 
                 <Col md={10}>
 
-                <ol className="breadcrumb">
-                    <li/>
-                    <li>Student</li>
-                    <li className="active">Activities</li>
-                </ol>
 
-                <Col md={7}>
-                    <div>{activities}</div>
-                </Col>
+                    <Col md={9}>
+                        <ol className="breadcrumb">
+                            <li/>
+                            <li className="active">Activities</li>
+                        </ol>
+                        {activities}
+                    </Col>
 
-                <Col md={5}>
-                    <Panel header='Search Activities'>
-                            <Select.Async
-                                instanceId="search" placeholder="Search ..." autoload={false} cache={false}
-                            />
-                            <Checkbox><p>Organization Acronym</p></Checkbox>
-                            <Checkbox><p>Request Title</p></Checkbox>
-                            <Checkbox><p>Request Description</p></Checkbox>
-                    </Panel>
-                </Col>
+                    <Col md={3}>
+                        <Panel header='Activities'>
+                            <ReactCenter><Link to="/student/request"><Button bsSize="medium">New
+                                Request</Button></Link></ReactCenter>
+                        </Panel>
+
+
+                    </Col>
                 </Col>
             </div>
         )

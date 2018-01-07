@@ -26,7 +26,8 @@ class Activities extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:3001/api/activities').then(response => {
+        // fetch('http://localhost:8000/api/activities').then(response => {
+        fetch('http://localhost:8000/api/activities').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
@@ -38,27 +39,27 @@ class Activities extends Component {
                 // });
             }
         }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:3001/api/pending').then(response => {
-            if (response.ok) {
-                console.log('/api/pending! :D');
-                response.json().then(results => {
-                    console.log('Total pending activities: ' + results);
-
-                    //console.log(this.state.activities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                console.log('Unable to fetch pending activities')
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+        // fetch('http://localhost:3001/api/pending').then(response => {
+        //     if (response.ok) {
+        //         console.log('/api/pending! :D');
+        //         response.json().then(results => {
+        //             console.log('Total pending activities: ' + results);
+        //
+        //             //console.log(this.state.activities);
+        //             //this.props.router.push(`/activities/${createdRequest._id}`);
+        //         });
+        //     } else {
+        //         console.log('Unable to fetch pending activities')
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     //this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
     }
 
     render() {
@@ -66,11 +67,10 @@ class Activities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter><Icon icon={home} style={{paddingRight: "45px"}} />Home</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter> <Icon icon={fileText2} style={{paddingRight: "30px"}} />Request</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter><Icon icon={iosPaw} style={{paddingRight: "30px"}}/>Activities</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter><Icon icon={statsDots} style={{paddingRight: "30px"}}/>Statistics</ReactCenter></Link></NavItem>
-                    <NavItem> <Link to="/admin"><ReactCenter><Icon icon={userTie} style={{paddingRight: "45px"}}/>Admin</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -79,12 +79,13 @@ class Activities extends Component {
 
             <Col md={12}>
 
-                <Panel header={activity.requestTitle}>
-                    <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
-                    <p>Description: {activity.activityDescription}</p>
-                    <p>Organization: {activity.organization.name}</p>
-                    <p>Facility: {activity.facilities.name}</p>
-                    <p>Status: {activity.status}</p>
+                <Panel header={activity.activityName}>
+                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                    <br/>
+                    <p><b>Description:</b> {activity.activityDescription}</p>
+                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                    <p><b>Facility:</b> {activity.facility.space}</p>
+                    <p><b>Status:</b> {activity.status.description}</p>
                 </Panel>
 
             </Col>

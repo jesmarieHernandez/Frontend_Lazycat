@@ -26,9 +26,11 @@ class Organizations extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/admin/organizations').then(response => {
+        // fetch('http://localhost:8000/api/organizations').then(response => {
+        fetch('http://localhost:8000/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {
+                    console.log(results);
                     this.setState({organizations: results});
                 });
             } else {
@@ -37,7 +39,7 @@ class Organizations extends Component {
                 // });
             }
         }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
     }
 
@@ -45,10 +47,10 @@ class Organizations extends Component {
         const organizations = this.state.organizations.map(organization =>
 
             <Col md={12}>
-                <Panel collapsible header={organization.name}>
-                    <p><Link to={`/admin/organizations/${organization._id}`}>{organization.name}</Link></p>
-                    <p>Type: {organization.type}</p>
-                    <p>Creation Date: {organization.creationDate}</p>
+                <Panel collapsible header={organization.organizationName} style={{fontFamily: 'Helvetica'}}>
+                    <p><Link to={`/admin/organizations/${organization.id}`}>{organization.organizationName}</Link></p>
+                    <p>Type: {organization.description}</p>
+                    <p>Creation Date: {organization.created_at}</p>
                     <p>Counselor Name: {organization.counselorName}</p>
                     <p>Counselor Email: {organization.counselorEmail}</p>
                     <Link to={`/admin/organizations/${organization._id}`}><Button className="btn btn-primary">Details</Button></Link>
@@ -61,11 +63,10 @@ class Organizations extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/"><ReactCenter><Icon icon={home} style={{paddingRight: "45px"}} />Home</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><ReactCenter> <Icon icon={fileText2} style={{paddingRight: "30px"}} />Request</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><ReactCenter><Icon icon={iosPaw} style={{paddingRight: "30px"}}/>Activities</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><ReactCenter><Icon icon={statsDots} style={{paddingRight: "30px"}}/>Statistics</ReactCenter></Link></NavItem>
-                    <NavItem> <Link to="/admin"><ReactCenter><Icon icon={userTie} style={{paddingRight: "45px"}}/>Admin</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );

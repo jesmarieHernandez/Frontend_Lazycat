@@ -33,7 +33,10 @@ class Request extends Component {
         this.state = {
             organizations: [],
             facilities: [],
-            selectedOrganization: {},
+            selectedOrganization: {
+                id: '',
+                organizationInitials: ''
+            },
             selectedDate: value,
             selectedStartTime: '',
             startTime: '',
@@ -69,6 +72,10 @@ class Request extends Component {
                 studentPhone: '',
                 studentZipCode: '',
                 user_id: ''
+            },
+
+            counselorInformation: {
+
             }
         }
 
@@ -92,49 +99,54 @@ class Request extends Component {
 
     componentDidMount() {
         console.log('Ok?');
-        fetch(`http://localhost:8000/api/userOrganizations/${this.state.studentInfo.email}`).then(response => {
-            console.log('Cool...');
-            if (response.ok) {
-                response.json().then(results => {
-                    this.setState({organizations: results});
-                });
-            } else {
-                console.log('Not ok');
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            console.log(err);
-            // this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
 
-        fetch(`http://localhost:8000/api/facilities/`).then(response => {
-            if (response.ok) {
-                response.json().then(results => {
-                    //console.log(results);
-                    this.setState({facilities: results});
-                    console.log(this.state.facilities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                console.log('Not ok');
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            console.log(err);
-            // this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
 
 
         fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({studentInfo: results.students[0]});
+                    console.log('La puta info del estudiante: ');
                     console.log(this.state.studentInfo);
                     //this.props.router.push(`/activities/${createdRequest._id}`);
+
+                    fetch(`http://localhost:8000/api/userOrganizations/${this.state.studentInfo.studentEmail}`).then(response => {
+                        console.log('Cool...');
+                        if (response.ok) {
+                            response.json().then(results => {
+                                console.log('El puto resultado de userOrganization');
+                                this.setState({organizations: results});
+                                console.log()
+                            });
+                        } else {
+                            console.log('Not ok');
+                            // response.json().then(error => {
+                            //     this.props.showError(`Failed to add issue: ${error.message}`);
+                            // });
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                        // this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
+
+                    fetch(`http://localhost:8000/api/facilities/`).then(response => {
+                        if (response.ok) {
+                            response.json().then(results => {
+                                //console.log(results);
+                                this.setState({facilities: results});
+                                console.log(this.state.facilities);
+                                //this.props.router.push(`/activities/${createdRequest._id}`);
+                            });
+                        } else {
+                            console.log('Not ok');
+                            // response.json().then(error => {
+                            //     this.props.showError(`Failed to add issue: ${error.message}`);
+                            // });
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                        // this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
                 });
             } else {
                 console.log('Not ok');
@@ -171,10 +183,12 @@ class Request extends Component {
             staff_id: null,
             activityName: form.requestTitle.value,
             activityDescription: form.activityDescription.value,
-            attendantsNUmber: form.activityAssistant.value,
+            attendantsNumber: form.activityAssistant.value,
             activityDate: this.state.selectedDate,
-            activityStart: this.state.selectedStartTime,
-            activityEnd: this.state.selectedEndTime,
+            activityStart: '10:10',
+            // activityStart: this.state.selectedStartTime,
+            activityEnd: this.state.endTime,
+            // activityEnd: this.state.selectedEndTime,
             hasFood: null,
             guestName: form.activityGuest.value,
             activityStatus_code: 1,
@@ -225,6 +239,7 @@ class Request extends Component {
             body: JSON.stringify(activityRequest),
         }).then(response => {
             if (response.ok) {
+                console.log('PINGA y METRACA');
                 console.log(response);
                 response.json().then(createdRequest => {
                     console.log('Activity request was created successfully!');
@@ -250,15 +265,27 @@ class Request extends Component {
         this.setState({ organizationPicked: true });
         event.preventDefault();
         console.log('Change happened');
-        console.log(event.target.value);
         const selectedOrganization = this.state.organizations.filter(function (organization) {
-            console.log(organization);
+            //console.log(organization);
             console.log(event.target.value);
-            console.log(organization.id === event.target.value);
-            return organization.id === event.target.value;
+            console.log(organization.id);
+            console.log(organization.id == event.target.value);
+            return organization.id == event.target.value;
         });
-        console.log(selectedOrganization);
+
+        //console.log(selectedOrganization);
+        console.log('EL biiiiii');
         this.setState({selectedOrganization: selectedOrganization[0]});
+
+        console.log('El cri');
+        console.log(selectedOrganization[0].counselors[0]);
+
+        this.setState({counselorInformation: selectedOrganization[0].counselors[0]});
+        console.log(this.state.selectedOrganization);
+        console.log(this.state.counselorInformation);
+
+
+
     }
 
     onFacilitiesSelected(event) {
@@ -418,6 +445,7 @@ class Request extends Component {
                 </Nav>
             </div>
         );
+
 
         return (
             <div className="container">
@@ -599,19 +627,19 @@ class Request extends Component {
                                         <Col md={4}>
                                             <Col componentClass={ControlLabel}>Name</Col>
                                             <FormControl name="counselorName"
-                                                         value={this.state.selectedOrganization.counselorName} disabled/>
+                                                         value={this.state.counselorInformation.counselorName} disabled/>
                                         </Col>
 
                                         <Col sm={4}>
                                             <Col componentClass={ControlLabel}>Telephone</Col>
                                             <FormControl name="counselorTelephone"
-                                                         value={this.state.selectedOrganization.counselorTelephone} disabled/>
+                                                         value={this.state.counselorInformation.counselorPhone} disabled/>
                                         </Col>
 
                                         <Col sm={4}>
                                             <Col componentClass={ControlLabel}>Email</Col>
                                             <FormControl name="counselorEmail"
-                                                         value={this.state.selectedOrganization.counselorEmail} disabled/>
+                                                         value={this.state.counselorInformation.counselorEmail} disabled/>
                                         </Col>
                                     </FormGroup>
 
@@ -619,19 +647,19 @@ class Request extends Component {
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Faculty</Col>
                                             <FormControl name="counselorFaculty"
-                                                         value={this.state.selectedOrganization.counselorFaculty} disabled/>
+                                                         value={this.state.counselorInformation.counselorFaculty} disabled/>
                                         </Col>
 
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Department</Col>
                                             <FormControl name="counselorDepartment"
-                                                         value={this.state.selectedOrganization.counselorDepartment} disabled/>
+                                                         value={this.state.counselorInformation.counselorDepartment} disabled/>
                                         </Col>
 
                                         <Col sm={2}>
                                             <Col componentClass={ControlLabel}>Office Number</Col>
                                             <FormControl name="counselorOfficeNumber"
-                                                         value={this.state.selectedOrganization.counselorOfficeNumber} disabled/>
+                                                         value={this.state.counselorInformation.counselorOffice} disabled/>
                                         </Col>
                                     </FormGroup>
 

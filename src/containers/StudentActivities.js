@@ -21,10 +21,14 @@ class StudentActivities extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:3001/api/activities').then(response => {
+        fetch(`http://localhost:8000/api/activity/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
+                console.log('Colon');
                 response.json().then(results => {
+                    console.log(':)');
+                    console.log(results);
                     this.setState({activities: results});
+                    console.log(this.state.activities);
                     //this.props.router.push(`/activities/${createdRequest._id}`);
                 });
             } else {
@@ -72,12 +76,12 @@ class StudentActivities extends Component {
 
             <Col md={12}>
 
-            <Panel  header={activity.requestTitle}>
-                <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
+            <Panel  header={activity.activityName}>
+                <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
                 <p>Description: {activity.activityDescription}</p>
-                <p>Organization: {activity.organization.name}</p>
-                <p>Facility: {activity.facilities.name}</p>
-                <p>Status: {activity.status}</p>
+                <p>Organization: {activity.organization.organizationName}</p>
+                <p>Facility: {activity.facility.building + '-' + activity.facility.space}</p>
+                <p>Status: {activity.status.description}</p>
             </Panel>
 
             </Col>

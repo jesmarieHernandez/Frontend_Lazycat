@@ -20,8 +20,12 @@ class Activities extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
+            activeKey: "1",
             activities: []
         }
+
+        this.handleSelect = this.handleSelect.bind(this);
+
     }
 
     componentDidMount() {
@@ -62,6 +66,12 @@ class Activities extends Component {
         // });
     }
 
+    handleSelect(event) {
+        // event.preventDefault();
+        console.log(event);
+        this.setState({activeKey: event});
+    }
+
     render() {
         const tabsInstance = (
 
@@ -74,6 +84,70 @@ class Activities extends Component {
                 </Nav>
             </div>
         );
+
+        const pending = this.state.activities.filter(function (obj) {
+            return obj.status.code == 1;
+        });
+
+        const pendingActivities = pending.map(activity =>
+
+            <Col md={12}>
+
+                <Panel header={activity.activityName}>
+                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                    <br/>
+                    <p><b>Description:</b> {activity.activityDescription}</p>
+                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                    <p><b>Facility:</b> {activity.facility.space}</p>
+                    <p><b>Status:</b> {activity.status.description}</p>
+                </Panel>
+
+            </Col>
+        );
+
+        const approved = this.state.activities.filter(function (obj) {
+            return obj.status.code == 2;
+        });
+
+        const approvedActivities = approved.map(activity =>
+
+            <Col md={12}>
+
+                <Panel header={activity.activityName}>
+                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                    <br/>
+                    <p><b>Description:</b> {activity.activityDescription}</p>
+                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                    <p><b>Facility:</b> {activity.facility.space}</p>
+                    <p><b>Status:</b> {activity.status.description}</p>
+                </Panel>
+
+            </Col>
+        );
+
+
+        const denied = this.state.activities.filter(function (obj) {
+            return obj.status.code == 3;
+        });
+
+        const deniedActivities = denied.map(activity =>
+
+            <Col md={12}>
+
+                <Panel header={activity.activityName}>
+                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                    <br/>
+                    <p><b>Description:</b> {activity.activityDescription}</p>
+                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                    <p><b>Facility:</b> {activity.facility.space}</p>
+                    <p><b>Status:</b> {activity.status.description}</p>
+                </Panel>
+
+            </Col>
+        );
+
+
+        console.log(pendingActivities.length);
 
         const activities = this.state.activities.map(activity =>
 
@@ -91,6 +165,8 @@ class Activities extends Component {
             </Col>
         );
 
+
+        console.log(this.state.activities);
         return (
             <div className="container">
                 <Col md={2}>
@@ -105,7 +181,18 @@ class Activities extends Component {
                             <li/>
                             <li className="active">Activities</li>
                         </ol>
-                        {activities}
+                        <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+                            <NavItem eventKey="1" href="/home">Pendientes</NavItem>
+                            <NavItem eventKey="2" title="Item">Aprobadas</NavItem>
+                            <NavItem eventKey="3" title="Item">Denegadas</NavItem>
+                        </Nav>
+                        <br/>
+                        {/*{activities}*/}
+
+                        {this.state.activeKey === '1' ? pendingActivities : null}
+                        {this.state.activeKey === '2' ? approvedActivities : null}
+                        {this.state.activeKey === '3' ? deniedActivities : null}
+
                     </Col>
 
                     <Col md={3}>

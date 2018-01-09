@@ -5,11 +5,11 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
 import Icon from 'react-icons-kit';
-import {statsDots} from 'react-icons-kit/icomoon/statsDots';
-import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
-import {home} from 'react-icons-kit/icomoon/home';
-import {fileText2} from 'react-icons-kit/icomoon/fileText2';
-import {userTie} from 'react-icons-kit/icomoon/userTie';
+import { statsDots } from 'react-icons-kit/icomoon/statsDots';
+import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
+import { home } from 'react-icons-kit/icomoon/home';
+import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
+import { userTie } from 'react-icons-kit/icomoon/userTie';
 import DatePicker from 'react-bootstrap-date-picker';
 import TimePicker from 'react-bootstrap-time-picker';
 
@@ -18,6 +18,7 @@ import {
     Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
+
 
 
 const PAGE_SIZE = 10;
@@ -31,8 +32,41 @@ class ActivityDetail extends Component {
             selectedType: {},
             commentary: '',
 
+/*            activity: {
+                _id: 0,
+                requestTitle: '',
+                activityDescription: '',
+                activityGuest: '',
+                activityAssistant: '',
+                selectedDate: '',
+                startTime: '',
+                endTime: '',
+                organization: {},
+                organizationInitials: '',
+                requesterName: '',
+                studentIdentificationNumber: '',
+                studentRole: '',
+                studentAddress1: '',
+                studentAddressCity: '',
+                studentAddressState: '',
+                studentAddressCountry: '',
+                studentAddressZipCode: '',
+                studentTelephone: '',
+                counselor: {},
+                counselorTelephone: '',
+                counselorFaculty: '',
+                counselorDepartment: '',
+                counselorOfficeNumber: '',
+                requestDate: '',
+                building: '',
+                facilities: {},
+                status: '',
+                facilityManagerDecision: '',
+                counselorDecision: '',
+                dscaDecision: ''
+            }*/
             activity: {
-                id: '',
+                id:  '',
                 activityName: '',
                 activityDescription: '',
                 attendantsNumber: '',

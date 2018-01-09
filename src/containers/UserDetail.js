@@ -35,7 +35,7 @@ class UserDetail extends Component {
     componentDidMount() {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
-        fetch(`http://localhost:3001/api/admin/users/${id}`).then(response => {
+        fetch(`http://192.168.99.100/api/admin/users/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({user: data});

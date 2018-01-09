@@ -204,11 +204,11 @@ class CreateFacilities extends Component {
 
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Department</Col>
-                                    <FormControl name="facilitiesDepartmentCode" required/>
+                                    <FormControl name="facilitiesDepartmentCode" placeholder="Ex. Ingenier&iacute;a Civil" required/>
                                 </Col>
                             </FormGroup>
 
-                            <FormGroup>
+{/*                            <FormGroup>
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Manager Email</Col>
                                     <FormControl name="facilitiesManagerEmail"/>
@@ -223,7 +223,7 @@ class CreateFacilities extends Component {
                                     <Col componentClass={ControlLabel}>Space</Col>
                                     <FormControl name="space"/>
                                 </Col>
-                            </FormGroup>
+                            </FormGroup>*/}
 
 
                             <ReactCenter>

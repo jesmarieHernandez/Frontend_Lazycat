@@ -403,14 +403,14 @@ class NewUser extends Component {
                                     <HelpBlock style={errorHelpBlockStyle}>Nombre es demasiado largo</HelpBlock>
                                 </div>)
                                 :
-                                (this.state.adminNameValue.length != 0 && /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === false) ?
+                                (this.state.adminNameValue.length != 0 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === false) ?
                                     (<div>
                                         <FormControl name="adminName" onChange={this.handleAdminNameValue}
                                                      style={errorFormStyle} placeholder="Ex. Maria Cruz" required/>
                                         <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre y apellido</HelpBlock>
                                     </div>)
                                     :
-                                    (this.state.adminNameValue.length < 50 && /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === true) ?
+                                    (this.state.adminNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === true) ?
                                         (<div>
                                             <FormControl name="adminName" onChange={this.handleAdminNameValue}
                                                          style={successFormStyle} placeholder="Ex. Maria Cruz"
@@ -495,7 +495,7 @@ class NewUser extends Component {
                                     <HelpBlock style={errorHelpBlockStyle}>Nombre es demasiado largo</HelpBlock>
                                 </div>)
                                 :
-                                (this.state.staffNameValue.length != 0 && /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === false) ?
+                                (this.state.staffNameValue.length != 0 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === false) ?
                                     (<div>
                                         <FormControl name="staffName" style={errorFormStyle}
                                                      onChange={this.handleStaffNameValue} placeholder="Ex. Juan Velez"
@@ -503,7 +503,7 @@ class NewUser extends Component {
                                         <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre y apellido</HelpBlock>
                                     </div>)
                                     :
-                                    (this.state.staffNameValue.length < 50 && /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === true) ?
+                                    (this.state.staffNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === true) ?
                                         (<div>
                                             <FormControl name="staffName" style={successFormStyle}
                                                          onChange={this.handleStaffNameValue}
@@ -587,7 +587,7 @@ class NewUser extends Component {
                                         <HelpBlock style={errorHelpBlockStyle}>Nombre es demasiado largo</HelpBlock>
                                     </div>)
                                     :
-                                    (this.state.studentNameValue.length != 0 && /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === false) ?
+                                    (this.state.studentNameValue.length != 0 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === false) ?
                                         (<div>
                                             <FormControl name="studentName" style={errorFormStyle}
                                                          onChange={this.handleStudentNameValue}
@@ -597,7 +597,7 @@ class NewUser extends Component {
                                                 apellido</HelpBlock>
                                         </div>)
                                         :
-                                        (this.state.studentNameValue.length < 50 && /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === true) ?
+                                        (this.state.studentNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === true) ?
                                             (<div>
                                                 <FormControl name="studentName" style={successFormStyle}
                                                              onChange={this.handleStudentNameValue}
@@ -698,7 +698,7 @@ class NewUser extends Component {
                                                 :
                                                 (this.state.studentAddressValue.length >= 10 && this.state.studentAddressValue.length < 200 &&
                                                 /^[0-9]+$/.test(this.state.studentAddressValue) === false &&
-                                                /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.studentAddressValue) === false) ?
+                                                /^[`!@#\$%&\*()_+\{}\|:"<>?~,./;'\]a-zA-Z]+$/.test(this.state.studentAddressValue) === false) ?
                                                     (<div>
                                                         <FormControl style={successFormStyle} name="studentAddress1"
                                                                      onChange={this.handleStudentAddressValue}
@@ -725,7 +725,7 @@ class NewUser extends Component {
                                     (<div>
                                         <FormControl name="studentAddressCity" onChange={this.handleStudentCityValue}
                                                      style={errorFormStyle} placeholder="Ex. Bayamon" required/>
-                                        <HelpBlock style={errorHelpBlockStyle}> Escribir solo texto</HelpBlock>
+                                        <HelpBlock style={errorHelpBlockStyle}> Escriba solo texto</HelpBlock>
                                     </div>)
                                     :
                                     (this.state.studentCityValue.length <= 3 && this.state.studentCityValue.length != 0) ?
@@ -763,25 +763,25 @@ class NewUser extends Component {
 
                         <Col sm={3}>
                             <Col componentClass={ControlLabel}>Pa&iacute;s</Col>
-                            {
-                                (/^(Puerto Rico)|(PR)$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
+{/*                            {
+                                (/^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
                                     (<div>
                                         <FormControl name="studentAddressCountry" style={errorFormStyle}
                                                      onChange={this.handleStudentCountryValue}
                                                      placeholder="Ex. Puerto Rico" required/>
-                                        <HelpBlock style={errorHelpBlockStyle}>Pa&iacute;s debe ser Puerto Rico o
-                                            PR</HelpBlock>
+                                        <HelpBlock style={errorHelpBlockStyle}>Escriba solo texto</HelpBlock>
                                     </div>)
                                     :
-                                    (/^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
+                                    (/^(Puerto Rico)|(PR)|(pr)|(Pr)|(pR)$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
                                         (<div>
                                             <FormControl name="studentAddressCountry" style={errorFormStyle}
                                                          onChange={this.handleStudentCountryValue}
                                                          placeholder="Ex. Puerto Rico" required/>
-                                            <HelpBlock style={errorHelpBlockStyle}>Solo texto</HelpBlock>
+                                            <HelpBlock style={errorHelpBlockStyle}>Pa&iacute;s debe ser Puerto Rico o
+                                                PR</HelpBlock>
                                         </div>)
                                         :
-                                        (/^(Puerto Rico)|(PR)$/.test(this.state.studentCountryValue) === true && /^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === true) ?
+                                        (/^(Puerto Rico)|(PR)|(pr)|(Pr)|(pR)$/.test(this.state.studentCountryValue) === true && /^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === true) ?
                                             (<div>
                                                 <FormControl name="studentAddressCountry" style={successFormStyle}
                                                              onChange={this.handleStudentCountryValue}
@@ -791,25 +791,25 @@ class NewUser extends Component {
                                             (<div>
                                                 <FormControl name="studentAddressCountry"
                                                              onChange={this.handleStudentCountryValue}
-                                                             placeholder="Ex. Puerto Rico" required/>
+                                                             placeholder="Ex. Puerto Rico" value="Puerto Rico" disabled/>
                                             </div>)
-                            }
-
+                            }*/}
+                            <FormControl name="studentAddressCountry" value="Puerto Rico" disabled/>
                         </Col>
 
                         <Col sm={3}>
                             <Col componentClass={ControlLabel}>C&oacute;digo Postal</Col>
                             {
-                                (/^([0-9]{5})$/.test(this.state.studentCountryValue) === false && this.state.studentZipCodeValue.length != 0) ?
+                                (/^([0-9]{5})$/.test(this.state.studentZipCodeValue) === false && this.state.studentZipCodeValue.length != 0) ?
                                     (<div>
                                         <FormControl name="studentAddressZipCode" style={errorFormStyle}
                                                      onChange={this.handleStudentZipCodeValue} placeholder="Ex. 00922"
                                                      required/>
                                         <HelpBlock style={errorHelpBlockStyle}>C&oacute;digo Postal debe ser 5 d&iacute;
-                                            gitos</HelpBlock>
+                                            gitos num&eacute;ricos</HelpBlock>
                                     </div>)
                                     :
-                                    (/^([0-9]{5})$/.test(this.state.studentCountryValue) === true) ?
+                                    (/^([0-9]{5})$/.test(this.state.studentZipCodeValue) === true) ?
                                         (<div>
                                             <FormControl name="studentAddressZipCode" style={successFormStyle}
                                                          onChange={this.handleStudentZipCodeValue}
@@ -836,8 +836,7 @@ class NewUser extends Component {
                                         <FormControl name="studentTelephone" style={errorFormStyle}
                                                      onChange={this.handleStudentPhoneValue} placeholder="Ex. 4567"
                                                      required/>
-                                        <HelpBlock style={errorHelpBlockStyle}>N&uacute;mero completo (10 d&iacute;
-                                            gitos)</HelpBlock>
+                                        <HelpBlock style={errorHelpBlockStyle}>Tel&acute;fono debe ser 10 d&iacute;gitos</HelpBlock>
                                     </div>)
                                     :
                                     (/^(([0-9]{10}))$/.test(this.state.studentPhoneValue) === true) ?
@@ -893,7 +892,7 @@ class NewUser extends Component {
                     <Col sm={4}>
                         <Col componentClass={ControlLabel}>Nombre</Col>
                         {
-                            (/^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === false && this.state.counselorNameValue.length != 0) ?
+                            (/^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === false && this.state.counselorNameValue.length != 0) ?
                                 (<div>
                                     <FormControl name="organizationCounselorName"
                                                  placeholder="Ex. Raymond Lopez"
@@ -903,7 +902,7 @@ class NewUser extends Component {
                                         apellidos</HelpBlock>
                                 </div>)
                                 :
-                                (this.state.counselorNameValue.length < 50 && /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === true) ?
+                                (this.state.counselorNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === true) ?
                                     (<div>
                                         <FormControl name="organizationCounselorName"
                                                      placeholder="Ex. Raymond Lopez"
@@ -1140,7 +1139,7 @@ class NewUser extends Component {
                     <Col sm={4}>
                         <Col componentClass={ControlLabel} required>Nombre</Col>
                         {
-                            (/^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.managerNameValue) === false && this.state.managerNameValue.length != 0) ?
+                            (/^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.managerNameValue) === false && this.state.managerNameValue.length != 0) ?
                                 (<div>
                                     <FormControl name="managerName" style={errorFormStyle}
                                                  onChange={this.handleManagerNameValue}
@@ -1158,7 +1157,7 @@ class NewUser extends Component {
                                     </div>)
                                     :
                                     (this.state.managerNameValue.length < 50 &&
-                                    /^[a-zA-Z]+\s[a-zA-Z]+\s?[a-zA-Z]*\s*?$/.test(this.state.managerNameValue) === true) ?
+                                    /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.managerNameValue) === true) ?
                                         (<div>
                                             <FormControl name="managerName" style={successFormStyle}
                                                          onChange={this.handleManagerNameValue}

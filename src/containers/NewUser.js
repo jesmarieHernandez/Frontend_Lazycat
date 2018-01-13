@@ -201,6 +201,7 @@ class NewUser extends Component {
 
             console.log('El gallo claudio');
             console.log(newUser);
+
             fetch('http://localhost:8000/api/managers', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},

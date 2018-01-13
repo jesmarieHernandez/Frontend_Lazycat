@@ -20,11 +20,56 @@ class Users extends Component {
         this.state = {
             activeKey: "1",
             users: {
-                administrators: [],
-                counselors: [],
-                managers: [],
-                staff: [],
-                students: []
+                administrators: [
+
+                    {
+                        staff: [
+                            {
+                                staffName: ''
+                            }
+                        ]
+                    }
+                ],
+                staff: [
+
+                    {
+                        staff: [
+                            {
+                                staffName: ''
+                            }
+                        ]
+                    }
+                ],
+                counselors: [
+
+                    {
+                        counselors: [
+                            {
+                                counselorName: ''
+                            }
+                        ]
+                    }
+                ],
+                managers: [
+
+                    {
+                        managers: [
+                            {
+                                managerName: ''
+                            }
+                        ]
+                    }
+                ],
+                students: [
+
+                    {
+                        students: [
+                            {
+                                studentName: ''
+                            }
+                        ]
+                    }
+                ]
             }
         }
 
@@ -81,11 +126,11 @@ class Users extends Component {
         // console.log('Los putos administrators: ');
         // console.log(this.state.users.administrators);
         // console.log(this.state.users.administrators[0].staff);
-        const administrators = this.state.users.administrators.map(staff =>
+        const administrators = this.state.users.administrators.map(administrator =>
 
             <Col md={12}>
 
-                <Link to="/" style={{border: 'none'}}><Panel  header={staff.staff[0].staffName}>
+                <Link to="/" style={{border: 'none'}}><Panel  header={administrator.staff[0].staffName}>
                     {/*<p>Role: {administrators.role}</p>*/}
                     {/*<p>Email: {administrators.userEmail}</p>*/}
                     {/*<p>Creation Date: {users.creationDate}</p>*/}
@@ -139,11 +184,11 @@ class Users extends Component {
             </Col>
         );
 
-        const managers = this.state.users.managers.map(counselor =>
+        const managers = this.state.users.managers.map(manager =>
 
             <Col md={12}>
 
-                <Link to="/" style={{border: 'none'}}><Panel  header={counselor.managers[0].managerName}>
+                <Link to="/" style={{border: 'none'}}><Panel  header={manager.managers[0].managerName}>
                     {/*<p>Role: {administrators.role}</p>*/}
                     {/*<p>Email: {administrators.userEmail}</p>*/}
                     {/*<p>Creation Date: {users.creationDate}</p>*/}

@@ -106,17 +106,12 @@ class Request extends Component {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({studentInfo: results.students[0]});
-                    console.log('La puta info del estudiante: ');
-                    console.log(this.state.studentInfo);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+
 
                     fetch(`http://localhost:8000/api/userOrganizations/${this.state.studentInfo.studentEmail}`).then(response => {
-                        console.log('Cool...');
                         if (response.ok) {
                             response.json().then(results => {
-                                console.log('El puto resultado de userOrganization');
                                 this.setState({organizations: results});
-                                console.log()
                             });
                         } else {
                             console.log('Not ok');
@@ -176,6 +171,12 @@ class Request extends Component {
 
         const form = document.forms.activityRequest;
 
+
+        var getTwentyFourHourTime = function(amPmString) {
+            var d = new Date("1/1/2013 " + amPmString);
+            return d.getHours() + ':' + d.getMinutes();
+        }
+
         const activityRequest = {
             student_id: this.state.studentInfo.id,
             organization_id: this.state.selectedOrganization.id,
@@ -185,10 +186,12 @@ class Request extends Component {
             activityDescription: form.activityDescription.value,
             attendantsNumber: form.activityAssistant.value,
             activityDate: this.state.selectedDate,
-            activityStart: '10:10',
-            // activityStart: this.state.selectedStartTime,
-            activityEnd: this.state.endTime,
+            // activityStart: date,
+            // activityStart: this.state.startTime,
+            activityStart: getTwentyFourHourTime(this.state.selectedStartTime),
+            // activityEnd: this.state.endTime,
             // activityEnd: this.state.selectedEndTime,
+            activityEnd: getTwentyFourHourTime(this.state.selectedEndTime),
             hasFood: null,
             guestName: form.activityGuest.value,
             activityStatus_code: 1,
@@ -239,15 +242,15 @@ class Request extends Component {
             body: JSON.stringify(activityRequest),
         }).then(response => {
             if (response.ok) {
-                console.log('PINGA y METRACA');
-                console.log(response);
+
                 response.json().then(createdRequest => {
                     console.log('Activity request was created successfully!');
                     console.log('Activity request ID: ' + createdRequest._id);
                     this.setState({showModal: false});
                     console.log(':D');
                     console.log(this);
-                    this.props.history.push(`/activities/${createdRequest._id}`);
+                    // this.props.history.push(`/student/activities/${createdRequest._id}`);
+                    this.props.history.push(`/student/activities/}`);
 
                 })
             } else {
@@ -273,19 +276,8 @@ class Request extends Component {
             return organization.id == event.target.value;
         });
 
-        //console.log(selectedOrganization);
-        console.log('EL biiiiii');
         this.setState({selectedOrganization: selectedOrganization[0]});
-
-        console.log('El cri');
-        console.log(selectedOrganization[0].counselors[0]);
-
         this.setState({counselorInformation: selectedOrganization[0].counselors[0]});
-        console.log(this.state.selectedOrganization);
-        console.log(this.state.counselorInformation);
-
-
-
     }
 
     onFacilitiesSelected(event) {
@@ -329,6 +321,8 @@ class Request extends Component {
         console.log("Result: " + result);
         this.setState({selectedStartTime: result});
         this.setState({startTime: event});
+        console.log('Start time: ');
+        console.log(this.state.startTime);
 
     }
 

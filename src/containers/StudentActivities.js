@@ -40,24 +40,24 @@ class StudentActivities extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:3001/api/pending').then(response => {
-            if (response.ok) {
-                console.log('/api/pending! :D');
-                response.json().then(results => {
-                    console.log('Total pending activities: ' + results);
-
-                    //console.log(this.state.activities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                console.log('Unable to fetch pending activities')
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+        // fetch('http://localhost:3001/api/pending').then(response => {
+        //     if (response.ok) {
+        //         console.log('/api/pending! :D');
+        //         response.json().then(results => {
+        //             console.log('Total pending activities: ' + results);
+        //
+        //             //console.log(this.state.activities);
+        //             //this.props.router.push(`/activities/${createdRequest._id}`);
+        //         });
+        //     } else {
+        //         console.log('Unable to fetch pending activities')
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
     }
 
     render() {
@@ -75,7 +75,6 @@ class StudentActivities extends Component {
         const activities = this.state.activities.map(activity =>
 
             <Col md={12}>
-
             <Panel  header={activity.activityName}>
                 <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
                 <p>Description: {activity.activityDescription}</p>
@@ -83,7 +82,6 @@ class StudentActivities extends Component {
                 <p>Facility: {activity.facility.building + '-' + activity.facility.space}</p>
                 <p>Status: {activity.status.description}</p>
             </Panel>
-
             </Col>
         );
 

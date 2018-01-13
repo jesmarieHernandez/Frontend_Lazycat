@@ -50,7 +50,7 @@ class CreateOrganization extends Component {
 
     componentDidMount() {
         // fetch('http://localhost:8000/api/organization_types/').then(response => {
-        fetch('http://192.168.99.100/api/organization_types').then(response => {
+        fetch('http://localhost:8000/api/organization_types').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Organization Types");
@@ -120,15 +120,17 @@ class CreateOrganization extends Component {
             counselorOffice: form.organizationCounselorOfficeNumber.value
 
         };
-
+        console.log('Esto es lo que necesita que se cree');
         console.log(newOrganization);
+
         // fetch('http://localhost:8000/api/organizations', {
-        fetch('http://192.168.99.100/api/organizations', {
+        fetch('http://localhost:8000/api/organizations', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),
         }).then(response => {
             if (response.ok) {
+                console.log('Se creo!');
                 console.log(response);
                 response.json().then(createdOrganization => {
                     console.log('New organization was created successfully!');

@@ -65,6 +65,172 @@ class UserDetail extends Component {
             </div>
         );
 
+        const adminFields = (
+            <Form horizontal onSubmit={this.onSubmit} name="newAdmin">
+
+                <FormGroup>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Full name</Col>
+                        <FormControl name="adminName" required/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Email</Col>
+                        <FormControl name="adminEmail" required/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Telephone</Col>
+                        <FormControl name="adminTelephone" required/>
+                    </Col>
+                </FormGroup>
+            </Form>
+        )
+
+        const staffFields = (
+            <Form horizontal onSubmit={this.onSubmit} name="newStaff">
+
+                <FormGroup>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Full name</Col>
+                        <FormControl name="staffName" required/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Email</Col>
+                        <FormControl name="staffEmail" required/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Telephone</Col>
+                        <FormControl name="staffTelephone" required/>
+                    </Col>
+                </FormGroup>
+            </Form>
+        )
+
+        const studentFields = (
+            <div>
+                <Form horizontal onSubmit={this.onSubmit} name="newStudent">
+                    <FormGroup>
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Full Name</Col>
+                            <FormControl name="requesterName" required/>
+                        </Col>
+
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Identification Number</Col>
+                            <FormControl name="studentIdentificationNumber" required/>
+                        </Col>
+
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={10}>
+                            <Col componentClass={ControlLabel}>Address</Col>
+                            <FormControl name="studentAddress1" required/>
+                        </Col>
+
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>City</Col>
+                            <FormControl name="studentAddressCity" required/>
+                        </Col>
+
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>State</Col>
+                            <FormControl name="studentAddressState" required/>
+                        </Col>
+
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>Country</Col>
+                            <FormControl name="studentAddressCountry" required/>
+                        </Col>
+
+                        <Col sm={3}>
+                            <Col componentClass={ControlLabel}>Zip Code</Col>
+                            <FormControl name="studentAddressZipCode" required/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup>
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Telephone</Col>
+                            <FormControl name="studentTelephone" required/>
+                        </Col>
+
+                        <Col sm={4}>
+                            <Col componentClass={ControlLabel}>Email</Col>
+                            <FormControl name="studentEmail" required/>
+                        </Col>
+                    </FormGroup>
+                </Form>
+            </div>
+        )
+
+        const counselorFields = (
+            <Form horizontal onSubmit={this.onSubmit} name="newCounselor">
+
+                <FormGroup>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Full Name</Col>
+                        <FormControl name="counselorName" required/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Email</Col>
+                        <FormControl name="counselorEmail" required/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Telephone</Col>
+                        <FormControl name="counselorTelephone" type="number" required/>
+                    </Col>
+                </FormGroup>
+
+                <FormGroup>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Faculty</Col>
+                        <FormControl name="counselorFaculty" required/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Department</Col>
+                        <FormControl name="counselorDepartment" required/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel}>Office Number</Col>
+                        <FormControl name="counselorOfficeNumber" required/>
+                    </Col>
+                </FormGroup>
+            </Form>
+        )
+
+        const facilitiesManagerFields = (
+            <Form horizontal onSubmit={this.onSubmit} name="newFacilitiesManager">
+
+                <FormGroup>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel} required>Full Name</Col>
+                        <FormControl name="managerName"/>
+                    </Col>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel} required>Email</Col>
+                        <FormControl name="managerEmail"/>
+                    </Col>
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel} required>Telephone</Col>
+                        <FormControl name="managerTelephone"/>
+                    </Col>
+                </FormGroup>
+            </Form>
+        )
+
         return (
             <div className="container">
                 <Col md={2}>

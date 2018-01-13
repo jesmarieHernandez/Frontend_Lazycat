@@ -20,18 +20,46 @@ class Activities extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            activities: []
+            activeKey: "1",
+            activities: [],
+            pendingActivities: [],
+            approvedActivities: [],
+            deniedActivities: []
         }
+
+        this.handleSelect = this.handleSelect.bind(this);
+
     }
 
     componentDidMount() {
 
         // fetch('http://localhost:8000/api/activities').then(response => {
-        fetch('http://192.168.99.100/api/activities').then(response => {
+        fetch('http://localhost:8000/api/activities').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
                     //this.props.router.push(`/activities/${createdRequest._id}`);
+                    const pending = this.state.activities.filter(function (obj) {
+                        return obj.status.code == 1;
+                    });
+
+                    this.setState({pendingActivities: pending});
+
+                    const approved = this.state.activities.filter(function (obj) {
+                        return obj.status.code == 2;
+                    });
+
+                    this.setState({approvedActivities: approved});
+
+                    const denied = this.state.activities.filter(function (obj) {
+                        return obj.status.code == 3;
+                    });
+
+                    this.setState({deniedActivities: denied});
+
+
+
+
                 });
             } else {
                 // response.json().then(error => {
@@ -62,6 +90,12 @@ class Activities extends Component {
         // });
     }
 
+    handleSelect(event) {
+        // event.preventDefault();
+        console.log(event);
+        this.setState({activeKey: event});
+    }
+
     render() {
         const tabsInstance = (
 
@@ -74,6 +108,68 @@ class Activities extends Component {
                 </Nav>
             </div>
         );
+
+
+
+        //this.setState({pendingActivities: pending});
+
+        let pendingActivities;
+
+        if (this.state.pendingActivities.length === 0) {
+            pendingActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades pendientes.</p>
+        } else {
+
+
+            pendingActivities = this.state.pendingActivities.map(activity =>
+
+                <Col md={12}>
+                    <Panel header={activity.activityName}>
+                        <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                        <br/>
+                        <p><b>Description:</b> {activity.activityDescription}</p>
+                        <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                        <p><b>Facility:</b> {activity.facility.space}</p>
+                        <p><b>Status:</b> {activity.status.description}</p>
+                    </Panel>
+                </Col>
+            );
+        }
+
+        let approvedActivities = this.state.approvedActivities.map(activity =>
+
+            <Col md={12}>
+
+                <Panel header={activity.activityName}>
+                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                    <br/>
+                    <p><b>Description:</b> {activity.activityDescription}</p>
+                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                    <p><b>Facility:</b> {activity.facility.space}</p>
+                    <p><b>Status:</b> {activity.status.description}</p>
+                </Panel>
+
+            </Col>
+        );
+
+
+
+
+        let deniedActivities = this.state.deniedActivities.map(activity =>
+
+            <Col md={12}>
+
+                <Panel header={activity.activityName}>
+                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                    <br/>
+                    <p><b>Description:</b> {activity.activityDescription}</p>
+                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                    <p><b>Facility:</b> {activity.facility.space}</p>
+                    <p><b>Status:</b> {activity.status.description}</p>
+                </Panel>
+
+            </Col>
+        );
+
 
         const activities = this.state.activities.map(activity =>
 
@@ -93,6 +189,10 @@ class Activities extends Component {
             </Col>
         );
 
+
+
+
+        console.log(this.state.activities);
         return (
             <div className="container">
                 <Col md={2}>
@@ -105,7 +205,23 @@ class Activities extends Component {
                             <li/>
                             <li className="active">Activities</li>
                         </ol>
-                        {activities}
+                        <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+                            <NavItem eventKey="1" href="/home">Pendientes
+                                {this.state.pendingActivities.length > 0 ?<Badge style={{background: 'red', marginLeft: '10px'}}>
+                                        {this.state.pendingActivities.length}</Badge>:
+                                null}
+                                </NavItem>
+
+                            <NavItem eventKey="2" title="Item">Aprobadas </NavItem>
+                            <NavItem eventKey="3" title="Item">Denegadas </NavItem>
+                        </Nav>
+                        <br/>
+                        {/*{activities}*/}
+
+                        {this.state.activeKey === '1' ? pendingActivities : null}
+                        {this.state.activeKey === '2' ? approvedActivities : null}
+                        {this.state.activeKey === '3' ? deniedActivities : null}
+
                     </Col>
 
                     <Col md={3}>

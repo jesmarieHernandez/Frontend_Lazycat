@@ -5,11 +5,11 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
 import Icon from 'react-icons-kit';
-import { statsDots } from 'react-icons-kit/icomoon/statsDots';
-import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
-import { home } from 'react-icons-kit/icomoon/home';
-import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
-import { userTie } from 'react-icons-kit/icomoon/userTie';
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
+import {userTie} from 'react-icons-kit/icomoon/userTie';
 import DatePicker from 'react-bootstrap-date-picker';
 import TimePicker from 'react-bootstrap-time-picker';
 
@@ -18,7 +18,6 @@ import {
     Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
-
 
 
 const PAGE_SIZE = 10;
@@ -32,41 +31,8 @@ class ActivityDetail extends Component {
             selectedType: {},
             commentary: '',
 
-/*            activity: {
-                _id: 0,
-                requestTitle: '',
-                activityDescription: '',
-                activityGuest: '',
-                activityAssistant: '',
-                selectedDate: '',
-                startTime: '',
-                endTime: '',
-                organization: {},
-                organizationInitials: '',
-                requesterName: '',
-                studentIdentificationNumber: '',
-                studentRole: '',
-                studentAddress1: '',
-                studentAddressCity: '',
-                studentAddressState: '',
-                studentAddressCountry: '',
-                studentAddressZipCode: '',
-                studentTelephone: '',
-                counselor: {},
-                counselorTelephone: '',
-                counselorFaculty: '',
-                counselorDepartment: '',
-                counselorOfficeNumber: '',
-                requestDate: '',
-                building: '',
-                facilities: {},
-                status: '',
-                facilityManagerDecision: '',
-                counselorDecision: '',
-                dscaDecision: ''
-            }*/
             activity: {
-                id:  '',
+                id: '',
                 activityName: '',
                 activityDescription: '',
                 attendantsNumber: '',
@@ -149,8 +115,8 @@ class ActivityDetail extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
-        // fetch(`http://localhost:3001/api/activities/${id}`).then(response => {
-        fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
+        // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({activity: data[0]});
@@ -179,8 +145,8 @@ class ActivityDetail extends Component {
 
 
         console.log("Activity Update Object: " + activityUpdate);
-        fetch(`http://localhost:3001/api/activities/update/${this.state.activity._id}`, {
-            method: 'POST',
+        fetch(`http://localhost:8000/api/adminApproved/${this.state.activity.id}`, {
+            method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
         }).then(response => {
@@ -216,8 +182,8 @@ class ActivityDetail extends Component {
         this.setState({dscaDecision: 'denied'});
 
         console.log(activityUpdate);
-        fetch(`http://localhost:3001/api/activities/update/${this.state.activity._id}`, {
-            method: 'POST',
+        fetch(`http://localhost:8000/api/adminDenied/${this.state.activity.id}`, {
+            method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
         }).then(response => {
@@ -239,51 +205,7 @@ class ActivityDetail extends Component {
         });
     }
 
-    /*    onApproval() {
-     console.log("This thing was clicked");
 
-     fetch(`/api/activities/${ this.state.activity._id}/approve`, {
-     method: 'POST'
-     }).then(response => {
-     if (response.ok) {
-     console.log(response);
-     response.json().then(approvedActivity => {
-     console.log('Activity request status: ' + approvedActivity.status);
-
-     this.props.router.push(`/activities/${approvedActivity._id}`);
-     })
-     } else {
-     response.json().then(error => {
-     //this.props.showError(`Failed to create request: ${error.message}`);
-     });
-     }
-     }).catch(err => {
-     //this.props.showError(`Error in sending data to server: ${err.message}`);
-     });
-     }
-
-     onDenied() {
-     console.log("This thing was denied");
-
-     fetch(`/api/activities/${ this.state.activity._id}/deny`, {
-     method: 'POST'
-     }).then(response => {
-     if (response.ok) {
-     console.log(response);
-     response.json().then(deniedActivity => {
-     console.log('Activity request status: ' + deniedActivity.status);
-
-     this.props.router.push(`/activities/${deniedActivity._id}`);
-     })
-     } else {
-     response.json().then(error => {
-     //this.props.showError(`Failed to create request: ${error.message}`);
-     });
-     }
-     }).catch(err => {
-     //this.props.showError(`Error in sending data to server: ${err.message}`);
-     });
-     }*/
 
     onTypeSelected(event) {
         console.log("Type here");
@@ -319,96 +241,6 @@ class ActivityDetail extends Component {
                 </Nav>
             </div>
         );
-
-        /*        return (
-         <div className="container">
-         <Col md={2}>
-         {tabsInstance}
-         </Col>
-
-         <Col md={10}>
-
-         <ol className="breadcrumb">
-         <li/>
-         <li ><Link to={`/activities/`}>Activities</Link></li>
-         <li className="active">Activity Details</li>
-         </ol>
-
-         <Panel  header={this.state.activity.requestTitle}>
-         {/!*<td><Link to={`/activities/${this.state.activity._id}`}>{this.state.activity.requestTitle}</Link></td>*!/}
-         <p><b>Organization Name:</b> {this.state.activity.organization.name}</p>
-         <p><b>Organization Initials:</b> {this.state.activity.organizationInitials}</p>
-         <br/>
-         <p><b>Requested Facility:</b> {this.state.activity.facilities.name}</p>
-         <p><b>Building:</b> {this.state.activity.facilities.building}</p>
-         <p><b>Activity Description:</b> {this.state.activity.activityDescription}</p>
-         <p><b>Activity Guest(s):</b> {this.state.activity.activityGuest}</p>
-         <p><b>Activity Assistants:</b> {this.state.activity.activityAssistant}</p>
-         <p><b>Activity Date:</b> {this.state.activity.selectedDate}</p>
-         <p><b>Activity Start Time:</b> {this.state.activity.startTime}</p>
-         <p><b>Activity End Time:</b> {this.state.activity.endTime}</p>
-         <br/>
-         <p><b>Requester Name:</b> {this.state.activity.requesterName}</p>
-         <p><b>Requester Identification Number:</b> {this.state.activity.studentIdentificationNumber}</p>
-         <p><b>Requester Role:</b> {this.state.activity.studentRole}</p>
-         <p><b>Requester Address:</b> {this.state.activity.studentAddress1} {this.state.activity.studentAddressCity} {this.state.activity.studentAddressState} {this.state.activity.studentAddressCountry} {this.state.activity.studentAddressZipCode}</p>
-         <p><b>Requester Telephone:</b> {this.state.activity.studentTelephone}</p>
-         <br/>
-         <p><b>Counselor Name:</b> {this.state.activity.counselorName}</p>
-         <p><b>Counselor Telephone:</b> {this.state.activity.counselorTelephone}</p>
-         <p><b>Counselor Faculty:</b> {this.state.activity.counselorFaculty}</p>
-         <p><b>Counselor Department:</b> {this.state.activity.counselorDepartment}</p>
-         <p><b>Counselor Office Number:</b> {this.state.activity.counselorOfficeNumber}</p>
-         <p><b>Counselor Email:</b> {this.state.activity.counselorEmail}</p>
-         <br/>
-         <div align="center">
-         <p><b>Status:</b> {this.state.activity.status}</p>
-         <p><b>Request Submission Date:</b> {this.state.activity.requestDate}</p>
-         <p><b>Counselor Decision Date:</b> </p>
-         <p><b>Facilities Manager Decision Date:</b></p><br />
-         </div>
-
-         <Row>
-         <Col sm={3}>
-         <Col componentClass={ControlLabel}>Category: </Col>
-         <FormControl componentClass="select" name="selectType"
-         onChange={this.onTypeSelected}
-         placeholder="select">
-         <option>select</option>
-         {typeOptions}
-
-         </FormControl>
-         </Col>
-         </Row>
-         <br />
-
-         <Row>
-         <Col sm={3}>
-         <Col componentClass={ControlLabel}>Commentary: </Col>
-         <FormControl componentClass="textarea" name="commentary"/>
-         </Col>
-         </Row>
-         <br />
-
-         <Row>
-         {(this.state.activity.dscaDecision === "pending" )  ?
-         (<div>
-         <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Back</Button></Link></Col>
-         <Col md="1"><Button className="btn-success" onClick={this.onApproval}>Approve</Button></Col>
-         <Col md="1"><Button className="btn-danger"  onClick={this.onDenied}>Decline</Button></Col>
-         </div>) :
-         (<div>
-         <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Back</Button></Link></Col>
-         <Col md="1"><Button>This activity has been {this.state.activity.dscaDecision}.</Button></Col>
-         </div>)
-         }
-         </Row>
-
-
-         </Panel>
-         </Col>
-         </div>
-         )*/
 
         return (
             <div className="container">

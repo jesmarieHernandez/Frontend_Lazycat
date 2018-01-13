@@ -161,7 +161,7 @@ class Request extends Component {
             studentAddressState: form.studentAddressState.value,
             studentAddressCountry: form.studentAddressCountry.value,
             studentAddressZipCode: form.studentAddressZipCode.value,
-            studentTelephone: form.studentTelephone.value,
+            studentPhone: form.studentTelephone.value,
             counselorName: form.counselorName.value,
             counselorTelephone: form.counselorTelephone.value,
             counselorFaculty: form.counselorFaculty.value,
@@ -179,7 +179,7 @@ class Request extends Component {
         };
 
         console.log(activityRequest);
-        fetch('http://localhost:3001/api/activities', {
+        fetch('http://localhost:8000/api/activities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityRequest),

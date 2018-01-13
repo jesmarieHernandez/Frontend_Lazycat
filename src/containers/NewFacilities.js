@@ -57,18 +57,19 @@ class CreateFacilities extends Component {
         console.log('Form was submitted');
 
         const form = document.forms.newFacilities;
-
+        console.log(form);
         const newFacilities = {
             building: form.building.value,
             space: form.space.value,
-            facilityDepartment_code: 1,
+            facilityDepartment: 'mcBicho',
             isActive: 1
         };
+        console.log('Los nuevos facilities');
 
         console.log(newFacilities);
 
         // fetch('http://localhost:3001/api/admin/facilities', {
-        fetch('http://192.168.99.100/api/admin/facilities', {
+        fetch('http://localhost:8000/api/facilities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),
@@ -207,24 +208,6 @@ class CreateFacilities extends Component {
                                     <FormControl name="facilitiesDepartmentCode" placeholder="Ex. Ingenier&iacute;a Civil" required/>
                                 </Col>
                             </FormGroup>
-
-{/*                            <FormGroup>
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Manager Email</Col>
-                                    <FormControl name="facilitiesManagerEmail"/>
-                                </Col>
-
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Manager Name</Col>
-                                    <FormControl name="facilitiesManagerName"/>
-                                </Col>
-
-                                <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Space</Col>
-                                    <FormControl name="space"/>
-                                </Col>
-                            </FormGroup>*/}
-
 
                             <ReactCenter>
                                 <ButtonToolbar>

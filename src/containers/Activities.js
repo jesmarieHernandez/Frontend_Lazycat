@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
-    Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
+    Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Badge, Col, Row, Checkbox, Breadcrumb,
     BreadcrumbItem, Nav, Navbar, NavItem, ButtonToolbar
 } from 'react-bootstrap';
 import Select from 'react-select';
@@ -228,8 +228,8 @@ class Activities extends Component {
                         <Panel header='Activities'>
                             <ReactCenter><Link to="/request"><Button bsSize="medium">New
                                 Request</Button></Link></ReactCenter>
-                            <Checkbox><p>Request Title</p></Checkbox>
-                            <Checkbox><p>Request Description</p></Checkbox>
+                            {/*<Checkbox><p>Request Title</p></Checkbox>*/}
+                            {/*<Checkbox><p>Request Description</p></Checkbox>*/}
                         </Panel>
 
 

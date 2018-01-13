@@ -42,7 +42,9 @@ class Request extends Component {
             startTime: '',
             selectedEndTime: '',
             endTime: '',
-            selectedFacilities: {},
+            selectedFacilities: {
+                building: ''
+            },
             statusOptions: ['pending', 'approved', 'denied'],
             selectedStatus: {},
 
@@ -96,45 +98,9 @@ class Request extends Component {
 
     componentDidMount() {
         console.log('Ok?');
-      //integration_jesmarie to delete
-       /* fetch(`http://192.168.99.100/api/userOrganizations/${this.state.studentInfo.studentEmail}`).then(response => {
-            console.log('Cool...');
-            console.log(this.state.studentInfo.studentEmail);
-            if (response.ok) {
-                response.json().then(results => {
-                    this.setState({organizations: results});
-                });
-            } else {
-                console.log('Organization Not ok');
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            console.log(err);
-            // this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
 
-        fetch(`http://192.168.99.100/api/facilities/`).then(response => {
-            if (response.ok) {
-                response.json().then(results => {
-                    //console.log(results);
-                    this.setState({facilities: results});
-                    console.log(this.state.facilities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                console.log('Not ok');
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            console.log(err);
-            // this.props.showError(`Error in sending data to server: ${err.message}`);
-        });*/
-
-        fetch(`http://192.168.99.100/api/users/${this.props.authentication.email}`).then(response => {
+        // fetch(`http://192.168.99.100/api/users/${this.props.authentication.email}`).then(response => {
+        fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({studentInfo: results.students[0]});
@@ -232,7 +198,8 @@ class Request extends Component {
             activityType_code: 1
         };
         console.log(activityRequest);
-        fetch('http://192.168.99.100/api/activities', {
+        // fetch('http://192.168.99.100/api/activities', {
+        fetch('http://localhost:8000/api/activities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityRequest),
@@ -280,6 +247,7 @@ class Request extends Component {
         this.setState({facilityPicked: true});
         event.preventDefault();
         console.log('Change happened');
+        console.log('Aqui se va a la puta: ');
         console.log(event.target.value);
         const selectedFacilities = this.state.facilities.filter(function (obj) {
             return obj.id == event.target.value;

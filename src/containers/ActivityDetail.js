@@ -242,7 +242,6 @@ class ActivityDetail extends Component {
             </div>
         );
 
-
         return (
             <div className="container">
 
@@ -485,11 +484,11 @@ class ActivityDetail extends Component {
 
                                     <Row>
                                         <ReactCenter>
-                                            <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Back</Button></Link></Col>
-                                            <Col md="1"><Button className="btn-success"
-                                                                onClick={this.onApproval}>Approve</Button></Col>
-                                            <Col md="1"><Button className="btn-danger"
-                                                                onClick={this.onDenied} style={{marginLeft: "20px"}}>Decline</Button></Col>
+                                        <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Back</Button></Link></Col>
+                                        <Col md="1"><Button className="btn-success"
+                                                            onClick={this.onApproval}>Approve</Button></Col>
+                                        <Col md="1"><Button className="btn-danger"
+                                                            onClick={this.onDenied} style={{marginLeft: "20px"}}>Decline</Button></Col>
                                         </ReactCenter>
                                     </Row>
 

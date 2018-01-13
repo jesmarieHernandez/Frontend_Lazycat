@@ -30,6 +30,7 @@ import CounselorActivities from "./containers/CounselorActivities";
 import ManagerActivities from "./containers/ManagerActivities";
 import StaffActivities from "./containers/StaffActivities"
 import StaffStatistics from "./containers/StaffStatistics";
+import EditActivity from "./containers/EditActivity"
 
 import NotFound from "./containers/NotFound";
 
@@ -52,6 +53,7 @@ export default ({childProps}) => {
         <AdminRoute path="/request" exact component={Request} props={childProps}/>
         <UnauthenticatedRoute path="/login" exact component={Login} props={childProps}/>
         <AdminRoute path="/activities" exact component={Activities} props={childProps}/>
+        <AdminRoute path="/activities/edit" exact component={EditActivity} props={childProps}/>
         <AdminRoute path="/activities/:id" exact component={ActivityDetail} props={childProps}/>
         <AdminRoute path="/stats" exact component={Stats} props={childProps}/>
         <AdminRoute path="/admin" exact component={Admin} props={childProps}/>

@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem, HelpBlock
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
 import Icon from 'react-icons-kit';
@@ -23,6 +23,10 @@ class NewUser extends Component {
 
         this.state = {
             userRoles: [
+                {
+                    id: 0,
+                    name: 'select'
+                },
                 {
                     id: 1,
                     name: 'Admin'
@@ -46,12 +50,27 @@ class NewUser extends Component {
             ],
             adminNameValue: '',
             adminEmailValue: '',
-            adminTelephoneValue: '',
+            adminPhoneValue: '',
             staffNameValue: '',
             staffEmailValue: '',
-            staffTelephoneValue: '',
-            requesterNameValue: '',
-            studentIdentificationNumberValue: '',
+            staffPhoneValue: '',
+            studentNameValue: '',
+            studentIdentificationNoValue: '',
+            studentAddressValue: '',
+            studentCityValue: '',
+            studentCountryValue: '',
+            studentZipCodeValue: '',
+            studentPhoneValue: '',
+            studentEmailValue: '',
+            counselorNameValue: '',
+            counselorEmailValue: '',
+            counselorPhoneValue: '',
+            counselorFacultyValue: '',
+            counselorDepartmentValue: '',
+            counselorOfficeValue: '',
+            managerNameValue: '',
+            managerEmailValue: '',
+            managerPhoneValue: '',
             selectedUserRole: ''
         }
     }
@@ -229,6 +248,98 @@ class NewUser extends Component {
 
     }
 
+    handleAdminNameValue = (e) => {
+        this.setState({adminNameValue: e.target.value})
+    }
+
+    handleAdminEmailValue = (e) => {
+        this.setState({adminEmailValue: e.target.value})
+    }
+
+    handleAdminPhoneValue = (e) => {
+        this.setState({adminPhoneValue: e.target.value})
+    }
+
+    handleStaffNameValue = (e) => {
+        this.setState({staffNameValue: e.target.value})
+    }
+
+    handleStaffEmailValue = (e) => {
+        this.setState({staffEmailValue: e.target.value})
+    }
+
+    handleStaffPhoneValue = (e) => {
+        this.setState({staffPhoneValue: e.target.value})
+    }
+
+    handleStudentNameValue = (e) => {
+        this.setState({studentNameValue: e.target.value})
+    }
+
+    handleStudentIdentificationNoValue = (e) => {
+        this.setState({studentIdentificationNoValue: e.target.value})
+    }
+
+    handleStudentAddressValue = (e) => {
+        this.setState({studentAddressValue: e.target.value})
+    }
+
+    handleStudentCityValue = (e) => {
+        this.setState({studentCityValue: e.target.value})
+    }
+
+    handleStudentCountryValue = (e) => {
+        this.setState({studentCountryValue: e.target.value})
+    }
+
+    handleStudentZipCodeValue = (e) => {
+        this.setState({studentZipCodeValue: e.target.value})
+    }
+    handleStudentPhoneValue = (e) => {
+        this.setState({studentPhoneValue: e.target.value})
+    }
+
+    handleStudentEmailValue = (e) => {
+        this.setState({studentEmailValue: e.target.value})
+    }
+
+    handleCounselorNameValue = (e) => {
+        this.setState({counselorNameValue: e.target.value})
+    }
+
+    handleCounselorEmailValue = (e) => {
+        this.setState({counselorEmailValue: e.target.value})
+    }
+
+    handleCounselorPhoneValue = (e) => {
+        this.setState({counselorPhoneValue: e.target.value})
+    }
+
+    handleCounselorFacultyValue = (e) => {
+        this.setState({counselorFacultyValue: e.target.value})
+    }
+
+    handleCounselorDepartmentValue = (e) => {
+        this.setState({counselorDepartmentValue: e.target.value})
+    }
+
+    handleCounselorOfficeValue = (e) => {
+        this.setState({counselorOfficeValue: e.target.value})
+    }
+
+    handleManagerNameValue = (e) => {
+        this.setState({managerNameValue: e.target.value})
+    }
+
+    handleManagerEmailValue = (e) => {
+        this.setState({managerEmailValue: e.target.value})
+    }
+
+    handleManagerPhoneValue = (e) => {
+        this.setState({managerPhoneValue: e.target.value})
+    }
+
+
     onUserRoleSelected = (event) => {
         event.preventDefault();
         console.log('Change happened');
@@ -252,13 +363,31 @@ class NewUser extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
-                    <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
+                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
+                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
+                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie}
+                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );
+
+        var errorFormStyle = {
+            borderColor: '#B74442',
+            boxShadow: "0px 0px 8px #B74442"
+        };
+
+        var errorHelpBlockStyle = {
+            color: '#B74442'
+        };
+
+        var successFormStyle = {
+            borderColor: '#3C765B',
+            boxShadow: "0px 0px 8px #3C765B"
+        };
 
 
         const adminFields = (
@@ -266,18 +395,86 @@ class NewUser extends Component {
 
                 <FormGroup>
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Full name</Col>
-                        <FormControl name="adminName" required/>
+                        <Col componentClass={ControlLabel}>Nombre</Col>
+                        {
+                            (this.state.adminNameValue.length > 50) ?
+                                (<div>
+                                    <FormControl name="adminName" onChange={this.handleAdminNameValue}
+                                                 style={errorFormStyle} placeholder="Ex. Maria Cruz" required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Nombre es demasiado largo</HelpBlock>
+                                </div>)
+                                :
+                                (this.state.adminNameValue.length != 0 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === false) ?
+                                    (<div>
+                                        <FormControl name="adminName" onChange={this.handleAdminNameValue}
+                                                     style={errorFormStyle} placeholder="Ex. Maria Cruz" required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre y apellido</HelpBlock>
+                                    </div>)
+                                    :
+                                    (this.state.adminNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === true) ?
+                                        (<div>
+                                            <FormControl name="adminName" onChange={this.handleAdminNameValue}
+                                                         style={successFormStyle} placeholder="Ex. Maria Cruz"
+                                                         required/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="adminName" placeholder="Ex. Maria Cruz"
+                                                         onChange={this.handleAdminNameValue}
+                                                         required/>
+                                        </div>)
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Email</Col>
-                        <FormControl name="adminEmail" required/>
+                        <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
+                        {
+                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.adminEmailValue) === false && this.state.adminEmailValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="adminEmail" onChange={this.handleAdminEmailValue}
+                                                 style={errorFormStyle} placeholder="Ex. maria.cruz@upr.edu" required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                        @upr.edu</HelpBlock>
+                                </div>)
+                                :
+                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.adminEmailValue) === true) ?
+                                    (<div>
+                                        <FormControl name="adminEmail" onChange={this.handleAdminEmailValue}
+                                                     style={successFormStyle} placeholder="Ex. maria.cruz@upr.edu"
+                                                     required/>
+                                    </div>)
+                                    :
+                                    (<div>
+                                        <FormControl name="adminEmail" onChange={this.handleAdminEmailValue}
+                                                     placeholder="Ex. maria.cruz@upr.edu" required/>
+                                    </div>)
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Telephone</Col>
-                        <FormControl name="adminTelephone" required/>
+                        <Col componentClass={ControlLabel}>Tel&eacute;fono</Col>
+                        {
+                            (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.adminPhoneValue) === false && this.state.adminPhoneValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="adminTelephone" style={errorFormStyle}
+                                                 onChange={this.handleAdminPhoneValue} placeholder="Ex. 7656" required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Solo extension (4 digitos) o
+                                        numero completo (10 digitos)</HelpBlock>
+                                </div>)
+                                :
+                                (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.adminPhoneValue) === true) ?
+                                    (<div>
+                                        <FormControl name="adminTelephone" style={successFormStyle}
+                                                     onChange={this.handleAdminPhoneValue} placeholder="Ex. 7656"
+                                                     required/>
+                                    </div>)
+                                    :
+                                    (<div>
+                                        <FormControl name="adminTelephone" placeholder="Ex. 7656"
+                                                     onChange={this.handleAdminPhoneValue}
+                                                     required/>
+                                    </div>)
+                        }
                     </Col>
                 </FormGroup>
             </Form>
@@ -289,18 +486,87 @@ class NewUser extends Component {
                 <FormGroup>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Full name</Col>
-                        <FormControl name="staffName" required/>
+                        <Col componentClass={ControlLabel}>Nombre</Col>
+                        {
+                            (this.state.staffNameValue.length > 50) ?
+                                (<div>
+                                    <FormControl name="staffName" style={errorFormStyle}
+                                                 onChange={this.handleStaffNameValue} placeholder="Ex. Juan Velez"
+                                                 required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Nombre es demasiado largo</HelpBlock>
+                                </div>)
+                                :
+                                (this.state.staffNameValue.length != 0 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === false) ?
+                                    (<div>
+                                        <FormControl name="staffName" style={errorFormStyle}
+                                                     onChange={this.handleStaffNameValue} placeholder="Ex. Juan Velez"
+                                                     required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre y apellido</HelpBlock>
+                                    </div>)
+                                    :
+                                    (this.state.staffNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === true) ?
+                                        (<div>
+                                            <FormControl name="staffName" style={successFormStyle}
+                                                         onChange={this.handleStaffNameValue}
+                                                         placeholder="Ex. Juan Velez" required/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="staffName" onChange={this.handleStaffNameValue}
+                                                         placeholder="Ex. Juan Velez" required/>
+                                        </div>)
+
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Email</Col>
-                        <FormControl name="staffEmail" required/>
+                        <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
+                        {
+                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.staffEmailValue) === false && this.state.staffEmailValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="staffEmail" style={errorFormStyle}
+                                                 onChange={this.handleStaffEmailValue}
+                                                 placeholder="Ex. juan.velex@upr.edu" required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                        @upr.edu</HelpBlock>
+                                </div>)
+                                :
+                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.staffEmailValue) === true) ?
+                                    (<div>
+                                        <FormControl name="staffEmail" onChange={this.handleStaffEmailValue}
+                                                     style={successFormStyle} placeholder="Ex. juan.velex@upr.edu"
+                                                     required/>
+                                    </div>)
+                                    :
+                                    (<div>
+                                        <FormControl name="staffEmail" onChange={this.handleStaffEmailValue}
+                                                     placeholder="Ex. juan.velex@upr.edu" required/>
+                                    </div>)
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Telephone</Col>
-                        <FormControl name="staffTelephone" required/>
+                        <Col componentClass={ControlLabel}>Tel&eacute;fono</Col>
+                        {
+                            (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.staffPhoneValue) === false && this.state.staffPhoneValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="staffTelephone" onChange={this.handleStaffPhoneValue}
+                                                 style={errorFormStyle} placeholder="Ex.5678" required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Solo extension (4 digitos) o
+                                        numero completo (10 digitos)</HelpBlock>
+                                </div>)
+                                :
+                                (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.staffPhoneValue) === true) ?
+                                    (<div>
+                                        <FormControl name="staffTelephone" onChange={this.handleStaffPhoneValue}
+                                                     style={successFormStyle} placeholder="Ex.5678" required/>
+                                    </div>)
+                                    :
+                                    (<div>
+                                        <FormControl name="staffTelephone" onChange={this.handleStaffPhoneValue}
+                                                     placeholder="Ex.5678" required/>
+                                    </div>)
+                        }
                     </Col>
                 </FormGroup>
             </Form>
@@ -311,56 +577,309 @@ class NewUser extends Component {
                 <Form horizontal onSubmit={this.onSubmit} name="newStudent">
                     <FormGroup>
                         <Col sm={4}>
-                            <Col componentClass={ControlLabel}>Full Name</Col>
-                            <FormControl name="requesterName" required/>
+                            <Col componentClass={ControlLabel}>Nombre</Col>
+                            {
+                                (this.state.studentNameValue.length > 50) ?
+                                    (<div>
+                                        <FormControl name="studentName" style={errorFormStyle}
+                                                     onChange={this.handleStudentNameValue}
+                                                     placeholder="Ex. Carlos Donato"
+                                                     required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Nombre es demasiado largo</HelpBlock>
+                                    </div>)
+                                    :
+                                    (this.state.studentNameValue.length != 0 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === false) ?
+                                        (<div>
+                                            <FormControl name="studentName" style={errorFormStyle}
+                                                         onChange={this.handleStudentNameValue}
+                                                         placeholder="Ex. Carlos Donato"
+                                                         required/>
+                                            <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre y
+                                                apellido</HelpBlock>
+                                        </div>)
+                                        :
+                                        (this.state.studentNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === true) ?
+                                            (<div>
+                                                <FormControl name="studentName" style={successFormStyle}
+                                                             onChange={this.handleStudentNameValue}
+                                                             placeholder="Ex. Carlos Donato"
+                                                             required/>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="studentName" onChange={this.handleStudentNameValue}
+                                                             placeholder="Ex. Carlos Donato"
+                                                             required/>
+                                            </div>)
+                            }
                         </Col>
 
                         <Col sm={4}>
-                            <Col componentClass={ControlLabel}>Identification Number</Col>
-                            <FormControl name="studentIdentificationNumber" required/>
+                            <Col componentClass={ControlLabel}>N&uacute;m. de identificaci&oacute;n</Col>
+                            {
+                                ((this.state.studentIdentificationNoValue.length > 9 || this.state.studentIdentificationNoValue.length < 9) && this.state.studentIdentificationNoValue.length != 0) ?
+                                    (<div>
+                                        <FormControl name="studentIdentificationNumber"
+                                                     onChange={this.handleStudentIdentificationNoValue}
+                                                     style={errorFormStyle} placeholder="Ex. 7875557656"
+                                                     required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Escriba el n&uacute;mero de
+                                            identificaci&oacute;n sin espacios o gui&oacute;n</HelpBlock>
+                                    </div>)
+                                    :
+                                    (/^([0-9]{9})$/.test(this.state.studentIdentificationNoValue) === false && this.state.studentIdentificationNoValue.length != 0) ?
+                                        (<div>
+                                            <FormControl name="studentIdentificationNumber"
+                                                         onChange={this.handleStudentIdentificationNoValue}
+                                                         style={errorFormStyle} placeholder="Ex. 7875557656"
+                                                         required/>
+                                            <HelpBlock style={errorHelpBlockStyle}>Escriba solo n&uacute;
+                                                meros</HelpBlock>
+                                        </div>)
+                                        :
+                                        (/^([0-9]{9})$/.test(this.state.studentIdentificationNoValue) === true && this.state.studentIdentificationNoValue.length === 9) ?
+                                            (<div>
+                                                <FormControl name="studentIdentificationNumber"
+                                                             onChange={this.handleStudentIdentificationNoValue}
+                                                             style={successFormStyle} placeholder="Ex. 7875557656"
+                                                             required/>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="studentIdentificationNumber"
+                                                             onChange={this.handleStudentIdentificationNoValue}
+                                                             placeholder="Ex. 7875557656"
+                                                             required/>
+                                            </div>)
+                            }
                         </Col>
 
                     </FormGroup>
 
                     <FormGroup>
                         <Col sm={10}>
-                            <Col componentClass={ControlLabel}>Address</Col>
-                            <FormControl name="studentAddress1" required/>
+                            <Col componentClass={ControlLabel}>Direcci&oacute;n</Col>
+                            {
+                                (this.state.studentAddressValue.length < 10 && this.state.studentAddressValue.length != 0) ?
+                                    (<div>
+                                        <FormControl style={errorFormStyle} name="studentAddress1"
+                                                     onChange={this.handleStudentAddressValue}
+                                                     placeholder="Ex. HC 61 Box 5467" required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Direcci&oacute;n muy peque&ntilde;
+                                            a</HelpBlock>
+                                    </div>)
+                                    :
+                                    (this.state.studentAddressValue.length > 200 && this.state.studentAddressValue.length != 0) ?
+                                        (<div>
+                                            <FormControl style={errorFormStyle} name="studentAddress1"
+                                                         onChange={this.handleStudentAddressValue}
+                                                         placeholder="Ex. HC 61 Box 5467" required/>
+                                            <HelpBlock style={errorHelpBlockStyle}>Direcci&oacute;n muy
+                                                grande</HelpBlock>
+                                        </div>)
+                                        :
+                                        (/^[0-9]+$/.test(this.state.studentAddressValue) === true) ?
+                                            (<div>
+                                                <FormControl style={errorFormStyle} name="studentAddress1"
+                                                             onChange={this.handleStudentAddressValue}
+                                                             placeholder="Ex. HC 61 Box 5467" required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>Direcci&oacute;n no debe ser solo
+                                                    d&iacute;gitos</HelpBlock>
+                                            </div>)
+                                            :
+                                            (/^[`!@#\$%&\*()_+\{}\|:"<>?~,./;'\]a-zA-Z]+$/.test(this.state.studentAddressValue) === true) ?
+                                                (<div>
+                                                    <FormControl style={errorFormStyle} name="studentAddress1"
+                                                                 onChange={this.handleStudentAddressValue}
+                                                                 placeholder="Ex. HC 61 Box 5467"
+                                                                 required/>
+                                                    <HelpBlock style={errorHelpBlockStyle}>Direcci&oacute;n no deben ser
+                                                        s&iacute;mbolos</HelpBlock>
+                                                </div>)
+                                                :
+                                                (this.state.studentAddressValue.length >= 10 && this.state.studentAddressValue.length < 200 &&
+                                                /^[0-9]+$/.test(this.state.studentAddressValue) === false &&
+                                                /^[`!@#\$%&\*()_+\{}\|:"<>?~,./;'\]a-zA-Z]+$/.test(this.state.studentAddressValue) === false) ?
+                                                    (<div>
+                                                        <FormControl style={successFormStyle} name="studentAddress1"
+                                                                     onChange={this.handleStudentAddressValue}
+                                                                     placeholder="Ex. HC 61 Box 5467"
+                                                                     required/>
+                                                    </div>)
+                                                    :
+                                                    (<div>
+                                                        <FormControl name="studentAddress1"
+                                                                     onChange={this.handleStudentAddressValue}
+                                                                     placeholder="Ex. HC 61 Box 5467"
+                                                                     required/>
+                                                    </div>)
+                            }
                         </Col>
 
                     </FormGroup>
 
                     <FormGroup>
                         <Col sm={3}>
-                            <Col componentClass={ControlLabel}>City</Col>
-                            <FormControl name="studentAddressCity" required/>
+                            <Col componentClass={ControlLabel}>Ciudad</Col>
+                            {
+                                (/^[a-zA-Z\s?]+$/.test(this.state.studentCityValue) === false && this.state.studentCityValue.length != 0) ?
+                                    (<div>
+                                        <FormControl name="studentAddressCity" onChange={this.handleStudentCityValue}
+                                                     style={errorFormStyle} placeholder="Ex. Bayamon" required/>
+                                        <HelpBlock style={errorHelpBlockStyle}> Escriba solo texto</HelpBlock>
+                                    </div>)
+                                    :
+                                    (this.state.studentCityValue.length <= 3 && this.state.studentCityValue.length != 0) ?
+                                        (<div>
+                                            <FormControl name="studentAddressCity" style={errorFormStyle}
+                                                         onChange={this.handleStudentCityValue}
+                                                         placeholder="Ex. Bayamon" required/>
+                                            <HelpBlock style={errorHelpBlockStyle}>Nombre de ciudad muy peque&ntilde;
+                                                o</HelpBlock>
+                                        </div>)
+                                        :
+                                        (this.state.studentCityValue.length > 20 && this.state.studentCityValue.length != 0) ?
+                                            (<div>
+                                                <FormControl name="studentAddressCity" style={errorFormStyle}
+                                                             placeholder="Ex. Bayamon" required/>
+                                                <HelpBlock style={errorHelpBlockStyle}
+                                                           onChange={this.handleStudentCityValue}>Nombre de ciudad muy
+                                                    grande</HelpBlock>
+                                            </div>)
+                                            :
+                                            (this.state.studentCityValue.length >= 3 && this.state.studentCityValue.length < 20 && /^[a-zA-Z\s?]+$/.test(this.state.studentCityValue) === true) ?
+                                                (<div>
+                                                    <FormControl name="studentAddressCity" style={successFormStyle}
+                                                                 onChange={this.handleStudentCityValue}
+                                                                 placeholder="Ex. Bayamon" required/>
+                                                </div>)
+                                                :
+                                                (<div>
+                                                    <FormControl name="studentAddressCity"
+                                                                 onChange={this.handleStudentCityValue}
+                                                                 placeholder="Ex. Bayamon" required/>
+                                                </div>)
+                            }
                         </Col>
 
                         <Col sm={3}>
-                            <Col componentClass={ControlLabel}>State</Col>
-                            <FormControl name="studentAddressState" required/>
+                            <Col componentClass={ControlLabel}>Pa&iacute;s</Col>
+{/*                            {
+                                (/^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
+                                    (<div>
+                                        <FormControl name="studentAddressCountry" style={errorFormStyle}
+                                                     onChange={this.handleStudentCountryValue}
+                                                     placeholder="Ex. Puerto Rico" required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Escriba solo texto</HelpBlock>
+                                    </div>)
+                                    :
+                                    (/^(Puerto Rico)|(PR)|(pr)|(Pr)|(pR)$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
+                                        (<div>
+                                            <FormControl name="studentAddressCountry" style={errorFormStyle}
+                                                         onChange={this.handleStudentCountryValue}
+                                                         placeholder="Ex. Puerto Rico" required/>
+                                            <HelpBlock style={errorHelpBlockStyle}>Pa&iacute;s debe ser Puerto Rico o
+                                                PR</HelpBlock>
+                                        </div>)
+                                        :
+                                        (/^(Puerto Rico)|(PR)|(pr)|(Pr)|(pR)$/.test(this.state.studentCountryValue) === true && /^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === true) ?
+                                            (<div>
+                                                <FormControl name="studentAddressCountry" style={successFormStyle}
+                                                             onChange={this.handleStudentCountryValue}
+                                                             placeholder="Ex. Puerto Rico" required/>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="studentAddressCountry"
+                                                             onChange={this.handleStudentCountryValue}
+                                                             placeholder="Ex. Puerto Rico" value="Puerto Rico" disabled/>
+                                            </div>)
+                            }*/}
+                            <FormControl name="studentAddressCountry" value="Puerto Rico" disabled/>
                         </Col>
 
                         <Col sm={3}>
-                            <Col componentClass={ControlLabel}>Country</Col>
-                            <FormControl name="studentAddressCountry" required/>
-                        </Col>
+                            <Col componentClass={ControlLabel}>C&oacute;digo Postal</Col>
+                            {
+                                (/^([0-9]{5})$/.test(this.state.studentZipCodeValue) === false && this.state.studentZipCodeValue.length != 0) ?
+                                    (<div>
+                                        <FormControl name="studentAddressZipCode" style={errorFormStyle}
+                                                     onChange={this.handleStudentZipCodeValue} placeholder="Ex. 00922"
+                                                     required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>C&oacute;digo Postal debe ser 5 d&iacute;
+                                            gitos num&eacute;ricos</HelpBlock>
+                                    </div>)
+                                    :
+                                    (/^([0-9]{5})$/.test(this.state.studentZipCodeValue) === true) ?
+                                        (<div>
+                                            <FormControl name="studentAddressZipCode" style={successFormStyle}
+                                                         onChange={this.handleStudentZipCodeValue}
+                                                         placeholder="Ex. 00922" required/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="studentAddressZipCode"
+                                                         onChange={this.handleStudentZipCodeValue}
+                                                         placeholder="Ex. 00922" required/>
+                                        </div>)
+                            }
 
-                        <Col sm={3}>
-                            <Col componentClass={ControlLabel}>Zip Code</Col>
-                            <FormControl name="studentAddressZipCode" required/>
                         </Col>
                     </FormGroup>
 
                     <FormGroup>
                         <Col sm={4}>
-                            <Col componentClass={ControlLabel}>Telephone</Col>
-                            <FormControl name="studentTelephone" required/>
+                            <Col componentClass={ControlLabel}>Tel&eacute;fono</Col>
+
+                            {
+                                (/^(([0-9]{10}))$/.test(this.state.studentPhoneValue) === false && this.state.studentPhoneValue.length != 0) ?
+                                    (<div>
+                                        <FormControl name="studentTelephone" style={errorFormStyle}
+                                                     onChange={this.handleStudentPhoneValue} placeholder="Ex. 4567"
+                                                     required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Tel&acute;fono debe ser 10 d&iacute;gitos</HelpBlock>
+                                    </div>)
+                                    :
+                                    (/^(([0-9]{10}))$/.test(this.state.studentPhoneValue) === true) ?
+                                        (<div>
+                                            <FormControl name="studentTelephone" style={successFormStyle}
+                                                         onChange={this.handleStudentPhoneValue} placeholder="Ex. 4567"
+                                                         required/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="studentTelephone" onChange={this.handleStudentPhoneValue}
+                                                         placeholder="Ex. 4567"
+                                                         required/>
+                                        </div>)
+                            }
                         </Col>
 
                         <Col sm={4}>
-                            <Col componentClass={ControlLabel}>Email</Col>
-                            <FormControl name="studentEmail" required/>
+                            <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
+                            {
+                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.studentEmailValue) === false && this.state.studentEmailValue.length != 0) ?
+                                    (<div>
+                                        <FormControl name="studentEmail" style={errorFormStyle}
+                                                     onChange={this.handleStudentEmailValue}
+                                                     placeholder="Ex. carlos.donato@upr.edu" required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                            @upr.edu</HelpBlock>
+                                    </div>)
+                                    :
+                                    (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.studentEmailValue) === true) ?
+                                        (<div>
+                                            <FormControl name="studentEmail" style={successFormStyle}
+                                                         onChange={this.handleStudentEmailValue}
+                                                         placeholder="Ex. carlos.donato@upr.edu" required/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="studentEmail" onChange={this.handleStudentEmailValue}
+                                                         placeholder="Ex. carlos.donato@upr.edu"
+                                                         required/>
+                                        </div>)
+                            }
                         </Col>
                     </FormGroup>
                 </Form>
@@ -372,35 +891,243 @@ class NewUser extends Component {
 
                 <FormGroup>
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Full Name</Col>
-                        <FormControl name="counselorName" required/>
+                        <Col componentClass={ControlLabel}>Nombre</Col>
+                        {
+                            (/^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === false && this.state.counselorNameValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="organizationCounselorName"
+                                                 placeholder="Ex. Raymond Lopez"
+                                                 onChange={this.handleCounselorNameValue} style={errorFormStyle}
+                                                 required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre con los dos
+                                        apellidos</HelpBlock>
+                                </div>)
+                                :
+                                (this.state.counselorNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === true) ?
+                                    (<div>
+                                        <FormControl name="organizationCounselorName"
+                                                     placeholder="Ex. Raymond Lopez"
+                                                     onChange={this.handleCounselorNameValue} style={successFormStyle}
+                                                     required/>
+                                    </div>)
+                                    :
+                                    (
+                                        (this.state.counselorNameValue.length > 50) ?
+                                            (<div>
+                                                <FormControl name="organizationCounselorName"
+                                                             placeholder="Ex. Raymond Lopez"
+                                                             onChange={this.handleCounselorNameValue}
+                                                             style={{
+                                                                 borderColor: '#B74442',
+                                                                 boxShadow: "0px 0px 8px #B74442"
+                                                             }}
+                                                             required/>
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre muy
+                                                    largo</HelpBlock>
+
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="organizationCounselorName"
+                                                             placeholder="Ex. Raymond Lopez"
+                                                             onChange={this.handleCounselorNameValue}
+                                                             required/>
+                                            </div>)
+                                    )
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Email</Col>
-                        <FormControl name="counselorEmail" required/>
+                        <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
+                        {
+                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.counselorEmailValue) === false && this.state.counselorEmailValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="organizationCounselorEmail"
+                                                 placeholder="Ex. raymond.lopez@upr.edu"
+                                                 onChange={this.handleCounselorEmailValue} style={errorFormStyle}
+                                                 required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                        @upr.edu</HelpBlock>
+                                </div>)
+                                :
+                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.counselorEmailValue) === true) ?
+                                    (<div>
+                                        <FormControl name="organizationCounselorEmail"
+                                                     placeholder="Ex. raymond.lopez@upr.edu"
+                                                     onChange={this.handleCounselorEmailValue} style={successFormStyle}
+                                                     required/>
+                                    </div>)
+                                    :
+                                    (<div>
+                                        <FormControl name="organizationCounselorEmail"
+                                                     placeholder="Ex. raymond.lopez@upr.edu"
+                                                     onChange={this.handleCounselorEmailValue} required/>
+                                    </div>)
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Telephone</Col>
-                        <FormControl name="counselorTelephone" type="number" required/>
+                        <Col componentClass={ControlLabel}>Tel&eacute;fono</Col>
+                        {
+                            (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.counselorPhoneValue) === false && this.state.counselorPhoneValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="organizationCounselorTelephone" type="text"
+                                                 placeholder="Ex. 7266"
+                                                 onChange={this.handleCounselorPhoneValue}
+                                                 style={errorFormStyle}
+                                                 required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Solo extension (4 digitos) o
+                                        numero completo (10 digitos)</HelpBlock>
+                                </div>)
+                                :
+                                (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.counselorPhoneValue) === true) ?
+                                    (<div>
+                                        <FormControl name="organizationCounselorTelephone" type="text"
+                                                     placeholder="Ex. 7266"
+                                                     onChange={this.handleCounselorPhoneValue} style={successFormStyle}
+                                                     required/>
+                                    </div>)
+                                    :
+                                    (<div>
+                                        <FormControl name="organizationCounselorTelephone" type="text"
+                                                     placeholder="Ex. 7266"
+                                                     onChange={this.handleCounselorPhoneValue}
+                                                     required/>
+                                    </div>)
+                        }
                     </Col>
                 </FormGroup>
 
                 <FormGroup>
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Faculty</Col>
-                        <FormControl name="counselorFaculty" required/>
+                        <Col componentClass={ControlLabel}>Facultad</Col>
+                        {
+                            (this.state.counselorFacultyValue.length >= 50) ?
+                                (<div>
+                                    <FormControl name="organizationCounselorFaculty"
+                                                 placeholder="Ex. Ingenieria"
+                                                 onChange={this.handleCounselorFacultyValue} style={errorFormStyle}
+                                                 required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Nombre de la facultad muy
+                                        largo</HelpBlock>
+                                </div>)
+                                :
+                                (/^([a-zA-Z\s?])+$/.test(this.state.counselorFacultyValue) === false && this.state.counselorFacultyValue.length != 0 ) ?
+                                    (<div>
+                                        <FormControl name="organizationCounselorFaculty"
+                                                     placeholder="Ex. Ingenieria"
+                                                     onChange={this.handleCounselorFacultyValue} style={errorFormStyle}
+                                                     required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Solo texto</HelpBlock>
+                                    </div>)
+                                    :
+                                    (/^([a-zA-Z\s?])+$/.test(this.state.counselorFacultyValue) === true && this.state.counselorFacultyValue.length <= 50 && this.state.counselorFacultyValue.length != 0 ) ?
+                                        (<div>
+                                            <FormControl name="organizationCounselorFaculty"
+                                                         placeholder="Ex. Ingenieria"
+                                                         onChange={this.handleCounselorFacultyValue}
+                                                         style={successFormStyle} required/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="organizationCounselorFaculty"
+                                                         placeholder="Ex. Ingenieria"
+                                                         onChange={this.handleCounselorFacultyValue} required/>
+                                        </div>)
+
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Department</Col>
-                        <FormControl name="counselorDepartment" required/>
+                        <Col componentClass={ControlLabel}>Departamento</Col>
+                        {
+                            (this.state.counselorDepartmentValue.length >= 50) ?
+                                (<div>
+                                    <FormControl name="organizationCounselorDepartment"
+                                                 placeholder="Ex. Ingenieria de Computadoras"
+                                                 onChange={this.handleCounselorDepartmentValue} style={errorFormStyle}
+                                                 required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Nombre del departamento muy
+                                        largo</HelpBlock>
+
+                                </div>)
+                                :
+                                (/^([a-zA-Z\s?])+$/.test(this.state.counselorDepartmentValue) === false && this.state.counselorDepartmentValue.length != 0 ) ?
+                                    (<div>
+                                        <FormControl name="organizationCounselorDepartment"
+                                                     placeholder="Ex. Ingenieria de Computadoras"
+                                                     onChange={this.handleCounselorDepartmentValue}
+                                                     style={errorFormStyle} required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Solo texto</HelpBlock>
+
+                                    </div>)
+                                    :
+                                    (/^([a-zA-Z\s?])+$/.test(this.state.counselorDepartmentValue) === true && this.state.counselorDepartmentValue.length <= 50 && this.state.counselorDepartmentValue.length != 0 ) ?
+                                        (<div>
+                                            <FormControl name="organizationCounselorDepartment"
+                                                         placeholder="Ex. Ingenieria de Computadoras"
+                                                         onChange={this.handleCounselorDepartmentValue}
+                                                         style={successFormStyle} required/>
+
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="organizationCounselorDepartment"
+                                                         placeholder="Ex. Ingenieria de Computadoras"
+                                                         onChange={this.handleCounselorDepartmentValue} required/>
+                                        </div>)
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel}>Office Number</Col>
-                        <FormControl name="counselorOfficeNumber" required/>
+                        <Col componentClass={ControlLabel}>Oficina</Col>
+                        {
+                            (this.state.counselorOfficeValue.length >= 15 && this.state.counselorOfficeValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="organizationCounselorOfficeNumber"
+                                                 placeholder="Ex. S-113"
+                                                 onChange={this.handleCounselorOfficeValue} style={errorFormStyle}
+                                                 required/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Numero de oficina muy
+                                        largo</HelpBlock>
+
+                                </div>)
+                                :
+                                (this.state.counselorOfficeValue.length === 1) ?
+                                    (<div>
+                                        <FormControl name="organizationCounselorOfficeNumber"
+                                                     placeholder="Ex. S-113"
+                                                     onChange={this.handleCounselorOfficeValue} style={errorFormStyle}
+                                                     required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Numero de oficina muy pequeno</HelpBlock>
+
+                                    </div>)
+                                    :
+                                    (/^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.counselorOfficeValue) === true) ?
+                                        (<div>
+                                            <FormControl name="organizationCounselorOfficeNumber"
+                                                         placeholder="Ex. S-113"
+                                                         onChange={this.handleCounselorOfficeValue}
+                                                         style={errorFormStyle} required/>
+                                            <HelpBlock style={errorHelpBlockStyle}>Oficina no puede ser solo
+                                                simbolos</HelpBlock>
+                                        </div>)
+                                        :
+                                        (/^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.counselorOfficeValue) === false && this.state.counselorOfficeValue.length < 15 && this.state.counselorOfficeValue.length != 0 ) ?
+                                            (<div>
+                                                <FormControl name="organizationCounselorOfficeNumber"
+                                                             placeholder="Ex. S-113"
+                                                             onChange={this.handleCounselorOfficeValue}
+                                                             style={successFormStyle} required/>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="organizationCounselorOfficeNumber"
+                                                             placeholder="Ex. S-113"
+                                                             onChange={this.handleCounselorOfficeValue} required/>
+                                            </div>)
+                        }
+
                     </Col>
                 </FormGroup>
             </Form>
@@ -411,17 +1138,89 @@ class NewUser extends Component {
 
                 <FormGroup>
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel} required>Full Name</Col>
-                        <FormControl name="managerName"/>
+                        <Col componentClass={ControlLabel} required>Nombre</Col>
+                        {
+                            (/^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.managerNameValue) === false && this.state.managerNameValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="managerName" style={errorFormStyle}
+                                                 onChange={this.handleManagerNameValue}
+                                                 placeholder="Ex. Heribero Bourdon"/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre con los dos
+                                        apellidos</HelpBlock>
+                                </div>)
+                                :
+                                (this.state.managerNameValue.length > 50) ?
+                                    (<div>
+                                        <FormControl name="managerName" style={errorFormStyle}
+                                                     onChange={this.handleManagerNameValue}
+                                                     placeholder="Ex. Heribero Bourdon"/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Nombre muy largo</HelpBlock>
+                                    </div>)
+                                    :
+                                    (this.state.managerNameValue.length < 50 &&
+                                    /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.managerNameValue) === true) ?
+                                        (<div>
+                                            <FormControl name="managerName" style={successFormStyle}
+                                                         onChange={this.handleManagerNameValue}
+                                                         placeholder="Ex. Heribero Bourdon"/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="managerName" onChange={this.handleManagerNameValue}
+                                                         placeholder="Ex. Heribero Bourdon"/>
+                                        </div>)
+                        }
                     </Col>
 
                     <Col sm={4}>
-                        <Col componentClass={ControlLabel} required>Email</Col>
-                        <FormControl name="managerEmail"/>
+                        <Col componentClass={ControlLabel} required>Correo Electr&oacute;nico</Col>
+                        {
+                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.managerEmailValue) === false
+                            && this.state.managerEmailValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="managerEmail" style={errorFormStyle}
+                                                 onChange={this.handleManagerEmailValue}
+                                                 placeholder="Ex. heriberto.bourdon@upr.edu"/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                        @upr.edu</HelpBlock>
+                                </div>)
+                                :
+                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.managerEmailValue) === true) ?
+                                    (<div>
+                                        <FormControl name="managerEmail" style={successFormStyle}
+                                                     onChange={this.handleManagerEmailValue}
+                                                     placeholder="Ex. heriberto.bourdon@upr.edu"/>
+                                    </div>)
+                                    :
+                                    (<div>
+                                        <FormControl name="managerEmail" onChange={this.handleManagerEmailValue}
+                                                     placeholder="Ex. heriberto.bourdon@upr.edu"/>
+                                    </div>)
+                        }
                     </Col>
-                <Col sm={4}>
-                        <Col componentClass={ControlLabel} required>Telephone</Col>
-                        <FormControl name="managerTelephone"/>
+
+                    <Col sm={4}>
+                        <Col componentClass={ControlLabel} required>Tel&eacute;fono</Col>
+                        {
+                            (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.managerPhoneValue) === false && this.state.managerPhoneValue.length != 0) ?
+                                (<div>
+                                    <FormControl name="managerTelephone" style={errorFormStyle}
+                                                 onChange={this.handleManagerPhoneValue} placeholder="Ex. 7651"/>
+                                    <HelpBlock style={errorHelpBlockStyle}>Solo extension (4 digitos) o
+                                        numero completo (10 digitos)</HelpBlock>
+                                </div>)
+                                :
+                                (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.managerPhoneValue) === true) ?
+                                    (<div>
+                                        <FormControl name="managerTelephone" style={successFormStyle}
+                                                     onChange={this.handleManagerPhoneValue} placeholder="Ex. 7651"/>
+                                    </div>)
+                                    :
+                                    (<div>
+                                        <FormControl name="managerTelephone" onChange={this.handleManagerPhoneValue}
+                                                     placeholder="Ex. 7651"/>
+                                    </div>)
+                        }
                     </Col>
                 </FormGroup>
             </Form>
@@ -449,16 +1248,16 @@ class NewUser extends Component {
                                 <FormGroup>
                                     <Col sm={4}>
                                         <Col componentClass={ControlLabel}>Role</Col>
-                                        <FormControl componentClass="select" name="userRole"
+                                        <FormControl componentClass="select" placeholder="select" name="userRole"
                                                      onChange={this.onUserRoleSelected}
-
-                                                     placeholder="select" required>
-                                            <option>select</option>
+                                                     required>
+                                            {/*<option>select</option>*/}
                                             {roles}
                                         </FormControl>
 
                                     </Col>
                                 </FormGroup>
+                                {this.state.selectedUserRole.name === 'select' ? null : null}
                                 {this.state.selectedUserRole.name === 'Admin' ? adminFields : null }
                                 {this.state.selectedUserRole.name === 'Student' ? studentFields : null }
                                 {this.state.selectedUserRole.name === 'Staff' ? staffFields : null }

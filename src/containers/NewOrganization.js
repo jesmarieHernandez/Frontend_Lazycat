@@ -506,7 +506,7 @@ class CreateOrganization extends Component {
                                 </Col>
 
                                 <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Extensión de Teléfono</Col>
+                                    <Col componentClass={ControlLabel}>Teléfono</Col>
                                     {
                                         (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.counselorTelephoneValue) === false && this.state.counselorTelephoneValue.length != 0) ?
                                             (<div>

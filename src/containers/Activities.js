@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
-    Button, Badge, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
-    BreadcrumbItem, Nav, Navbar, NavItem
+    Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
+    BreadcrumbItem, Nav, Navbar, NavItem, ButtonToolbar
 } from 'react-bootstrap';
 import Select from 'react-select';
 import ReactCenter from 'react-center';
@@ -174,7 +174,6 @@ class Activities extends Component {
         const activities = this.state.activities.map(activity =>
 
             <Col md={12}>
-
                 <Panel header={activity.activityName}>
                     <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
                     <br/>
@@ -182,6 +181,9 @@ class Activities extends Component {
                     <p><b>Organization:</b> {activity.organization.organizationName}</p>
                     <p><b>Facility:</b> {activity.facility.space}</p>
                     <p><b>Status:</b> {activity.status.description}</p>
+                    <Link to={`/activities/edit`}><Button className="btn-info">Edit</Button></Link>
+                    <Button className="btn-success" style={{marginLeft: "20px"}}>Approve</Button>
+                    <Button className="btn-danger" style={{marginLeft: "20px"}}>Decline</Button>
                 </Panel>
 
             </Col>
@@ -198,8 +200,6 @@ class Activities extends Component {
                 </Col>
 
                 <Col md={10}>
-
-
                     <Col md={9}>
                         <ol className="breadcrumb">
                             <li/>

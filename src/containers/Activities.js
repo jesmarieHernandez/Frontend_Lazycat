@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
-    Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Badge, Col, Row, Checkbox, Breadcrumb,
-    BreadcrumbItem, Nav, Navbar, NavItem, ButtonToolbar
+
+    Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
+    BreadcrumbItem, Nav, Navbar, NavItem, ButtonToolbar, Badge
+
 } from 'react-bootstrap';
 import Select from 'react-select';
 import ReactCenter from 'react-center';

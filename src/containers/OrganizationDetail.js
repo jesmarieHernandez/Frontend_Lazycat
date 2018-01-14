@@ -6,8 +6,8 @@ import 'isomorphic-fetch';
 import {Link} from 'react-router-dom';
 
 import {
-    FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem, HelpBlock, Modal
+    FormGroup, FormControl, ControlLabel, Button, Badge,
+    Panel, Form, Col, Row, Nav, NavItem, HelpBlock, Modal
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
 import AlertContainer from 'react-alert';
@@ -24,6 +24,7 @@ class OrganizationDetail extends Component {
         super(props, context);
         this.state = {
             notEditMode: true,
+            activeKey: '1',
             organization: {
                 _id: 0,
                 name: '',
@@ -40,14 +41,17 @@ class OrganizationDetail extends Component {
             orgNameValue: '',
             orgInitialsValue: '',
             orgTypeValue: false,
-            orgId: null,
             orgTypePicked: '',
+            orgId: null,
             organizationActivities: [],
             organizationTypes: [],
+            selectedOrganizationType: {}
         }
 
         this.toggleEditMode = this.toggleEditMode.bind(this);
     }
+
+
 
     componentDidMount() {
         console.log('this.props.params.id: ' + this.props.match.params.id);
@@ -61,10 +65,10 @@ class OrganizationDetail extends Component {
 
                 console.log(`http://localhost:8000/api/organizations/${id}`);
                 console.log(data);
-                this.setState({orgNameValue: data.organizationName});
-                this.setState({orgInitialsValue: data.organizationInitials});
-                this.setState({orgTypeValue: 1});
-                this.setState({orgId: data.id});
+                this.setState({orgNameValue: data[0].organizationName});
+                this.setState({orgInitialsValue: data[0].organizationInitials});
+                this.setState({orgTypeValue: data[0].organizationType_code});
+                this.setState({orgId: data[0].id});
 
             }).catch(err => {
                 console.log(err)
@@ -99,6 +103,12 @@ class OrganizationDetail extends Component {
 
 
 
+    }
+
+    handleSelect = (event) => {
+        // event.preventDefault();
+        console.log(event);
+        this.setState({activeKey: event});
     }
 
     toggleEditMode() {
@@ -148,6 +158,29 @@ class OrganizationDetail extends Component {
         this.setState({orgInitialsValue: e.target.value})
     }
 
+    onOrganizationTypeSelected = (event) => {
+        // event.preventDefault();
+        //this.setState({orgTypePicked: '2'});
+        const selectedOrganizationType = this.state.organizationTypes.filter(function (obj) {
+
+            console.log('Current object code: ' + obj.code);
+            console.log('Event target value: ' + event.target.value);
+
+            console.log(obj.code == event.target.value);
+            return obj.code == event.target.value;
+        });
+        console.log("Selected organization type: ");
+        console.log(selectedOrganizationType);
+        this.setState({selectedOrganizationType: selectedOrganizationType[0]});
+        this.setState({orgTypeValue: selectedOrganizationType[0].code});
+
+        console.log('Shiiiittt');
+        console.log(this.state.selectedOrganizationType);
+
+        // console.log("Selected organization type: " + this.state.selectedOrganizationType);
+
+    }
+
 
     render() {
 
@@ -165,17 +198,6 @@ class OrganizationDetail extends Component {
             boxShadow: "0px 0px 8px #3C765B"
         };
 
-        const organizationActivities = this.state.organizationActivities.map(activity =>
-            <Col md={12}>
-                <Panel header={activity.requestTitle}>
-                    <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
-                    <p>Organization Acronym: {activity.organization.name}</p>
-                    <p>Request Title: {activity.requestDate}</p>
-                    <p>Request Description: {activity.facilities.name}</p>
-                </Panel>
-
-            </Col>
-        );
 
 
         const organizationTypes = this.state.organizationTypes.map(option =>
@@ -193,6 +215,28 @@ class OrganizationDetail extends Component {
                 </Nav>
             </div>
         );
+
+        let organizationActivities;
+
+        if (this.state.organizationActivities.length === 0) {
+            organizationActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades para esta organización.</p>
+        } else {
+
+
+            organizationActivities = this.state.organizationActivities.map(activity =>
+
+                <Col md={12}>
+                    <Panel header={activity.activityName}>
+                        <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                        <br/>
+                        <p><b>Description:</b> {activity.activityDescription}</p>
+                        <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                        <p><b>Facility:</b> {activity.facility.space}</p>
+                        <p><b>Status:</b> {activity.status.description}</p>
+                    </Panel>
+                </Col>
+            );
+        }
 
         return (
             <div className="container">
@@ -435,15 +479,21 @@ class OrganizationDetail extends Component {
 
                             </Form>
                         </Panel>
+                        <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+                            <NavItem eventKey="1" >Actividades</NavItem>
+                            <NavItem eventKey="2" title="Item">Miembros </NavItem>
+                            <NavItem eventKey="3" title="Item">Consejeros </NavItem>
+                        </Nav>
+                        <br/>
 
                     </Col>
 
                     <Col md={2}></Col>
 
                     <Col md={10}>
-                        <Panel header="Recent Activities">
-                            {organizationActivities}
-                        </Panel>
+                        {/*{this.state.activeKey === '1' ? organizationActivities : null}*/}
+                        {/*{this.state.activeKey === '2' ? approvedActivities : null}*/}
+                        {/*{this.state.activeKey === '3' ? deniedActivities : null}*/}
                     </Col>
             </div>
         )

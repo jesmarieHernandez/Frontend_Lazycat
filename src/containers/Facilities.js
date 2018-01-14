@@ -56,12 +56,13 @@ class Facilities extends Component {
 
             <Col md={12}>
 
-                <Panel collapsible header={facilities.space}>
-                    <p><Link to={`/admin/facilities/${facilities.id}`}>{facilities.space}</Link></p>
-                    <p>Building Name: {facilities.building}</p>
-                    <p>Space Name: {facilities.space}</p>
-                    <Link to={`/admin/facilities/${facilities.id}`}><Button className="btn btn-primary">Details</Button></Link>
-                </Panel>
+                <Link to={`/admin/facilities/${facilities.id}`}><Panel  header={facilities.space} style={{fontFamily: 'Helvetica'}}></Panel></Link>
+                {/*<Panel  header={facilities.space}>*/}
+                    {/*<p><Link to={`/admin/facilities/${facilities.id}`}>{facilities.space}</Link></p>*/}
+                    {/*<p>Building Name: {facilities.building}</p>*/}
+                    {/*<p>Space Name: {facilities.space}</p>*/}
+                    {/*<Link to={`/admin/facilities/${facilities.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
+                {/*</Panel>*/}
 
             </Col>
         );

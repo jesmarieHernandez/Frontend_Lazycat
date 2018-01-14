@@ -18,9 +18,6 @@ import {
 } from 'react-bootstrap';
 import ReactCenter from "react-center"
 
-
-const PAGE_SIZE = 10;
-
 class FacilitiesDetail extends Component {
     constructor(props, context) {
         super(props, context);
@@ -32,12 +29,14 @@ class FacilitiesDetail extends Component {
                 facilityDepartment: ''
             },
             showModal: false,
+            facilitiesId: null,
             buildingValue: '',
             spaceValue: '',
-            editMode: false
+            facilityDepartmentValue: '',
+            editMode: false,
+            notEditMode: true,
+            activeKey: '1',
         }
-
-        this.onEdit = this.onEdit.bind(this);
     }
 
     componentDidMount() {
@@ -49,8 +48,11 @@ class FacilitiesDetail extends Component {
         fetch(`http://localhost:8000/api/facilities/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
-                this.setState({facilities: data});
-                console.log(this.state.facilities.id);
+                this.setState({facilitiesId: data.id});
+                this.setState({buildingValue: data.building});
+                this.setState({spaceValue: data.space});
+                this.setState({facilityDepartmentValue: data.facilityDepartment});
+
             }).catch(err => {
                 console.log(err)
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
@@ -58,9 +60,53 @@ class FacilitiesDetail extends Component {
         })
     }
 
+    onSubmit = (event) => {
+        event.preventDefault();
+        this.setState({notEditMode: !this.state.notEditMode});
+        const newFacilities = {
+            building: this.state.buildingValue,
+            space: this.state.spaceValue,
+            facilityDepartmentValue: this.state.facilityDepartmentValue,
 
-    onEdit() {
-        this.setState({editMode: !this.state.notEditMode})
+        };
+
+        // fetch('http://localhost:8000/api/organizations', {
+        fetch(`http://localhost:8000/api/facilities/${this.state.facilitiesId}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newFacilities),
+        }).then(response => {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(editedFacilities => {
+
+
+                    this.props.history.push(`/admin/facilities/`);
+                    // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+    }
+
+
+
+    handleBuildingValue = (e) => {
+        this.setState({buildingValue: e.target.value})
+    }
+
+    handleSpaceValue = (e) => {
+        this.setState({spaceValue: e.target.value})
+    }
+
+    toggleEditMode = () => {
+        this.setState({notEditMode: !this.state.notEditMode});
+        console.log(this.state.notEditMode);
     }
 
     render() {
@@ -96,116 +142,105 @@ class FacilitiesDetail extends Component {
                         <li className="active">Facilities Details</li>
                     </ol>
 
-                    {/*<Panel  header={this.state.facilities.name}>*/}
-                    {/*/!*<td><Link to={`/activities/${this.state.activity._id}`}>{this.state.activity.requestTitle}</Link></td>*!/*/}
-                    {/*<p>Building Name: {this.state.facilities.building}</p>*/}
-                    {/*<p>Space Name: {this.state.facilities.space}</p>*/}
+                    <Panel header="Detalles de las facilidades">
 
-                    {/*<Row>*/}
-                    {/*<Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary btn-large" style={{paddingLeft: '20px', paddingRight: '20px'}}>Back</Button></Link></Col>*/}
-                    {/*<Col md="1"><Button className="btn-warning" >Edit</Button></Col>*/}
-                    {/*</Row>*/}
+                        <Form horizontal name="newFacilities">
 
+                            <FormGroup>
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Edificio</Col>
+                                    {
+                                        (this.state.buildingValue.length > 20) ?
+                                            (<div>
+                                                <FormControl name="building"
+                                                             placeholder="Ex. Luis A. Stefani"
+                                                             onChange={this.handleBuildingValue}
+                                                             style={{
+                                                                 borderColor: '#B74442',
+                                                                 boxShadow: "0px 0px 8px #B74442"
+                                                             }}
+                                                             disabled={this.state.notEditMode}
+                                                             value={this.state.buildingValue}
+                                                             required/>
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre del edifico muy
+                                                    largo</HelpBlock>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="building"
+                                                             placeholder="Ex. Luis A. Stefani"
+                                                             onChange={this.handleBuildingValue}
+                                                             disabled={this.state.notEditMode}
+                                                             value={this.state.buildingValue}
+                                                             required/>
+                                            </div>)
+                                    }
+                                </Col>
 
-                    {/*</Panel>*/}
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Sal&oacute;n/Espacio</Col>
+                                    {
+                                        (this.state.spaceValue.length > 20) ?
+                                            (<div>
+                                                <FormControl name="space" placeholder="Ex. S-113"
+                                                             onChange={this.handleSpaceValue}
+                                                             style={{
+                                                                 borderColor: '#B74442',
+                                                                 boxShadow: "0px 0px 8px #B74442"
+                                                             }}
+                                                             disabled={this.state.notEditMode}
+                                                             value={this.state.spaceValue}
+                                                             required/>
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre del sal&oacute;n/espacio
+                                                    muy
+                                                    largo</HelpBlock>
 
-                    {this.state.notEditMode ? (<FormGroup>
-                            <Col sm={4}>
-                                <Col componentClass={ControlLabel}>Edificio</Col>
-                                {
-                                    (this.state.buildingValue.length > 20) ?
-                                        (<div>
-                                            <FormControl name="building" placeholder="Ex. Luis A. Stefani"
-                                                         onChange={this.handleBuildingValue}
-                                                         style={{borderColor: '#B74442', boxShadow: "0px 0px 8px #B74442"}}
-                                                         required/>
-                                            <HelpBlock style={{color: '#B74442'}}>Nombre del edifico muy largo</HelpBlock>
-                                        </div>)
-                                        :
-                                        (<div>
-                                            <FormControl name="building" placeholder="Ex. Luis A. Stefani"
-                                                         onChange={this.handleBuildingValue} required/>
-                                        </div>)
-                                }
-                            </Col>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="space"
+                                                             placeholder="Ex. S-113"
+                                                             onChange={this.handleSpaceValue}
+                                                             disabled={this.state.notEditMode}
+                                                             value={this.state.spaceValue}
+                                                             required/>
+                                            </div>)
+                                    }
+                                </Col>
 
-                            <Col sm={4}>
-                                <Col componentClass={ControlLabel}>Sal&oacute;n/Espacio</Col>
-                                {
-                                    (this.state.spaceValue.length > 20) ?
-                                        (<div>
-                                            <FormControl name="space" placeholder="Ex. S-113"
-                                                         onChange={this.handleSpaceValue}
-                                                         style={{borderColor: '#B74442', boxShadow: "0px 0px 8px #B74442"}}
-                                                         required/>
-                                            <HelpBlock style={{color: '#B74442'}}>Nombre del sal&oacute;n/espacio muy
-                                                largo</HelpBlock>
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Department</Col>
+                                    <FormControl name="facilitiesDepartmentCode"
+                                                 disabled={this.state.notEditMode}
+                                                 value={this.state.facilityDepartmentValue}
+                                                 required/>
+                                </Col>
 
-                                        </div>)
-                                        :
-                                        (<div>
-                                            <FormControl name="space" placeholder="Ex. S-113"
-                                                         onChange={this.handleSpaceValue} required/>
-                                        </div>)
-                                }
-                            </Col>
+                            </FormGroup>
+                            <br/>
+                            <ReactCenter>
 
-                            <Col sm={4}>
-                                <Col componentClass={ControlLabel}>Department</Col>
-                                <FormControl name="facilitiesDepartmentCode" required/>
-                            </Col>
-                        </FormGroup>)
+                            </ReactCenter>
 
-                        : <FormGroup>
-                            <Row>
-                            <Col sm={4}>
-                                <Col componentClass={ControlLabel}>Edificio</Col>
-                                <div>
-                                    <FormControl name="building" value={this.state.facilities.building}
-                                                 onChange={this.handleBuildingValue} required disabled={true}/>
-                                </div>
-                            </Col>
-                            <Col sm={4}>
-                                <Col componentClass={ControlLabel}>Sal&oacute;n/Espacio</Col>
-
-
-                                <div>
-                                    <FormControl name="space" value={this.state.facilities.space}
-                                                 onChange={this.handleSpaceValue} required disabled={true}/>
-                                </div>
-
-                            </Col>
-
-                            <Col sm={4}>
-                                <Col componentClass={ControlLabel}>Department</Col>
-                                <FormControl name="facilitiesDepartmentCode" value={this.state.facilities.facilityDepartment}
-                                             required disabled={true}/>
-                            </Col>
-                            </Row>
-
-                            <Row>
-                                <Row>
-                                    <Col md="1"><Link to={`/facilities/`}><Button className="btn btn-primary btn-large" style={{
-                                        paddingLeft: '20px',
-                                        paddingRight: '20px'
-                                    }}>Back</Button></Link></Col>
-                                    <Col md="1"><Button className="btn-default btn-large" onClick={this.onEdit}>Edit</Button></Col>
-                                </Row>
-                            </Row>
-
-                        </FormGroup>
-
-                    }
-
-                    <Row>
+                        </Form>
+                        <ReactCenter>
                         <Row>
-                            <Col md="1"><Link to={`/facilities/`}><Button className="btn btn-primary btn-large" style={{
-                                paddingLeft: '20px',
-                                paddingRight: '20px'
-                            }}>Back</Button></Link></Col>
-                            <Col md="1"><Button className="btn-default btn-large" onClick={this.onEdit}>Edit</Button></Col>
+                            <Col md={6}><Link to={`/admin/facilities/`}><Button
+                                className="btn btn-primary">Atrás</Button></Link>
+                            </Col>
+                            {
+                                this.state.notEditMode ? <Col md={6}><Button className="btn-warning"
+                                                                             onClick={this.toggleEditMode}>Editar</Button></Col>
+                                    :
+                                    <Col md={6}><Button className="btn-success" onClick={this.onSubmit}>Guardar</Button></Col>
+                            }
                         </Row>
-                    </Row>
+                        </ReactCenter>
+                    </Panel>
+
+
+
+
                 </Col>
             </div>
         )

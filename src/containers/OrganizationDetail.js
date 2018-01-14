@@ -247,12 +247,12 @@ class OrganizationDetail extends Component {
                     <Col md={10}>
                         <ol className="breadcrumb">
                             <li/>
-                            <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                            <li><Link to={`/admin/organizations`}>Organizations</Link></li>
-                            <li className="active">Organization Details</li>
+                            <li><Link to={`/admin/`}>Panel de admistración</Link></li>
+                            <li><Link to={`/admin/organizations`}>Organizaciones</Link></li>
+                            <li className="active">Detalles de la organización</li>
                         </ol>
 
-                        <Panel header="Create New Organization">
+                        <Panel header="Detalles de la organización">
                             <Form horizontal name="newOrganization" onSubmit={this.open}>
 
                                 <FormGroup>
@@ -453,11 +453,11 @@ class OrganizationDetail extends Component {
 
                                     <Row>
                                         <Col md={6}><Link to={`/admin/organizations/`}><Button
-                                            className="btn btn-primary">Back</Button></Link></Col>
+                                            className="btn btn-primary">Atrás</Button></Link></Col>
                                         {
-                                            this.state.notEditMode? <Col md="1"><Button className="btn-warning" onClick={this.toggleEditMode}>Edit</Button></Col>
+                                            this.state.notEditMode? <Col md="1"><Button className="btn-warning" onClick={this.toggleEditMode}>Editar</Button></Col>
                                                 :
-                                                <Col md={6}><Button className="btn-success" onClick={this.onSubmit}>Save</Button></Col>
+                                                <Col md={6}><Button className="btn-success" onClick={this.onSubmit}>Guardar</Button></Col>
                                         }
 
                                     </Row>

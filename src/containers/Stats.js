@@ -36,7 +36,7 @@ class Stats extends Component {
         fetch('http://192.168.99.100/api/pending').then(response => {
             if (response.ok) {
                 response.json().then(count => {
-                    this.setState({pending: count});
+                    this.setState({pending: count[0].pending});
                 });
             } else {
                 // response.json().then(error => {
@@ -65,7 +65,7 @@ class Stats extends Component {
         fetch('http://192.168.99.100/api/approved').then(response => {
             if (response.ok) {
                 response.json().then(count => {
-                    this.setState({approved: count});
+                    this.setState({approved: count[0].approved});
                 });
             } else {
                 // response.json().then(error => {
@@ -107,11 +107,11 @@ class Stats extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -136,31 +136,18 @@ class Stats extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li className="active">Stats</li>
+                        <li className="active">Estad&iacute;sticas</li>
                     </ol>
 
                     <Col md={12}>
 
                         <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
-                            <NavItem eventKey="1" href="/home">Representaci&oacute;n Gr&aacute;fica</NavItem>
-                            <NavItem eventKey="2" title="Item">Resumen de Estad&iacute;sticas</NavItem>
+                            <NavItem eventKey="1" href="/home">Resumen de Estad&iacute;sticas por Facilidad</NavItem>
+                            <NavItem eventKey="2" title="Item">Representaci&oacute;n Gr&aacute;fica</NavItem>
                         </Nav>
                         <br/>
 
                         {this.state.activeKey === "1" ?
-                                <ReactCenter>
-                                    <BarChart width={600} height={300} data={data}>
-                                        <XAxis dataKey="name"/>
-                                        <YAxis />
-                                        <CartesianGrid strokeDasharray="3 3"/>
-                                        <Tooltip />
-                                        <Legend />
-                                        <Bar dataKey="pending" fill="#8884d8"/>
-                                        <Bar dataKey="approved" fill="#82ca9d"/>
-                                        <Bar dataKey="denied" fill="#823333"/>
-                                    </BarChart>
-                                </ReactCenter>
-                            :
                             <Row>
                                 <Col md={12}>
                                     <Table bordered condensed striped>
@@ -171,16 +158,24 @@ class Stats extends Component {
                                                     Edificio
                                                 </th>
                                             </ReactCenter>
-                                            <th style={{paddingTop: "20px", borderBottom: '0px'}}>Espacio</th>
-                                            <th style={{paddingTop: "20px", borderBottom: '0px'}}>Diurno</th>
-                                            <th style={{paddingTop: "20px", borderBottom: '0px'}}>Nocturno</th>
-                                            <th colSpan="10" style={{
-                                                paddingTop: "10px",
+                                            <th
+                                                style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Espacio</th>
+                                            <th
+                                                style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Diurno</th>
+                                            <th
+                                                style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Nocturno</th>
+                                            <th
+                                                colSpan="10"
+                                                style={{paddingTop: "10px",
                                                 paddingLeft: "200px",
-                                                paddingBottom: "10px"
-                                            }}>Clasificaci&oacute;n
+                                                paddingBottom: "10px"}}>Clasificaci&oacute;n
                                             </th>
-                                            <th style={{paddingTop: "20px", borderBottom: '0px'}}>TOTAL</th>
+                                            <th
+                                                style={{paddingTop: "20px",
+                                                    borderBottom: '0px'}}>TOTAL</th>
                                         </tr>
                                         </thead>
 
@@ -223,6 +218,19 @@ class Stats extends Component {
                                     </Table>
                                 </Col>
                             </Row>
+                            :
+                        <ReactCenter>
+                            <BarChart width={600} height={300} data={data}>
+                                <XAxis dataKey="name"/>
+                                <YAxis />
+                                <CartesianGrid strokeDasharray="3 3"/>
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="pending" fill="#8884d8"/>
+                                <Bar dataKey="approved" fill="#82ca9d"/>
+                                <Bar dataKey="denied" fill="#823333"/>
+                            </BarChart>
+                        </ReactCenter>
                         }
                     </Col>
 

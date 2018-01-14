@@ -226,7 +226,7 @@ class Request extends Component {
         console.log('Change happened');
         console.log(event.target.value);
         const selectedFacilities = this.state.facilities.filter(function (obj) {
-            return obj._id == event.target.value;
+            return obj.id == event.target.value;
         });
         console.log(selectedFacilities[0]);
         this.setState({selectedFacilities: selectedFacilities[0]});

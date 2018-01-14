@@ -3,7 +3,7 @@ import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
     Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
-    BreadcrumbItem, Nav, Navbar, NavItem, ButtonToolbar
+    BreadcrumbItem, Nav, Navbar, NavItem, ButtonToolbar, Badge
 } from 'react-bootstrap';
 import Select from 'react-select';
 import ReactCenter from 'react-center';

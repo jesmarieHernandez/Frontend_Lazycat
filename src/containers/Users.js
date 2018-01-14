@@ -77,7 +77,8 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.99.100/api/users').then(response => {
+        // fetch('http://192.168.99.100/api/users').then(response => {
+        fetch('http://localhost:8000/api/users').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
@@ -126,41 +127,50 @@ class Users extends Component {
         // console.log('Los putos administrators: ');
         // console.log(this.state.users.administrators);
         // console.log(this.state.users.administrators[0].staff);
-        const administrators = this.state.users.administrators.map(administrator =>
+        const administrators = this.state.users.administrators.map(administrator => {
 
+                const userRoute = '/admin/users/'+administrator.staff[0].staffEmail;
+                return  (
+                <Col md={12}>
+
+                    <Link to={userRoute} style={{border: 'none'}}><Panel header={administrator.staff[0].staffName}>
+                        {/*<p>Role: {administrators.role}</p>*/}
+                        {/*<p>Email: {administrators.userEmail}</p>*/}
+                        {/*<p>Creation Date: {users.creationDate}</p>*/}
+                        {/*<Link to={`/admin/users/${administrators.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
+                    </Panel></Link>
+
+                </Col>
+                )
+            }
+        );
+
+
+
+        const staff = this.state.users.staff.map(staff => {
+
+            const userRoute = '/admin/users/'+staff.staff[0].staffEmail;
+            return  (
             <Col md={12}>
 
-                <Link to="/" style={{border: 'none'}}><Panel  header={administrator.staff[0].staffName}>
+                <Link to={userRoute} style={{border: 'none'}}><Panel  header={staff.staff[0].staffName}>
                     {/*<p>Role: {administrators.role}</p>*/}
                     {/*<p>Email: {administrators.userEmail}</p>*/}
                     {/*<p>Creation Date: {users.creationDate}</p>*/}
                     {/*<Link to={`/admin/users/${administrators.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
                 </Panel></Link>
 
-            </Col>
+            </Col>)
+        }
         );
 
+        const students = this.state.users.students.map(student => {
 
-
-        const staff = this.state.users.staff.map(staff =>
-
+            const userRoute = '/admin/users/'+student.students[0].studentEmail;
+            return  (
             <Col md={12}>
 
-                <Link to="/" style={{border: 'none'}}><Panel  header={staff.staff[0].staffName}>
-                    {/*<p>Role: {administrators.role}</p>*/}
-                    {/*<p>Email: {administrators.userEmail}</p>*/}
-                    {/*<p>Creation Date: {users.creationDate}</p>*/}
-                    {/*<Link to={`/admin/users/${administrators.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
-                </Panel></Link>
-
-            </Col>
-        );
-
-        const students = this.state.users.students.map(student =>
-
-            <Col md={12}>
-
-                <Link to={`/admin/users/${student.id}`}><Panel header={student.students[0].studentName}>
+                <Link to={userRoute}><Panel header={student.students[0].studentName}>
                     {/*<p>Role: Student</p>*/}
                     {/*<p>Email: {student.userEmail}</p>*/}
                     {/*/!*<p>Creation Date: {users.creationDate}</p>*!/*/}
@@ -168,34 +178,44 @@ class Users extends Component {
                 </Panel></Link>
 
             </Col>
+            )
+            }
         );
 
-        const counselors = this.state.users.counselors.map(counselor =>
+        const counselors = this.state.users.counselors.map(counselor => {
 
+            const userRoute = '/admin/users/'+counselor.counselors[0].counselorEmail;
+            return  (
             <Col md={12}>
 
-                <Link to="/" style={{border: 'none'}}><Panel  header={counselor.counselors[0].counselorName}>
+                <Link to={userRoute} style={{border: 'none'}}><Panel  header={counselor.counselors[0].counselorName}>
                     {/*<p>Role: {administrators.role}</p>*/}
                     {/*<p>Email: {administrators.userEmail}</p>*/}
                     {/*<p>Creation Date: {users.creationDate}</p>*/}
                     {/*<Link to={`/admin/users/${administrators.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
                 </Panel></Link>
 
-            </Col>
+            </Col> )
+            }
         );
 
-        const managers = this.state.users.managers.map(manager =>
+        const managers = this.state.users.managers.map(manager => {
 
-            <Col md={12}>
+                const userRoute = '/admin/users/' + manager.managers[0].managerEmail;
+                return (
 
-                <Link to="/" style={{border: 'none'}}><Panel  header={manager.managers[0].managerName}>
-                    {/*<p>Role: {administrators.role}</p>*/}
-                    {/*<p>Email: {administrators.userEmail}</p>*/}
-                    {/*<p>Creation Date: {users.creationDate}</p>*/}
-                    {/*<Link to={`/admin/users/${administrators.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
-                </Panel></Link>
+                    <Col md={12}>
 
-            </Col>
+                        <Link to={userRoute} style={{border: 'none'}}><Panel header={manager.managers[0].managerName}>
+                            {/*<p>Role: {administrators.role}</p>*/}
+                            {/*<p>Email: {administrators.userEmail}</p>*/}
+                            {/*<p>Creation Date: {users.creationDate}</p>*/}
+                            {/*<Link to={`/admin/users/${administrators.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
+                        </Panel></Link>
+
+                    </Col>
+                )
+            }
         );
 
         //console.log(this.state.users);
@@ -223,8 +243,8 @@ class Users extends Component {
                     {tabsInstance}
                 </Col>
 
-                <Col md={10}>
-                    <Col md={9}>
+                <Col md={7}>
+                    {/*<Col md={9}>*/}
                         <Col className="breadcrumb">
                             <li/>
                             <li><Link to={`/admin/`}>Admin Panel</Link></li>
@@ -238,54 +258,6 @@ class Users extends Component {
                             <NavItem eventKey="5" title="Item">Facilidades</NavItem>
                         </Nav>
                         <br/>
-                        {/*<ReactCenter>*/}
-                            {/*<Col md={4}>*/}
-                                {/*<Link to={`/admin/users`}>*/}
-                                    {/*<Panel style={styling}>*/}
-                                        {/*<ReactCenter><div style={{color: '#a8a8a8'}}><Icon size={75} icon={user}/></div></ReactCenter>*/}
-                                        {/*<ReactCenter><div>Admin</div></ReactCenter>*/}
-                                    {/*</Panel>*/}
-                                {/*</Link>*/}
-                            {/*</Col>*/}
-                            {/*<Col md={4}>*/}
-                                {/*<Link to={`/admin/users`}>*/}
-                                    {/*<Panel style={styling}>*/}
-                                        {/*<ReactCenter><div style={{color: '#a8a8a8'}}><Icon size={75} icon={user}/></div></ReactCenter>*/}
-                                        {/*<ReactCenter><div>Staff</div></ReactCenter>*/}
-                                    {/*</Panel>*/}
-                                {/*</Link>*/}
-                            {/*</Col>*/}
-                            {/*<Col md={4}>*/}
-                                {/*<Link to={`/admin/users`}>*/}
-                                    {/*<Panel style={styling}>*/}
-                                        {/*<ReactCenter><div style={{color: '#a8a8a8'}}><Icon size={75} icon={user}/></div></ReactCenter>*/}
-                                        {/*<ReactCenter><div>Estudiante</div></ReactCenter>*/}
-                                    {/*</Panel>*/}
-                                {/*</Link>*/}
-                            {/*</Col>*/}
-                        {/*</ReactCenter>*/}
-                        {/*<ReactCenter>*/}
-
-                            {/*<Col md={4}>*/}
-                                {/*<Link to={`/admin/users`}>*/}
-                                    {/*<Panel style={styling}>*/}
-                                        {/*<ReactCenter><div style={{color: '#a8a8a8'}}><Icon size={75} icon={user}/></div></ReactCenter>*/}
-                                        {/*<ReactCenter><div>Consejero</div></ReactCenter>*/}
-                                    {/*</Panel>*/}
-                                {/*</Link>*/}
-                            {/*</Col>*/}
-                            {/*<Col md={4}>*/}
-                                {/*<Link to={`/admin/users`}>*/}
-                                    {/*<Panel style={styling}>*/}
-                                        {/*<ReactCenter><div style={{color: '#a8a8a8'}}><Icon size={75} icon={user}/></div></ReactCenter>*/}
-                                        {/*<ReactCenter><div><ReactCenter>Encargado de Facilidades</ReactCenter></div></ReactCenter>*/}
-                                    {/*</Panel>*/}
-                                {/*</Link>*/}
-                            {/*</Col>*/}
-
-                        {/*</ReactCenter>*/}
-                        {/*{students}*/}
-                        {/*{users}*/}
 
                         {this.state.activeKey === '1' ? administrators : null}
                         {this.state.activeKey === '2' ? staff : null}
@@ -298,14 +270,15 @@ class Users extends Component {
 
                         </ReactCenter>
 
-                    </Col>
+                    {/*</Col>*/}
 
-                    <Col md={3}>
-                        <Panel>
-                            <ReactCenter><Link to="/admin/users/create"><Button bsSize="medium">New User</Button></Link></ReactCenter>
-                        </Panel>
-                    </Col>
 
+
+                </Col>
+                <Col md={3}>
+                    <Panel>
+                        <ReactCenter><Link to="/admin/users/create"><Button bsSize="medium">New User</Button></Link></ReactCenter>
+                    </Panel>
                 </Col>
             </div>
         )

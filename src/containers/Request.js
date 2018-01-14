@@ -87,11 +87,13 @@ class Request extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:3001/api/organizations').then(response => {
+        fetch('http://localhost:8000/api/organizations').then(response => {
 
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({organizations: results});
+                    console.log('Asi salen las organizaciones: ');
+                    console.log(this.state.organizations);
                 });
             } else {
                 console.log('Not ok');
@@ -104,11 +106,13 @@ class Request extends Component {
             // this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch(`http://localhost:3001/api/facilities/`).then(response => {
+        fetch(`http://localhost:8000/api/facilities/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
                     this.setState({facilities: results});
+                    console.log('Asi salen las facilities: ');
+
                     console.log(this.state.facilities);
                     //this.props.router.push(`/activities/${createdRequest._id}`);
                 });
@@ -360,11 +364,11 @@ class Request extends Component {
     render() {
         console.log(this.state.selectedOrganization._id);
         const organizationOptions = this.state.organizations.map(organization =>
-            <option value={organization._id}>{organization.name}</option>
+            <option value={organization.id}>{organization.organizationName}</option>
         );
 
         const facilitiesOptions = this.state.facilities.map(facilities =>
-            <option value={facilities._id}>{facilities.space}</option>
+            <option value={facilities.id}>{facilities.space}</option>
         );
 
         const statusOptions = this.state.statusOptions.map(option =>
@@ -418,60 +422,60 @@ class Request extends Component {
                         <Col md={12}>
                             <Form horizontal name="activityRequest" onSubmit={this.open}>
 
-                                <Panel header="Student Information">
+                                <Panel header="Requester Information">
                                     <FormGroup id="needs-validation">
                                         <Col sm={4}>
                                             <Col componentClass={ControlLabel} for="validationCustom01">Full Name</Col>
                                             <FormControl name="requesterName" required/>
                                         </Col>
 
-                                        <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Identification Number</Col>
-                                            <FormControl name="studentIdentificationNumber" required/>
-                                        </Col>
+                                        {/*<Col sm={4}>*/}
+                                            {/*<Col componentClass={ControlLabel}>Identification Number</Col>*/}
+                                            {/*<FormControl name="studentIdentificationNumber" required/>*/}
+                                        {/*</Col>*/}
 
-                                        <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>Role</Col>
-                                            <FormControl name="studentRole" required/>
-                                        </Col>
+                                        {/*<Col sm={3}>*/}
+                                            {/*<Col componentClass={ControlLabel}>Role</Col>*/}
+                                            {/*<FormControl name="studentRole" required/>*/}
+                                        {/*</Col>*/}
                                     </FormGroup>
 
-                                    <FormGroup>
-                                        <Col sm={10}>
-                                            <Col componentClass={ControlLabel}>Address</Col>
-                                            <FormControl name="studentAddress1" required/>
-                                        </Col>
+                                    {/*<FormGroup>*/}
+                                        {/*<Col sm={10}>*/}
+                                            {/*<Col componentClass={ControlLabel}>Address</Col>*/}
+                                            {/*<FormControl name="studentAddress1" required/>*/}
+                                        {/*</Col>*/}
 
-                                    </FormGroup>
+                                    {/*</FormGroup>*/}
 
-                                    <FormGroup>
-                                        <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>City</Col>
-                                            <FormControl name="studentAddressCity" required/>
-                                        </Col>
+                                    {/*<FormGroup>*/}
+                                        {/*<Col sm={3}>*/}
+                                            {/*<Col componentClass={ControlLabel}>City</Col>*/}
+                                            {/*<FormControl name="studentAddressCity" required/>*/}
+                                        {/*</Col>*/}
 
-                                        <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>State</Col>
-                                            <FormControl name="studentAddressState" required/>
-                                        </Col>
+                                        {/*<Col sm={3}>*/}
+                                            {/*<Col componentClass={ControlLabel}>State</Col>*/}
+                                            {/*<FormControl name="studentAddressState" required/>*/}
+                                        {/*</Col>*/}
 
-                                        <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>Country</Col>
-                                            <FormControl name="studentAddressCountry" required/>
-                                        </Col>
+                                        {/*<Col sm={3}>*/}
+                                            {/*<Col componentClass={ControlLabel}>Country</Col>*/}
+                                            {/*<FormControl name="studentAddressCountry" required/>*/}
+                                        {/*</Col>*/}
 
-                                        <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>Zip Code</Col>
-                                            <FormControl name="studentAddressZipCode" required/>
-                                        </Col>
-                                    </FormGroup>
+                                        {/*<Col sm={3}>*/}
+                                            {/*<Col componentClass={ControlLabel}>Zip Code</Col>*/}
+                                            {/*<FormControl name="studentAddressZipCode" required/>*/}
+                                        {/*</Col>*/}
+                                    {/*</FormGroup>*/}
 
-                                    <FormGroup>
-                                        <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Telephone</Col>
-                                            <FormControl name="studentTelephone" required/>
-                                        </Col>
-                                    </FormGroup>
+                                    {/*<FormGroup>*/}
+                                        {/*<Col sm={4}>*/}
+                                            {/*<Col componentClass={ControlLabel}>Telephone</Col>*/}
+                                            {/*<FormControl name="studentTelephone" required/>*/}
+                                        {/*</Col>*/}
+                                    {/*</FormGroup>*/}
                                 </Panel>
                                 <br/>
                                 <br/>

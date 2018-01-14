@@ -60,7 +60,7 @@ class FacilitiesDetail extends Component {
 
 
     onEdit() {
-        this.setState({editMode: !this.state.editMode})
+        this.setState({editMode: !this.state.notEditMode})
     }
 
     render() {
@@ -109,7 +109,7 @@ class FacilitiesDetail extends Component {
 
                     {/*</Panel>*/}
 
-                    {this.state.editMode ? (<FormGroup>
+                    {this.state.notEditMode ? (<FormGroup>
                             <Col sm={4}>
                                 <Col componentClass={ControlLabel}>Edificio</Col>
                                 {

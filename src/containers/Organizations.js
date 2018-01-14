@@ -47,17 +47,18 @@ class Organizations extends Component {
         const organizations = this.state.organizations.map(organization =>
 
             <Col md={12}>
-                <Link to={`/admin/organizations/${organization.id}`}><Panel collapsible header={organization.organizationName} style={{fontFamily: 'Helvetica'}}>
-                    <p><Link to={`/admin/organizations/${organization.id}`}>{organization.organizationName}</Link></p>
-                    <p>Type: {organization.description}</p>
-                    <p>Creation Date: {organization.created_at}</p>
-                    <p>Counselor Name: {organization.counselorName}</p>
-                    <p>Counselor Email: {organization.counselorEmail}</p>
-                    <Link to={`/admin/organizations/${organization._id}`}><Button className="btn btn-primary">Details</Button></Link>
+                <Link to={`/admin/organizations/${organization.id}`}><Panel  header={organization.organizationName} style={{fontFamily: 'Helvetica'}}>
+                    {/*<p><Link to={`/admin/organizations/${organization.id}`}>{organization.organizationName}</Link></p>*/}
+                    {/*<p>Type: {organization.description}</p>*/}
+                    {/*<p>Creation Date: {organization.created_at}</p>*/}
+                    {/*<p>Counselor Name: {organization.counselorName}</p>*/}
+                    {/*<p>Counselor Email: {organization.counselorEmail}</p>*/}
+                    {/*<Link to={`/admin/organizations/${organization._id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
                 </Panel>
                 </Link>
             </Col>
         );
+
 
         const tabsInstance = (
 

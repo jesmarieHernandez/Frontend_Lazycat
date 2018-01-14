@@ -167,6 +167,7 @@ class UserDetail extends Component {
 
         console.log('Form was submitted');
 
+        //TODO Waiting for edit admin route to be done
         if (this.state.userType_code === 1) {
             const form = document.forms.newAdmin;
 

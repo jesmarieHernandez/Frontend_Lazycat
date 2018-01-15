@@ -13,7 +13,6 @@ import { home } from 'react-icons-kit/icomoon/home';
 import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
 import { userTie } from 'react-icons-kit/icomoon/userTie';
 
-const PAGE_SIZE = 10;
 
 class Organizations extends Component {
 

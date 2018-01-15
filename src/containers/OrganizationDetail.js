@@ -12,11 +12,11 @@ import {
 import ReactCenter from "react-center";
 import AlertContainer from 'react-alert';
 import Icon from 'react-icons-kit';
-import { statsDots } from 'react-icons-kit/icomoon/statsDots';
-import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
-import { home } from 'react-icons-kit/icomoon/home';
-import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
-import { userTie } from 'react-icons-kit/icomoon/userTie';
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
+import {userTie} from 'react-icons-kit/icomoon/userTie';
 
 
 class OrganizationDetail extends Component {
@@ -44,13 +44,14 @@ class OrganizationDetail extends Component {
             orgTypePicked: '',
             orgId: null,
             organizationActivities: [],
+            organizationCounselors: [],
+            organizationMembers: [],
             organizationTypes: [],
             selectedOrganizationType: {}
         }
 
         this.toggleEditMode = this.toggleEditMode.bind(this);
     }
-
 
 
     componentDidMount() {
@@ -69,6 +70,123 @@ class OrganizationDetail extends Component {
                 this.setState({orgInitialsValue: data[0].organizationInitials});
                 this.setState({orgTypeValue: data[0].organizationType_code});
                 this.setState({orgId: data[0].id});
+
+                // TODO Fetch organization activities
+                // fetch(`http://localhost:8000/api/organizations/${id}`).then(response => {
+                //     response.json().then(data => {
+                //
+                //         console.log(`http://localhost:8000/api/organizations/${id}`);
+                //         console.log(data);
+                //         this.setState({orgNameValue: data[0].organizationName});
+                //         this.setState({orgInitialsValue: data[0].organizationInitials});
+                //         this.setState({orgTypeValue: data[0].organizationType_code});
+                //         this.setState({orgId: data[0].id});
+                //
+                //     }).catch(err => {
+                //         console.log(err)
+                //         //this.props.showError(`Error in sending data to server: ${err.message}`);
+                //     });
+                // });
+
+                // TODO Fetch organization counselors
+                fetch(`http://localhost:8000/api/organizations/counselors/${id}`).then(response => {
+                    response.json().then(data => {
+
+                        // this.setState({orgNameValue: data[0].organizationName});
+                        // this.setState({orgInitialsValue: data[0].organizationInitials});
+                        // this.setState({orgTypeValue: data[0].organizationType_code});
+                        // this.setState({orgId: data[0].id});
+
+                        // let organizationCounselors = [
+                        //     {
+                        //         "id": 1,
+                        //         "counselorName": "Raymond Lopez",
+                        //         "counselorEmail": "raymond.lopez@upr.edu",
+                        //         "counselorPhone": "9090",
+                        //         "counselorFaculty": "asdasd",
+                        //         "counselorDepartment": "asdasdasdas",
+                        //         "counselorOffice": "dasdasd",
+                        //         "user_id": 5,
+                        //         "isActive": 1
+                        //     },
+                        //     {
+                        //         "id": 2,
+                        //         "counselorName": "Raymond Perez",
+                        //         "counselorEmail": "raymond.lopez@upr.edu",
+                        //         "counselorPhone": "9090",
+                        //         "counselorFaculty": "asdasd",
+                        //         "counselorDepartment": "asdasdasdas",
+                        //         "counselorOffice": "dasdasd",
+                        //         "user_id": 5,
+                        //         "isActive": 1
+                        //     },
+                        // ];
+
+                        this.setState({organizationCounselors: data});
+
+
+                    }).catch(err => {
+                        console.log(err)
+                        //this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
+                });
+
+
+                //TODO Fetch organization members
+                fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
+                    response.json().then(data => {
+
+                        // let members = [
+                        //     {
+                        //         "id": 1,
+                        //         "studentName": "Deborah Meltrozo",
+                        //         "studentEmail": "jesmarie.hernandez@upr.edu",
+                        //         "studentNo": "555119999",
+                        //         "studentPhone": "7875554040",
+                        //         "studentAddress": "La Calle Algo",
+                        //         "studentCity": "Maya",
+                        //         "studentCountry": "Rep Dom",
+                        //         "studentZipCode": "00000",
+                        //         "user_id": 2,
+                        //         "isActive": 1
+                        //     },
+                        //     {
+                        //         "id": 2,
+                        //         "studentName": "Monica Galindo",
+                        //         "studentEmail": "jesmarie.hernandez@upr.edu",
+                        //         "studentNo": "555119999",
+                        //         "studentPhone": "7875554040",
+                        //         "studentAddress": "La Calle Algo",
+                        //         "studentCity": "Maya",
+                        //         "studentCountry": "Rep Dom",
+                        //         "studentZipCode": "00000",
+                        //         "user_id": 2,
+                        //         "isActive": 1
+                        //     },
+                        //     {
+                        //         "id": 3,
+                        //         "studentName": "Elma Canon Moreno",
+                        //         "studentEmail": "jesmarie.hernandez@upr.edu",
+                        //         "studentNo": "555119999",
+                        //         "studentPhone": "7875554040",
+                        //         "studentAddress": "La Calle Algo",
+                        //         "studentCity": "Maya",
+                        //         "studentCountry": "Rep Dom",
+                        //         "studentZipCode": "00000",
+                        //         "user_id": 2,
+                        //         "isActive": 1
+                        //     },
+                        //
+                        // ];
+
+                        this.setState({organizationMembers: data});
+
+
+                    }).catch(err => {
+                        console.log(err)
+                        //this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
+                });
 
             }).catch(err => {
                 console.log(err)
@@ -102,12 +220,10 @@ class OrganizationDetail extends Component {
         });
 
 
-
     }
 
     handleSelect = (event) => {
         // event.preventDefault();
-        console.log(event);
         this.setState({activeKey: event});
     }
 
@@ -199,7 +315,6 @@ class OrganizationDetail extends Component {
         };
 
 
-
         const organizationTypes = this.state.organizationTypes.map(option =>
             <option value={option.code}>{option.description}</option>
         );
@@ -208,10 +323,14 @@ class OrganizationDetail extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
-                    <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
+                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
+                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
+                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie}
+                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -219,7 +338,8 @@ class OrganizationDetail extends Component {
         let organizationActivities;
 
         if (this.state.organizationActivities.length === 0) {
-            organizationActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades para esta organización.</p>
+            organizationActivities =
+                <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades para esta organización.</p>
         } else {
 
 
@@ -238,144 +358,240 @@ class OrganizationDetail extends Component {
             );
         }
 
+        let organizationCounselors;
+
+        console.log('Orgnization Counselors');
+        console.log(this.state.organizationCounselors);
+
+        if (this.state.organizationCounselors.length === 0) {
+            organizationCounselors =
+                <p style={{color: 'grey', marginLeft: '20px'}}>No hay consejeros para esta organización.</p>
+        } else {
+
+
+            organizationCounselors = this.state.organizationCounselors.map(organization =>
+
+                <Col md={12}>
+                    <Link to={`/admin/users/${organization.counselorEmail}`}><Panel header={organization.counselorName}
+
+
+                                                                            style={{fontFamily: 'Helvetica'}}>
+                        <Col md={6}>
+                            <Row>
+                                <Col md={6}><p>Nombre:</p> </Col><Col md={6}><p> {organization.counselorName}</p></Col>
+                                <Col md={6}><p>Email:</p> </Col><Col md={6}><p> {organization.counselorEmail}</p></Col>
+                            </Row>
+                        </Col>
+                        <Col md={6} >
+
+                            <Row>
+                                <Row>
+                                    <Col md={12}><Button className="btn-info btn-large pull-right" style={{width: '100px', marginBottom: '10px'}} onClick={this.toggleEditMode}>Detalles</Button> </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={12}><Button className="btn-danger btn-large pull-right" style={{width: '100px'}} onClick={this.toggleEditMode}>Remover</Button> </Col>
+                                </Row>
+                            </Row>
+                        </Col>
+
+                    </Panel>
+                    </Link>
+                </Col>
+            );
+        }
+
+        let organizationMembers;
+
+        if (this.state.organizationMembers.length === 0) {
+            organizationMembers =
+                <p style={{color: 'grey', marginLeft: '20px'}}>No hay miembros para esta organización.</p>
+        } else {
+
+
+            organizationMembers = this.state.organizationMembers.map(member =>
+
+                <Col md={12}>
+                    <Link to={`/admin/users/${member.studentEmail}`}><Panel header={member.studentName}
+
+
+                                                                        style={{fontFamily: 'Helvetica'}}>
+                        <Col md={6}>
+                        <Row>
+                        <Col md={6}><p>Nombre:</p> </Col><Col md={6}><p> {member.studentName}</p></Col>
+                        <Col md={6}><p>Email:</p> </Col><Col md={6}><p> {member.studentEmail}</p></Col>
+                        </Row>
+                        </Col>
+                        <Col md={6} >
+
+                        <Row>
+                            <Row>
+                            <Col md={12}><Button className="btn-info btn-large pull-right" style={{width: '100px', marginBottom: '10px'}} onClick={this.toggleEditMode}>Detalles</Button> </Col>
+                            </Row>
+                            <Row>
+                            <Col md={12}><Button className="btn-danger btn-large pull-right" style={{width: '100px'}} onClick={this.toggleEditMode}>Remover</Button> </Col>
+                            </Row>
+                        </Row>
+                        </Col>
+
+                    </Panel>
+                    </Link>
+                </Col>
+            );
+        }
+
         return (
             <div className="container">
                 <Col md={2}>
                     {tabsInstance}
                 </Col>
 
-                    <Col md={10}>
-                        <ol className="breadcrumb">
-                            <li/>
-                            <li><Link to={`/admin/`}>Panel de admistración</Link></li>
-                            <li><Link to={`/admin/organizations`}>Organizaciones</Link></li>
-                            <li className="active">Detalles de la organización</li>
-                        </ol>
+                <Col md={10}>
+                    <ol className="breadcrumb">
+                        <li/>
+                        <li><Link to={`/admin/`}>Panel de admistración</Link></li>
+                        <li><Link to={`/admin/organizations`}>Organizaciones</Link></li>
+                        <li className="active">Detalles de la organización</li>
+                    </ol>
 
-                        <Panel header="Detalles de la organización">
-                            <Form horizontal name="newOrganization" onSubmit={this.open}>
+                    <Panel header="Detalles de la organización">
+                        <Form horizontal name="newOrganization" onSubmit={this.open}>
 
-                                <FormGroup>
-                                    <Col sm={4}>
+                            <FormGroup>
+                                <Col sm={4}>
 
-                                        <Col componentClass={ControlLabel}>Nombre de la organización</Col>
-                                        {
-                                            (this.state.orgNameValue.length >= 100) ?
+                                    <Col componentClass={ControlLabel}>Nombre de la organización</Col>
+                                    {
+                                        (this.state.orgNameValue.length >= 100) ?
+                                            (<div>
+                                                <FormControl name="organizationName"
+                                                             onChange={this.handleOrgNameValue}
+                                                             placeholder="Ex. Association for Computing Machinery"
+                                                             style={errorFormStyle}
+                                                             disabled={this.state.notEditMode}
+                                                             value={this.state.orgNameValue}
+                                                             required
+                                                />
+                                                <HelpBlock style={errorHelpBlockStyle}>El nombre es demasiado
+                                                    largo</HelpBlock>
+                                            </div>)
+                                            :
+                                            (this.state.orgNameValue.length <= 5 && this.state.orgNameValue.length != 0 ) ?
                                                 (<div>
                                                     <FormControl name="organizationName"
                                                                  onChange={this.handleOrgNameValue}
                                                                  placeholder="Ex. Association for Computing Machinery"
                                                                  style={errorFormStyle}
-                                                                 disabled={this.state.notEditMode}
                                                                  value={this.state.orgNameValue}
-                                                                 required
-                                                    />
-                                                    <HelpBlock style={errorHelpBlockStyle}>El nombre es demasiado
-                                                        largo</HelpBlock>
+                                                                 disabled={this.state.notEditMode}
+                                                                 required/>
+                                                    <HelpBlock style={errorHelpBlockStyle}>El nombre es muy
+                                                        pequeno</HelpBlock>
                                                 </div>)
                                                 :
-                                                (this.state.orgNameValue.length <= 5 && this.state.orgNameValue.length !=0 ) ?
+                                                (/^[0-9]+$/.test(this.state.orgNameValue) === true) ?
                                                     (<div>
                                                         <FormControl name="organizationName"
                                                                      onChange={this.handleOrgNameValue}
                                                                      placeholder="Ex. Association for Computing Machinery"
                                                                      style={errorFormStyle}
-                                                                     value={this.state.orgNameValue}
                                                                      disabled={this.state.notEditMode}
+                                                                     value={this.state.orgNameValue}
                                                                      required/>
-                                                        <HelpBlock style={errorHelpBlockStyle}>El nombre es muy pequeno</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>El nombre de la
+                                                            organizacion
+                                                            no puede ser un numero</HelpBlock>
+
                                                     </div>)
                                                     :
-                                                    (/^[0-9]+$/.test(this.state.orgNameValue) === true) ?
+                                                    (/^[0-9]+$/.test(this.state.orgNameValue) === false && this.state.orgNameValue != 0) ?
                                                         (<div>
                                                             <FormControl name="organizationName"
                                                                          onChange={this.handleOrgNameValue}
                                                                          placeholder="Ex. Association for Computing Machinery"
-                                                                         style={errorFormStyle}
+                                                                         style={successFormStyle}
                                                                          disabled={this.state.notEditMode}
                                                                          value={this.state.orgNameValue}
                                                                          required/>
-                                                            <HelpBlock style={errorHelpBlockStyle}>El nombre de la organizacion
-                                                                no puede ser un numero</HelpBlock>
-
                                                         </div>)
                                                         :
-                                                        (/^[0-9]+$/.test(this.state.orgNameValue) === false && this.state.orgNameValue != 0) ?
-                                                            (<div>
-                                                                <FormControl name="organizationName"
-                                                                             onChange={this.handleOrgNameValue}
-                                                                             placeholder="Ex. Association for Computing Machinery"
-                                                                             style={successFormStyle}
-                                                                             disabled={this.state.notEditMode}
-                                                                             value={this.state.orgNameValue}
-                                                                             required/>
-                                                            </div>)
-                                                            :
-                                                            (<div>
-                                                                <FormControl name="organizationName"
-                                                                             onChange={this.handleOrgNameValue}
-                                                                             placeholder="Ex. Association for Computing Machinery"
-                                                                             disabled={this.state.notEditMode}
-                                                                             value={this.state.orgNameValue}
-                                                                             required/>
-                                                            </div>)
-                                        }
-                                    </Col>
+                                                        (<div>
+                                                            <FormControl name="organizationName"
+                                                                         onChange={this.handleOrgNameValue}
+                                                                         placeholder="Ex. Association for Computing Machinery"
+                                                                         disabled={this.state.notEditMode}
+                                                                         value={this.state.orgNameValue}
+                                                                         required/>
+                                                        </div>)
+                                    }
+                                </Col>
 
-                                    <Col md={4}>
-                                        <Col componentClass={ControlLabel}>Tipo</Col>
-                                        {
-                                            (this.state.orgTypePicked != '1') ?
-                                                (this.state.orgTypePicked === '2') ?
-                                                    (<div>
-                                                        <FormControl componentClass="select"
-                                                                     name="organizationType"
-                                                                     onChange={this.onOrganizationTypeSelected}
-                                                                     placeholder="select"
-                                                                     style={successFormStyle}
-                                                                     disabled={this.state.notEditMode}
-                                                                     value={this.state.orgTypeValue}
-                                                                     required>
-                                                            <option>select</option>
-                                                            {organizationTypes}
-                                                        </FormControl>
-                                                    </div>)
-                                                    :
-                                                    (<div>
-                                                        <FormControl componentClass="select"
-                                                                     name="organizationType"
-                                                                     onChange={this.onOrganizationTypeSelected}
-                                                                     placeholder="select"
-                                                                     disabled={this.state.notEditMode}
-                                                                     value={this.state.orgTypeValue}
-                                                                     required>
-                                                            <option>select</option>
-                                                            {organizationTypes}
-                                                        </FormControl>
-                                                    </div>)
-                                                :
+                                <Col md={4}>
+                                    <Col componentClass={ControlLabel}>Tipo</Col>
+                                    {
+                                        (this.state.orgTypePicked != '1') ?
+                                            (this.state.orgTypePicked === '2') ?
                                                 (<div>
-                                                    <FormControl componentClass="select" name="organizationType"
+                                                    <FormControl componentClass="select"
+                                                                 name="organizationType"
                                                                  onChange={this.onOrganizationTypeSelected}
                                                                  placeholder="select"
-                                                                 style={errorFormStyle}
+                                                                 style={successFormStyle}
                                                                  disabled={this.state.notEditMode}
                                                                  value={this.state.orgTypeValue}
                                                                  required>
                                                         <option>select</option>
                                                         {organizationTypes}
                                                     </FormControl>
-                                                    <HelpBlock style={errorHelpBlockStyle}>Escoja el tipo de la
-                                                        organización</HelpBlock>
                                                 </div>)
-                                        }
+                                                :
+                                                (<div>
+                                                    <FormControl componentClass="select"
+                                                                 name="organizationType"
+                                                                 onChange={this.onOrganizationTypeSelected}
+                                                                 placeholder="select"
+                                                                 disabled={this.state.notEditMode}
+                                                                 value={this.state.orgTypeValue}
+                                                                 required>
+                                                        <option>select</option>
+                                                        {organizationTypes}
+                                                    </FormControl>
+                                                </div>)
+                                            :
+                                            (<div>
+                                                <FormControl componentClass="select" name="organizationType"
+                                                             onChange={this.onOrganizationTypeSelected}
+                                                             placeholder="select"
+                                                             style={errorFormStyle}
+                                                             disabled={this.state.notEditMode}
+                                                             value={this.state.orgTypeValue}
+                                                             required>
+                                                    <option>select</option>
+                                                    {organizationTypes}
+                                                </FormControl>
+                                                <HelpBlock style={errorHelpBlockStyle}>Escoja el tipo de la
+                                                    organización</HelpBlock>
+                                            </div>)
+                                    }
 
-                                    </Col>
+                                </Col>
 
-                                    <Col sm={4}>
-                                        <Col componentClass={ControlLabel}>Siglas</Col>
-                                        {
-                                            (this.state.orgInitialsValue.length > 20) ?
+                                <Col sm={4}>
+                                    <Col componentClass={ControlLabel}>Siglas</Col>
+                                    {
+                                        (this.state.orgInitialsValue.length > 20) ?
+                                            (<div>
+                                                <FormControl name="organizationInitials"
+                                                             placeholder="Ex. ACM"
+                                                             onChange={this.handleOrgInitialsValue}
+                                                             style={errorFormStyle}
+                                                             disabled={this.state.notEditMode}
+                                                             value={this.state.orgInitialsValue}
+                                                             required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>El numero de siglas es muy
+                                                    grande</HelpBlock>
+                                            </div>)
+                                            :
+                                            (this.state.orgInitialsValue.length === 1) ?
                                                 (<div>
                                                     <FormControl name="organizationInitials"
                                                                  placeholder="Ex. ACM"
@@ -385,10 +601,10 @@ class OrganizationDetail extends Component {
                                                                  value={this.state.orgInitialsValue}
                                                                  required/>
                                                     <HelpBlock style={errorHelpBlockStyle}>El numero de siglas es muy
-                                                        grande</HelpBlock>
+                                                        pequeno</HelpBlock>
                                                 </div>)
                                                 :
-                                                (this.state.orgInitialsValue.length === 1) ?
+                                                (/^[0-9]+$/.test(this.state.orgInitialsValue) === true) ?
                                                     (<div>
                                                         <FormControl name="organizationInitials"
                                                                      placeholder="Ex. ACM"
@@ -397,104 +613,85 @@ class OrganizationDetail extends Component {
                                                                      disabled={this.state.notEditMode}
                                                                      value={this.state.orgInitialsValue}
                                                                      required/>
-                                                        <HelpBlock style={errorHelpBlockStyle}>El numero de siglas es muy
-                                                            pequeno</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Las siglas
+                                                            no pueden ser un numero</HelpBlock>
                                                     </div>)
                                                     :
-                                                    (/^[0-9]+$/.test(this.state.orgInitialsValue) === true) ?
+                                                    (/^[0-9]+$/.test(this.state.orgInitialsValue) === false && this.state.orgInitialsValue.length > 2) ?
                                                         (<div>
                                                             <FormControl name="organizationInitials"
                                                                          placeholder="Ex. ACM"
                                                                          onChange={this.handleOrgInitialsValue}
-                                                                         style={errorFormStyle}
+                                                                         style={successFormStyle}
                                                                          disabled={this.state.notEditMode}
                                                                          value={this.state.orgInitialsValue}
                                                                          required/>
-                                                            <HelpBlock style={errorHelpBlockStyle}>Las siglas
-                                                                no pueden ser un numero</HelpBlock>
                                                         </div>)
                                                         :
-                                                        (/^[0-9]+$/.test(this.state.orgInitialsValue) === false && this.state.orgInitialsValue.length > 2) ?
-                                                            (<div>
-                                                                <FormControl name="organizationInitials"
-                                                                             placeholder="Ex. ACM"
-                                                                             onChange={this.handleOrgInitialsValue}
-                                                                             style={successFormStyle}
-                                                                             disabled={this.state.notEditMode}
-                                                                             value={this.state.orgInitialsValue}
-                                                                             required/>
-                                                            </div>)
-                                                            :
-                                                            (<div>
-                                                                <FormControl name="organizationInitials"
-                                                                             placeholder="Ex. ACM"
-                                                                             onChange={this.handleOrgInitialsValue}
-                                                                             disabled={this.state.notEditMode}
-                                                                             value={this.state.orgInitialsValue}
-                                                                             required/>
-                                                            </div>)
+                                                        (<div>
+                                                            <FormControl name="organizationInitials"
+                                                                         placeholder="Ex. ACM"
+                                                                         onChange={this.handleOrgInitialsValue}
+                                                                         disabled={this.state.notEditMode}
+                                                                         value={this.state.orgInitialsValue}
+                                                                         required/>
+                                                        </div>)
 
-                                        }
-                                    </Col>
-                                </FormGroup>
+                                    }
+                                </Col>
+                            </FormGroup>
 
 
-                                <AlertContainer ref={a => this.msg = a}/>
+                            <AlertContainer ref={a => this.msg = a}/>
 
-                                <ReactCenter>
-                                    {/*<ButtonToolbar>*/}
-                                        {/*<Col md={6}><Link to={`/admin/organizations/`}><Button*/}
-                                            {/*className="btn btn-primary">Back</Button></Link></Col>*/}
-                                        {/*<Col md={6}>*/}
-                                            {/*<Button bsStyle="btn btn-success" type="submit">*/}
-                                                {/*Submit </Button>*/}
-                                        {/*</Col>*/}
-                                    {/*</ButtonToolbar>*/}
+                            <ReactCenter>
 
-                                    <Row>
-                                        <Col md={6}><Link to={`/admin/organizations/`}><Button
-                                            className="btn btn-primary">Atrás</Button></Link></Col>
-                                        {
-                                            this.state.notEditMode? <Col md="1"><Button className="btn-warning" onClick={this.toggleEditMode}>Editar</Button></Col>
-                                                :
-                                                <Col md={6}><Button className="btn-success" onClick={this.onSubmit}>Guardar</Button></Col>
-                                        }
+                                <Row>
+                                    <Col md={6}><Link to={`/admin/organizations/`}><Button
+                                        className="btn btn-primary">Atrás</Button></Link></Col>
+                                    {
+                                        this.state.notEditMode ?
+                                            <Col md="1"><Button className="btn-warning" onClick={this.toggleEditMode}>Editar</Button></Col>
+                                            :
+                                            <Col md={6}><Button className="btn-success"
+                                                                onClick={this.onSubmit}>Guardar</Button></Col>
+                                    }
 
-                                    </Row>
-                                </ReactCenter>
+                                </Row>
+                            </ReactCenter>
 
-                                <Modal show={this.state.showModal} onHide={this.close}>
-                                    <Modal.Header closeButton>
-                                        <Modal.Title>Submit organization?</Modal.Title>
-                                    </Modal.Header>
-                                    <Modal.Body>
-                                        <h4>Are you sure you want to submit the organization?</h4>
-                                    </Modal.Body>
-                                    <Modal.Footer>
-                                        <Button onClick={this.onSubmit} bsStyle="primary"
-                                                type="button">Ok</Button>
-                                        <Button onClick={this.close}>Cancel</Button>
-                                    </Modal.Footer>
-                                </Modal>
+                            <Modal show={this.state.showModal} onHide={this.close}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Submit organization?</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <h4>Are you sure you want to submit the organization?</h4>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button onClick={this.onSubmit} bsStyle="primary"
+                                            type="button">Ok</Button>
+                                    <Button onClick={this.close}>Cancel</Button>
+                                </Modal.Footer>
+                            </Modal>
 
-                            </Form>
-                        </Panel>
-                        <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
-                            <NavItem eventKey="1" >Actividades</NavItem>
-                            <NavItem eventKey="2" title="Item">Miembros </NavItem>
-                            <NavItem eventKey="3" title="Item">Consejeros </NavItem>
-                        </Nav>
-                        <br/>
+                        </Form>
+                    </Panel>
+                    <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+                        <NavItem eventKey="1">Actividades</NavItem>
+                        <NavItem eventKey="2" title="Item">Consejeros </NavItem>
+                        <NavItem eventKey="3" title="Item">Miembros </NavItem>
+                    </Nav>
+                    <br/>
 
-                    </Col>
+                </Col>
 
-                    <Col md={2}></Col>
+                <Col md={2}></Col>
 
-                    <Col md={10}>
-                        {/*{this.state.activeKey === '1' ? organizationActivities : null}*/}
-                        {/*{this.state.activeKey === '2' ? approvedActivities : null}*/}
-                        {/*{this.state.activeKey === '3' ? deniedActivities : null}*/}
-                    </Col>
+                <Col md={10}>
+                    {this.state.activeKey === '1' ? organizationActivities : null}
+                    {this.state.activeKey === '2' ? organizationCounselors : null}
+                    {this.state.activeKey === '3' ? organizationMembers : null}
+                </Col>
             </div>
         )
     }

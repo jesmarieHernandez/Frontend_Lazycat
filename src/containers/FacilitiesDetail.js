@@ -3,18 +3,17 @@
  */
 import React, {Component} from 'react';
 import 'isomorphic-fetch';
-import {Link, Router, Route} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Icon from 'react-icons-kit';
 import {statsDots} from 'react-icons-kit/icomoon/statsDots';
 import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
-import {home} from 'react-icons-kit/icomoon/home';
 import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 import {userTie} from 'react-icons-kit/icomoon/userTie';
 
 
 import {
-    FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, HelpBlock, Nav, NavItem
+    FormGroup, FormControl, ControlLabel, Button,
+    Panel, Form, Col, Row, HelpBlock, Nav, NavItem
 } from 'react-bootstrap';
 import ReactCenter from "react-center"
 
@@ -22,12 +21,6 @@ class FacilitiesDetail extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            facilities: {
-                id: 0,
-                building: '',
-                space: '',
-                facilityDepartment: ''
-            },
             showModal: false,
             facilitiesId: null,
             buildingValue: '',
@@ -36,6 +29,8 @@ class FacilitiesDetail extends Component {
             editMode: false,
             notEditMode: true,
             activeKey: '1',
+            facilitiesActivities: [],
+            facilitiesManagers: []
         }
     }
 
@@ -53,11 +48,32 @@ class FacilitiesDetail extends Component {
                 this.setState({spaceValue: data.space});
                 this.setState({facilityDepartmentValue: data.facilityDepartment});
 
+                // TODO Fetch facilities managers
+                // fetch(`http://localhost:8000/api/facilities/${id}`).then(response => {
+                //     response.json().then(data => {
+                //         console.log(data);
+                //         this.setState({facilitiesId: data.id});
+                //         this.setState({buildingValue: data.building});
+                //         this.setState({spaceValue: data.space});
+                //         this.setState({facilityDepartmentValue: data.facilityDepartment});
+                //
+                //     }).catch(err => {
+                //         console.log(err)
+                //         //this.props.showError(`Error in sending data to server: ${err.message}`);
+                //     });
+                // })
+
             }).catch(err => {
                 console.log(err)
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
             });
         })
+    }
+
+    handleSelect = (event) => {
+        // event.preventDefault();
+        console.log(event);
+        this.setState({activeKey: event});
     }
 
     onSubmit = (event) => {
@@ -115,16 +131,60 @@ class FacilitiesDetail extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estadísticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
         );
+
+        let facilitiesManagers;
+
+        if (this.state.facilitiesManagers.length === 0) {
+            facilitiesManagers = <p style={{color: 'grey', marginLeft: '20px'}}>No hay consejeros para esta organización.</p>
+        } else {
+
+
+            facilitiesManagers = this.state.facilitiesManagers.map(activity =>
+
+                <Col md={12}>
+                    <Panel header={activity.activityName}>
+                        <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                        <br/>
+                        <p><b>Description:</b> {activity.activityDescription}</p>
+                        <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                        <p><b>Facility:</b> {activity.facility.space}</p>
+                        <p><b>Status:</b> {activity.status.description}</p>
+                    </Panel>
+                </Col>
+            );
+        }
+
+        let facilitiesActivities;
+
+        if (this.state.facilitiesActivities.length === 0) {
+            facilitiesActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades para esta organización.</p>
+        } else {
+
+
+            facilitiesActivities = this.state.facilitiesActivities.map(activity =>
+
+                <Col md={12}>
+                    <Panel header={activity.activityName}>
+                        <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                        <br/>
+                        <p><b>Description:</b> {activity.activityDescription}</p>
+                        <p><b>Organization:</b> {activity.organization.organizationName}</p>
+                        <p><b>Facility:</b> {activity.facility.space}</p>
+                        <p><b>Status:</b> {activity.status.description}</p>
+                    </Panel>
+                </Col>
+            );
+        }
 
         return (
             <div className="container">
@@ -137,9 +197,9 @@ class FacilitiesDetail extends Component {
 
                     <ol className="breadcrumb">
                         <li/>
-                        <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                        <li><Link to={`/admin/facilities`}>Facilities</Link></li>
-                        <li className="active">Facilities Details</li>
+                        <li><Link to={`/admin/`}>Panel de administración</Link></li>
+                        <li><Link to={`/admin/facilities`}>Facilidades</Link></li>
+                        <li className="active">Detalles de las facilidades</li>
                     </ol>
 
                     <Panel header="Detalles de las facilidades">
@@ -238,9 +298,20 @@ class FacilitiesDetail extends Component {
                         </ReactCenter>
                     </Panel>
 
+                    <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+                        <NavItem eventKey="1" >Actividades</NavItem>
+                        <NavItem eventKey="2" title="Item"> Encargados</NavItem>
+                    </Nav>
+                    <br/>
 
 
+                </Col>
 
+                <Col md={2}></Col>
+
+                <Col md={10}>
+                    {this.state.activeKey === '1' ? facilitiesActivities : null}
+                    {this.state.activeKey === '2' ? facilitiesManagers : null}
                 </Col>
             </div>
         )

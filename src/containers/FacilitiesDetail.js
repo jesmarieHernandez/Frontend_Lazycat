@@ -48,20 +48,368 @@ class FacilitiesDetail extends Component {
                 this.setState({spaceValue: data.space});
                 this.setState({facilityDepartmentValue: data.facilityDepartment});
 
-                // TODO Fetch facilities managers
-                // fetch(`http://localhost:8000/api/facilities/${id}`).then(response => {
-                //     response.json().then(data => {
-                //         console.log(data);
-                //         this.setState({facilitiesId: data.id});
-                //         this.setState({buildingValue: data.building});
-                //         this.setState({spaceValue: data.space});
-                //         this.setState({facilityDepartmentValue: data.facilityDepartment});
-                //
-                //     }).catch(err => {
-                //         console.log(err)
-                //         //this.props.showError(`Error in sending data to server: ${err.message}`);
-                //     });
-                // })
+                // TODO Fetch facilities activities
+                fetch(`http://localhost:8000/api/activityByFacility/${id}`).then(response => {
+                    response.json().then(data => {
+
+                        let facilitiesActivities = [
+                            {
+                                "id": 1,
+                                "activityName": "Putoooo",
+                                "activityDescription": "sdasdasd",
+                                "attendantsNumber": 222,
+                                "activityDate": "2018-10-10",
+                                "activityStart": "00:00:00",
+                                "activityEnd": "00:00:00",
+                                "hasFood": null,
+                                "guestName": "Putooo",
+                                "activityStatus_code": 1,
+                                "counselorStatus_code": 1,
+                                "managerStatus_code": 1,
+                                "activityType_code": null,
+                                "counselorComment": null,
+                                "managerComment": null,
+                                "staffComment": null,
+                                "student": {
+                                    "id": 1,
+                                    "studentName": "Jesmarie Hernandez",
+                                    "studentEmail": "jesmarie.hernandez@upr.edu",
+                                    "studentNo": "555119999",
+                                    "studentPhone": "7875554040",
+                                    "studentAddress": "La Calle Algo",
+                                    "studentCity": "Maya",
+                                    "studentCountry": "Rep Dom",
+                                    "studentZipCode": "00000",
+                                    "user_id": 2,
+                                    "isActive": 1
+                                },
+                                "organization": {
+                                    "id": 1,
+                                    "organizationName": "Las Monjasfhfhg",
+                                    "organizationInitials": "ACM2ssss",
+                                    "isActive": 0
+                                },
+                                "facility": {
+                                    "id": 2,
+                                    "building": "Stefani",
+                                    "space": "S-113",
+                                    "facilityDepartment": ""
+                                },
+                                "status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "counselor_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "manager_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                }
+                            },
+                            {
+                                "id": 2,
+                                "activityName": "Putoooo",
+                                "activityDescription": "sdasdasd",
+                                "attendantsNumber": 222,
+                                "activityDate": "2018-10-10",
+                                "activityStart": "00:00:00",
+                                "activityEnd": "00:00:00",
+                                "hasFood": null,
+                                "guestName": "Putooo",
+                                "activityStatus_code": 1,
+                                "counselorStatus_code": 1,
+                                "managerStatus_code": 1,
+                                "activityType_code": null,
+                                "counselorComment": null,
+                                "managerComment": null,
+                                "staffComment": null,
+                                "student": {
+                                    "id": 1,
+                                    "studentName": "Jesmarie Hernandez",
+                                    "studentEmail": "jesmarie.hernandez@upr.edu",
+                                    "studentNo": "555119999",
+                                    "studentPhone": "7875554040",
+                                    "studentAddress": "La Calle Algo",
+                                    "studentCity": "Maya",
+                                    "studentCountry": "Rep Dom",
+                                    "studentZipCode": "00000",
+                                    "user_id": 2,
+                                    "isActive": 1
+                                },
+                                "organization": {
+                                    "id": 1,
+                                    "organizationName": "Las Monjasfhfhg",
+                                    "organizationInitials": "ACM2ssss",
+                                    "isActive": 0
+                                },
+                                "facility": {
+                                    "id": 2,
+                                    "building": "Stefani",
+                                    "space": "S-113",
+                                    "facilityDepartment": ""
+                                },
+                                "status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "counselor_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "manager_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                }
+                            },
+                            {
+                                "id": 3,
+                                "activityName": "Putoooo",
+                                "activityDescription": "sdasdasd",
+                                "attendantsNumber": 222,
+                                "activityDate": "2018-10-10",
+                                "activityStart": "00:00:00",
+                                "activityEnd": "00:00:00",
+                                "hasFood": null,
+                                "guestName": "Putooo",
+                                "activityStatus_code": 1,
+                                "counselorStatus_code": 1,
+                                "managerStatus_code": 1,
+                                "activityType_code": null,
+                                "counselorComment": null,
+                                "managerComment": null,
+                                "staffComment": null,
+                                "student": {
+                                    "id": 1,
+                                    "studentName": "Jesmarie Hernandez",
+                                    "studentEmail": "jesmarie.hernandez@upr.edu",
+                                    "studentNo": "555119999",
+                                    "studentPhone": "7875554040",
+                                    "studentAddress": "La Calle Algo",
+                                    "studentCity": "Maya",
+                                    "studentCountry": "Rep Dom",
+                                    "studentZipCode": "00000",
+                                    "user_id": 2,
+                                    "isActive": 1
+                                },
+                                "organization": {
+                                    "id": 1,
+                                    "organizationName": "Las Monjasfhfhg",
+                                    "organizationInitials": "ACM2ssss",
+                                    "isActive": 0
+                                },
+                                "facility": {
+                                    "id": 2,
+                                    "building": "Stefani",
+                                    "space": "S-113",
+                                    "facilityDepartment": ""
+                                },
+                                "status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "counselor_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "manager_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                }
+                            },
+                            {
+                                "id": 4,
+                                "activityName": "Putoooo",
+                                "activityDescription": "sdasdasd",
+                                "attendantsNumber": 222,
+                                "activityDate": "2018-10-10",
+                                "activityStart": "00:00:00",
+                                "activityEnd": "00:00:00",
+                                "hasFood": null,
+                                "guestName": "Putooo",
+                                "activityStatus_code": 1,
+                                "counselorStatus_code": 1,
+                                "managerStatus_code": 1,
+                                "activityType_code": null,
+                                "counselorComment": null,
+                                "managerComment": null,
+                                "staffComment": null,
+                                "student": {
+                                    "id": 1,
+                                    "studentName": "Jesmarie Hernandez",
+                                    "studentEmail": "jesmarie.hernandez@upr.edu",
+                                    "studentNo": "555119999",
+                                    "studentPhone": "7875554040",
+                                    "studentAddress": "La Calle Algo",
+                                    "studentCity": "Maya",
+                                    "studentCountry": "Rep Dom",
+                                    "studentZipCode": "00000",
+                                    "user_id": 2,
+                                    "isActive": 1
+                                },
+                                "organization": {
+                                    "id": 1,
+                                    "organizationName": "Las Monjasfhfhg",
+                                    "organizationInitials": "ACM2ssss",
+                                    "isActive": 0
+                                },
+                                "facility": {
+                                    "id": 2,
+                                    "building": "Stefani",
+                                    "space": "S-113",
+                                    "facilityDepartment": ""
+                                },
+                                "status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "counselor_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "manager_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                }
+                            },
+                            {
+                                "id": 5,
+                                "activityName": "Putoooo",
+                                "activityDescription": "sdasdasd",
+                                "attendantsNumber": 222,
+                                "activityDate": "2018-10-10",
+                                "activityStart": "00:00:00",
+                                "activityEnd": "00:00:00",
+                                "hasFood": null,
+                                "guestName": "Putooo",
+                                "activityStatus_code": 1,
+                                "counselorStatus_code": 1,
+                                "managerStatus_code": 1,
+                                "activityType_code": null,
+                                "counselorComment": null,
+                                "managerComment": null,
+                                "staffComment": null,
+                                "student": {
+                                    "id": 1,
+                                    "studentName": "Jesmarie Hernandez",
+                                    "studentEmail": "jesmarie.hernandez@upr.edu",
+                                    "studentNo": "555119999",
+                                    "studentPhone": "7875554040",
+                                    "studentAddress": "La Calle Algo",
+                                    "studentCity": "Maya",
+                                    "studentCountry": "Rep Dom",
+                                    "studentZipCode": "00000",
+                                    "user_id": 2,
+                                    "isActive": 1
+                                },
+                                "organization": {
+                                    "id": 1,
+                                    "organizationName": "Las Monjasfhfhg",
+                                    "organizationInitials": "ACM2ssss",
+                                    "isActive": 0
+                                },
+                                "facility": {
+                                    "id": 2,
+                                    "building": "Stefani",
+                                    "space": "S-113",
+                                    "facilityDepartment": ""
+                                },
+                                "status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "counselor_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "manager_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                }
+                            },
+                            {
+                                "id": 6,
+                                "activityName": "Putoooo",
+                                "activityDescription": "sdasdasd",
+                                "attendantsNumber": 222,
+                                "activityDate": "2018-10-10",
+                                "activityStart": "00:00:00",
+                                "activityEnd": "00:00:00",
+                                "hasFood": null,
+                                "guestName": "Putooo",
+                                "activityStatus_code": 1,
+                                "counselorStatus_code": 1,
+                                "managerStatus_code": 1,
+                                "activityType_code": null,
+                                "counselorComment": null,
+                                "managerComment": null,
+                                "staffComment": null,
+                                "student": {
+                                    "id": 1,
+                                    "studentName": "Jesmarie Hernandez",
+                                    "studentEmail": "jesmarie.hernandez@upr.edu",
+                                    "studentNo": "555119999",
+                                    "studentPhone": "7875554040",
+                                    "studentAddress": "La Calle Algo",
+                                    "studentCity": "Maya",
+                                    "studentCountry": "Rep Dom",
+                                    "studentZipCode": "00000",
+                                    "user_id": 2,
+                                    "isActive": 1
+                                },
+                                "organization": {
+                                    "id": 1,
+                                    "organizationName": "Las Monjasfhfhg",
+                                    "organizationInitials": "ACM2ssss",
+                                    "isActive": 0
+                                },
+                                "facility": {
+                                    "id": 2,
+                                    "building": "Stefani",
+                                    "space": "S-113",
+                                    "facilityDepartment": ""
+                                },
+                                "status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "counselor_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                },
+                                "manager_status": {
+                                    "code": 1,
+                                    "description": "Pendiente"
+                                }
+                            }
+                        ];
+
+                        // this.setState({facilitiesActivities: data});
+                        this.setState({facilitiesActivities: facilitiesActivities});
+
+
+
+                    }).catch(err => {
+                        console.log(err)
+                        //this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
+                });
+
+
+                fetch(`http://localhost:8000/api/facilities/managers/${id}`).then(response => {
+                    response.json().then(data => {
+
+                        this.setState({facilitiesManagers: data});
+
+                    }).catch(err => {
+                        console.log(err)
+                        //this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
+                });
+
+
+
 
             }).catch(err => {
                 console.log(err)
@@ -95,7 +443,6 @@ class FacilitiesDetail extends Component {
             if (response.ok) {
                 console.log(response);
                 response.json().then(editedFacilities => {
-
 
                     this.props.history.push(`/admin/facilities/`);
                     // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
@@ -142,32 +489,81 @@ class FacilitiesDetail extends Component {
             </div>
         );
 
+
         let facilitiesManagers;
 
+        console.log('Facilities Managers');
+        console.log(this.state.facilitiesManagers);
+
         if (this.state.facilitiesManagers.length === 0) {
-            facilitiesManagers = <p style={{color: 'grey', marginLeft: '20px'}}>No hay consejeros para esta organización.</p>
+            facilitiesManagers =
+                <p style={{color: 'grey', marginLeft: '20px'}}>No hay consejeros para esta organización.</p>
         } else {
 
 
-            facilitiesManagers = this.state.facilitiesManagers.map(activity =>
+            facilitiesManagers = this.state.facilitiesManagers.map(manager =>
 
                 <Col md={12}>
-                    <Panel header={activity.activityName}>
-                        <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                        <br/>
-                        <p><b>Description:</b> {activity.activityDescription}</p>
-                        <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                        <p><b>Facility:</b> {activity.facility.space}</p>
-                        <p><b>Status:</b> {activity.status.description}</p>
+                    <Panel header={manager.managerName}
+
+
+                           style={{fontFamily: 'Helvetica'}}>
+                        <Col md={6}>
+                            <Row>
+                                <Col md={6}><p>Nombre:</p></Col><Col md={6}><p> {manager.managerName}</p></Col>
+                                <Col md={6}><p>Email:</p></Col><Col md={6}><p> {manager.managerEmail}</p></Col>
+                            </Row>
+                        </Col>
+                        <Col md={6}>
+
+                            <Row>
+                                <Row>
+                                    <Col md={12}><Button className="btn-info btn-large pull-right"
+                                                         style={{width: '100px', marginBottom: '10px'}}
+                                                         onClick={this.toggleEditMode}>Detalles</Button> </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={12}><Button className="btn-danger btn-large pull-right"
+                                                         style={{width: '100px'}}
+                                                         onClick={() => this.removeCounselor(manager.id)}>Remover</Button>
+                                    </Col>
+                                </Row>
+                            </Row>
+                        </Col>
+
                     </Panel>
+
                 </Col>
             );
         }
 
+        // let facilitiesActivities;
+        //
+        // if (this.state.facilitiesActivities.length === 0) {
+        //     facilitiesActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades para esta organización.</p>
+        // } else {
+        //
+        //
+        //     facilitiesActivities = this.state.facilitiesActivities.map(activity =>
+        //
+        //         <Col md={12}>
+        //             <Panel header={activity.activityName}>
+        //                 <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+        //                 <br/>
+        //                 <p><b>Description:</b> {activity.activityDescription}</p>
+        //                 <p><b>Organization:</b> {activity.organization.organizationName}</p>
+        //                 <p><b>Facility:</b> {activity.facility.space}</p>
+        //                 <p><b>Status:</b> {activity.status.description}</p>
+        //             </Panel>
+        //         </Col>
+        //     );
+        // }
+
         let facilitiesActivities;
 
         if (this.state.facilitiesActivities.length === 0) {
-            facilitiesActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades para esta organización.</p>
+            facilitiesActivities =
+                <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades para esta organización.</p>
         } else {
 
 
@@ -175,12 +571,30 @@ class FacilitiesDetail extends Component {
 
                 <Col md={12}>
                     <Panel header={activity.activityName}>
-                        <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                        <br/>
-                        <p><b>Description:</b> {activity.activityDescription}</p>
-                        <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                        <p><b>Facility:</b> {activity.facility.space}</p>
-                        <p><b>Status:</b> {activity.status.description}</p>
+                        {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+                        {/*<br/>*/}
+                        <Col md={6}>
+                            <Row>
+
+                                <Col md={6}><p>Título:</p></Col><Col md={6}><p> {activity.activityName}</p></Col>
+                                <Col md={6}><p>Descripción:</p></Col><Col md={6}><p> {activity.activityDescription}</p>
+                            </Col>
+                                <Col md={6}><p>Organización:</p></Col><Col md={6}>
+                                <p> {activity.organization.organizationName}</p></Col>
+                                <Col md={6}><p>Facilidades:</p></Col><Col md={6}><p> {activity.facility.space}</p></Col>
+                                <Col md={6}><p>Estado:</p></Col><Col md={6}><p> {activity.status.description}</p></Col>
+
+                            </Row>
+                        </Col>
+                        <Col md={6}>
+                            <Row>
+                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                                    className="btn-info btn-large pull-right"
+                                    style={{width: '100px', marginBottom: '10px'}}
+                                >Detalles</Button></Link> </Col>
+                            </Row>
+                        </Col>
+
                     </Panel>
                 </Col>
             );

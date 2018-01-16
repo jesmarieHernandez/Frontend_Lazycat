@@ -184,31 +184,6 @@ class CreateOrganization extends Component {
         this.setState({orgInitialsValue: e.target.value})
     }
 
-    handleCounselorNameValue = (e) => {
-        this.setState({counselorNameValue: e.target.value})
-    }
-
-    handleCounselorEmailValue = (e) => {
-        this.setState({counselorEmailValue: e.target.value})
-    }
-
-    handleCounselorTelephoneValue = (e) => {
-        this.setState({counselorTelephoneValue: e.target.value})
-    }
-
-    handleCounselorFacultyValue = (e) => {
-        this.setState({counselorFacultyValue: e.target.value})
-    }
-
-    handleCounselorDepartmentValue = (e) => {
-        this.setState({counselorDepartmentValue: e.target.value})
-    }
-
-    handleCounselorOfficeNumberValue = (e) => {
-        this.setState({counselorOfficeNumber: e.target.value})
-    }
-
-
     getInitialState = () => {
         return {showModal: false};
     }

@@ -47,11 +47,18 @@ class OrganizationDetail extends Component {
             organizationCounselors: [],
             organizationMembers: [],
             organizationTypes: [],
-            selectedOrganizationType: {}
+            organizationRoles: [],
+            selectedOrganizationType: {},
+            counselors: [],
+            students: [],
+            newCounselorValue: '',
+            newMemberValue: '',
+            selectedMemberRole: 0
         }
 
         this.toggleEditMode = this.toggleEditMode.bind(this);
         this.removeMember = this.removeMember.bind(this);
+        this.onCounselorChange = this.onCounselorChange.bind(this);
     }
 
 
@@ -108,6 +115,17 @@ class OrganizationDetail extends Component {
                     });
                 });
 
+                fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
+                    response.json().then(data => {
+                        this.setState({organizationMembers: data});
+
+                    }).catch(err => {
+                        console.log(err)
+                        //this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
+                });
+
+
             }).catch(err => {
                 console.log(err)
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
@@ -139,6 +157,57 @@ class OrganizationDetail extends Component {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
+        fetch('http://localhost:8000/api/organization_types').then(response => {
+            if (response.ok) {
+                response.json().then(results => {
+                    console.log("Organization Types");
+                    console.log(results);
+
+                    // TODO Replace once route is ready
+                    let organizationRoles = [
+                        {
+                            "code": 1,
+                            "description": "Presidente"
+                        },
+                        {
+                            "code": 2,
+                            "description": "Tesorero"
+                        },
+                        {
+                            "code": 3,
+                            "description": "Alicate"
+                        }
+                    ];
+
+
+                    this.setState({organizationRoles: organizationRoles});
+                    // this.setState({organizationRoles: results});
+                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                });
+            } else {
+                // response.json().then(error => {
+                //     this.props.showError(`Failed to add issue: ${error.message}`);
+                // });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+        fetch(`http://localhost:8000/api/users`).then(response => {
+            response.json().then(data => {
+
+                this.setState({counselors: data.counselors});
+                this.setState({students: data.students});
+
+                console.log('this.state.counselors: ');
+                console.log(this.state.counselors);
+
+            }).catch(err => {
+                console.log(err)
+                //this.props.showError(`Error in sending data to server: ${err.message}`);
+            });
+        });
+
 
     }
 
@@ -152,7 +221,7 @@ class OrganizationDetail extends Component {
         console.log(this.state.notEditMode);
     }
 
-    removeMember = (memberId ) => {
+    removeMember = (memberId) => {
 
         console.log('El memberId');
         console.log(memberId);
@@ -223,6 +292,142 @@ class OrganizationDetail extends Component {
         }).catch(err => {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
+    }
+
+    addCounselor = () => {
+
+        const counselorEmail = this.state.newCounselorValue;
+        const selectedCounselor = this.state.counselors.filter(function (counselor) {
+
+            console.log('Current counselor email: ' + counselor.userEmail);
+            console.log('this.state.newCounselorValue: ' + counselorEmail);
+
+            console.log(counselor.userEmail == counselorEmail);
+            return counselor.userEmail == counselorEmail;
+        });
+
+        console.log('selectedCounselor array');
+        console.log(selectedCounselor);
+
+        const counselorId = selectedCounselor[0].counselors[0].id;
+
+        const newCounsels = {
+            counselor_id: counselorId,
+            organization_id: this.state.orgId
+        }
+
+        console.log('counselor_id: ' + counselorId);
+        console.log('organization_id: ' + this.state.orgId);
+
+        fetch(`http://localhost:8000/api/organizations/addCounselor/`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newCounsels),
+        }).then(response => {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(createCounsels => {
+
+
+                    // this.props.history.push(`/admin/organizations/`);
+                    console.log('New counsel was created');
+                    // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+
+    }
+
+
+    addMember = () => {
+
+        const memberEmail = this.state.newMemberValue;
+        const selectedStudent = this.state.students.filter(function (member) {
+
+            console.log('Current member email: ' + member.userEmail);
+            console.log('this.state.newMemberEmail: ' + memberEmail);
+
+            console.log(member.userEmail == memberEmail);
+            return member.userEmail == memberEmail;
+        });
+
+        console.log('selectedMember array');
+        console.log(selectedStudent);
+
+        const memberId = selectedStudent[0].students[0].id;
+
+        const newMembership = {
+            member_id: memberId,
+            member_role: this.state.selectedMemberRole,
+            organization_id: this.state.orgId,
+        }
+
+        console.log('member_id: ' + memberId);
+        console.log('organization_id: ' + this.state.orgId);
+
+        fetch(`http://localhost:8000/api/organizations/addCounselor/`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(newMembership),
+        }).then(response => {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(createdMembership => {
+
+
+                    // this.props.history.push(`/admin/organizations/`);
+                    console.log('New membership was created');
+                    // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+    }
+
+    onCounselorChange = (event) => {
+        console.log(event.target);
+        event.preventDefault();
+        this.setState({newCounselorValue: event.target.value});
+
+        console.log(this.state.newCounselorValue);
+    }
+
+
+    onMemberChange = (event) => {
+        console.log(event.target);
+        event.preventDefault();
+        this.setState({newMemberValue: event.target.value});
+    }
+
+    onMemberRoleSelected = (event) => {
+        // event.preventDefault();
+        //this.setState({orgTypePicked: '2'});
+        const selectedMemberRole = this.state.organizationRoles.filter(function (obj) {
+
+            console.log('Current object code: ' + obj.code);
+            console.log('Event target value: ' + event.target.value);
+
+            console.log(obj.code == event.target.value);
+            return obj.code == event.target.value;
+        });
+        console.log("Selected member role array ");
+        console.log(selectedMemberRole);
+        this.setState({selectedMemberRole: selectedMemberRole[0].code});
+
+        // console.log("Selected organization type: " + this.state.selectedOrganizationType);
     }
 
     onSubmit = (event) => {
@@ -312,6 +517,10 @@ class OrganizationDetail extends Component {
             <option value={option.code}>{option.description}</option>
         );
 
+        const organizationRoles = this.state.organizationRoles.map(option =>
+            <option value={option.code}>{option.description}</option>
+        );
+
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>
@@ -346,8 +555,10 @@ class OrganizationDetail extends Component {
                             <Row>
 
                                 <Col md={6}><p>Título:</p></Col><Col md={6}><p> {activity.activityName}</p></Col>
-                                <Col md={6}><p>Descripción:</p></Col><Col md={6}><p> {activity.activityDescription}</p></Col>
-                                <Col md={6}><p>Organización:</p></Col><Col md={6}><p> {activity.organization.organizationName}</p></Col>
+                                <Col md={6}><p>Descripción:</p></Col><Col md={6}><p> {activity.activityDescription}</p>
+                            </Col>
+                                <Col md={6}><p>Organización:</p></Col><Col md={6}>
+                                <p> {activity.organization.organizationName}</p></Col>
                                 <Col md={6}><p>Facilidades:</p></Col><Col md={6}><p> {activity.facility.space}</p></Col>
                                 <Col md={6}><p>Estado:</p></Col><Col md={6}><p> {activity.status.description}</p></Col>
 
@@ -355,8 +566,9 @@ class OrganizationDetail extends Component {
                         </Col>
                         <Col md={6}>
                             <Row>
-                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button className="btn-info btn-large pull-right"
-                                                     style={{width: '100px', marginBottom: '10px'}}
+                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                                    className="btn-info btn-large pull-right"
+                                    style={{width: '100px', marginBottom: '10px'}}
                                 >Detalles</Button></Link> </Col>
                             </Row>
                         </Col>
@@ -384,7 +596,7 @@ class OrganizationDetail extends Component {
                     <Panel header={counselor.counselorName}
 
 
-                                                                                    style={{fontFamily: 'Helvetica'}}>
+                           style={{fontFamily: 'Helvetica'}}>
                         <Col md={6}>
                             <Row>
                                 <Col md={6}><p>Nombre:</p></Col><Col md={6}><p> {counselor.counselorName}</p></Col>
@@ -402,7 +614,8 @@ class OrganizationDetail extends Component {
                                 <Row>
                                     <Col md={12}><Button className="btn-danger btn-large pull-right"
                                                          style={{width: '100px'}}
-                                                         onClick={() => this.removeCounselor(counselor.id)}>Remover</Button> </Col>
+                                                         onClick={() => this.removeCounselor(counselor.id)}>Remover</Button>
+                                    </Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -427,7 +640,7 @@ class OrganizationDetail extends Component {
                     <Panel header={member.studentName}
 
 
-                                                                            style={{fontFamily: 'Helvetica'}}>
+                           style={{fontFamily: 'Helvetica'}}>
                         <Col md={6}>
                             <Row>
                                 <Col md={6}><p>Nombre:</p></Col><Col md={6}><p> {member.studentName}</p></Col>
@@ -440,12 +653,13 @@ class OrganizationDetail extends Component {
                                 <Row>
                                     <Col md={12}><Button className="btn-info btn-large pull-right"
                                                          style={{width: '100px', marginBottom: '10px'}}
-                                                         >Detalles</Button> </Col>
+                                    >Detalles</Button> </Col>
                                 </Row>
                                 <Row>
                                     <Col md={12}><Button className="btn-danger btn-large pull-right"
                                                          style={{width: '100px'}}
-                                                         onClick={() => this.removeMember(member.id)}>Remover</Button> </Col>
+                                                         onClick={() => this.removeMember(member.id)}>Remover</Button>
+                                    </Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -708,34 +922,120 @@ class OrganizationDetail extends Component {
                     {this.state.activeKey === '2' ?
                         <div>
                             <Col md={12}>
-                            <Panel>
-                                <Col md={6}><FormControl name="organizationInitials"
-                                                         placeholder="juan.delpueblo@upr.edu"
-                                                         required/></Col>
-                                <Button className="btn-success btn-large pull-right"
-                                        style={{width: '100px', marginBottom: '10px'}}
-                                        onClick={this.toggleEditMode}>Añadir</Button>
+                                <Panel>
 
-                        </Panel>
+                                    <Col md={6}>
+                                        <Col componentClass={ControlLabel}>Email del consejero</Col>
+                                        {
+                                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.newCounselorValue) === false && this.state.newCounselorValue.length != 0) ?
+                                                (<div>
+                                                    <FormControl name="adminEmail"
+                                                                 onChange={this.onCounselorChange}
+                                                                 style={errorFormStyle}
+                                                                 placeholder="Ex. maria.cruz@upr.edu"
+                                                                 required/>
+                                                    <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                                        @upr.edu</HelpBlock>
+                                                </div>)
+                                                :
+                                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.newCounselorValue) === true) ?
+                                                    (<div>
+                                                        <FormControl name="adminEmail"
+                                                                     onChange={this.onCounselorChange}
+                                                                     style={successFormStyle}
+                                                                     placeholder="Ex. maria.cruz@upr.edu"
+                                                                     required/>
+                                                    </div>)
+                                                    :
+                                                    (<div>
+                                                        <FormControl name="adminEmail"
+                                                                     onChange={this.onCounselorChange}
+                                                                     placeholder="Ex. maria.cruz@upr.edu"
+                                                                     required/>
+                                                    </div>)
+                                        }
+                                    </Col>
+
+
+                                    {/*<Col md={6}><FormControl name="organizationInitials"*/}
+                                    {/*placeholder="juan.delpueblo@upr.edu"*/}
+                                    {/*onChange={this.onCounselorChange}*/}
+                                    {/*value={this.state.newCounselorValue}*/}
+                                    {/*required/></Col>*/}
+                                    <Col md={3}></Col>
+                                    <Col md={3}>
+
+                                    <Button className="btn-success btn-large pull-right"
+                                            style={{width: '100px', marginBottom: '10px'}}
+                                            onClick={this.addCounselor}>Añadir</Button>
+                                    </Col>
+
+                                </Panel>
                             </Col>
                             {organizationCounselors}
 
                         </div>
 
-                                :
-                                null
-                        }
+                        :
+                        null
+                    }
                     {this.state.activeKey === '3' ? <div>
                         <Col md={12}>
                             <Panel>
-                                <Col md={6}><FormControl name="organizationInitials"
-                                                         placeholder="juan.delpueblo@upr.edu"
-                                                         required/></Col>
-                                <Button className="btn-success btn-large pull-right"
-                                        style={{width: '100px', marginBottom: '10px'}}
-                                        onClick={this.toggleEditMode}>Añadir</Button>
+                                <Col md={6}>
+                                    <Col componentClass={ControlLabel}>Email del estudiante</Col>
 
+                                    {
+                                        (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.newMemberValue) === false && this.state.newMemberValue.length != 0) ?
+                                            (<div>
+                                                <FormControl name="adminEmail"
+                                                             onChange={this.onMemberChange}
+                                                             style={errorFormStyle}
+                                                             placeholder="Ex. maria.cruz@upr.edu"
+                                                             required/>
+                                                <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                                    @upr.edu</HelpBlock>
+                                            </div>)
+                                            :
+                                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.newMemberValue) === true) ?
+                                                (<div>
+                                                    <FormControl name="adminEmail"
+                                                                 onChange={this.onMemberChange}
+                                                                 style={successFormStyle}
+                                                                 placeholder="Ex. maria.cruz@upr.edu"
+                                                                 required/>
+                                                </div>)
+                                                :
+                                                (<div>
+                                                    <FormControl name="adminEmail"
+                                                                 onChange={this.onMemberChange}
+                                                                 placeholder="Ex. maria.cruz@upr.edu"
+                                                                 required/>
+                                                </div>)
+                                    }
+                                </Col>
+
+
+                                <Col md={3}>
+                                    <Col componentClass={ControlLabel}>Rol </Col>
+
+                                    <FormControl componentClass="select"
+                                                 name="memberRole"
+                                                 onChange={this.onMemberRoleSelected}
+                                                 placeholder="select"
+                                                 value={this.state.selectedMemberRole}
+                                                 required>
+                                        <option>select</option>
+                                        {organizationRoles}
+                                    </FormControl>
+                                </Col>
+                                <Col md={3}>
+                                    <Button className="btn-success btn-large pull-right"
+                                            style={{width: '100px', marginBottom: '10px'}}
+                                            onClick={this.addMember}>Añadir</Button>
+                                </Col>
                             </Panel>
+
                         </Col>
                         {organizationMembers}
 

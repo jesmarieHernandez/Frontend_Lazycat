@@ -194,7 +194,7 @@ class Users extends Component {
             console.log('counselors');
             console.log(this.state.counselors);
             // const userRoute = '/admin/users/';
-            const userRoute = '/admin/users/'+counselor.counselorEmail;
+            const userRoute = '/admin/users/'+counselor.counselors[0].counselorEmail;
 
             if (counselor.counselors[0] !== null) {
                 return  (

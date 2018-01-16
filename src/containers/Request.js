@@ -143,7 +143,7 @@ class Request extends Component {
         });
 
         fetch(`http://192.168.99.100/api/users/${this.props.authentication.email}`).then(response => {
-            // fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
+            // fetch(`http://192.168.99.100/api/users/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({staffInfo: results.staff[0]});

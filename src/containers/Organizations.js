@@ -25,7 +25,7 @@ class Organizations extends Component {
     }
 
     componentDidMount() {
-        // fetch('http://localhost:8000/api/organizations').then(response => {
+        // fetch('http://192.168.99.100/api/organizations').then(response => {
         fetch('http://192.168.99.100/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {

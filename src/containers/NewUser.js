@@ -110,7 +110,7 @@ class NewUser extends Component {
                 staffPhone: form.staffTelephone.value
             }
 
-            fetch('http://localhost:8000/api/staff', {
+            fetch('http://192.168.99.100/api/staff', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -139,7 +139,7 @@ class NewUser extends Component {
             const form = document.forms.newStudent;
             let newUser;
             newUser = {
-                studentName: form.requesterName.value,
+                studentName: form.studentName.value,
                 studentNo: form.studentIdentificationNumber.value,
                 studentAddress: form.studentAddress1.value,
                 studentCity: form.studentAddressCity.value,
@@ -149,7 +149,7 @@ class NewUser extends Component {
                 studentEmail: form.studentEmail.value
             }
 
-            fetch('http://localhost:8000/api/students', {
+            fetch('http://192.168.99.100/api/students', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -187,7 +187,7 @@ class NewUser extends Component {
                 counselorPhone: this.state.counselorPhoneValue
             }
 
-            fetch('http://localhost:8000/api/counselors', {
+            fetch('http://192.168.99.100/api/counselors', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -224,7 +224,7 @@ class NewUser extends Component {
             console.log('El gallo claudio');
             console.log(newUser);
 
-            fetch('http://localhost:8000/api/managers', {
+            fetch('http://192.168.99.100/api/managers', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),

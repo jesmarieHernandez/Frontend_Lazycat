@@ -84,7 +84,7 @@ class Users extends Component {
 
     componentDidMount() {
         // fetch('http://192.168.99.100/api/users').then(response => {
-        fetch('http://localhost:8000/api/users').then(response => {
+        fetch('http://192.168.99.100/api/users').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
@@ -181,7 +181,7 @@ class Users extends Component {
                     {/*<p>Role: Student</p>*/}
                     {/*<p>Email: {student.userEmail}</p>*/}
                     {/*/!*<p>Creation Date: {users.creationDate}</p>*!/*/}
-                   {/*<Button className="btn btn-primary">Details</Button>*/}
+                    {/*<Button className="btn btn-primary">Details</Button>*/}
                 </Panel></Link>
 
             </Col>
@@ -194,7 +194,7 @@ class Users extends Component {
             console.log('counselors');
             console.log(this.state.counselors);
             // const userRoute = '/admin/users/';
-            const userRoute = '/admin/users/'+counselor.counselorEmail;
+            const userRoute = '/admin/users/'+counselor.counselors[0].counselorEmail;
 
             if (counselor.counselors[0] !== null) {
                 return  (

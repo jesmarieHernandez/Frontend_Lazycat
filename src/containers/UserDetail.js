@@ -99,7 +99,7 @@ class UserDetail extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         // fetch(`http://192.168.99.100/api/admin/users/${id}`).then(response => {
-        fetch(`http://localhost:8000/api/users/${this.props.match.params.id}`).then(response => {
+        fetch(`http://192.168.99.100/api/users/${this.props.match.params.id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({user: data});
@@ -189,7 +189,7 @@ class UserDetail extends Component {
                 staffPhone: form.staffTelephone.value
             }
 
-            fetch(`http://localhost:8000/api/staff/${this.state.staffId}`, {
+            fetch(`http://192.168.99.100/api/staff/${this.state.staffId}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -227,7 +227,7 @@ class UserDetail extends Component {
                 studentEmail: form.studentEmail.value
             }
 
-            fetch(`http://localhost:8000/api/students/${this.state.studentId}`, {
+            fetch(`http://192.168.99.100/api/students/${this.state.studentId}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -262,7 +262,7 @@ class UserDetail extends Component {
                 counselorPhone: form.organizationCounselorTelephone.value
             }
 
-            fetch(`http://localhost:8000/api/counselors/${this.state.counselorId}`, {
+            fetch(`http://192.168.99.100/api/counselors/${this.state.counselorId}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -295,7 +295,7 @@ class UserDetail extends Component {
                 managerPhone: this.state.managerPhoneValue
             }
 
-            fetch(`http://localhost:8000/api/managers/${this.state.managerId}`, {
+            fetch(`http://192.168.99.100/api/managers/${this.state.managerId}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),

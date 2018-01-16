@@ -115,15 +115,15 @@ class OrganizationDetail extends Component {
                     });
                 });
 
-                fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
-                    response.json().then(data => {
-                        this.setState({organizationMembers: data});
-
-                    }).catch(err => {
-                        console.log(err)
-                        //this.props.showError(`Error in sending data to server: ${err.message}`);
-                    });
-                });
+                // fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
+                //     response.json().then(data => {
+                //         this.setState({organizationMembers: data});
+                //
+                //     }).catch(err => {
+                //         console.log(err)
+                //         //this.props.showError(`Error in sending data to server: ${err.message}`);
+                //     });
+                // });
 
 
             }).catch(err => {

@@ -61,7 +61,7 @@ class CreateFacilities extends Component {
         const newFacilities = {
             building: form.building.value,
             space: form.space.value,
-            facilityDepartment: 'mcBicho',
+            facilityDepartment: form.facilitiesDepartment.value,
             isActive: 1
         };
         console.log('Los nuevos facilities');
@@ -205,7 +205,7 @@ class CreateFacilities extends Component {
 
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Department</Col>
-                                    <FormControl name="facilitiesDepartmentCode" placeholder="Ex. Ingenier&iacute;a Civil" required/>
+                                    <FormControl name="facilitiesDepartment" placeholder="Ex. Ingenier&iacute;a Civil" required/>
                                 </Col>
                             </FormGroup>
 

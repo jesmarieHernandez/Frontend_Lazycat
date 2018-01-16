@@ -51,6 +51,7 @@ class OrganizationDetail extends Component {
         }
 
         this.toggleEditMode = this.toggleEditMode.bind(this);
+        this.removeMember = this.removeMember.bind(this);
     }
 
 
@@ -149,6 +150,79 @@ class OrganizationDetail extends Component {
     toggleEditMode() {
         this.setState({notEditMode: !this.state.notEditMode});
         console.log(this.state.notEditMode);
+    }
+
+    removeMember = (memberId ) => {
+
+        console.log('El memberId');
+        console.log(memberId);
+
+        fetch(`http://localhost:8000/api/organizations/members/delete/${memberId}/${this.state.orgId}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+        }).then(response => {
+            if (response.ok) {
+                console.log('PUNETA :DDDD');
+                response.json().then(createdOrganization => {
+
+                    console.log('Esasdasdasdnjasdnklasdnjklasdnklnksaldnklask');
+                    // TODO Pop member from organizationCounselors
+                    // this.props.history.push(`/admin/organizations/`);
+                    // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
+                    fetch(`http://localhost:8000/api/organizations/members/${this.state.orgId}`).then(response => {
+                        response.json().then(data => {
+                            this.setState({organizationMembers: data});
+
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    });
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+    }
+
+    removeCounselor = (counselorId) => {
+
+
+        fetch(`http://localhost:8000/api/organizations/counselors/delete/${counselorId}/${this.state.orgId}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+        }).then(response => {
+            if (response.ok) {
+                console.log('PUNETA :DDDD');
+                response.json().then(createdOrganization => {
+
+                    console.log('Esasdasdasdnjasdnklasdnjklasdnklnksaldnklask');
+                    // TODO Pop member from organizationCounselors
+                    // this.props.history.push(`/admin/organizations/`);
+                    // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
+                    fetch(`http://localhost:8000/api/organizations/counselors/${this.state.orgId}`).then(response => {
+                        response.json().then(data => {
+                            this.setState({organizationCounselors: data});
+
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    });
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
     }
 
     onSubmit = (event) => {
@@ -304,17 +378,17 @@ class OrganizationDetail extends Component {
         } else {
 
 
-            organizationCounselors = this.state.organizationCounselors.map(organization =>
+            organizationCounselors = this.state.organizationCounselors.map(counselor =>
 
                 <Col md={12}>
-                    <Link to={`/admin/users/${organization.counselorEmail}`}><Panel header={organization.counselorName}
+                    <Panel header={counselor.counselorName}
 
 
                                                                                     style={{fontFamily: 'Helvetica'}}>
                         <Col md={6}>
                             <Row>
-                                <Col md={6}><p>Nombre:</p></Col><Col md={6}><p> {organization.counselorName}</p></Col>
-                                <Col md={6}><p>Email:</p></Col><Col md={6}><p> {organization.counselorEmail}</p></Col>
+                                <Col md={6}><p>Nombre:</p></Col><Col md={6}><p> {counselor.counselorName}</p></Col>
+                                <Col md={6}><p>Email:</p></Col><Col md={6}><p> {counselor.counselorEmail}</p></Col>
                             </Row>
                         </Col>
                         <Col md={6}>
@@ -328,13 +402,13 @@ class OrganizationDetail extends Component {
                                 <Row>
                                     <Col md={12}><Button className="btn-danger btn-large pull-right"
                                                          style={{width: '100px'}}
-                                                         onClick={this.toggleEditMode}>Remover</Button> </Col>
+                                                         onClick={() => this.removeCounselor(counselor.id)}>Remover</Button> </Col>
                                 </Row>
                             </Row>
                         </Col>
 
                     </Panel>
-                    </Link>
+
                 </Col>
             );
         }
@@ -350,7 +424,7 @@ class OrganizationDetail extends Component {
             organizationMembers = this.state.organizationMembers.map(member =>
 
                 <Col md={12}>
-                    <Link to={`/admin/users/${member.studentEmail}`}><Panel header={member.studentName}
+                    <Panel header={member.studentName}
 
 
                                                                             style={{fontFamily: 'Helvetica'}}>
@@ -366,18 +440,17 @@ class OrganizationDetail extends Component {
                                 <Row>
                                     <Col md={12}><Button className="btn-info btn-large pull-right"
                                                          style={{width: '100px', marginBottom: '10px'}}
-                                                         onClick={this.toggleEditMode}>Detalles</Button> </Col>
+                                                         >Detalles</Button> </Col>
                                 </Row>
                                 <Row>
                                     <Col md={12}><Button className="btn-danger btn-large pull-right"
                                                          style={{width: '100px'}}
-                                                         onClick={this.toggleEditMode}>Remover</Button> </Col>
+                                                         onClick={() => this.removeMember(member.id)}>Remover</Button> </Col>
                                 </Row>
                             </Row>
                         </Col>
 
                     </Panel>
-                    </Link>
                 </Col>
             );
         }
@@ -638,7 +711,6 @@ class OrganizationDetail extends Component {
                             <Panel>
                                 <Col md={6}><FormControl name="organizationInitials"
                                                          placeholder="juan.delpueblo@upr.edu"
-                                                         onChange={this.handleOrgInitialsValue}
                                                          required/></Col>
                                 <Button className="btn-success btn-large pull-right"
                                         style={{width: '100px', marginBottom: '10px'}}
@@ -665,7 +737,7 @@ class OrganizationDetail extends Component {
 
                             </Panel>
                         </Col>
-                        {organizationCounselors}
+                        {organizationMembers}
 
                     </div> : null}
                 </Col>

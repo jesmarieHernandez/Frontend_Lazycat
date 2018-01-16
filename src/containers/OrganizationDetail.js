@@ -632,8 +632,42 @@ class OrganizationDetail extends Component {
 
                 <Col md={10}>
                     {this.state.activeKey === '1' ? organizationActivities : null}
-                    {this.state.activeKey === '2' ? organizationCounselors : null}
-                    {this.state.activeKey === '3' ? organizationMembers : null}
+                    {this.state.activeKey === '2' ?
+                        <div>
+                            <Col md={12}>
+                            <Panel>
+                                <Col md={6}><FormControl name="organizationInitials"
+                                                         placeholder="juan.delpueblo@upr.edu"
+                                                         onChange={this.handleOrgInitialsValue}
+                                                         required/></Col>
+                                <Button className="btn-success btn-large pull-right"
+                                        style={{width: '100px', marginBottom: '10px'}}
+                                        onClick={this.toggleEditMode}>Añadir</Button>
+
+                        </Panel>
+                            </Col>
+                            {organizationCounselors}
+
+                        </div>
+
+                                :
+                                null
+                        }
+                    {this.state.activeKey === '3' ? <div>
+                        <Col md={12}>
+                            <Panel>
+                                <Col md={6}><FormControl name="organizationInitials"
+                                                         placeholder="juan.delpueblo@upr.edu"
+                                                         required/></Col>
+                                <Button className="btn-success btn-large pull-right"
+                                        style={{width: '100px', marginBottom: '10px'}}
+                                        onClick={this.toggleEditMode}>Añadir</Button>
+
+                            </Panel>
+                        </Col>
+                        {organizationCounselors}
+
+                    </div> : null}
                 </Col>
             </div>
         )

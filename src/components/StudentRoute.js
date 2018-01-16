@@ -8,7 +8,7 @@ export default ({ component: C, props: cProps, ...rest }) =>
         cProps.cookies.get('signedIn') === 'true' && cProps.cookies.get('role') === '3'
         ? <C {...props} {...cProps} />
         : <Redirect
-            to={`/student/activities`}
+            to={`/login?redirect=/student/activities`}
           />}
   />;
 

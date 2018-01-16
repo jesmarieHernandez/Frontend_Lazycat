@@ -142,8 +142,9 @@ class Stats extends Component {
                     <Col md={12}>
 
                         <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
-                            <NavItem eventKey="1" href="/home">Resumen de Estad&iacute;sticas por Facilidad</NavItem>
-                            <NavItem eventKey="2" title="Item">Representaci&oacute;n Gr&aacute;fica</NavItem>
+                            <NavItem eventKey="1" href="/home">Estad&iacute;sticas por Clasificaci&oacute;n</NavItem>
+                            <NavItem eventKey="2" title="Item">Estad&iacute;sticas por Horario</NavItem>
+                            <NavItem eventKey="3" title="Item">Representaci&oacute;n Gr&aacute;fica</NavItem>
                         </Nav>
                         <br/>
 
@@ -162,12 +163,6 @@ class Stats extends Component {
                                                 style={{paddingTop: "20px",
                                                         borderBottom: '0px'}}>Espacio</th>
                                             <th
-                                                style={{paddingTop: "20px",
-                                                        borderBottom: '0px'}}>Diurno</th>
-                                            <th
-                                                style={{paddingTop: "20px",
-                                                        borderBottom: '0px'}}>Nocturno</th>
-                                            <th
                                                 colSpan="10"
                                                 style={{paddingTop: "10px",
                                                 paddingLeft: "200px",
@@ -181,8 +176,6 @@ class Stats extends Component {
 
                                         <tbody>
                                         <tr>
-                                            <th></th>
-                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th>Acad.</th>
@@ -211,14 +204,48 @@ class Stats extends Component {
                                             <td>10</td>
                                             <td>11</td>
                                             <td>12</td>
-                                            <td>13</td>
-                                            <td>14</td>
                                         </tr>
                                         </tbody>
                                     </Table>
                                 </Col>
                             </Row>
                             :
+                            this.state.activeKey === "2" ?
+                                <Row>
+                                    <Col md={12}>
+                                        <Table bordered condensed striped>
+                                            <thead>
+                                            <tr>
+                                                <th style={{paddingTop: "20px",
+                                                            borderBottom: '0px'}}>Edificio</th>
+                                                <th
+                                                    style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Espacio</th>
+                                                <th
+                                                    style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Diurno</th>
+                                                <th
+                                                    style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Nocturno</th>
+                                                <th
+                                                    style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>TOTAL</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <tr>
+                                                <td>Centro de Estudiantes</td>
+                                                <td>1</td>
+                                                <td>2</td>
+                                                <td>3</td>
+                                                <td>4</td>
+                                            </tr>
+                                            </tbody>
+                                        </Table>
+                                    </Col>
+                                </Row>
+                                :
                         <ReactCenter>
                             <BarChart width={600} height={300} data={data}>
                                 <XAxis dataKey="name"/>

@@ -36,7 +36,7 @@ class Activities extends Component {
     componentDidMount() {
 
         // fetch('http://localhost:8000/api/activities').then(response => {
-        fetch('http://localhost:8000/api/activities').then(response => {
+        fetch('http://192.168.99.100/api/activities').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
@@ -103,9 +103,9 @@ class Activities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
@@ -205,7 +205,7 @@ class Activities extends Component {
                     <Col md={9}>
                         <ol className="breadcrumb">
                             <li/>
-                            <li className="active">Activities</li>
+                            <li className="active">Actividades</li>
                         </ol>
                         <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
                             <NavItem eventKey="1" href="/home">Pendientes
@@ -227,9 +227,8 @@ class Activities extends Component {
                     </Col>
 
                     <Col md={3}>
-                        <Panel header='Activities'>
-                            <ReactCenter><Link to="/request"><Button bsSize="medium">New
-                                Request</Button></Link></ReactCenter>
+                        <Panel header='Actividades'>
+                            <ReactCenter><Link to="/request"><Button bsSize="medium">Nueva Solicitud</Button></Link></ReactCenter>
                             {/*<Checkbox><p>Request Title</p></Checkbox>*/}
                             {/*<Checkbox><p>Request Description</p></Checkbox>*/}
                         </Panel>

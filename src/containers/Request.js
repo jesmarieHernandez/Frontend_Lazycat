@@ -39,11 +39,16 @@ class Request extends Component {
         this.state = {
             organizations: [],
             facilities: [],
-            selectedOrganization: {},
+            selectedOrganization: {
+                id: '',
+                organizationInitials: ''
+            },
+            activityTypes: [],
+            selectedType: 0,
             selectedDate: value,
-            selectedStartTime: '0',
+            selectedStartTime: '',
             startTime: '',
-            selectedEndTime: '1',
+            selectedEndTime: '',
             endTime: '',
             selectedFacilities: {},
             statusOptions: ['pending', 'approved', 'denied'],
@@ -64,8 +69,19 @@ class Request extends Component {
             guestDecision: '',
             attendanceDecision: '',
 
+            staffInfo: {
+                id: '',
+                staffName: '',
+                staffEmail: '',
+                staffPhone: ''
+            },
 
-            helpMessage: ''
+            helpMessage: '',
+
+            commentary: '',
+            counselorInformation: {
+
+            }
         }
 
         this.onOrganizationSelected = this.onOrganizationSelected.bind(this);
@@ -87,8 +103,7 @@ class Request extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8000/api/organizations').then(response => {
-
+        fetch('http://192.168.99.100/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({organizations: results});
@@ -106,7 +121,7 @@ class Request extends Component {
             // this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch(`http://localhost:8000/api/facilities/`).then(response => {
+        fetch(`http://192.168.99.100/api/facilities/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
@@ -115,6 +130,42 @@ class Request extends Component {
 
                     console.log(this.state.facilities);
                     //this.props.router.push(`/activities/${createdRequest._id}`);
+                });
+            } else {
+                console.log('Not ok');
+                // response.json().then(error => {
+                //     this.props.showError(`Failed to add issue: ${error.message}`);
+                // });
+            }
+        }).catch(err => {
+            console.log(err);
+            // this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+        fetch(`http://192.168.99.100/api/users/${this.props.authentication.email}`).then(response => {
+            // fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
+            if (response.ok) {
+                response.json().then(results => {
+                    this.setState({staffInfo: results.staff[0]});
+                            });
+                        } else {
+                            console.log('Not ok');
+                            // response.json().then(error => {
+                            //     this.props.showError(`Failed to add issue: ${error.message}`);
+                            // });
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                        // this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
+
+        fetch(`http://192.168.99.100/api/activityType/`).then(response => {
+            if (response.ok) {
+                response.json().then(results => {
+                    console.log("Type:");
+                    console.log(results);
+                    this.setState({activityTypes: results});
+                    console.log('Asi son los activityTypes: ' + this.state.activityTypes);
                 });
             } else {
                 console.log('Not ok');
@@ -148,42 +199,62 @@ class Request extends Component {
 
         const form = document.forms.activityRequest;
 
+        var getTwentyFourHourTime = function(amPmString) {
+            var d = new Date("1/1/2013 " + amPmString);
+            return d.getHours() + ':' + d.getMinutes();
+        };
+
         const activityRequest = {
-            requestTitle: form.requestTitle.value,
+            // requestTitle: form.requestTitle.value,
+            // activityDescription: form.activityDescription.value,
+            // activityGuest: form.activityGuest.value,
+            // activityAssistant: form.activityAssistant.value,
+            // selectedDate: this.state.selectedDate,
+            // startTime: this.state.selectedStartTime,
+            // endTime: this.state.selectedEndTime,
+            // organizationInitials: form.organizationInitials.value,
+            // requesterName: form.requesterName.value,
+            // studentIdentificationNumber: form.studentIdentificationNumber.value,
+            // studentRole: form.studentRole.value,
+            // studentAddress1: form.studentAddress1.value,
+            // studentAddressCity: form.studentAddressCity.value,
+            // studentAddressState: form.studentAddressState.value,
+            // studentAddressCountry: form.studentAddressCountry.value,
+            // studentAddressZipCode: form.studentAddressZipCode.value,
+            // studentPhone: form.studentTelephone.value,
+            // counselorName: form.counselorName.value,
+            // counselorTelephone: form.counselorTelephone.value,
+            // counselorFaculty: form.counselorFaculty.value,
+            // counselorDepartment: form.counselorDepartment.value,
+            // counselorOfficeNumber: form.counselorOfficeNumber.value,
+            // counselorEmail: form.counselorEmail.value,
+            // requestDate: new Date(),
+            // building: form.facilityBuilding.value,
+            // organization: this.state.selectedOrganization,
+            // facilities: this.state.selectedFacilities,
+            // status: this.state.selectedStatus,
+            // facilityManagerDecision: 'approved',
+            // counselorDecision: 'approved',
+            // dscaDecision: 'pending'
+
+            student_id: null,
+            organization_id: this.state.selectedOrganization.id,
+            facility_id: this.state.selectedFacilities.id,
+            staff_id: this.state.staffInfo.id,
+            activityName: form.requestTitle.value,
             activityDescription: form.activityDescription.value,
-            activityGuest: form.activityGuest.value,
-            activityAssistant: form.activityAssistant.value,
-            selectedDate: this.state.selectedDate,
-            startTime: this.state.selectedStartTime,
-            endTime: this.state.selectedEndTime,
-            organizationInitials: form.organizationInitials.value,
-            requesterName: form.requesterName.value,
-            studentIdentificationNumber: form.studentIdentificationNumber.value,
-            studentRole: form.studentRole.value,
-            studentAddress1: form.studentAddress1.value,
-            studentAddressCity: form.studentAddressCity.value,
-            studentAddressState: form.studentAddressState.value,
-            studentAddressCountry: form.studentAddressCountry.value,
-            studentAddressZipCode: form.studentAddressZipCode.value,
-            studentPhone: form.studentTelephone.value,
-            counselorName: form.counselorName.value,
-            counselorTelephone: form.counselorTelephone.value,
-            counselorFaculty: form.counselorFaculty.value,
-            counselorDepartment: form.counselorDepartment.value,
-            counselorOfficeNumber: form.counselorOfficeNumber.value,
-            counselorEmail: form.counselorEmail.value,
-            requestDate: new Date(),
-            building: form.facilityBuilding.value,
-            organization: this.state.selectedOrganization,
-            facilities: this.state.selectedFacilities,
-            status: this.state.selectedStatus,
-            facilityManagerDecision: 'approved',
-            counselorDecision: 'approved',
-            dscaDecision: 'pending'
+            attendantsNumber: form.activityAssistant.value,
+            activityDate: this.state.selectedDate,
+            activityStart: getTwentyFourHourTime(this.state.selectedStartTime),
+            activityEnd: getTwentyFourHourTime(this.state.selectedEndTime),
+            hasFood: null,
+            guestName: form.activityGuest.value,
+            activityType_code: this.state.selectedType,
+            staffComment: form.commentary.value
         };
 
         console.log(activityRequest);
-        fetch('http://localhost:8000/api/activities', {
+        fetch('http://192.168.99.100/api/adminStore', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityRequest),
@@ -192,11 +263,11 @@ class Request extends Component {
                 console.log(response);
                 response.json().then(createdRequest => {
                     console.log('Activity request was created successfully!');
-                    console.log('Activity request ID: ' + createdRequest._id);
+                    console.log('Activity request ID: ' + createdRequest.id);
                     this.setState({showModal: false});
                     console.log(':D');
                     console.log(this);
-                    this.props.history.push(`/activities/${createdRequest._id}`);
+                    this.props.history.push(`/activities/${createdRequest.id}`);
 
                 })
             } else {
@@ -215,13 +286,14 @@ class Request extends Component {
         console.log('Change happened');
         console.log(event.target.value);
         const selectedOrganization = this.state.organizations.filter(function (organization) {
-            console.log(organization);
+            console.log(organization.id);
             console.log(event.target.value);
-            console.log(organization._id === event.target.value);
-            return organization._id === event.target.value;
+            console.log(organization.id == event.target.value);
+            return organization.id == event.target.value;
         });
         console.log(selectedOrganization);
         this.setState({selectedOrganization: selectedOrganization[0]});
+        this.setState({counselorInformation: selectedOrganization[0].counselors[0]});
     }
 
     onFacilitiesSelected(event) {
@@ -281,6 +353,16 @@ class Request extends Component {
         var editedDate = event.substr(0, 10);
         console.log("editedDate: " + editedDate);
         this.setState({selectedDate: editedDate});
+    }
+
+    onTypeSelected = (event) => {
+        event.preventDefault();
+        console.log("Type here");
+        const selectedType = this.state.activityTypes.filter(function (obj) {
+            return obj.code == event.target.value;
+        });
+        this.setState({selectedType: selectedType[0].code});
+
     }
 
     getInitialState() {
@@ -361,8 +443,11 @@ class Request extends Component {
         this.setState({attendanceValue: e.target.value})
     }
 
+    handleCommentaryChange = (e) => {
+        this.setState({commentary: e.target.value})
+    }
+
     render() {
-        console.log(this.state.selectedOrganization._id);
         const organizationOptions = this.state.organizations.map(organization =>
             <option value={organization.id}>{organization.organizationName}</option>
         );
@@ -371,8 +456,8 @@ class Request extends Component {
             <option value={facilities.id}>{facilities.space}</option>
         );
 
-        const statusOptions = this.state.statusOptions.map(option =>
-            <option value={option}>{option}</option>
+        const typeOptions = this.state.activityTypes.map(option =>
+            <option value={option.code}>{option.description}</option>
         );
 
         const tabsInstance = (
@@ -380,11 +465,11 @@ class Request extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -415,72 +500,34 @@ class Request extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li className="active">Request</li>
+                        <li className="active">Solicitud</li>
                     </ol>
 
                     <Row>
                         <Col md={12}>
                             <Form horizontal name="activityRequest" onSubmit={this.open}>
 
-                                <Panel header="Requester Information">
+                                <Panel header="Detalles del Administrador">
                                     <FormGroup id="needs-validation">
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel} for="validationCustom01">Full Name</Col>
-                                            <FormControl name="requesterName" required/>
+                                            <Col componentClass={ControlLabel}>Nombre</Col>
+                                            <FormControl name="staffName" value={this.state.staffInfo.staffName} disabled/>
                                         </Col>
 
-                                        {/*<Col sm={4}>*/}
-                                            {/*<Col componentClass={ControlLabel}>Identification Number</Col>*/}
-                                            {/*<FormControl name="studentIdentificationNumber" required/>*/}
-                                        {/*</Col>*/}
+                                        <Col sm={4}>
+                                            <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
+                                            <FormControl name="staffEmail" value={this.state.staffInfo.staffEmail} disabled/>
+                                        </Col>
 
-                                        {/*<Col sm={3}>*/}
-                                            {/*<Col componentClass={ControlLabel}>Role</Col>*/}
-                                            {/*<FormControl name="studentRole" required/>*/}
-                                        {/*</Col>*/}
+                                        <Col sm={3}>
+                                            <Col componentClass={ControlLabel}>Tel&eacute;fono</Col>
+                                            <FormControl name="staffPhone" value={this.state.staffInfo.staffPhone} disabled/>
+                                        </Col>
                                     </FormGroup>
-
-                                    {/*<FormGroup>*/}
-                                        {/*<Col sm={10}>*/}
-                                            {/*<Col componentClass={ControlLabel}>Address</Col>*/}
-                                            {/*<FormControl name="studentAddress1" required/>*/}
-                                        {/*</Col>*/}
-
-                                    {/*</FormGroup>*/}
-
-                                    {/*<FormGroup>*/}
-                                        {/*<Col sm={3}>*/}
-                                            {/*<Col componentClass={ControlLabel}>City</Col>*/}
-                                            {/*<FormControl name="studentAddressCity" required/>*/}
-                                        {/*</Col>*/}
-
-                                        {/*<Col sm={3}>*/}
-                                            {/*<Col componentClass={ControlLabel}>State</Col>*/}
-                                            {/*<FormControl name="studentAddressState" required/>*/}
-                                        {/*</Col>*/}
-
-                                        {/*<Col sm={3}>*/}
-                                            {/*<Col componentClass={ControlLabel}>Country</Col>*/}
-                                            {/*<FormControl name="studentAddressCountry" required/>*/}
-                                        {/*</Col>*/}
-
-                                        {/*<Col sm={3}>*/}
-                                            {/*<Col componentClass={ControlLabel}>Zip Code</Col>*/}
-                                            {/*<FormControl name="studentAddressZipCode" required/>*/}
-                                        {/*</Col>*/}
-                                    {/*</FormGroup>*/}
-
-                                    {/*<FormGroup>*/}
-                                        {/*<Col sm={4}>*/}
-                                            {/*<Col componentClass={ControlLabel}>Telephone</Col>*/}
-                                            {/*<FormControl name="studentTelephone" required/>*/}
-                                        {/*</Col>*/}
-                                    {/*</FormGroup>*/}
                                 </Panel>
                                 <br/>
-                                <br/>
 
-                                <Panel header="Activity Information">
+                                <Panel header="Detalles de la Actividad">
                                     <FormGroup>
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Nombre de la actividad</Col>
@@ -705,7 +752,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>Attendants</Col>
+                                            <Col componentClass={ControlLabel}>N&uacute;mero de Asistentes</Col>
                                             <FormControl name="activityAssistant"
                                                          value={this.state.activityAssistant}
                                                          type="number" min="1" max="10000" start="1"
@@ -713,7 +760,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col md={3}>
-                                            <Col componentClass={ControlLabel}>Facility Name</Col>
+                                            <Col componentClass={ControlLabel}>Espacio/Sal&oacute;n</Col>
                                             {
                                                 (this.state.facilityPicked === '1') ?
                                                     (<div>
@@ -754,7 +801,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col md={3}>
-                                            <Col componentClass={ControlLabel}>Building</Col>
+                                            <Col componentClass={ControlLabel}>Edificio</Col>
                                             <FormControl name="facilityBuilding"
                                                          value={this.state.selectedFacilities.building} required
                                                          disabled/>
@@ -763,7 +810,7 @@ class Request extends Component {
                                     <FormGroup>
                                         <Col md={4}>
 
-                                            <Col componentClass={ControlLabel}>Date</Col>
+                                            <Col componentClass={ControlLabel}>Fecha</Col>
                                             {
                                                 (this.state.datePicked === '1') ?
                                                     (<div>
@@ -797,7 +844,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col md={4}>
-                                            <Col componentClass={ControlLabel}>Start Time</Col>
+                                            <Col componentClass={ControlLabel}>Horario de Comienzo</Col>
                                             {
                                                 (this.state.startTimePicked === '1') ?
                                                     <div>
@@ -840,7 +887,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col md={4}>
-                                            <Col componentClass={ControlLabel}>End Time</Col>
+                                            <Col componentClass={ControlLabel}>Horario de Finalizaci&oacute;n</Col>
                                             {
                                                 (this.state.endTimePicked === '1') ?
                                                     (<div>
@@ -884,14 +931,34 @@ class Request extends Component {
                                             }
                                         </Col>
                                     </FormGroup>
+
+                                    <FormGroup>
+                                        <Col sm={3}>
+                                            <Col componentClass={ControlLabel}>Categor&iacute;a: </Col>
+                                            <FormControl componentClass="select" name="selectType"
+                                                         onChange={this.onTypeSelected}
+                                                         required>
+                                                <option>select</option>
+                                                {typeOptions}
+                                            </FormControl>
+                                        </Col>
+
+                                        <Col sm={9}>
+                                            <Col componentClass={ControlLabel}>Observaciones: </Col>
+                                            <FormControl name="commentary"
+                                                         value={this.state.commentary}
+                                                         onChange={this.handleCommentaryChange}
+                                                         required/>
+                                        </Col>
+                                    </FormGroup>
+
                                 </Panel>
                                 <br/>
-                                <br/>
 
-                                <Panel header="Organization Information">
+                                <Panel header="Detalles de la Organizaci&oacute;n">
                                     <FormGroup>
                                         <Col md={4}>
-                                            <Col componentClass={ControlLabel}>Organization</Col>
+                                            <Col componentClass={ControlLabel}>Organizaci&oacute;n</Col>
                                             {
                                                 (this.state.organizationPicked === '1') ?
                                                     (<div>
@@ -932,76 +999,60 @@ class Request extends Component {
                                         </Col>
 
                                         <Col sm={2}>
-                                            <Col componentClass={ControlLabel}>Initials</Col>
+                                            <Col componentClass={ControlLabel}>Siglas</Col>
                                             <FormControl name="organizationInitials"
-                                                         value={this.state.selectedOrganization.initials} disabled/>
+                                                         value={this.state.selectedOrganization.organizationInitials} disabled/>
                                         </Col>
                                     </FormGroup>
                                 </Panel>
                                 <br/>
-                                <br/>
 
-                                <Panel header="Counselor Information">
+                                <Panel header="Detalles del Consejero">
                                     <FormGroup>
                                         <Col md={4}>
-                                            <Col componentClass={ControlLabel}>Name</Col>
+                                            <Col componentClass={ControlLabel}>Nombre</Col>
                                             <FormControl name="counselorName"
-                                                         value={this.state.selectedOrganization.counselorName}
+                                                         value={this.state.counselorInformation.counselorName}
                                                          disabled/>
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Telephone</Col>
+                                            <Col componentClass={ControlLabel}>Tel&eacute;fono</Col>
                                             <FormControl name="counselorTelephone"
-                                                         value={this.state.selectedOrganization.counselorTelephone}
+                                                         value={this.state.counselorInformation.counselorPhone}
                                                          disabled/>
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Email</Col>
+                                            <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
                                             <FormControl name="counselorEmail"
-                                                         value={this.state.selectedOrganization.counselorEmail}
+                                                         value={this.state.counselorInformation.counselorEmail}
                                                          disabled/>
                                         </Col>
                                     </FormGroup>
 
                                     <FormGroup>
                                         <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>Faculty</Col>
+                                            <Col componentClass={ControlLabel}>Facultad</Col>
                                             <FormControl name="counselorFaculty"
-                                                         value={this.state.selectedOrganization.counselorFaculty}
+                                                         value={this.state.counselorInformation.counselorFaculty}
                                                          disabled/>
                                         </Col>
 
                                         <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>Department</Col>
+                                            <Col componentClass={ControlLabel}>Departmento</Col>
                                             <FormControl name="counselorDepartment"
-                                                         value={this.state.selectedOrganization.counselorDepartment}
+                                                         value={this.state.counselorInformation.counselorDepartment}
                                                          disabled/>
                                         </Col>
 
                                         <Col sm={2}>
-                                            <Col componentClass={ControlLabel}>Office Number</Col>
+                                            <Col componentClass={ControlLabel}>Oficina</Col>
                                             <FormControl name="counselorOfficeNumber"
-                                                         value={this.state.selectedOrganization.counselorOfficeNumber}
+                                                         value={this.state.counselorInformation.counselorOffice}
                                                          disabled/>
                                         </Col>
                                     </FormGroup>
-
-                                    <FormGroup>
-                                        <Col md={4}>
-                                            <Col componentClass={ControlLabel}>Status</Col>
-
-                                            <FormControl componentClass="select" name="selectStatus"
-                                                         onChange={this.onStatusSelected}
-
-                                                         placeholder="select">
-                                                <option>select</option>
-                                                {statusOptions}
-                                            </FormControl>
-                                        </Col>
-                                    </FormGroup>
-
                                 </Panel>
 
                                 <Col md={12}>
@@ -1009,25 +1060,24 @@ class Request extends Component {
                                     <AlertContainer ref={a => this.msg = a}/>
 
                                     <ReactCenter>
-                                        <Button bsStyle="primary" type="submit">Submit</Button>
+                                        <Button bsStyle="primary" type="submit">Someter</Button>
                                     </ReactCenter>
 
                                     <Modal show={this.state.showModal} onHide={this.close}>
                                         <Modal.Header closeButton>
-                                            <Modal.Title>Submit request?</Modal.Title>
+                                            <Modal.Title>¿Someter la solicitud?</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <h4>Are you sure you want to submit the request?</h4>
+                                            <h4>¿Se asegur&oacute; que toda la informaci&oacute;n est&aacute; correcta?</h4>
                                         </Modal.Body>
                                         <Modal.Footer>
                                             <Button onClick={this.onSubmit} bsStyle="primary"
                                                     type="button">Ok</Button>
-                                            <Button onClick={this.close}>Cancel</Button>
+                                            <Button onClick={this.close}>Cancelar</Button>
                                         </Modal.Footer>
                                     </Modal>
 
                                 </Col>
-                                <br />
                                 <br />
                             </Form>
                         </Col>

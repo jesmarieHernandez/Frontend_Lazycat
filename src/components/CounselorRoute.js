@@ -8,7 +8,7 @@ export default ({ component: C, props: cProps, ...rest }) =>
     <Route
         {...rest}
         render={props =>
-            cProps.authentication.signedIn === 'true' && cProps.authentication.role === '4'
+            cProps.cookies.get('signedIn') === 'true' && cProps.cookies.get('role') === '4'
                 ? <C {...props} {...cProps} />
                 : <Redirect
                 to={`/login?redirect=/`}

@@ -39,15 +39,20 @@ class App extends Component {
         this.props.cookies.remove('role', { path: '/' });
         this.props.cookies.remove('email', { path: '/' });
         this.props.cookies.remove('signedIn', { path: '/' });
-
+        console.log(this.props.history);
         this.props.history.push("/login");
+        this.setState({
+            role: null,
+            email: null,
+            signedIn: null
+        });
     };
 
     render() {
         const childProps = {
             authentication: this.state.authentication,
             cookies: this.state.cookies,
-            signedIn: this.state.authentication.signedIn
+            signedIn: this.state.authentication.signedIn,
         };
 
         return (

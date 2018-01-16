@@ -17,32 +17,103 @@ export default class Login extends Component {
         };
     }
 
+    componentDidMount() {
+        console.log(this.props.cookies);
+        let userType_code = this.props.cookies.get('role');
+        console.log(userType_code);
+        if(userType_code === '1') {
+            console.log('ADMIN');
+            this.props.history.push("/activities");
+            return;
+        }
+        else if (userType_code === '2') {
+            console.log('STAFF');
+            this.props.history.push("/activities");
+            return;
+        }
+        else if (userType_code === '3') {
+            console.log('STUDENT');
+            this.props.history.push("/student/activities");
+            return;
+        }
+        else if (userType_code === '4') {
+            console.log('COUNSELOR');
+            this.props.history.push("/activities");
+            return;
+        }
+        else if (userType_code === '5') {
+            console.log('MANAGER');
+            this.props.history.push("/activities");
+            return;
+        }
+    }
 
     responseGoogle = (response) => {
-        console.log(response.w3.U3);
-        console.log(response);
+
         fetch(`http://localhost:8000/api/users/${response.w3.U3}`).then(response => {
         // fetch(`http://192.168.99.100/api/users/${response.w3.U3}`).then(response => {
 
-            console.log("Luis, it is your fault...");
             if (response.ok) {
                 response.json().then(results => {
-                    // console.log('pepe :D');
-                    // console.log(results);
-                    // console.log(this.props);
-                    // this.props.setUserRole(results.role);
-                    console.log('Shit happened');
-                    console.log(results);
-                    console.log(this.props);
+
+
                     this.props.cookies.set('role', results.userType_code, { path: '/' });
                     this.props.cookies.set('email', results.userEmail, { path: '/' });
                     this.props.cookies.set('signedIn', 'true', { path: '/' });
-                    this.props.history.push("/");
+
+                    if(results.userType_code === 1) {
+                        console.log('ADMIN');
+                        console.log(this.props.cookies.get('role'));
+                        this.props.history.push("/activities");
+                        return;
+                    }
+                    else if (results.userType_code === 2) {
+                        console.log('STAFF');
+                        this.props.history.push("/activities");
+                        return;
+                    }
+                    else if (results.userType_code === 3) {
+                        console.log('STUDENT');
+                        this.props.history.push("/student/activities");
+                        return;
+                    }
+                    else if (results.userType_code === 4) {
+                        console.log('COUNSELOR');
+                        this.props.history.push("/activities");
+                        return;
+                    }
+                    else if (results.userType_code === 5) {
+                        console.log('MANAGER');
+                        this.props.history.push("/activities");
+                        return;
+                    }
                 });
             } else {
                 // response.json().then(error => {
                 //     this.props.showError(`Failed to add issue: ${error.message}`);
                 // });
+                console.log('HMMMMM');
+                //
+                // if(results.userType_code === 1) {
+                //     console.log('ADMIN');
+                //     this.props.history.push("/activities");
+                // }
+                // else if (results.userType_code === 2) {
+                //     console.log('STAFF');
+                //     this.props.history.push("/activities");
+                // }
+                // else if (results.userType_code === 3) {
+                //     console.log('STUDENT');
+                //     this.props.history.push("/student/activities");
+                // }
+                // else if (results.userType_code === 4) {
+                //     console.log('COUNSELOR');
+                //     this.props.history.push("/activities");
+                // }
+                // else if (results.userType_code === 5) {
+                //     console.log('MANAGER');
+                //     this.props.history.push("/activities");
+                // }
             }
         }).catch(err => {
             //this.props.showError(`Error in sending data to server: ${err.message}`);

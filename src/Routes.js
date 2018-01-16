@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Switch, Router} from "react-router-dom";
+import {Route, Switch, Router, Redirect} from "react-router-dom";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -32,26 +32,15 @@ import StaffActivities from "./containers/StaffActivities"
 import StaffStatistics from "./containers/StaffStatistics";
 import EditActivity from "./containers/EditActivity"
 
-import NotFound from "./containers/NotFound";
-
 export default ({childProps}) => {
 
-    console.log('Route Changed');
-    console.log(childProps);
-    let auth2;
-    try {
-         auth2 = window.gapi.auth2.getAuthInstance();
-         console.log(auth2);
-
-    } catch (error) {
-        console.log('Error')
-    }
+    console.log(':D');
     return (
     <Switch>
         {/*<AppliedRoute path="/" exact component={Home} props={childProps}/>*/}
-        <AuthenticatedRoute path="/" exact component={Home} props={childProps}/>
-        <AdminRoute path="/request" exact component={Request} props={childProps}/>
+        <UnauthenticatedRoute path="/" exact component={Login} props={childProps}/>
         <UnauthenticatedRoute path="/login" exact component={Login} props={childProps}/>
+        <AdminRoute path="/request" exact component={Request} props={childProps}/>
         <AdminRoute path="/activities" exact component={Activities} props={childProps}/>
         <AdminRoute path="/activities/edit" exact component={EditActivity} props={childProps}/>
         <AdminRoute path="/activities/:id" exact component={ActivityDetail} props={childProps}/>
@@ -73,15 +62,8 @@ export default ({childProps}) => {
         <StaffRoute path="/staff/activities" exact component={StaffActivities} props={childProps}/>
         <StaffRoute path="/staff/statistics" exact component={StaffStatistics} props={childProps}/>
 
-        {/*
-         */}
-        {/*
-         <AdminRoute path="/admin/facilities/   " exact component={FacilitiesDetail} props={childProps}/>
-         */}
-        {/*<AuthenticatedRoute path="/notes/new" exact component={NewNote} props={childProps}/>*/}
-        {/*<AuthenticatedRoute path="/notes/:id" exact component={Notes} props={childProps}/>*/}
         {/* Finally, catch all unmatched routes */}
-        <Route component={NotFound}/>
+        <UnauthenticatedRoute component={Login} props={childProps}/>
     </Switch>
     )
 }

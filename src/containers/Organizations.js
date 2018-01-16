@@ -63,9 +63,9 @@ class Organizations extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Estadísticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
@@ -81,8 +81,8 @@ class Organizations extends Component {
                 <Col md={7}>
                     <ol className="breadcrumb">
                     <li/>
-                    <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                    <li className="active">Organizations</li>
+                    <li><Link to={`/admin/`}>Panel de administración</Link></li>
+                    <li className="active">Organizaciones</li>
                     </ol>
 
                     <Col md={12}>
@@ -92,7 +92,7 @@ class Organizations extends Component {
 
                 <Col md={3}>
                     <Panel>
-                        <ReactCenter><Link to="/admin/organizations/create"><Button bsSize="medium">New Organization</Button></Link></ReactCenter>
+                        <ReactCenter><Link to="/admin/organizations/create"><Button bsSize="medium">Nueva organización</Button></Link></ReactCenter>
                     </Panel>
                 </Col>
             </div>

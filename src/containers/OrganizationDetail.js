@@ -72,56 +72,21 @@ class OrganizationDetail extends Component {
                 this.setState({orgId: data[0].id});
 
                 // TODO Fetch organization activities
-                // fetch(`http://localhost:8000/api/organizations/${id}`).then(response => {
-                //     response.json().then(data => {
-                //
-                //         console.log(`http://localhost:8000/api/organizations/${id}`);
-                //         console.log(data);
-                //         this.setState({orgNameValue: data[0].organizationName});
-                //         this.setState({orgInitialsValue: data[0].organizationInitials});
-                //         this.setState({orgTypeValue: data[0].organizationType_code});
-                //         this.setState({orgId: data[0].id});
-                //
-                //     }).catch(err => {
-                //         console.log(err)
-                //         //this.props.showError(`Error in sending data to server: ${err.message}`);
-                //     });
-                // });
-
-                // TODO Fetch organization counselors
-                fetch(`http://localhost:8000/api/organizations/counselors/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/activityByOrg/${id}`).then(response => {
                     response.json().then(data => {
 
-                        // this.setState({orgNameValue: data[0].organizationName});
-                        // this.setState({orgInitialsValue: data[0].organizationInitials});
-                        // this.setState({orgTypeValue: data[0].organizationType_code});
-                        // this.setState({orgId: data[0].id});
+                        console.log(`http://localhost:8000/api/organizations/${id}`);
+                        console.log(data);
+                        this.setState({organizationActivities: data});
 
-                        // let organizationCounselors = [
-                        //     {
-                        //         "id": 1,
-                        //         "counselorName": "Raymond Lopez",
-                        //         "counselorEmail": "raymond.lopez@upr.edu",
-                        //         "counselorPhone": "9090",
-                        //         "counselorFaculty": "asdasd",
-                        //         "counselorDepartment": "asdasdasdas",
-                        //         "counselorOffice": "dasdasd",
-                        //         "user_id": 5,
-                        //         "isActive": 1
-                        //     },
-                        //     {
-                        //         "id": 2,
-                        //         "counselorName": "Raymond Perez",
-                        //         "counselorEmail": "raymond.lopez@upr.edu",
-                        //         "counselorPhone": "9090",
-                        //         "counselorFaculty": "asdasd",
-                        //         "counselorDepartment": "asdasdasdas",
-                        //         "counselorOffice": "dasdasd",
-                        //         "user_id": 5,
-                        //         "isActive": 1
-                        //     },
-                        // ];
+                    }).catch(err => {
+                        console.log(err)
+                        //this.props.showError(`Error in sending data to server: ${err.message}`);
+                    });
+                });
 
+                fetch(`http://localhost:8000/api/organizations/counselors/${id}`).then(response => {
+                    response.json().then(data => {
                         this.setState({organizationCounselors: data});
 
 
@@ -132,55 +97,9 @@ class OrganizationDetail extends Component {
                 });
 
 
-                //TODO Fetch organization members
                 fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
                     response.json().then(data => {
-
-                        // let members = [
-                        //     {
-                        //         "id": 1,
-                        //         "studentName": "Deborah Meltrozo",
-                        //         "studentEmail": "jesmarie.hernandez@upr.edu",
-                        //         "studentNo": "555119999",
-                        //         "studentPhone": "7875554040",
-                        //         "studentAddress": "La Calle Algo",
-                        //         "studentCity": "Maya",
-                        //         "studentCountry": "Rep Dom",
-                        //         "studentZipCode": "00000",
-                        //         "user_id": 2,
-                        //         "isActive": 1
-                        //     },
-                        //     {
-                        //         "id": 2,
-                        //         "studentName": "Monica Galindo",
-                        //         "studentEmail": "jesmarie.hernandez@upr.edu",
-                        //         "studentNo": "555119999",
-                        //         "studentPhone": "7875554040",
-                        //         "studentAddress": "La Calle Algo",
-                        //         "studentCity": "Maya",
-                        //         "studentCountry": "Rep Dom",
-                        //         "studentZipCode": "00000",
-                        //         "user_id": 2,
-                        //         "isActive": 1
-                        //     },
-                        //     {
-                        //         "id": 3,
-                        //         "studentName": "Elma Canon Moreno",
-                        //         "studentEmail": "jesmarie.hernandez@upr.edu",
-                        //         "studentNo": "555119999",
-                        //         "studentPhone": "7875554040",
-                        //         "studentAddress": "La Calle Algo",
-                        //         "studentCity": "Maya",
-                        //         "studentCountry": "Rep Dom",
-                        //         "studentZipCode": "00000",
-                        //         "user_id": 2,
-                        //         "isActive": 1
-                        //     },
-                        //
-                        // ];
-
                         this.setState({organizationMembers: data});
-
 
                     }).catch(err => {
                         console.log(err)
@@ -324,11 +243,11 @@ class OrganizationDetail extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estadísticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -346,14 +265,30 @@ class OrganizationDetail extends Component {
             organizationActivities = this.state.organizationActivities.map(activity =>
 
                 <Col md={12}>
-                    <Panel header={activity.activityName}>
-                        <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                        <br/>
-                        <p><b>Description:</b> {activity.activityDescription}</p>
-                        <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                        <p><b>Facility:</b> {activity.facility.space}</p>
-                        <p><b>Status:</b> {activity.status.description}</p>
+                    <Link to={`/activities/${activity.id}`}><Panel header={activity.activityName}>
+                        {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+                        {/*<br/>*/}
+                        <Col md={6}>
+                            <Row>
+
+                                <Col md={6}><p>Título:</p></Col><Col md={6}><p> {activity.activityName}</p></Col>
+                                <Col md={6}><p>Descripción:</p></Col><Col md={6}><p> {activity.activityDescription}</p></Col>
+                                <Col md={6}><p>Organización:</p></Col><Col md={6}><p> {activity.organization.organizationName}</p></Col>
+                                <Col md={6}><p>Facilidades:</p></Col><Col md={6}><p> {activity.facility.space}</p></Col>
+                                <Col md={6}><p>Estado:</p></Col><Col md={6}><p> {activity.status.description}</p></Col>
+
+                            </Row>
+                        </Col>
+                        <Col md={6}>
+                            <Row>
+                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button className="btn-info btn-large pull-right"
+                                                     style={{width: '100px', marginBottom: '10px'}}
+                                >Detalles</Button></Link> </Col>
+                            </Row>
+                        </Col>
+
                     </Panel>
+                    </Link>
                 </Col>
             );
         }
@@ -375,21 +310,25 @@ class OrganizationDetail extends Component {
                     <Link to={`/admin/users/${organization.counselorEmail}`}><Panel header={organization.counselorName}
 
 
-                                                                            style={{fontFamily: 'Helvetica'}}>
+                                                                                    style={{fontFamily: 'Helvetica'}}>
                         <Col md={6}>
                             <Row>
-                                <Col md={6}><p>Nombre:</p> </Col><Col md={6}><p> {organization.counselorName}</p></Col>
-                                <Col md={6}><p>Email:</p> </Col><Col md={6}><p> {organization.counselorEmail}</p></Col>
+                                <Col md={6}><p>Nombre:</p></Col><Col md={6}><p> {organization.counselorName}</p></Col>
+                                <Col md={6}><p>Email:</p></Col><Col md={6}><p> {organization.counselorEmail}</p></Col>
                             </Row>
                         </Col>
-                        <Col md={6} >
+                        <Col md={6}>
 
                             <Row>
                                 <Row>
-                                    <Col md={12}><Button className="btn-info btn-large pull-right" style={{width: '100px', marginBottom: '10px'}} onClick={this.toggleEditMode}>Detalles</Button> </Col>
+                                    <Col md={12}><Button className="btn-info btn-large pull-right"
+                                                         style={{width: '100px', marginBottom: '10px'}}
+                                                         onClick={this.toggleEditMode}>Detalles</Button> </Col>
                                 </Row>
                                 <Row>
-                                    <Col md={12}><Button className="btn-danger btn-large pull-right" style={{width: '100px'}} onClick={this.toggleEditMode}>Remover</Button> </Col>
+                                    <Col md={12}><Button className="btn-danger btn-large pull-right"
+                                                         style={{width: '100px'}}
+                                                         onClick={this.toggleEditMode}>Remover</Button> </Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -414,23 +353,27 @@ class OrganizationDetail extends Component {
                     <Link to={`/admin/users/${member.studentEmail}`}><Panel header={member.studentName}
 
 
-                                                                        style={{fontFamily: 'Helvetica'}}>
+                                                                            style={{fontFamily: 'Helvetica'}}>
                         <Col md={6}>
-                        <Row>
-                        <Col md={6}><p>Nombre:</p> </Col><Col md={6}><p> {member.studentName}</p></Col>
-                        <Col md={6}><p>Email:</p> </Col><Col md={6}><p> {member.studentEmail}</p></Col>
-                        </Row>
+                            <Row>
+                                <Col md={6}><p>Nombre:</p></Col><Col md={6}><p> {member.studentName}</p></Col>
+                                <Col md={6}><p>Email:</p></Col><Col md={6}><p> {member.studentEmail}</p></Col>
+                            </Row>
                         </Col>
-                        <Col md={6} >
+                        <Col md={6}>
 
-                        <Row>
                             <Row>
-                            <Col md={12}><Button className="btn-info btn-large pull-right" style={{width: '100px', marginBottom: '10px'}} onClick={this.toggleEditMode}>Detalles</Button> </Col>
+                                <Row>
+                                    <Col md={12}><Button className="btn-info btn-large pull-right"
+                                                         style={{width: '100px', marginBottom: '10px'}}
+                                                         onClick={this.toggleEditMode}>Detalles</Button> </Col>
+                                </Row>
+                                <Row>
+                                    <Col md={12}><Button className="btn-danger btn-large pull-right"
+                                                         style={{width: '100px'}}
+                                                         onClick={this.toggleEditMode}>Remover</Button> </Col>
+                                </Row>
                             </Row>
-                            <Row>
-                            <Col md={12}><Button className="btn-danger btn-large pull-right" style={{width: '100px'}} onClick={this.toggleEditMode}>Remover</Button> </Col>
-                            </Row>
-                        </Row>
                         </Col>
 
                     </Panel>

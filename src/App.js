@@ -44,7 +44,7 @@ class App extends Component {
         this.setState({
             role: null,
             email: null,
-            signedIn: null
+
         });
     };
 
@@ -82,7 +82,7 @@ class App extends Component {
                                         {/*>*/}
                                         {/*</GoogleLogout>*/}
                                         <Navbar.Brand>
-                                            {this.state.authentication.email}
+                                            {this.state.cookies.get('email')}
                                         </Navbar.Brand>
                                     </NavItem>
                                     </Navbar.Header>

@@ -175,13 +175,16 @@ class NewUser extends Component {
         } else if (this.state.selectedUserRole.name === 'Counselor') {
             const form = document.forms.newCounselor;
             let newUser;
+
+            console.log('SHIT JUST HAPPENED');
             newUser = {
-                counselorName: form.counselorName.value,
-                counselorEmail: form.counselorEmail.value,
-                counselorDepartment: form.counselorDepartment.value,
-                counselorFaculty: form.counselorFaculty.value,
-                counselorOffice: form.counselorOfficeNumber.value,
-                counselorPhone: form.counselorTelephone.value
+
+                counselorName: this.state.counselorNameValue,
+                counselorEmail: this.state.counselorEmailValue,
+                counselorDepartment: this.state.counselorDepartmentValue,
+                counselorFaculty: this.state.counselorFacultyValue,
+                counselorOffice: this.state.counselorOfficeValue,
+                counselorPhone: this.state.counselorPhoneValue
             }
 
             fetch('http://localhost:8000/api/counselors', {

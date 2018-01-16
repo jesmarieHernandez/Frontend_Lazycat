@@ -44,12 +44,7 @@ export default class Home extends Component {
     }
   
     componentDidMount() {
-        console.log('Yauco');
-        console.log(this.props);
-        // if (this.props.authentication.isSignedIn === 'false') {
-        //     this.props.history.push("/login");
-        // }
-        //
+
         if (this.props.authentication.role === '1') {
             this.props.history.push("/activities");
         }

@@ -45,7 +45,8 @@ class Users extends Component {
                     {
                         counselors: [
                             {
-                                counselorName: ''
+                                counselorName: '',
+                                counselorEmail: ''
                             }
                         ]
                     }
@@ -70,7 +71,12 @@ class Users extends Component {
                         ]
                     }
                 ]
-            }
+            },
+            administrators: [],
+            staff: [],
+            students: [],
+            counselors: [],
+            managers: []
         }
 
         this.handleSelect = this.handleSelect.bind(this);
@@ -83,7 +89,8 @@ class Users extends Component {
                 response.json().then(results => {
                     //console.log(results);
                     this.setState({users: results});
-                    console.log(this.state.users);
+                    this.setState({counselors: results.counselors});
+
                     //this.props.router.push(`/activities/${createdRequest._id}`);
                 });
             } else {
@@ -182,21 +189,33 @@ class Users extends Component {
             }
         );
 
-        const counselors = this.state.users.counselors.map(counselor => {
+        const counselors = this.state.counselors.map(counselor => {
 
-            const userRoute = '/admin/users/'+counselor.counselors[0].counselorEmail;
-            return  (
-            <Col md={12}>
+            console.log('counselors');
+            console.log(this.state.counselors);
+            // const userRoute = '/admin/users/';
+            const userRoute = '/admin/users/'+counselor.counselorEmail;
 
-                <Link to={userRoute} style={{border: 'none'}}><Panel  header={counselor.counselors[0].counselorName}>
-                    {/*<p>Role: {administrators.role}</p>*/}
-                    {/*<p>Email: {administrators.userEmail}</p>*/}
-                    {/*<p>Creation Date: {users.creationDate}</p>*/}
-                    {/*<Link to={`/admin/users/${administrators.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
-                </Panel></Link>
+            if (counselor.counselors[0] !== null) {
+                return  (
+                    <Col md={12}>
 
-            </Col> )
+                        <Link to={userRoute} style={{border: 'none'}}><Panel  header={counselor.counselors[0].counselorName}>
+                            {/*<p>Role: {administrators.role}</p>*/}
+                            {/*<p>Email: {administrators.userEmail}</p>*/}
+                            {/*<p>Creation Date: {users.creationDate}</p>*/}
+                            {/*<Link to={`/admin/users/${administrators.id}`}><Button className="btn btn-primary">Details</Button></Link>*/}
+                        </Panel></Link>
+
+                    </Col> )
+
+            } else {
+                return null;
             }
+            }
+
+
+
         );
 
         const managers = this.state.users.managers.map(manager => {

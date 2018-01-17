@@ -21,7 +21,7 @@ class CounselorActivities extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:3001/api/activities').then(response => {
+        fetch(`http://192.168.99.100/api/activity/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});

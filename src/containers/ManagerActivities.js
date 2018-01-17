@@ -21,7 +21,7 @@ class ManagerActivities extends Component {
 
     componentDidMount() {
 
-        fetch('http://localhost:3001/api/activities').then(response => {
+        fetch(`http://192.168.99.100/api/activity/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
@@ -36,35 +36,27 @@ class ManagerActivities extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:3001/api/pending').then(response => {
-            if (response.ok) {
-                console.log('/api/pending! :D');
-                response.json().then(results => {
-                    console.log('Total pending activities: ' + results);
-
-                    //console.log(this.state.activities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                console.log('Unable to fetch pending activities')
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+        // fetch('http://localhost:3001/api/pending').then(response => {
+        //     if (response.ok) {
+        //         console.log('/api/pending! :D');
+        //         response.json().then(results => {
+        //             console.log('Total pending activities: ' + results);
+        //
+        //             //console.log(this.state.activities);
+        //             //this.props.router.push(`/activities/${createdRequest._id}`);
+        //         });
+        //     } else {
+        //         console.log('Unable to fetch pending activities')
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
     }
 
     render() {
-
-/*        const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/manager/activities">Activities</Link></li>
-                </ul>
-            </div>
-        );*/
 
         const tabsInstance = (
 
@@ -81,12 +73,12 @@ class ManagerActivities extends Component {
 
             <Col md={12}>
 
-                <Panel  header={activity.requestTitle}>
-                    <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
+                <Panel  header={activity.activityName}>
+                    <td><Link to={`/manager/activities/${activity.id}`}>{activity.activityName}</Link></td>
                     <p>Description: {activity.activityDescription}</p>
-                    <p>Organization: {activity.organization.name}</p>
-                    <p>Facility: {activity.facilities.name}</p>
-                    <p>Status: {activity.status}</p>
+                    <p>Organization: {activity.organization.organizationName}</p>
+                    <p>Facility: {activity.facility.building + '-' + activity.facility.space}</p>
+                    <p>Status: {activity.status.description}</p>
                 </Panel>
 
             </Col>
@@ -108,17 +100,6 @@ class ManagerActivities extends Component {
 
                     <Col md={7}>
                         <div>{activities}</div>
-                    </Col>
-
-                    <Col md={5}>
-                        <Panel header='Search Activities'>
-                            <Select.Async
-                                instanceId="search" placeholder="Search ..." autoload={false} cache={false}
-                            />
-                            <Checkbox><p>Organization Acronym</p></Checkbox>
-                            <Checkbox><p>Request Title</p></Checkbox>
-                            <Checkbox><p>Request Description</p></Checkbox>
-                        </Panel>
                     </Col>
                 </Col>
             </div>

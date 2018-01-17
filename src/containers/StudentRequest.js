@@ -197,7 +197,7 @@ class Request extends Component {
             activityStatus_code: 1,
             counselorStatus_code: 1,
             managerStatus_code: 1,
-            activityType_code: 1
+            activityType_code: null
         };
         console.log(activityRequest);
         fetch('http://192.168.99.100/api/activities', {
@@ -210,12 +210,12 @@ class Request extends Component {
 
                 response.json().then(createdRequest => {
                     console.log('Activity request was created successfully!');
-                    console.log('Activity request ID: ' + createdRequest._id);
+                    console.log('Activity request ID: ' + createdRequest.id);
                     this.setState({showModal: false});
                     console.log(':D');
                     console.log(this);
                     // this.props.history.push(`/student/activities/${createdRequest._id}`);
-                    this.props.history.push(`/student/activities/}`);
+                    this.props.history.push(`/student/activities/${createdRequest.id}`);
 
                 })
             } else {
@@ -325,7 +325,7 @@ class Request extends Component {
 
     open() {
 
-        if (this.state.titleValue.length <= 20 /*&& this.state.titleValue.length >= 5 &&
+        if (this.state.titleValue.length <= 50 /*&& this.state.titleValue.length >= 5 &&
             /^[0-9]+$/.test(this.state.titleValue) === false && /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.titleValue) === false &&
             this.state.descriptionValue.length <= 100 && this.state.descriptionValue.length >= 10  &&
             /^[0-9]+$/.test(this.state.descriptionValue) === false && /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.descriptionValue) === false &&
@@ -541,7 +541,7 @@ class Request extends Component {
                                                                 s&iacute;mbolos</HelpBlock>
                                                         </div>)
                                                         :
-                                                        (this.state.titleValue.length > 20) ?
+                                                        (this.state.titleValue.length > 50) ?
                                                             (<div>
                                                                 <FormControl name="requestTitle"
                                                                              value={this.state.titleValue}
@@ -565,7 +565,7 @@ class Request extends Component {
                                                                         demasiado peque&ntilde;o</HelpBlock>
                                                                 </div>)
                                                                 :
-                                                                (this.state.titleValue.length <= 20 && this.state.titleValue.length >= 4 && this.state.titleValue.length != 0) ?
+                                                                (this.state.titleValue.length <= 50 && this.state.titleValue.length >= 4 && this.state.titleValue.length != 0) ?
                                                                     (<div>
                                                                         <FormControl name="requestTitle"
                                                                                      value={this.state.titleValue}

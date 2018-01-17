@@ -26,6 +26,7 @@ import NewUser from "./containers/NewUser";
 import UserDetail from "./containers/UserDetail";
 import StudentRequest from "./containers/StudentRequest";
 import StudentActivities from "./containers/StudentActivities";
+import StudentActivityDetail from "./containers/StudentActivityDetail"
 import CounselorActivities from "./containers/CounselorActivities";
 import ManagerActivities from "./containers/ManagerActivities";
 import StaffActivities from "./containers/StaffActivities"
@@ -57,8 +58,10 @@ export default ({childProps}) => {
         <AdminRoute path="/admin/users/:id" exact component={UserDetail} props={childProps}/>
         <StudentRoute path="/student/request/" exact component={StudentRequest} props={childProps}/>
         <StudentRoute path="/student/activities/" exact component={StudentActivities} props={childProps}/>
+        <StudentRoute path="/student/activities/:id" exact component={StudentActivityDetail} props={childProps}/>\
         <CounselorRoute path="/counselor/activities" exact component={CounselorActivities} props={childProps}/>
         <ManagerRoute path="/manager/activities" exact component={ManagerActivities} props={childProps}/>
+        <ManagerRoute path="/manager/activities/:id" exact component={ActivityDetail} props={childProps}/>
         <StaffRoute path="/staff/activities" exact component={StaffActivities} props={childProps}/>
         <StaffRoute path="/staff/statistics" exact component={StaffStatistics} props={childProps}/>
 

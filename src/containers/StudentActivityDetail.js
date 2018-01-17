@@ -1,4 +1,7 @@
 /**
+ * Created by jesma on 1/17/2018.
+ */
+/**
  * Created by jesma on 12/12/2017.
  */
 import React, {Component} from 'react';
@@ -22,15 +25,10 @@ import ReactCenter from "react-center";
 
 const PAGE_SIZE = 10;
 
-class ActivityDetail extends Component {
+class StudentActivityDetail extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            activityTypes: [],
-            selectedType: 0,
-            commentary: '',
-            selectedOption: false,
-            editDecision: false,
 
             activity: {
                 id: '',
@@ -116,9 +114,6 @@ class ActivityDetail extends Component {
             }
         }
 
-        this.onApproval = this.onApproval.bind(this);
-        this.onDenied = this.onDenied.bind(this);
-        this.onTypeSelected = this.onTypeSelected.bind(this);
     }
 
     componentDidMount() {
@@ -157,166 +152,19 @@ class ActivityDetail extends Component {
         });
     }
 
-    onApproval(event) {
-        event.preventDefault();
-
-        console.log('Selected status: ' + this.state.selectedStatus);
-
-        const activityUpdate = {
-            staffComment: this.state.commentary,
-            activityType_code: this.state.selectedType,
-            hasFood: this.state.selectedOption ? 1 : 0
-        };
-
-        this.setState({dscaDecision: 'approved'});
-
-        console.log("DSCA Decision: " + this.state.dscaDecision);
-
-
-        console.log("Activity Update Object: " + activityUpdate);
-        fetch(`http://192.168.99.100/api/adminApproved/${this.state.activity.id}`, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(activityUpdate),
-        }).then(response => {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(updatedRequest => {
-                    console.log('Activity request was updated successfully!');
-                    console.log('Activity request ID: ' + updatedRequest.id);
-
-                    this.props.router.push(`/activities/${updatedRequest.id}`);
-                })
-            } else {
-                response.json().then(error => {
-                    //this.props.showError(`Failed to create request: ${error.message}`);
-                });
-            }
-        }).catch(err => {
-            //this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
-    }
-
-    onDenied(event) {
-        event.preventDefault();
-
-        console.log('Selected status: ' + this.state.selectedStatus);
-
-        const activityUpdate = {
-            staffComment: this.state.commentary,
-            activityType_code: this.state.selectedType,
-            hasFood: this.state.selectedOption ? 1 : 0
-        };
-
-        this.setState({dscaDecision: 'denied'});
-
-        console.log(activityUpdate);
-        fetch(`http://192.168.99.100/api/adminDenied/${this.state.activity.id}`, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(activityUpdate),
-        }).then(response => {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(updatedRequest => {
-                    console.log('Activity request was updated successfully!');
-                    console.log('Activity request ID: ' + updatedRequest.id);
-
-                    this.props.router.push(`/activities/${updatedRequest.id}`);
-                })
-            } else {
-                response.json().then(error => {
-                    //this.props.showError(`Failed to create request: ${error.message}`);
-                });
-            }
-        }).catch(err => {
-            //this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
-    }
-
-    onTypeSelected = (event) => {
-        console.log("Type here");
-        const selectedType = this.state.activityTypes.filter(function (obj) {
-            console.log(obj.code == event.target.value);
-            return obj.code == event.target.value;
-        });
-        console.log('Seleceted type');
-        console.log(selectedType[0].code);
-        this.setState({selectedType: selectedType[0].code});
-        // console.log(this.state.selectedType);
-
-
-    }
-
-    boxToogle = () => {
-        console.log("Food");
-        console.log(this.state.selectedOption);
-        this.setState({selectedOption: !this.state.selectedOption});
-    }
-
-    handleCommentChange = (event) => {
-        this.setState({commentary: event.target.value});
-    }
-
-    onEdit = (event) => {
-        event.preventDefault();
-        this.setState({editDecision: true});
-        console.log("Decision");
-        console.log(this.state.editDecision);
-    }
-
-    onSave = (event) => {
-        event.preventDefault();
-
-        const activityUpdate = {
-            activityType_code: this.state.selectedType,
-        };
-        console.log(activityUpdate);
-        console.log("Typeeeeeee");
-        console.log(this.state.selectedType);
-
-        fetch(`http://192.168.99.100/api/updateType/${this.state.activity.id}`, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(activityUpdate),
-        }).then(response => {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(updatedRequest => {
-                    console.log('Type request was updated successfully!');
-                    this.props.router.push(`/activities/${updatedRequest.id}`);
-                })
-            } else {
-                response.json().then(error => {
-                    //this.props.showError(`Failed to create request: ${error.message}`);
-                });
-            }
-        }).catch(err => {
-            //this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
-    }
-
     render() {
         console.log('this.state.selectedType');
 
         console.log(this.state.selectedType);
 
-        const typeOptions = this.state.activityTypes.map(option =>
-            <option value={option.code}>{option.description}</option>
-        );
-
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
-                    <NavItem> <Link to="/admin"><Icon icon={userTie}
-                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/student/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
+                        to="/student/request"><ReactCenter>Solicitud</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
         );
@@ -337,29 +185,6 @@ class ActivityDetail extends Component {
 
                     <Row>
                         <Col md={12}>
-                            {this.state.activity.student === null ?
-                                <Panel header="Detalles del Administrador">
-                                    <FormGroup>
-                                        <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Nombre Completo</Col>
-                                            <FormControl name="requesterName"
-                                                         value={this.state.activity.staff.staffName} disabled/>
-                                        </Col>
-
-                                        <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Email</Col>
-                                            <FormControl name="studentAddressZipCode"
-                                                         value={this.state.activity.staff.staffEmail} disabled/>
-                                        </Col>
-
-                                        <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Telephone</Col>
-                                            <FormControl name="studentTelephone"
-                                                         value={this.state.activity.staff.staffPhone} disabled/>
-                                        </Col>
-                                    </FormGroup>
-                                </Panel>
-                                :
                                 <Panel header="Detalles del Estudiante">
                                     <FormGroup>
                                         <Col sm={4}>
@@ -416,7 +241,7 @@ class ActivityDetail extends Component {
                                         </Col>
                                     </FormGroup>
                                 </Panel>
-                            }
+
                             <Panel header="Detalles de la Actividad">
                                 <FormGroup>
                                     <Col sm={3}>
@@ -481,7 +306,7 @@ class ActivityDetail extends Component {
                                 {
                                     (this.state.activity.status.code === 2) ?
                                         (<div>
-                                            <FormGroup bsStyle="success">
+                                            <FormGroup validationState="success">
                                                 <Col md={4}>
                                                     <Col componentClass={ControlLabel}>Estado</Col>
                                                     <FormControl name="status"
@@ -491,7 +316,7 @@ class ActivityDetail extends Component {
                                             </FormGroup>
                                         </div>)
                                         :
-                                        (<div bsStyle="danger">
+                                        (<div>
                                             <FormGroup>
                                                 <Col md={4}>
                                                     <Col componentClass={ControlLabel}>Estado</Col>
@@ -572,130 +397,6 @@ class ActivityDetail extends Component {
                                 </FormGroup>
                             </Panel>
                             <br/>
-
-                            {/* Panel only for the DCSA Admin/Staff */}
-                            <Panel header="Decisi&oacute;n de la Actividad">
-                                <FormGroup>
-                                    {/* Show already placed category and commentary by the DSCA Staff/Admin */}
-                                    {(this.state.activity.status.code === 2 || this.state.activity.status.code === 3) || this.state.activity.type != null ?
-                                        (<div>
-                                            <Col sm={3}>
-                                                <Col componentClass={ControlLabel}>Categor&iacute;a: </Col>
-                                                <FormControl name="selectType"
-                                                             value={this.state.activity.type.description}
-                                                             disabled/>
-                                            </Col>
-
-                                            <Col sm={9}>
-                                                <Col componentClass={ControlLabel}>Comentario: </Col>
-                                                <FormControl name="commentary"
-                                                             value={this.state.activity.staffComment}
-                                                             disabled/>
-                                            </Col>
-                                            <br/>
-                                            <br/>
-                                            <br/>
-                                        </div>)
-                                        :
-                                        ((this.state.activity.counselor_status.code === 3 || this.state.activity.manager_status.code === 3) && this.state.editDecision === true) ?
-                                            (<div>
-                                                <Col sm={3}>
-                                                    <Col componentClass={ControlLabel}>Categor&iacute;a: </Col>
-                                                    <FormControl componentClass="select" name="selectType"
-                                                                 onChange={this.onTypeSelected}
-                                                                 required>
-                                                        <option>select</option>
-                                                        {typeOptions}
-                                                    </FormControl>
-                                                </Col>
-                                                <br/>
-                                                <br/>
-                                                <br/>
-                                            </div>)
-                                            :
-                                            ((this.state.activity.counselor_status.code === 3 || this.state.activity.manager_status.code === 3) && this.state.editDecision === false) ?
-                                                (<div>
-                                                </div>)
-                                                :
-                                                (<div>
-                                                    <Col sm={3}>
-                                                        <Col componentClass={ControlLabel}>Categor&iacute;a: </Col>
-                                                        <FormControl componentClass="select" name="selectType"
-                                                                     onChange={this.onTypeSelected}
-                                                                     required>
-                                                            <option>select</option>
-                                                            {typeOptions}
-                                                        </FormControl>
-                                                    </Col>
-
-                                                    <Col sm={6}>
-                                                        <Col componentClass={ControlLabel}>Comentario: </Col>
-                                                        <FormControl name="commentary"
-                                                                     value={this.state.commentary}
-                                                                     required/>
-                                                    </Col>
-
-                                                    <Col sm={3}>
-                                                        <Col componentClass={ControlLabel}>Permisos: </Col>
-                                                        <Col>
-                                                            <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso de Comida?</Checkbox>{' '}
-                                                        </Col>
-                                                    </Col>
-                                                    <br/>
-                                                    <br/>
-                                                    <br/>
-                                                </div>)
-                                    }
-                                    <br/>
-
-                                    <Row>
-                                        <ReactCenter>
-                                            <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
-                                            {
-                                                ((this.state.activity.counselor_status.code === 3 || this.state.activity.manager_status.code === 3) && this.state.editDecision === true) ?
-                                                    (<div>
-                                                        <Col md="1"><Button className="btn-success"
-                                                                            onClick={this.onSave}
-                                                                            style={{marginLeft: "40px"}}>Guardar</Button></Col>
-                                                    </div>)
-                                                    :
-                                                    (this.state.activity.counselor_status.code === 3 || this.state.activity.manager_status.code === 3) && this.state.activity.type === null ?
-                                                        (<div>
-                                                            <Col md="1"><Button className="btn-warning"
-                                                                                onClick={this.onEdit}
-                                                                                style={{marginLeft: "40px"}}>Editar</Button></Col>
-                                                        </div>)
-                                                        :
-                                                        (this.state.activity.status.code === 2 || this.state.activity.status.code === 3) ?
-                                                            (<div>
-                                                            </div>)
-                                                            :
-                                                            (this.state.activity.counselor_status.code === 2 && this.state.activity.manager_status.code === 2) ?
-                                                            (<div>
-                                                                <Col md="1"><Button className="btn-success"
-                                                                                    onClick={this.onApproval}
-                                                                                    style={{marginLeft: "40px"}} required>Aprobar</Button></Col>
-                                                                <Col md="1"><Button className="btn-danger"
-                                                                                    onClick={this.onDenied}
-                                                                                    style={{marginLeft: "140px"}} required>Denegar</Button></Col>
-                                                            </div>)
-                                                                :
-                                                                (<div>
-                                                                    <Col md="1"><Button className="btn-success"
-                                                                                        onClick={this.onApproval}
-                                                                                        style={{marginLeft: "40px"}} disabled>Aprobar</Button></Col>
-                                                                    <Col md="1"><Button className="btn-danger"
-                                                                                        onClick={this.onDenied}
-                                                                                        style={{marginLeft: "140px"}} disabled>Denegar</Button></Col>
-                                                                </div>)
-                                            }
-                                        </ReactCenter>
-                                    </Row>
-
-                                </FormGroup>
-                            </Panel>
-                            <br />
-
                         </Col>
                     </Row>
                 </Col>
@@ -706,8 +407,8 @@ class ActivityDetail extends Component {
 }
 
 
-ActivityDetail.contextTypes = {
+StudentActivityDetail.contextTypes = {
     initialState: React.PropTypes.object,
 };
 
-export default ActivityDetail;
+export default StudentActivityDetail;

@@ -29,7 +29,7 @@ class StudentActivities extends Component {
                     console.log(results);
                     this.setState({activities: results});
                     console.log(this.state.activities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.router.push(`/activities/${createdRequest.id}`);
                 });
             } else {
                 // response.json().then(error => {
@@ -66,9 +66,9 @@ class StudentActivities extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/student/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                        to="/student/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/student/request"><ReactCenter>Request</ReactCenter></Link></NavItem>
+                        to="/student/request"><ReactCenter>Solicitud</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
         );
@@ -76,7 +76,7 @@ class StudentActivities extends Component {
 
             <Col md={12}>
             <Panel  header={activity.activityName}>
-                <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+                <td><Link to={`/student/activities/${activity.id}`}>{activity.activityName}</Link></td>
                 <p>Description: {activity.activityDescription}</p>
                 <p>Organization: {activity.organization.organizationName}</p>
                 <p>Facility: {activity.facility.building + '-' + activity.facility.space}</p>
@@ -98,15 +98,14 @@ class StudentActivities extends Component {
                     <Col md={9}>
                         <ol className="breadcrumb">
                             <li/>
-                            <li className="active">Activities</li>
+                            <li className="active">Actividades</li>
                         </ol>
                         {activities}
                     </Col>
 
                     <Col md={3}>
-                        <Panel header='Activities'>
-                            <ReactCenter><Link to="/student/request"><Button bsSize="medium">New
-                                Request</Button></Link></ReactCenter>
+                        <Panel header='Actividades'>
+                            <ReactCenter><Link to="/student/request"><Button bsSize="medium">Nueva Solicitud</Button></Link></ReactCenter>
                         </Panel>
 
 

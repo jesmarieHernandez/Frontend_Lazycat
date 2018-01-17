@@ -38,12 +38,12 @@ export default class Login extends Component {
         }
         else if (userType_code === '4') {
             console.log('COUNSELOR');
-            this.props.history.push("/activities");
+            this.props.history.push("/counselor/activities");
             return;
         }
         else if (userType_code === '5') {
             console.log('MANAGER');
-            this.props.history.push("/activities");
+            this.props.history.push("/manager/activities");
             return;
         }
     }
@@ -79,12 +79,12 @@ export default class Login extends Component {
                     }
                     else if (results.userType_code === 4) {
                         console.log('COUNSELOR');
-                        this.props.history.push("/activities");
+                        this.props.history.push("/counselor/activities");
                         return;
                     }
                     else if (results.userType_code === 5) {
                         console.log('MANAGER');
-                        this.props.history.push("/activities");
+                        this.props.history.push("/manager/activities");
                         return;
                     }
                 });

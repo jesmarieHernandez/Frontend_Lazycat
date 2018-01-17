@@ -22,11 +22,11 @@ import ReactCenter from "react-center";
 
 const PAGE_SIZE = 10;
 
-class StudentActivityDetail extends Component {
+class ManagerActivityDetail extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-
+            commentary: '',
             activity: {
                 id: '',
                 activityName: '',
@@ -111,6 +111,8 @@ class StudentActivityDetail extends Component {
             }
         }
 
+        this.onApproval = this.onApproval.bind(this);
+        this.onDenied = this.onDenied.bind(this);
     }
 
     componentDidMount() {
@@ -149,19 +151,132 @@ class StudentActivityDetail extends Component {
         });
     }
 
-    render() {
-        console.log('this.state.selectedType');
+    onApproval(event) {
+        event.preventDefault();
 
-        console.log(this.state.selectedType);
+        // console.log('Selected status: ' + this.state.selectedStatus);
+
+        const activityUpdate = {
+            managerComment: this.state.commentary,
+        };
+
+        // this.setState({managerDecision: 'approved'});
+        // console.log("DSCA Decision: " + this.state.dscaDecision);
+
+
+        console.log("Activity Update Object: " + activityUpdate);
+        fetch(`http://192.168.99.100/api/managerApproved/${this.state.activity.id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(activityUpdate),
+        }).then(response => {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(updatedRequest => {
+                    console.log('Activity request was updated successfully!');
+                    console.log('Activity request ID: ' + updatedRequest.id);
+
+                    this.props.history.push(`/manager/activities/`);
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+    }
+
+    onDenied(event) {
+        event.preventDefault();
+
+        // console.log('Selected status: ' + this.state.selectedStatus);
+
+        const activityUpdate = {
+            managerComment: this.state.commentary,
+        };
+
+        // this.setState({dscaDecision: 'denied'});
+
+        console.log(activityUpdate);
+        fetch(`http://192.168.99.100/api/managerDenied/${this.state.activity.id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(activityUpdate),
+        }).then(response => {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(updatedRequest => {
+                    console.log('Activity request was updated successfully!');
+                    console.log('Activity request ID: ' + updatedRequest.id);
+
+                    this.props.history.push(`/manager/activities/`);
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+    }
+
+    handleCommentChange = (event) => {
+        this.setState({commentary: event.target.value});
+    }
+
+    // onEdit = (event) => {
+    //     event.preventDefault();
+    //     this.setState({editDecision: true});
+    //     console.log("Decision");
+    //     console.log(this.state.editDecision);
+    // }
+
+    // onSave = (event) => {
+    //     event.preventDefault();
+    //
+    //     const activityUpdate = {
+    //         activityType_code: this.state.selectedType,
+    //     };
+    //     console.log(activityUpdate);
+    //     console.log("Typeeeeeee");
+    //     console.log(this.state.selectedType);
+    //
+    //     fetch(`http://192.168.99.100/api/updateType/${this.state.activity.id}`, {
+    //         method: 'PUT',
+    //         headers: {'Content-Type': 'application/json'},
+    //         body: JSON.stringify(activityUpdate),
+    //     }).then(response => {
+    //         if (response.ok) {
+    //             console.log(response);
+    //             response.json().then(updatedRequest => {
+    //                 console.log('Type request was updated successfully!');
+    //                 this.props.router.push(`/activities/${updatedRequest.id}`);
+    //             })
+    //         } else {
+    //             response.json().then(error => {
+    //                 //this.props.showError(`Failed to create request: ${error.message}`);
+    //             });
+    //         }
+    //     }).catch(err => {
+    //         //this.props.showError(`Error in sending data to server: ${err.message}`);
+    //     });
+    // }
+
+    render() {
+        // console.log('this.state.selectedType');
+
+        // console.log(this.state.selectedType);
 
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/student/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/student/request"><ReactCenter>Solicitud</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/manager/activities"><Icon
+                        icon={iosPaw}
+                        style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -182,6 +297,29 @@ class StudentActivityDetail extends Component {
 
                     <Row>
                         <Col md={12}>
+                            {this.state.activity.student === null ?
+                                <Panel header="Detalles del Administrador">
+                                    <FormGroup>
+                                        <Col sm={4}>
+                                            <Col componentClass={ControlLabel}>Nombre Completo</Col>
+                                            <FormControl name="requesterName"
+                                                         value={this.state.activity.staff.staffName} disabled/>
+                                        </Col>
+
+                                        <Col sm={4}>
+                                            <Col componentClass={ControlLabel}>Email</Col>
+                                            <FormControl name="studentAddressZipCode"
+                                                         value={this.state.activity.staff.staffEmail} disabled/>
+                                        </Col>
+
+                                        <Col sm={4}>
+                                            <Col componentClass={ControlLabel}>Telephone</Col>
+                                            <FormControl name="studentTelephone"
+                                                         value={this.state.activity.staff.staffPhone} disabled/>
+                                        </Col>
+                                    </FormGroup>
+                                </Panel>
+                                :
                                 <Panel header="Detalles del Estudiante">
                                     <FormGroup>
                                         <Col sm={4}>
@@ -191,7 +329,8 @@ class StudentActivityDetail extends Component {
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>N&uacute;mero de Identificaci&oacute;n</Col>
+                                            <Col componentClass={ControlLabel}>N&uacute;mero de Identificaci&oacute;
+                                                n</Col>
                                             <FormControl name="studentIdentificationNumber"
                                                          value={this.state.activity.student.studentNo} disabled/>
                                         </Col>
@@ -238,7 +377,7 @@ class StudentActivityDetail extends Component {
                                         </Col>
                                     </FormGroup>
                                 </Panel>
-
+                            }
                             <Panel header="Detalles de la Actividad">
                                 <FormGroup>
                                     <Col sm={3}>
@@ -303,7 +442,7 @@ class StudentActivityDetail extends Component {
                                 {
                                     (this.state.activity.status.code === 2) ?
                                         (<div>
-                                            <FormGroup validationState="success">
+                                            <FormGroup bsStyle="success">
                                                 <Col md={4}>
                                                     <Col componentClass={ControlLabel}>Estado</Col>
                                                     <FormControl name="status"
@@ -313,7 +452,7 @@ class StudentActivityDetail extends Component {
                                             </FormGroup>
                                         </div>)
                                         :
-                                        (<div>
+                                        (<div bsStyle="danger">
                                             <FormGroup>
                                                 <Col md={4}>
                                                     <Col componentClass={ControlLabel}>Estado</Col>
@@ -394,6 +533,62 @@ class StudentActivityDetail extends Component {
                                 </FormGroup>
                             </Panel>
                             <br/>
+
+                            <Panel header="Decisión de la Actividad">
+                                <FormGroup>
+                                    <Row>
+                                        {
+                                            (this.state.activity.counselor_status.code === 2) ?
+                                                (<div>
+                                                        <Col sm={12}>
+                                                            <Col componentClass={ControlLabel}>Observaciones: </Col>
+                                                            <FormControl name="commentary"
+                                                                         onChange={this.handleCommentChange}
+                                                                         value={this.state.commentary}
+                                                                         required/>
+                                                        </Col>
+                                                    <br/>
+                                                    <br/>
+
+                                                    <Row></Row>
+                                                    <br/>
+
+                                                    <Row>
+                                                        <ReactCenter>
+                                                            <Col md="1"><Link to={`/activities/`}><Button
+                                                                className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
+                                                            <Col md="1"><Button className="btn-success"
+                                                                                onClick={this.onApproval}
+                                                                                style={{marginLeft: "10px"}} required>Aprobar</Button></Col>
+                                                            <Col md="1"><Button className="btn-danger"
+                                                                                onClick={this.onDenied}
+                                                                                style={{marginLeft: "40px"}} required>Denegar</Button></Col>
+                                                        </ReactCenter>
+                                                    </Row>
+                                                </div>)
+                                                :
+                                                (this.state.activity.counselor_status.code === 1) ?
+                                                    (<div>
+                                                        <ReactCenter>
+                                                            <Col md="1"><Link to={`/activities/`}><Button
+                                                                className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
+                                                            <Col md="1"><Button className="btn-success"
+                                                                                onClick={this.onApproval}
+                                                                                style={{marginLeft: "40px"}} disabled>Aprobar</Button></Col>
+                                                            <Col md="1"><Button className="btn-danger"
+                                                                                onClick={this.onDenied}
+                                                                                style={{marginLeft: "140px"}} disabled>Denegar</Button></Col>
+                                                        </ReactCenter>
+                                                    </div>)
+                                                    :
+                                                    (<div>
+                                                    </div>)
+                                        }
+                                    </Row>
+                                </FormGroup>
+                            </Panel>
+                            <br/>
+                            <br/>
                         </Col>
                     </Row>
                 </Col>
@@ -404,8 +599,8 @@ class StudentActivityDetail extends Component {
 }
 
 
-StudentActivityDetail.contextTypes = {
+ManagerActivityDetail.contextTypes = {
     initialState: React.PropTypes.object,
 };
 
-export default StudentActivityDetail;
+export default ManagerActivityDetail;

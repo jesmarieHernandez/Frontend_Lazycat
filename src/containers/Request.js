@@ -16,7 +16,7 @@ import {userTie} from 'react-icons-kit/icomoon/userTie';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Tab, Tow, Nav, NavItem, Row, HelpBlock
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Tab, Tow, Nav, NavItem, Row, HelpBlock, Checkbox
 } from 'react-bootstrap';
 
 
@@ -81,7 +81,8 @@ class Request extends Component {
             commentary: '',
             counselorInformation: {
 
-            }
+            },
+            selectedOption: false
         }
 
         this.onOrganizationSelected = this.onOrganizationSelected.bind(this);
@@ -103,7 +104,7 @@ class Request extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8000/api/organizations').then(response => {
+        fetch('http://192.168.99.100/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({organizations: results});
@@ -121,7 +122,7 @@ class Request extends Component {
             // this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch(`http://localhost:8000/api/facilities/`).then(response => {
+        fetch(`http://192.168.99.100/api/facilities/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
@@ -142,8 +143,8 @@ class Request extends Component {
             // this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
-            // fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
+        fetch(`http://192.168.99.100/api/users/${this.props.authentication.email}`).then(response => {
+            // fetch(`http://192.168.99.100/api/users/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({staffInfo: results.staff[0]});
@@ -159,7 +160,7 @@ class Request extends Component {
                         // this.props.showError(`Error in sending data to server: ${err.message}`);
                     });
 
-        fetch(`http://localhost:8000/api/activityType/`).then(response => {
+        fetch(`http://192.168.99.100/api/activityType/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Type:");
@@ -246,14 +247,14 @@ class Request extends Component {
             activityDate: this.state.selectedDate,
             activityStart: getTwentyFourHourTime(this.state.selectedStartTime),
             activityEnd: getTwentyFourHourTime(this.state.selectedEndTime),
-            hasFood: null,
+            hasFood: this.state.selectedOption ? 1 : 0,
             guestName: form.activityGuest.value,
             activityType_code: this.state.selectedType,
             staffComment: form.commentary.value
         };
 
         console.log(activityRequest);
-        fetch('http://localhost:8000/api/adminStore', {
+        fetch('http://192.168.99.100/api/adminStore', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityRequest),
@@ -364,8 +365,10 @@ class Request extends Component {
 
     }
 
-    getInitialState() {
-        return {showModal: false};
+    boxToogle = () => {
+        console.log("Food");
+        console.log(this.state.selectedOption);
+        this.setState({selectedOption: !this.state.selectedOption});
     }
 
     close() {
@@ -942,12 +945,19 @@ class Request extends Component {
                                             </FormControl>
                                         </Col>
 
-                                        <Col sm={9}>
+                                        <Col sm={6}>
                                             <Col componentClass={ControlLabel}>Observaciones: </Col>
                                             <FormControl name="commentary"
                                                          value={this.state.commentary}
                                                          onChange={this.handleCommentaryChange}
                                                          required/>
+                                        </Col>
+
+                                        <Col sm={3}>
+                                            <Col componentClass={ControlLabel}>Permisos: </Col>
+                                            <Col>
+                                                <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso de Comida?</Checkbox>{' '}
+                                            </Col>
                                         </Col>
                                     </FormGroup>
 
@@ -1077,6 +1087,7 @@ class Request extends Component {
                                     </Modal>
 
                                 </Col>
+                                <br />
                                 <br />
                             </Form>
                         </Col>

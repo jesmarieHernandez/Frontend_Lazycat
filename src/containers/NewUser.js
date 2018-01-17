@@ -24,10 +24,6 @@ class NewUser extends Component {
         this.state = {
             userRoles: [
                 {
-                    id: 0,
-                    name: 'select'
-                },
-                {
                     id: 1,
                     name: 'Admin'
                 },
@@ -367,11 +363,11 @@ class NewUser extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -627,7 +623,7 @@ class NewUser extends Component {
                                                      style={errorFormStyle} placeholder="Ex. 7875557656"
                                                      required/>
                                         <HelpBlock style={errorHelpBlockStyle}>Escriba el n&uacute;mero de
-                                            identificaci&oacute;n sin espacios o gui&oacute;n</HelpBlock>
+                                            identificaci&oacute;n de 9 d&iacute;gitos sin espacios o gui&oacute;n</HelpBlock>
                                     </div>)
                                     :
                                     (/^([0-9]{9})$/.test(this.state.studentIdentificationNoValue) === false && this.state.studentIdentificationNoValue.length != 0) ?
@@ -837,22 +833,27 @@ class NewUser extends Component {
                             {
                                 (/^(([0-9]{10}))$/.test(this.state.studentPhoneValue) === false && this.state.studentPhoneValue.length != 0) ?
                                     (<div>
-                                        <FormControl name="studentTelephone" style={errorFormStyle}
-                                                     onChange={this.handleStudentPhoneValue} placeholder="Ex. 4567"
+                                        <FormControl name="studentTelephone"
+                                                     style={errorFormStyle}
+                                                     onChange={this.handleStudentPhoneValue}
+                                                     placeholder="Ex. 7875467890"
                                                      required/>
-                                        <HelpBlock style={errorHelpBlockStyle}>Tel&acute;fono debe ser 10 d&iacute;gitos</HelpBlock>
+                                        <HelpBlock style={errorHelpBlockStyle}>Tel&aacute;fono debe ser de 10 d&iacute;gitos</HelpBlock>
                                     </div>)
                                     :
                                     (/^(([0-9]{10}))$/.test(this.state.studentPhoneValue) === true) ?
                                         (<div>
-                                            <FormControl name="studentTelephone" style={successFormStyle}
-                                                         onChange={this.handleStudentPhoneValue} placeholder="Ex. 4567"
+                                            <FormControl name="studentTelephone"
+                                                         style={successFormStyle}
+                                                         onChange={this.handleStudentPhoneValue}
+                                                         placeholder="Ex. 7875467890"
                                                          required/>
                                         </div>)
                                         :
                                         (<div>
-                                            <FormControl name="studentTelephone" onChange={this.handleStudentPhoneValue}
-                                                         placeholder="Ex. 4567"
+                                            <FormControl name="studentTelephone"
+                                                         onChange={this.handleStudentPhoneValue}
+                                                         placeholder="Ex. 7875467890"
                                                          required/>
                                         </div>)
                             }
@@ -1242,25 +1243,24 @@ class NewUser extends Component {
                     <Col md={9}>
                         <ol className="breadcrumb">
                             <li/>
-                            <li><Link to={`/admin`}>Admin Panel</Link></li>
-                            <li><Link to={`/admin/users`}>Users</Link></li>
-                            <li className="active">Create New User</li>
+                            <li><Link to={`/admin`}>Panel de Administraci&oacute;n</Link></li>
+                            <li><Link to={`/admin/users`}>Usuarios</Link></li>
+                            <li className="active">Crear Nuevo Usuario</li>
                         </ol>
-                        <Panel header="Create New User">
+                        <Panel header="Crear un Nuevo Usuario">
                             <Form horizontal onSubmit={this.onSubmit} name="newUser">
                                 <FormGroup>
                                     <Col sm={4}>
-                                        <Col componentClass={ControlLabel}>Role</Col>
+                                        <Col componentClass={ControlLabel}>Puesto</Col>
                                         <FormControl componentClass="select" placeholder="select" name="userRole"
                                                      onChange={this.onUserRoleSelected}
                                                      required>
-                                            {/*<option>select</option>*/}
+                                            <option hidden>select</option>
                                             {roles}
                                         </FormControl>
 
                                     </Col>
                                 </FormGroup>
-                                {this.state.selectedUserRole.name === 'select' ? null : null}
                                 {this.state.selectedUserRole.name === 'Admin' ? adminFields : null }
                                 {this.state.selectedUserRole.name === 'Student' ? studentFields : null }
                                 {this.state.selectedUserRole.name === 'Staff' ? staffFields : null }
@@ -1270,7 +1270,7 @@ class NewUser extends Component {
                                 <ButtonToolbar>
                                     <Col md={6}>
                                         <Button bsStyle="primary" type="submit">
-                                            Submit </Button>
+                                            Someter </Button>
                                     </Col>
                                 </ButtonToolbar>
                             </Form>

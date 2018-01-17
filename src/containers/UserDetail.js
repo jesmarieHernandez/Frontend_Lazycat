@@ -2423,9 +2423,9 @@ class UserDetail extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                        <li><Link to={`/admin/users`}>Users</Link></li>
-                        <li className="active">User Details</li>
+                        <li><Link to={`/admin/`}>Panel de Administraci&oacute;n</Link></li>
+                        <li><Link to={`/admin/users`}>Usuarios</Link></li>
+                        <li className="active">Detalles del Usuario</li>
                     </ol>
 
                     {/*<Panel header={this.state.user.email}>*/}
@@ -2441,9 +2441,9 @@ class UserDetail extends Component {
                             <Col md="1"><Link to={`/admin/users/`}><Button
                                 className="btn btn-primary">Back</Button></Link></Col>
                             {
-                                this.state.notEditMode? <Col md="1"><Button className="btn-warning" onClick={this.toggleEditMode}>Edit</Button></Col>
+                                this.state.notEditMode? <Col md="1"><Button className="btn-warning" onClick={this.toggleEditMode}>Editar</Button></Col>
                                     :
-                                    <Col md="1"><Button className="btn-success" onClick={this.onSubmit}>Save</Button></Col>
+                                    <Col md="1"><Button className="btn-success" onClick={this.onSubmit}>Guardar</Button></Col>
                             }
 
                         </Row>

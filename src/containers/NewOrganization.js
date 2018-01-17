@@ -40,8 +40,8 @@ class CreateOrganization extends Component {
     }
 
     componentDidMount() {
-        // fetch('http://localhost:8000/api/organization_types/').then(response => {
-        fetch('http://localhost:8000/api/organization_types').then(response => {
+        // fetch('http://192.168.99.100/api/organization_types/').then(response => {
+        fetch('http://192.168.99.100/api/organization_types').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Organization Types");
@@ -63,21 +63,19 @@ class CreateOrganization extends Component {
 
     onOrganizationTypeSelected(event) {
         // event.preventDefault();
-        this.setState({orgTypePicked: '2'});
-        const selectedOrganizationType = this.state.organizationTypes.filter(function (obj) {
+            this.setState({orgTypePicked: '2'});
+            const selectedOrganizationType = this.state.organizationTypes.filter(function (obj) {
 
-            console.log('Current object code' + obj.code);
-            console.log('Event target value' + event.target.value);
-
-            console.log(obj.code == event.target.value);
-            return obj.code == event.target.value;
-        });
-        // console.log("Selected organization type: " + selectedOrganizationType[0]);
-        console.log(this.state.selectedOrganizationType);
-        this.setState({selectedOrganizationType: selectedOrganizationType[0].code});
-        console.log('Shiiiittt');
-        console.log(this.state.selectedOrganizationType);
-
+                console.log('Current object code' + obj.code);
+                console.log('Event target value' + event.target.value);
+                console.log(obj.code == event.target.value);
+                return obj.code == event.target.value;
+            });
+            // console.log("Selected organization type: " + selectedOrganizationType[0]);
+            console.log(this.state.selectedOrganizationType);
+            this.setState({selectedOrganizationType: selectedOrganizationType[0]});
+            console.log('Shiiiittt');
+            console.log(this.state.selectedOrganizationType);
         // console.log("Selected organization type: " + this.state.selectedOrganizationType);
 
     }
@@ -91,33 +89,24 @@ class CreateOrganization extends Component {
             this.setState({orgTypePicked: '1'});
         }
 
-        //this.showSuccessAlert();
+        this.showSuccessAlert();
 
         console.log('Form was submitted');
 
         const form = document.forms.newOrganization;
 
 
-        // const newOrganization = {
-        //     organizationName: form.organizationName.value,
-        //     organizationType_code: form.organizationType.value,
-        //     organizationInitials: form.organizationInitials.value,
-        //     organizationStatus_code: 1,
-        //
-        // };
-
         const newOrganization = {
-            organizationName: this.state.orgNameValue,
-            organizationType_code: this.state.selectedOrganizationType,
-            organizationInitials: this.state.orgInitialsValue,
+            organizationName: form.organizationName.value,
+            organizationType_code: form.organizationType.value,
+            organizationInitials: form.organizationInitials.value,
             organizationStatus_code: 1,
-
         };
         console.log('Esto es lo que necesita que se cree');
         console.log(newOrganization);
 
-        // fetch('http://localhost:8000/api/organizations', {
-        fetch('http://localhost:8000/api/organizations', {
+        // fetch('http://192.168.99.100/api/organizations', {
+        fetch('http://192.168.99.100/api/organizations', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),
@@ -143,30 +132,28 @@ class CreateOrganization extends Component {
     }
 
     open = (event) => {
-
-        console.log(':DD');
-        console.log(this.state);
         event.preventDefault();
+        console.log(isNaN(this.state.orgNameValue));
+        console.log(isNaN(this.state.orgTypeValue));
+        console.log(isNaN(this.state.orgInitialsValue));
+        console.log(isNaN(this.state.counselorNameValue));
+        console.log(isNaN(this.state.counselorEmailValue));
+        console.log(!isNaN(this.state.counselorTelephoneValue));
+        console.log(isNaN(this.state.counselorFacultyValue));
+        console.log(isNaN(this.state.counselorDepartmentValue));
 
-        this.setState({showModal: true});
+        if ((this.state.orgNameValue.length != 0) &&
+            (this.state.orgTypePicked === '2') &&
+            (this.state.orgInitialsValue.length != 0)) {
+            this.setState({showModal: true});
+        }
 
-        // if ((this.state.orgNameValue.length != 0) &&
-        //     (this.state.orgTypePicked === '2') &&
-        //     (this.state.orgInitialsValue.length != 0) &&
-        //     (this.state.counselorNameValue.length != 0) &&
-        //     (this.state.counselorEmailValue.length != 0) && !(this.state.counselorEmailValue.indexOf("@upr.edu") === -1) &&
-        //     (this.state.counselorTelephoneValue.length != 0) &&
-        //     (this.state.counselorFacultyValue.length != 0) &&
-        //     (this.state.counselorDepartmentValue.length != 0)) {
-        //     this.setState({showModal: true});
-        // }
-        //
-        // else {
-        //     if (this.state.orgTypePicked === '') {
-        //         this.setState({orgTypePicked: '1'});
-        //     }
-        //     this.showErrorAlert("Form filled incorrectly.")
-        // }
+        else {
+            if (this.state.orgTypePicked === '') {
+                this.setState({orgTypePicked: '1'});
+            }
+            this.showErrorAlert("Form filled incorrectly.")
+        }
     }
 
     handleOrgNameValue = (e) => {
@@ -245,12 +232,12 @@ class CreateOrganization extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li ><Link to={`/admin`}>Admin Panel</Link></li>
-                        <li ><Link to={`/admin/organizations`}>Organizations</Link></li>
-                        <li className="active">Create New Organization</li>
+                        <li ><Link to={`/admin`}>Panel de Administraci&oacute;n</Link></li>
+                        <li ><Link to={`/admin/organizations`}>Organizaciones</Link></li>
+                        <li className="active">Crear una Nueva Organizaci&oacute;n</li>
                     </ol>
 
-                    <Panel header="Create New Organization">
+                    <Panel header="Crear una Nueva Organizaci&oacute;n">
                         <Form horizontal name="newOrganization" onSubmit={this.open}>
 
                             <FormGroup>
@@ -316,7 +303,7 @@ class CreateOrganization extends Component {
                                                     <FormControl componentClass="select" name="organizationType"
                                                                  onChange={this.onOrganizationTypeSelected}
                                                                  placeholder="select" style={successFormStyle} required>
-                                                        <option>select</option>
+                                                        <option hidden>select</option>
                                                         {organizationTypes}
                                                     </FormControl>
                                                 </div>)
@@ -325,7 +312,7 @@ class CreateOrganization extends Component {
                                                     <FormControl componentClass="select" name="organizationType"
                                                                  onChange={this.onOrganizationTypeSelected}
                                                                  placeholder="select" required>
-                                                        <option>select</option>
+                                                        <option hidden>select</option>
                                                         {organizationTypes}
                                                     </FormControl>
                                                 </div>)
@@ -334,7 +321,7 @@ class CreateOrganization extends Component {
                                                 <FormControl componentClass="select" name="organizationType"
                                                              onChange={this.onOrganizationTypeSelected}
                                                              placeholder="select" style={errorFormStyle} required>
-                                                    <option>select</option>
+                                                    <option hidden>select</option>
                                                     {organizationTypes}
                                                 </FormControl>
                                                 <HelpBlock style={errorHelpBlockStyle}>Escoja el tipo de la
@@ -403,10 +390,10 @@ class CreateOrganization extends Component {
                             <ReactCenter>
                                 <ButtonToolbar>
                                     <Col md={6}><Link to={`/admin/organizations/`}><Button
-                                        className="btn btn-primary">Back</Button></Link></Col>
+                                        className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
                                     <Col md={6}>
                                         <Button bsStyle="btn btn-success" type="submit">
-                                            Submit </Button>
+                                            Someter</Button>
                                     </Col>
                                 </ButtonToolbar>
                             </ReactCenter>

@@ -13,6 +13,7 @@ import ReactCenter from "react-center";
 import Icon from 'react-icons-kit';
 import { statsDots } from 'react-icons-kit/icomoon/statsDots';
 import { iosPaw } from 'react-icons-kit/ionicons/iosPaw';
+import { home } from 'react-icons-kit/icomoon/home';
 import { fileText2 } from 'react-icons-kit/icomoon/fileText2';
 import { userTie } from 'react-icons-kit/icomoon/userTie';
 
@@ -35,7 +36,7 @@ class Admin extends Component {
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Estadísticas</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
@@ -50,7 +51,7 @@ class Admin extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li className="active">Admin Panel</li>
+                        <li className="active">Panel de Administraci&oacute;n</li>
                     </ol>
 
 {/*                    <Col md={9}>

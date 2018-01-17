@@ -236,7 +236,6 @@ class Request extends Component {
             // facilityManagerDecision: 'approved',
             // counselorDecision: 'approved',
             // dscaDecision: 'pending'
-
             student_id: null,
             organization_id: this.state.selectedOrganization.id,
             facility_id: this.state.selectedFacilities.id,
@@ -281,19 +280,19 @@ class Request extends Component {
     }
 
     onOrganizationSelected(event) {
-        this.setState({organizationPicked: '2'});
-        event.preventDefault();
-        console.log('Change happened');
-        console.log(event.target.value);
-        const selectedOrganization = this.state.organizations.filter(function (organization) {
-            console.log(organization.id);
+            this.setState({organizationPicked: '2'});
+            event.preventDefault();
+            console.log('Change happened');
             console.log(event.target.value);
-            console.log(organization.id == event.target.value);
-            return organization.id == event.target.value;
-        });
-        console.log(selectedOrganization);
-        this.setState({selectedOrganization: selectedOrganization[0]});
-        this.setState({counselorInformation: selectedOrganization[0].counselors[0]});
+            const selectedOrganization = this.state.organizations.filter(function (organization) {
+                console.log(organization.id);
+                console.log(event.target.value);
+                console.log(organization.id == event.target.value);
+                return organization.id == event.target.value;
+            });
+            console.log(selectedOrganization);
+            this.setState({selectedOrganization: selectedOrganization[0]});
+            this.setState({counselorInformation: selectedOrganization[0].counselors[0]});
     }
 
     onFacilitiesSelected(event) {
@@ -769,7 +768,7 @@ class Request extends Component {
                                                                      style={errorFormStyle}
 
                                                                      placeholder="select">
-                                                            <option>select</option>
+                                                            <option hidden>select</option>
                                                             {facilitiesOptions}
                                                         </FormControl>
                                                         <HelpBlock style={errorHelpBlockStyle}>Pick a
@@ -783,7 +782,7 @@ class Request extends Component {
                                                                          style={successFormStyle}
 
                                                                          placeholder="select">
-                                                                <option>select</option>
+                                                                <option hidden>select</option>
                                                                 {facilitiesOptions}
                                                             </FormControl>
                                                         </div>)
@@ -793,7 +792,7 @@ class Request extends Component {
                                                                          onChange={this.onFacilitiesSelected}
 
                                                                          placeholder="select">
-                                                                <option>select</option>
+                                                                <option hidden>select</option>
                                                                 {facilitiesOptions}
                                                             </FormControl>
                                                         </div>)
@@ -938,7 +937,7 @@ class Request extends Component {
                                             <FormControl componentClass="select" name="selectType"
                                                          onChange={this.onTypeSelected}
                                                          required>
-                                                <option>select</option>
+                                                <option hidden>select</option>
                                                 {typeOptions}
                                             </FormControl>
                                         </Col>
@@ -966,7 +965,7 @@ class Request extends Component {
                                                                      onChange={this.onOrganizationSelected}
                                                                      style={errorFormStyle}
                                                                      placeholder="select" required>
-                                                            <option>select</option>
+                                                            <option hidden>select</option>
                                                             {organizationOptions}
                                                         </FormControl>
                                                         <HelpBlock style={errorHelpBlockStyle}>Pick an
@@ -980,7 +979,7 @@ class Request extends Component {
                                                                          onChange={this.onOrganizationSelected}
                                                                          style={successFormStyle}
                                                                          placeholder="select" required>
-                                                                <option>select</option>
+                                                                <option hidden>select</option>
                                                                 {organizationOptions}
                                                             </FormControl>
                                                         </div>)
@@ -990,7 +989,7 @@ class Request extends Component {
                                                                          name="selectOrganization"
                                                                          onChange={this.onOrganizationSelected}
                                                                          placeholder="select" required>
-                                                                <option>select</option>
+                                                                <option hidden>select</option>
                                                                 {organizationOptions}
                                                             </FormControl>
                                                         </div>)

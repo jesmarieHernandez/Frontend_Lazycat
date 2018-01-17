@@ -30,7 +30,9 @@ class FacilitiesDetail extends Component {
             notEditMode: true,
             activeKey: '1',
             facilitiesActivities: [],
-            facilitiesManagers: []
+            facilitiesManagers: [],
+            managerEmailValue: '',
+            managers: []
         }
     }
 
@@ -40,8 +42,8 @@ class FacilitiesDetail extends Component {
         console.log("The ID: ");
         console.log(id);
 
-        // fetch(`http://192.168.99.100/api/facilities/${id}`).then(response => {
-        fetch(`http://192.168.99.100/api/facilities/${id}`).then(response => {
+        // fetch(`http://localhost:8000/api/facilities/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/facilities/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({facilitiesId: data.id});
@@ -50,9 +52,10 @@ class FacilitiesDetail extends Component {
                 this.setState({facilityDepartmentValue: data.facilityDepartment});
 
                 // TODO Fetch facilities activities
-                // fetch(`http://192.168.99.100/api/activityByFacility/${id}`).then(response => {
-                fetch(`http://192.168.99.100/api/activityByFacility/${id}`).then(response => {
+                // fetch(`http://localhost:8000/api/activityByFacility/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/activityByFacility/${id}`).then(response => {
                     response.json().then(data => {
+
 
                         this.setState({facilitiesActivities: data});
                         // this.setState({facilitiesActivities: facilitiesActivities});
@@ -66,11 +69,12 @@ class FacilitiesDetail extends Component {
                 });
 
 
-                // fetch(`http://192.168.99.100/api/facilities/managers/${id}`).then(response => {
-                fetch(`http://192.168.99.100/api/facilities/managers/${id}`).then(response => {
+                // fetch(`http://localhost:8000/api/facilities/managers/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/facilities/managers/${id}`).then(response => {
                     response.json().then(data => {
 
                         this.setState({facilitiesManagers: data});
+                        // this.setState({facilitiesManagers: facilitiesManagers});
 
                     }).catch(err => {
                         console.log(err)
@@ -86,12 +90,120 @@ class FacilitiesDetail extends Component {
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
             });
         })
+
+        fetch(`http://localhost:8000/api/users`).then(response => {
+            response.json().then(data => {
+
+                this.setState({managers: data.managers});
+
+                console.log('this.state.managers: ');
+                console.log(this.state.managers);
+
+            }).catch(err => {
+                console.log(err)
+                //this.props.showError(`Error in sending data to server: ${err.message}`);
+            });
+        });
+    }
+
+    addManager = () => {
+
+        const managerEmail = this.state.managerEmailValue;
+        const selectedManager = this.state.managers.filter(function (manager) {
+
+            console.log('Current manager email: ' + manager.userEmail);
+            console.log('this.state.managerEmailValue: ' + managerEmail);
+
+            console.log(manager.userEmail == managerEmail);
+            return manager.userEmail == managerEmail;
+        });
+
+        console.log('selectedManager array');
+        console.log(selectedManager);
+
+        const managerId = selectedManager[0].managers[0].id;
+
+        const facilitiesId = this.state.facilitiesId;
+
+
+        console.log('manager_id: ' + managerId);
+        console.log('organization_id: ' + this.state.facilitiesId);
+
+        fetch(`http://localhost:8000/api/facilities/${facilitiesId}/addManager/${managerId}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+        }).then(response => {
+            if (response.ok) {
+                console.log('')
+                console.log(response);
+                response.json().then(newMembership => {
+
+                    console.log('New membership was created');
+                    fetch(`http://localhost:8000/api/facilities/managers/${facilitiesId}`).then(response => {
+                        response.json().then(data => {
+                            this.setState({facilitiesManagers: data});
+
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    });
+                    // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+    }
+
+    removeManager = (managerId) => {
+
+        console.log('El managerId');
+        console.log(managerId);
+
+        fetch(`http://localhost:8000/api/facilities/managers/${this.state.facilitiesId}/${managerId}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+        }).then(response => {
+            if (response.ok) {
+                response.json().then(removedManager => {
+
+                    fetch(`http://localhost:8000/api/facilities/managers/${this.state.facilitiesId}`).then(response => {
+                        response.json().then(data => {
+                            this.setState({facilitiesManagers: data});
+
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    });
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
     }
 
     handleSelect = (event) => {
         // event.preventDefault();
         console.log(event);
         this.setState({activeKey: event});
+    }
+
+    onManagerChange = (event) => {
+        console.log(event.target);
+        event.preventDefault();
+        this.setState({managerEmailValue: event.target.value});
     }
 
     onSubmit = (event) => {
@@ -104,8 +216,8 @@ class FacilitiesDetail extends Component {
 
         };
 
-        // fetch('http://192.168.99.100/api/organizations', {
-        fetch(`http://192.168.99.100/api/facilities/${this.state.facilitiesId}`, {
+        // fetch('http://localhost:8000/api/organizations', {
+        fetch(`http://localhost:8000/api/facilities/${this.state.facilitiesId}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),
@@ -114,7 +226,7 @@ class FacilitiesDetail extends Component {
                 console.log(response);
                 response.json().then(editedFacilities => {
 
-                    this.props.history.push(`/admin/facilities/`);
+                    //this.props.history.push(`/admin/facilities/`);
                     // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
                 })
             } else {
@@ -147,7 +259,23 @@ class FacilitiesDetail extends Component {
         console.log(this.state.notEditMode);
     }
 
+
     render() {
+
+        var errorFormStyle = {
+            borderColor: '#B74442',
+            boxShadow: "0px 0px 8px #B74442"
+        };
+
+        var errorHelpBlockStyle = {
+            color: '#B74442'
+        };
+
+        var successFormStyle = {
+            borderColor: '#3C765B',
+            boxShadow: "0px 0px 8px #3C765B"
+        };
+
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>
@@ -193,14 +321,14 @@ class FacilitiesDetail extends Component {
 
                             <Row>
                                 <Row>
-                                    <Col md={12}><Button className="btn-info btn-large pull-right"
+                                    <Col md={12}><Link to={`/admin/users/${manager.managerEmail}`}><Button className="btn-info btn-large pull-right"
                                                          style={{width: '100px', marginBottom: '10px'}}
-                                                         onClick={this.toggleEditMode}>Detalles</Button> </Col>
+                                    >Detalles</Button></Link> </Col>
                                 </Row>
                                 <Row>
                                     <Col md={12}><Button className="btn-danger btn-large pull-right"
                                                          style={{width: '100px'}}
-                                                         onClick={() => this.removeCounselor(manager.id)}>Remover</Button>
+                                                         onClick={() => this.removeManager(manager.id)}>Remover</Button>
                                     </Col>
                                 </Row>
                             </Row>
@@ -212,27 +340,6 @@ class FacilitiesDetail extends Component {
             );
         }
 
-        // let facilitiesActivities;
-        //
-        // if (this.state.facilitiesActivities.length === 0) {
-        //     facilitiesActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades para esta organización.</p>
-        // } else {
-        //
-        //
-        //     facilitiesActivities = this.state.facilitiesActivities.map(activity =>
-        //
-        //         <Col md={12}>
-        //             <Panel header={activity.activityName}>
-        //                 <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-        //                 <br/>
-        //                 <p><b>Description:</b> {activity.activityDescription}</p>
-        //                 <p><b>Organization:</b> {activity.organization.organizationName}</p>
-        //                 <p><b>Facility:</b> {activity.facility.space}</p>
-        //                 <p><b>Status:</b> {activity.status.description}</p>
-        //             </Panel>
-        //         </Col>
-        //     );
-        // }
 
         let facilitiesActivities;
 
@@ -401,7 +508,50 @@ class FacilitiesDetail extends Component {
 
                 <Col md={10}>
                     {this.state.activeKey === '1' ? facilitiesActivities : null}
-                    {this.state.activeKey === '2' ? facilitiesManagers : null}
+                    {this.state.activeKey === '2' ?
+
+                        <div>
+                        <Col md={12}>
+                            <Panel>
+                                <Col md={6}>
+                                    <Col componentClass={ControlLabel}>Email del encargado</Col>
+                                {
+                                    (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.managerEmailValue) === false && this.state.managerEmailValue.length != 0) ?
+                                        (<div>
+                                            <FormControl name="studentEmail" style={errorFormStyle}
+                                                         onChange={this.onManagerChange}
+                                                         placeholder="Ex. carlos.donato@upr.edu" required/>
+                                            <HelpBlock style={errorHelpBlockStyle}>Correo debe ser del dominio
+                                                @upr.edu</HelpBlock>
+                                        </div>)
+                                        :
+                                        (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.managerEmailValue) === true) ?
+                                            (<div>
+                                                <FormControl name="studentEmail" style={successFormStyle}
+                                                             onChange={this.onManagerChange}
+                                                             placeholder="Ex. carlos.donato@upr.edu" required/>
+                                            </div>)
+                                            :
+                                            (<div>
+                                                <FormControl name="studentEmail" onChange={this.onManagerChange}
+                                                             placeholder="Ex. carlos.donato@upr.edu"
+                                                             required/>
+                                            </div>)
+                                }
+                                </Col>
+                                <Col md={3}></Col>
+
+                                <Col md={3}>
+                                    <Button className="btn-success btn-large pull-right"
+                                            style={{width: '100px', marginBottom: '10px'}}
+                                            onClick={this.addManager}>Añadir</Button>
+                                </Col>
+                            </Panel>
+
+                        </Col>
+                        { facilitiesManagers }
+                        </div>
+                        : null}
                 </Col>
             </div>
         )

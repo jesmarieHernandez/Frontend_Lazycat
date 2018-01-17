@@ -35,8 +35,8 @@ class Activities extends Component {
 
     componentDidMount() {
 
-        // fetch('http://192.168.99.100/api/activities').then(response => {
-        fetch('http://192.168.99.100/api/activities').then(response => {
+        // fetch('http://localhost:8000/api/activities').then(response => {
+        fetch('http://localhost:8000/api/activities').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});

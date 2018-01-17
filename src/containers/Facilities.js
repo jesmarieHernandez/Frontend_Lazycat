@@ -71,9 +71,9 @@ class Facilities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
@@ -88,8 +88,8 @@ class Facilities extends Component {
                 <Col md={7}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li><Link to={`/admin/`}>Admin Panel</Link></li>
-                        <li className="active">Facilities</li>
+                        <li><Link to={`/admin/`}>Panel de Administraci&oacute;n</Link></li>
+                        <li className="active">Facilidades</li>
                     </ol>
 
                     <Col md={12}>
@@ -108,7 +108,7 @@ class Facilities extends Component {
 
                 <Col md={3}>
                     <Panel>
-                        <ReactCenter><Link to="/admin/facilities/create"><Button bsSize="medium">New Facility</Button></Link></ReactCenter>
+                        <ReactCenter><Link to="/admin/facilities/create"><Button bsSize="medium">Nueva Facilidad</Button></Link></ReactCenter>
                     </Panel>
                 </Col>
 

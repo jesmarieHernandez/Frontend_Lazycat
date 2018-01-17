@@ -34,9 +34,9 @@ class Admin extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
             </div>
@@ -51,7 +51,7 @@ class Admin extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li className="active">Admin Panel</li>
+                        <li className="active">Panel de Administraci&oacute;n</li>
                     </ol>
 
 {/*                    <Col md={9}>
@@ -68,7 +68,7 @@ class Admin extends Component {
                         <Link to={`/admin/organizations`}>
                         <Panel style={styling}>
                             <ReactCenter><div style={{color: '#a8a8a8'}}><Icon size={75} icon={group}/></div></ReactCenter>
-                            <ReactCenter><div>Organizations</div></ReactCenter>
+                            <ReactCenter><div>Organizaciones</div></ReactCenter>
                         </Panel>
                         </Link>
                     </Col>
@@ -77,7 +77,7 @@ class Admin extends Component {
                         <Link to={`/admin/facilities`}>
                         <Panel style={styling}>
                            <ReactCenter><div style={{color: '#a8a8a8'}}><Icon size={75} icon={home3}/></div></ReactCenter>
-                            <ReactCenter><div>Facilities</div></ReactCenter>
+                            <ReactCenter><div>Facilidades</div></ReactCenter>
                         </Panel>
                         </Link>
                     </Col>
@@ -86,7 +86,7 @@ class Admin extends Component {
                         <Link to={`/admin/users`}>
                         <Panel style={styling}>
                             <ReactCenter><div style={{color: '#a8a8a8'}}><Icon size={75} icon={user}/></div></ReactCenter>
-                            <ReactCenter><div>Users</div></ReactCenter>
+                            <ReactCenter><div>Usuarios</div></ReactCenter>
                         </Panel>
                         </Link>
                     </Col>

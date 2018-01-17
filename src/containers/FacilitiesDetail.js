@@ -100,7 +100,7 @@ class FacilitiesDetail extends Component {
         const newFacilities = {
             building: this.state.buildingValue,
             space: this.state.spaceValue,
-            facilityDepartmentValue: this.state.facilityDepartmentValue,
+            facilityDepartment: this.state.facilityDepartmentValue,
 
         };
 
@@ -136,6 +136,11 @@ class FacilitiesDetail extends Component {
     handleSpaceValue = (e) => {
         this.setState({spaceValue: e.target.value})
     }
+
+    handleDepartmentValue = (e) => {
+        this.setState({facilityDepartmentValue: e.target.value})
+    }
+
 
     toggleEditMode = () => {
         this.setState({notEditMode: !this.state.notEditMode});
@@ -294,7 +299,7 @@ class FacilitiesDetail extends Component {
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Edificio</Col>
                                     {
-                                        (this.state.buildingValue.length > 20) ?
+                                        (this.state.buildingValue.length > 50) ?
                                             (<div>
                                                 <FormControl name="building"
                                                              placeholder="Ex. Luis A. Stefani"
@@ -306,7 +311,7 @@ class FacilitiesDetail extends Component {
                                                              disabled={this.state.notEditMode}
                                                              value={this.state.buildingValue}
                                                              required/>
-                                                <HelpBlock style={{color: '#B74442'}}>Nombre del edifico muy
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre del edificio muy
                                                     largo</HelpBlock>
                                             </div>)
                                             :
@@ -357,6 +362,7 @@ class FacilitiesDetail extends Component {
                                     <FormControl name="facilitiesDepartmentCode"
                                                  disabled={this.state.notEditMode}
                                                  value={this.state.facilityDepartmentValue}
+                                                 onChange={this.handleDepartmentValue}
                                                  required/>
                                 </Col>
 

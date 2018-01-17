@@ -31,12 +31,6 @@ class CreateOrganization extends Component {
             orgTypeValue: false,
             orgTypePicked: '',
             orgInitialsValue: '',
-            counselorNameValue: '',
-            counselorEmailValue: '',
-            counselorTelephoneValue: '',
-            counselorFacultyValue: '',
-            counselorDepartmentValue: '',
-            counselorOfficeValue: '',
             organizationTypes: [],
             selectedOrganizationType: {}
         }
@@ -69,21 +63,19 @@ class CreateOrganization extends Component {
 
     onOrganizationTypeSelected(event) {
         // event.preventDefault();
-        this.setState({orgTypePicked: '2'});
-        const selectedOrganizationType = this.state.organizationTypes.filter(function (obj) {
+            this.setState({orgTypePicked: '2'});
+            const selectedOrganizationType = this.state.organizationTypes.filter(function (obj) {
 
-            console.log('Current object code' + obj.code);
-            console.log('Event target value' + event.target.value);
-
-            console.log(obj.code == event.target.value);
-            return obj.code == event.target.value;
-        });
-        // console.log("Selected organization type: " + selectedOrganizationType[0]);
-        console.log(this.state.selectedOrganizationType);
-        this.setState({selectedOrganizationType: selectedOrganizationType[0]});
-        console.log('Shiiiittt');
-        console.log(this.state.selectedOrganizationType);
-
+                console.log('Current object code' + obj.code);
+                console.log('Event target value' + event.target.value);
+                console.log(obj.code == event.target.value);
+                return obj.code == event.target.value;
+            });
+            // console.log("Selected organization type: " + selectedOrganizationType[0]);
+            console.log(this.state.selectedOrganizationType);
+            this.setState({selectedOrganizationType: selectedOrganizationType[0]});
+            console.log('Shiiiittt');
+            console.log(this.state.selectedOrganizationType);
         // console.log("Selected organization type: " + this.state.selectedOrganizationType);
 
     }
@@ -109,13 +101,6 @@ class CreateOrganization extends Component {
             organizationType_code: form.organizationType.value,
             organizationInitials: form.organizationInitials.value,
             organizationStatus_code: 1,
-            counselorName: form.organizationCounselorName.value,
-            counselorEmail: form.organizationCounselorEmail.value,
-            counselorPhone: form.organizationCounselorTelephone.value,
-            counselorFaculty: form.organizationCounselorFaculty.value,
-            counselorDepartment: form.organizationCounselorDepartment.value,
-            counselorOffice: form.organizationCounselorOfficeNumber.value
-
         };
         console.log('Esto es lo que necesita que se cree');
         console.log(newOrganization);
@@ -159,12 +144,7 @@ class CreateOrganization extends Component {
 
         if ((this.state.orgNameValue.length != 0) &&
             (this.state.orgTypePicked === '2') &&
-            (this.state.orgInitialsValue.length != 0) &&
-            (this.state.counselorNameValue.length != 0) &&
-            (this.state.counselorEmailValue.length != 0) && !(this.state.counselorEmailValue.indexOf("@upr.edu") === -1) &&
-            (this.state.counselorTelephoneValue.length != 0) &&
-            (this.state.counselorFacultyValue.length != 0) &&
-            (this.state.counselorDepartmentValue.length != 0)) {
+            (this.state.orgInitialsValue.length != 0)) {
             this.setState({showModal: true});
         }
 
@@ -252,12 +232,12 @@ class CreateOrganization extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li ><Link to={`/admin`}>Admin Panel</Link></li>
-                        <li ><Link to={`/admin/organizations`}>Organizations</Link></li>
-                        <li className="active">Create New Organization</li>
+                        <li ><Link to={`/admin`}>Panel de Administraci&oacute;n</Link></li>
+                        <li ><Link to={`/admin/organizations`}>Organizaciones</Link></li>
+                        <li className="active">Crear una Nueva Organizaci&oacute;n</li>
                     </ol>
 
-                    <Panel header="Create New Organization">
+                    <Panel header="Crear una Nueva Organizaci&oacute;n">
                         <Form horizontal name="newOrganization" onSubmit={this.open}>
 
                             <FormGroup>
@@ -323,7 +303,7 @@ class CreateOrganization extends Component {
                                                     <FormControl componentClass="select" name="organizationType"
                                                                  onChange={this.onOrganizationTypeSelected}
                                                                  placeholder="select" style={successFormStyle} required>
-                                                        <option>select</option>
+                                                        <option hidden>select</option>
                                                         {organizationTypes}
                                                     </FormControl>
                                                 </div>)
@@ -332,7 +312,7 @@ class CreateOrganization extends Component {
                                                     <FormControl componentClass="select" name="organizationType"
                                                                  onChange={this.onOrganizationTypeSelected}
                                                                  placeholder="select" required>
-                                                        <option>select</option>
+                                                        <option hidden>select</option>
                                                         {organizationTypes}
                                                     </FormControl>
                                                 </div>)
@@ -341,7 +321,7 @@ class CreateOrganization extends Component {
                                                 <FormControl componentClass="select" name="organizationType"
                                                              onChange={this.onOrganizationTypeSelected}
                                                              placeholder="select" style={errorFormStyle} required>
-                                                    <option>select</option>
+                                                    <option hidden>select</option>
                                                     {organizationTypes}
                                                 </FormControl>
                                                 <HelpBlock style={errorHelpBlockStyle}>Escoja el tipo de la
@@ -410,10 +390,10 @@ class CreateOrganization extends Component {
                             <ReactCenter>
                                 <ButtonToolbar>
                                     <Col md={6}><Link to={`/admin/organizations/`}><Button
-                                        className="btn btn-primary">Back</Button></Link></Col>
+                                        className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
                                     <Col md={6}>
                                         <Button bsStyle="btn btn-success" type="submit">
-                                            Submit </Button>
+                                            Someter</Button>
                                     </Col>
                                 </ButtonToolbar>
                             </ReactCenter>

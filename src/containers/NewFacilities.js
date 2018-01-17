@@ -28,7 +28,8 @@ class CreateFacilities extends Component {
         this.state = {
             showModal: false,
             buildingValue: '',
-            spaceValue: ''
+            spaceValue: '',
+            departmentValue: ''
         }
 
         // this.state = {
@@ -61,7 +62,7 @@ class CreateFacilities extends Component {
         const newFacilities = {
             building: form.building.value,
             space: form.space.value,
-            facilityDepartment: form.facilitiesDepartment.value,
+            facilityDepartment: form.facilityDepartment.value,
             isActive: 1
         };
         console.log('Los nuevos facilities');
@@ -123,6 +124,10 @@ class CreateFacilities extends Component {
         this.setState({spaceValue: e.target.value})
     }
 
+    handleDepartmentValue = (e) => {
+        this.setState({departmentValue: e.target.value})
+    }
+
     close = () => {
         this.setState({showModal: false});
     }
@@ -140,11 +145,11 @@ class CreateFacilities extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Estadi</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -160,9 +165,9 @@ class CreateFacilities extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li ><Link to={`/admin`}>Admin Panel</Link></li>
-                        <li ><Link to={`/admin/facilities`}>Facilities</Link></li>
-                        <li className="active">Create New Facilities</li>
+                        <li ><Link to={`/admin`}>Panel de Administraci&oacute;n</Link></li>
+                        <li ><Link to={`/admin/facilities`}>Facilidades</Link></li>
+                        <li className="active">Crear una Nueva Facilidad</li>
                     </ol>
 
                     <Panel header="Crear una Nueva Facilidad">
@@ -171,11 +176,11 @@ class CreateFacilities extends Component {
                                 <Col sm={4}>
                                     <Col componentClass={ControlLabel}>Edificio</Col>
                                     {
-                                        (this.state.buildingValue.length > 20) ?
+                                        (this.state.buildingValue.length > 50) ?
                                             (<div>
                                                 <FormControl name="building" placeholder="Ex. Luis A. Stefani"
                                                              onChange={this.handleBuildingValue} style={{borderColor: '#B74442', boxShadow: "0px 0px 8px #B74442"}} required/>
-                                                <HelpBlock style={{color: '#B74442'}}>Nombre del edifico muy largo</HelpBlock>
+                                                <HelpBlock style={{color: '#B74442'}}>Nombre del edificio muy largo</HelpBlock>
                                             </div>)
                                             :
                                             (<div>
@@ -204,8 +209,11 @@ class CreateFacilities extends Component {
                                 </Col>
 
                                 <Col sm={4}>
-                                    <Col componentClass={ControlLabel}>Department</Col>
-                                    <FormControl name="facilitiesDepartment" placeholder="Ex. Ingenier&iacute;a Civil" required/>
+                                    <Col componentClass={ControlLabel}>Departmento</Col>
+                                    <FormControl name="facilityDepartment"
+                                                 placeholder="Ex. Ingenier&iacute;a Civil"
+                                                 onChange={this.handleDepartmentValue}
+                                                 required/>
                                 </Col>
                             </FormGroup>
 
@@ -218,7 +226,7 @@ class CreateFacilities extends Component {
                                          Submit </Button>*/}
 
                                         <Button bsStyle="primary" type="submit">
-                                            Submit </Button>
+                                            Someter </Button>
                                     </Col>
                                 </ButtonToolbar>
                             </ReactCenter>

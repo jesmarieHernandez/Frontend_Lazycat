@@ -183,9 +183,9 @@ class ActivityDetail extends Component {
                 console.log(response);
                 response.json().then(updatedRequest => {
                     console.log('Activity request was updated successfully!');
-                    console.log('Activity request ID: ' + updatedRequest._id);
+                    console.log('Activity request ID: ' + updatedRequest.id);
 
-                    this.props.router.push(`/activities/${updatedRequest._id}`);
+                    this.props.router.push(`/activities/${updatedRequest.id}`);
                 })
             } else {
                 response.json().then(error => {
@@ -577,7 +577,7 @@ class ActivityDetail extends Component {
 
                             <Panel header="Decisi&oacute;n de la Actividad">
                                 <FormGroup>
-                                    {(this.state.activity.status.code === 2 || this.state.activity.status.code === 3) ?
+                                    {(this.state.activity.status.code === 2 || this.state.activity.status.code === 3) || this.state.activity.type != null ?
                                         (<div>
                                             <Col sm={3}>
                                                 <Col componentClass={ControlLabel}>Categor&iacute;a: </Col>

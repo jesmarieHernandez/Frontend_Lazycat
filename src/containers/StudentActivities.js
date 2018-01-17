@@ -21,7 +21,7 @@ class StudentActivities extends Component {
 
     componentDidMount() {
 
-        fetch(`http://192.168.99.100/api/activity/${this.props.authentication.email}`).then(response => {
+        fetch(`http://localhost:8000/api/activity/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
                 console.log('Colon');
                 response.json().then(results => {

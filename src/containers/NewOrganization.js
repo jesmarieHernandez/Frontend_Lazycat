@@ -31,12 +31,6 @@ class CreateOrganization extends Component {
             orgTypeValue: false,
             orgTypePicked: '',
             orgInitialsValue: '',
-            counselorNameValue: '',
-            counselorEmailValue: '',
-            counselorTelephoneValue: '',
-            counselorFacultyValue: '',
-            counselorDepartmentValue: '',
-            counselorOfficeValue: '',
             organizationTypes: [],
             selectedOrganizationType: {}
         }
@@ -46,8 +40,8 @@ class CreateOrganization extends Component {
     }
 
     componentDidMount() {
-        // fetch('http://192.168.99.100/api/organization_types/').then(response => {
-        fetch('http://192.168.99.100/api/organization_types').then(response => {
+        // fetch('http://localhost:8000/api/organization_types/').then(response => {
+        fetch('http://localhost:8000/api/organization_types').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Organization Types");
@@ -80,7 +74,7 @@ class CreateOrganization extends Component {
         });
         // console.log("Selected organization type: " + selectedOrganizationType[0]);
         console.log(this.state.selectedOrganizationType);
-        this.setState({selectedOrganizationType: selectedOrganizationType[0]});
+        this.setState({selectedOrganizationType: selectedOrganizationType[0].code});
         console.log('Shiiiittt');
         console.log(this.state.selectedOrganizationType);
 
@@ -97,31 +91,33 @@ class CreateOrganization extends Component {
             this.setState({orgTypePicked: '1'});
         }
 
-        this.showSuccessAlert();
+        //this.showSuccessAlert();
 
         console.log('Form was submitted');
 
         const form = document.forms.newOrganization;
 
 
+        // const newOrganization = {
+        //     organizationName: form.organizationName.value,
+        //     organizationType_code: form.organizationType.value,
+        //     organizationInitials: form.organizationInitials.value,
+        //     organizationStatus_code: 1,
+        //
+        // };
+
         const newOrganization = {
-            organizationName: form.organizationName.value,
-            organizationType_code: form.organizationType.value,
-            organizationInitials: form.organizationInitials.value,
+            organizationName: this.state.orgNameValue,
+            organizationType_code: this.state.selectedOrganizationType,
+            organizationInitials: this.state.orgInitialsValue,
             organizationStatus_code: 1,
-            counselorName: form.organizationCounselorName.value,
-            counselorEmail: form.organizationCounselorEmail.value,
-            counselorPhone: form.organizationCounselorTelephone.value,
-            counselorFaculty: form.organizationCounselorFaculty.value,
-            counselorDepartment: form.organizationCounselorDepartment.value,
-            counselorOffice: form.organizationCounselorOfficeNumber.value
 
         };
         console.log('Esto es lo que necesita que se cree');
         console.log(newOrganization);
 
-        // fetch('http://192.168.99.100/api/organizations', {
-        fetch('http://192.168.99.100/api/organizations', {
+        // fetch('http://localhost:8000/api/organizations', {
+        fetch('http://localhost:8000/api/organizations', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),
@@ -147,33 +143,30 @@ class CreateOrganization extends Component {
     }
 
     open = (event) => {
+
+        console.log(':DD');
+        console.log(this.state);
         event.preventDefault();
-        console.log(isNaN(this.state.orgNameValue));
-        console.log(isNaN(this.state.orgTypeValue));
-        console.log(isNaN(this.state.orgInitialsValue));
-        console.log(isNaN(this.state.counselorNameValue));
-        console.log(isNaN(this.state.counselorEmailValue));
-        console.log(!isNaN(this.state.counselorTelephoneValue));
-        console.log(isNaN(this.state.counselorFacultyValue));
-        console.log(isNaN(this.state.counselorDepartmentValue));
 
-        if ((this.state.orgNameValue.length != 0) &&
-            (this.state.orgTypePicked === '2') &&
-            (this.state.orgInitialsValue.length != 0) &&
-            (this.state.counselorNameValue.length != 0) &&
-            (this.state.counselorEmailValue.length != 0) && !(this.state.counselorEmailValue.indexOf("@upr.edu") === -1) &&
-            (this.state.counselorTelephoneValue.length != 0) &&
-            (this.state.counselorFacultyValue.length != 0) &&
-            (this.state.counselorDepartmentValue.length != 0)) {
-            this.setState({showModal: true});
-        }
+        this.setState({showModal: true});
 
-        else {
-            if (this.state.orgTypePicked === '') {
-                this.setState({orgTypePicked: '1'});
-            }
-            this.showErrorAlert("Form filled incorrectly.")
-        }
+        // if ((this.state.orgNameValue.length != 0) &&
+        //     (this.state.orgTypePicked === '2') &&
+        //     (this.state.orgInitialsValue.length != 0) &&
+        //     (this.state.counselorNameValue.length != 0) &&
+        //     (this.state.counselorEmailValue.length != 0) && !(this.state.counselorEmailValue.indexOf("@upr.edu") === -1) &&
+        //     (this.state.counselorTelephoneValue.length != 0) &&
+        //     (this.state.counselorFacultyValue.length != 0) &&
+        //     (this.state.counselorDepartmentValue.length != 0)) {
+        //     this.setState({showModal: true});
+        // }
+        //
+        // else {
+        //     if (this.state.orgTypePicked === '') {
+        //         this.setState({orgTypePicked: '1'});
+        //     }
+        //     this.showErrorAlert("Form filled incorrectly.")
+        // }
     }
 
     handleOrgNameValue = (e) => {

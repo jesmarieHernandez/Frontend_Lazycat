@@ -65,15 +65,15 @@ class OrganizationDetail extends Component {
     componentDidMount() {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
-        // fetch(`http://192.168.99.100/api/organizations/${id}`).then(response => {
+        // fetch(`http://localhost:8000/api/organizations/${id}`).then(response => {
         this.setState({orgNameValue: 'Sociedad del Perreo'});
         this.setState({orgInitialsValue: 'SP'});
 
-        // fetch(`http://192.168.99.100/api/organizations/${id}`).then(response => {
-        fetch(`http://192.168.99.100/api/organizations/${id}`).then(response => {
+        // fetch(`http://localhost:8000/api/organizations/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/organizations/${id}`).then(response => {
             response.json().then(data => {
 
-                console.log(`http://192.168.99.100/api/organizations/${id}`);
+                console.log(`http://localhost:8000/api/organizations/${id}`);
                 console.log(data);
                 this.setState({orgNameValue: data[0].organizationName});
                 this.setState({orgInitialsValue: data[0].organizationInitials});
@@ -81,11 +81,11 @@ class OrganizationDetail extends Component {
                 this.setState({orgId: data[0].id});
 
                 // TODO Fetch organization activities
-                // fetch(`http://192.168.99.100/api/activityByOrg/${id}`).then(response => {
-                fetch(`http://192.168.99.100/api/activityByOrg/${id}`).then(response => {
+                // fetch(`http://localhost:8000/api/activityByOrg/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/activityByOrg/${id}`).then(response => {
                     response.json().then(data => {
 
-                        console.log(`http://192.168.99.100/api/organizations/${id}`);
+                        console.log(`http://localhost:8000/api/organizations/${id}`);
                         console.log(data);
                         this.setState({organizationActivities: data});
 
@@ -95,8 +95,8 @@ class OrganizationDetail extends Component {
                     });
                 });
 
-                // fetch(`http://192.168.99.100/api/organizations/counselors/${id}`).then(response => {
-                fetch(`http://192.168.99.100/api/organizations/counselors/${id}`).then(response => {
+                // fetch(`http://localhost:8000/api/organizations/counselors/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/organizations/counselors/${id}`).then(response => {
                     response.json().then(data => {
                         this.setState({organizationCounselors: data});
 
@@ -108,8 +108,8 @@ class OrganizationDetail extends Component {
                 });
 
 
-                // fetch(`http://192.168.99.100/api/organizations/members/${id}`).then(response => {
-                fetch(`http://192.168.99.100/api/organizations/members/${id}`).then(response => {
+                // fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
                     response.json().then(data => {
                         this.setState({organizationMembers: data});
 
@@ -119,8 +119,8 @@ class OrganizationDetail extends Component {
                     });
                 });
 
-                // fetch(`http://192.168.99.100/api/organizations/members/${id}`).then(response => {
-                fetch(`http://192.168.99.100/api/organizations/members/${id}`).then(response => {
+                // fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/organizations/members/${id}`).then(response => {
                     response.json().then(data => {
                         this.setState({organizationMembers: data});
 
@@ -144,8 +144,8 @@ class OrganizationDetail extends Component {
         //     });
         // });
 
-        // fetch('http://192.168.99.100/api/organization_types').then(response => {
-        fetch('http://192.168.99.100/api/organization_types').then(response => {
+        // fetch('http://localhost:8000/api/organization_types').then(response => {
+        fetch('http://localhost:8000/api/organization_types').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Organization Types");
@@ -163,32 +163,32 @@ class OrganizationDetail extends Component {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        // fetch('http://192.168.99.100/api/organization_types').then(response => {
-        fetch('http://192.168.99.100/api/organization_types').then(response => {
+        // fetch('http://localhost:8000/api/organization_types').then(response => {
+        fetch('http://localhost:8000/api/organization_roles').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Organization Types");
                     console.log(results);
 
                     // TODO Replace once route is ready
-                    let organizationRoles = [
-                        {
-                            "code": 1,
-                            "description": "Presidente"
-                        },
-                        {
-                            "code": 2,
-                            "description": "Tesorero"
-                        },
-                        {
-                            "code": 3,
-                            "description": "Alicate"
-                        }
-                    ];
+                    // let organizationRoles = [
+                    //     {
+                    //         "code": 1,
+                    //         "description": "Presidente"
+                    //     },
+                    //     {
+                    //         "code": 2,
+                    //         "description": "Tesorero"
+                    //     },
+                    //     {
+                    //         "code": 3,
+                    //         "description": "Alicate"
+                    //     }
+                    // ];
 
 
-                    this.setState({organizationRoles: organizationRoles});
-                    // this.setState({organizationRoles: results});
+                    // this.setState({organizationRoles: organizationRoles});
+                    this.setState({organizationRoles: results});
                     //this.props.router.push(`/activities/${createdRequest._id}`);
                 });
             } else {
@@ -200,8 +200,8 @@ class OrganizationDetail extends Component {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        // fetch(`http://192.168.99.100/api/users`).then(response => {
-        fetch(`http://192.168.99.100/api/users`).then(response => {
+        // fetch(`http://localhost:8000/api/users`).then(response => {
+        fetch(`http://localhost:8000/api/users`).then(response => {
             response.json().then(data => {
 
                 this.setState({counselors: data.counselors});
@@ -234,7 +234,7 @@ class OrganizationDetail extends Component {
         console.log('El memberId');
         console.log(memberId);
 
-        fetch(`http://192.168.99.100/api/organizations/members/delete/${memberId}/${this.state.orgId}`, {
+        fetch(`http://localhost:8000/api/organizations/members/delete/${memberId}/${this.state.orgId}`, {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json'},
         }).then(response => {
@@ -246,7 +246,7 @@ class OrganizationDetail extends Component {
                     // TODO Pop member from organizationCounselors
                     // this.props.history.push(`/admin/organizations/`);
                     // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
-                    fetch(`http://192.168.99.100/api/organizations/members/${this.state.orgId}`).then(response => {
+                    fetch(`http://localhost:8000/api/organizations/members/${this.state.orgId}`).then(response => {
                         response.json().then(data => {
                             this.setState({organizationMembers: data});
 
@@ -270,7 +270,7 @@ class OrganizationDetail extends Component {
     removeCounselor = (counselorId) => {
 
 
-        fetch(`http://192.168.99.100/api/organizations/counselors/delete/${counselorId}/${this.state.orgId}`, {
+        fetch(`http://localhost:8000/api/organizations/counselors/delete/${counselorId}/${this.state.orgId}`, {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json'},
         }).then(response => {
@@ -282,7 +282,7 @@ class OrganizationDetail extends Component {
                     // TODO Pop member from organizationCounselors
                     // this.props.history.push(`/admin/organizations/`);
                     // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
-                    fetch(`http://192.168.99.100/api/organizations/counselors/${this.state.orgId}`).then(response => {
+                    fetch(`http://localhost:8000/api/organizations/counselors/${this.state.orgId}`).then(response => {
                         response.json().then(data => {
                             this.setState({organizationCounselors: data});
 
@@ -318,19 +318,15 @@ class OrganizationDetail extends Component {
         console.log(selectedCounselor);
 
         const counselorId = selectedCounselor[0].counselors[0].id;
+        const organizationId = this.state.orgId;
 
-        const newCounsels = {
-            counselor_id: counselorId,
-            organization_id: this.state.orgId
-        }
 
         console.log('counselor_id: ' + counselorId);
         console.log('organization_id: ' + this.state.orgId);
 
-        fetch(`http://192.168.99.100/api/organizations/addCounselor/`, {
+        fetch(`http://localhost:8000/api/organizations/${organizationId}/addCounselor/${counselorId}`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(newCounsels),
+            headers: {'Content-Type': 'application/json'}
         }).then(response => {
             if (response.ok) {
                 console.log(response);
@@ -339,6 +335,16 @@ class OrganizationDetail extends Component {
 
                     // this.props.history.push(`/admin/organizations/`);
                     console.log('New counsel was created');
+                    fetch(`http://localhost:8000/api/organizations/counselors/${this.state.orgId}`).then(response => {
+                        response.json().then(data => {
+                            this.setState({organizationCounselors: data});
+
+
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    });
                     // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
                 })
             } else {
@@ -356,42 +362,47 @@ class OrganizationDetail extends Component {
 
     addMember = () => {
 
-        const memberEmail = this.state.newMemberValue;
-        const selectedStudent = this.state.students.filter(function (member) {
+        const studentEmail = this.state.newMemberValue;
+        const selectedStudent = this.state.students.filter(function (student) {
 
-            console.log('Current member email: ' + member.userEmail);
-            console.log('this.state.newMemberEmail: ' + memberEmail);
+            console.log('Current counselor email: ' + student.userEmail);
+            console.log('this.state.newCounselorValue: ' + studentEmail);
 
-            console.log(member.userEmail == memberEmail);
-            return member.userEmail == memberEmail;
+            console.log(student.userEmail == studentEmail);
+            return student.userEmail == studentEmail;
         });
 
-        console.log('selectedMember array');
+        console.log('selectedCounselor array');
         console.log(selectedStudent);
 
-        const memberId = selectedStudent[0].students[0].id;
+        const studentId = selectedStudent[0].students[0].id;
+        const studentRole = this.state.selectedMemberRole;
 
-        const newMembership = {
-            member_id: memberId,
-            member_role: this.state.selectedMemberRole,
-            organization_id: this.state.orgId,
-        }
+        const organizationId = this.state.orgId;
 
-        console.log('member_id: ' + memberId);
+
+        console.log('counselor_id: ' + studentId);
         console.log('organization_id: ' + this.state.orgId);
 
-        fetch(`http://192.168.99.100/api/organizations/addCounselor/`, {
+        fetch(`http://localhost:8000/api/organizations/${organizationId}/addMember/${studentId}/role/${studentRole}`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(newMembership),
+            headers: {'Content-Type': 'application/json'}
         }).then(response => {
             if (response.ok) {
                 console.log(response);
-                response.json().then(createdMembership => {
+                response.json().then(newMembership => {
 
 
-                    // this.props.history.push(`/admin/organizations/`);
                     console.log('New membership was created');
+                    fetch(`http://localhost:8000/api/organizations/members/${this.state.orgId}`).then(response => {
+                        response.json().then(data => {
+                            this.setState({organizationMembers: data});
+
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    });
                     // this.props.history.push(`/admin/organizations/${createdOrganization._id}`);
                 })
             } else {
@@ -448,8 +459,8 @@ class OrganizationDetail extends Component {
 
         };
 
-        // fetch('http://192.168.99.100/api/organizations', {
-        fetch(`http://192.168.99.100/api/organizations/${this.state.orgId}`, {
+        // fetch('http://localhost:8000/api/organizations', {
+        fetch(`http://localhost:8000/api/organizations/${this.state.orgId}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),
@@ -653,6 +664,7 @@ class OrganizationDetail extends Component {
                             <Row>
                                 <Col md={6}><p>Nombre:</p></Col><Col md={6}><p> {member.studentName}</p></Col>
                                 <Col md={6}><p>Email:</p></Col><Col md={6}><p> {member.studentEmail}</p></Col>
+                                <Col md={6}><p>Rol:</p></Col><Col md={6}><p> {member.description}</p></Col>
                             </Row>
                         </Col>
                         <Col md={6}>
@@ -992,7 +1004,6 @@ class OrganizationDetail extends Component {
                             <Panel>
                                 <Col md={6}>
                                     <Col componentClass={ControlLabel}>Email del estudiante</Col>
-
                                     {
                                         (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.newMemberValue) === false && this.state.newMemberValue.length != 0) ?
                                             (<div>

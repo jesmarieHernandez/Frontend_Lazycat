@@ -125,8 +125,8 @@ class ActivityDetail extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
-        // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
-        fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
+        // fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
+        fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log("DATA" + data);
                 this.setState({activity: data});
@@ -137,7 +137,7 @@ class ActivityDetail extends Component {
             });
         })
 
-        fetch(`http://localhost:8000/api/activityType/`).then(response => {
+        fetch(`http://192.168.99.100/api/activityType/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Type:");
@@ -162,19 +162,40 @@ class ActivityDetail extends Component {
 
         console.log('Selected status: ' + this.state.selectedStatus);
 
+        // const activityUpdate = {
+        //         staffComment : this.state.commentary,
+        //         activityType_code: this.state.selectedType,
+        //         hasFood: this.state.selectedOption ? 1 : 0
+        //
+        // };
+        console.log("On Approval!!!");
+        console.log(this.state.activity.type)
+        console.log(this.state.activity.type != null);
+        console.log(this.state.activity.staffComment != null);
+        console.log(this.state.activity.hasFood != null);
+        if (this.state.activity.type != null && this.state.activity.staffComment != null && this.state.activity.hasFood != null)
+        {
+            console.log("Inside the if");
+            this.setState({commentary: this.state.activity.staffComment});
+            this.setState({selectedType: this.state.activity.activityType_code});
+            this.setState({hasFood: this.state.activity.hasFood});
+        }
+
+
         const activityUpdate = {
-            staffComment: this.state.commentary,
+            staffComment : this.state.commentary,
             activityType_code: this.state.selectedType,
             hasFood: this.state.selectedOption ? 1 : 0
+
         };
 
-        this.setState({dscaDecision: 'approved'});
+        // this.setState({dscaDecision: 'approved'});
 
         console.log("DSCA Decision: " + this.state.dscaDecision);
 
 
         console.log("Activity Update Object: " + activityUpdate);
-        fetch(`http://localhost:8000/api/adminApproved/${this.state.activity.id}`, {
+        fetch(`http://192.168.99.100/api/adminApproved/${this.state.activity.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
@@ -185,7 +206,7 @@ class ActivityDetail extends Component {
                     console.log('Activity request was updated successfully!');
                     console.log('Activity request ID: ' + updatedRequest.id);
 
-                    this.props.router.push(`/activities/${updatedRequest.id}`);
+                    this.props.router.push(`/activities/`);
                 })
             } else {
                 response.json().then(error => {
@@ -211,7 +232,7 @@ class ActivityDetail extends Component {
         this.setState({dscaDecision: 'denied'});
 
         console.log(activityUpdate);
-        fetch(`http://localhost:8000/api/adminDenied/${this.state.activity.id}`, {
+        fetch(`http://192.168.99.100/api/adminDenied/${this.state.activity.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
@@ -222,7 +243,7 @@ class ActivityDetail extends Component {
                     console.log('Activity request was updated successfully!');
                     console.log('Activity request ID: ' + updatedRequest.id);
 
-                    this.props.router.push(`/activities/${updatedRequest.id}`);
+                    this.props.router.push(`/activities/`);
                 })
             } else {
                 response.json().then(error => {
@@ -275,7 +296,7 @@ class ActivityDetail extends Component {
         console.log("Typeeeeeee");
         console.log(this.state.selectedType);
 
-        fetch(`http://localhost:8000/api/updateType/${this.state.activity.id}`, {
+        fetch(`http://192.168.99.100/api/updateType/${this.state.activity.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
@@ -608,6 +629,20 @@ class ActivityDetail extends Component {
                                                         {typeOptions}
                                                     </FormControl>
                                                 </Col>
+
+                                                <Col sm={6}>
+                                                    <Col componentClass={ControlLabel}>Comentario: </Col>
+                                                    <FormControl name="commentary" onChange={this.handleCommentChange}
+                                                                 value={this.state.commentary}
+                                                                 required/>
+                                                </Col>
+
+                                                <Col sm={3}>
+                                                    <Col componentClass={ControlLabel}>Permisos: </Col>
+                                                    <Col>
+                                                        <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso de Comida?</Checkbox>{' '}
+                                                    </Col>
+                                                </Col>
                                                 <br/>
                                                 <br/>
                                                 <br/>
@@ -630,7 +665,7 @@ class ActivityDetail extends Component {
 
                                                     <Col sm={6}>
                                                         <Col componentClass={ControlLabel}>Comentario: </Col>
-                                                        <FormControl name="commentary"
+                                                        <FormControl name="commentary" onChange={this.handleCommentChange}
                                                                      value={this.state.commentary}
                                                                      required/>
                                                     </Col>

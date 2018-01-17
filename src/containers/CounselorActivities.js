@@ -58,22 +58,12 @@ class CounselorActivities extends Component {
 
     render() {
 
-/*        const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/counselor/activities">Activities</Link></li>
-                    <li><Link to="">My Info</Link></li>
-
-                </ul>
-            </div>
-        );*/
-
         const tabsInstance = (
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/counselor/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                        to="/counselor/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
         );
@@ -82,12 +72,12 @@ class CounselorActivities extends Component {
 
             <Col md={12}>
 
-                <Panel  header={activity.requestTitle}>
-                    <td><Link to={`/activities/${activity._id}`}>{activity.requestTitle}</Link></td>
+                <Panel  header={activity.activityName}>
+                    <td><Link to={`/counselor/activities/${activity.id}`}>{activity.activityName}</Link></td>
                     <p>Description: {activity.activityDescription}</p>
-                    <p>Organization: {activity.organization.name}</p>
-                    <p>Facility: {activity.facilities.name}</p>
-                    <p>Status: {activity.status}</p>
+                    <p>Organization: {activity.organization.organizationName}</p>
+                    <p>Facility: {activity.facility.building + '-' + activity.facility.space}</p>
+                    <p>Status: {activity.status.description}</p>
                 </Panel>
 
             </Col>
@@ -103,23 +93,13 @@ class CounselorActivities extends Component {
 
                     <ol className="breadcrumb">
                         <li/>
-                        <li className="active">Activities</li>
+                        <li className="active">Actividades</li>
                     </ol>
 
                     <Col md={7}>
                         <div>{activities}</div>
                     </Col>
 
-                    <Col md={5}>
-                        <Panel header='Search Activities'>
-                            <Select.Async
-                                instanceId="search" placeholder="Search ..." autoload={false} cache={false}
-                            />
-                            <Checkbox><p>Organization Acronym</p></Checkbox>
-                            <Checkbox><p>Request Title</p></Checkbox>
-                            <Checkbox><p>Request Description</p></Checkbox>
-                        </Panel>
-                    </Col>
                 </Col>
             </div>
         )

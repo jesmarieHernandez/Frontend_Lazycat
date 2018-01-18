@@ -63,7 +63,7 @@ class ManagerActivities extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/manager/activities"><ReactCenter>Activities</ReactCenter></Link></NavItem>
+                        to="/manager/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
                 </Nav>
             </div>
         );
@@ -95,7 +95,7 @@ class ManagerActivities extends Component {
                     <ol className="breadcrumb">
                         <li/>
                         <li>Facilities Manager</li>
-                        <li className="active">Activities</li>
+                        <li className="active">Actividades</li>
                     </ol>
 
                     <Col md={7}>

@@ -3,16 +3,13 @@ import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
 
-    Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
-    BreadcrumbItem, Nav, Navbar, NavItem, ButtonToolbar, Badge
+    Button, Panel, Pager, PageItem, Col, Row, Nav, NavItem, Badge
 
 } from 'react-bootstrap';
-import Select from 'react-select';
 import ReactCenter from 'react-center';
 import Icon from 'react-icons-kit';
 import {statsDots} from 'react-icons-kit/icomoon/statsDots';
 import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
-import {home} from 'react-icons-kit/icomoon/home';
 import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 import {userTie} from 'react-icons-kit/icomoon/userTie';
 
@@ -26,7 +23,11 @@ class Activities extends Component {
             activities: [],
             pendingActivities: [],
             approvedActivities: [],
-            deniedActivities: []
+            deniedActivities: [],
+            pendingActivitiesPageNumber: 1,
+            pendingActivitiesMaxPageNumber: 1000,
+            approvedActivitiesPageNumber: 1,
+            deniedActivitiesPageNumber: 1,
         }
 
         this.handleSelect = this.handleSelect.bind(this);
@@ -49,7 +50,217 @@ class Activities extends Component {
                     const pending = [
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 1",
+                            "activityDescription": "De Profesores",
+                            "attendantsNumber": 4,
+                            "activityDate": "2018-01-20",
+                            "activityStart": "838:59:59",
+                            "activityEnd": "00:00:00",
+                            "hasFood": 1,
+                            "guestName": "asdas",
+                            "activityStatus_code": 1,
+                            "counselorStatus_code": 2,
+                            "managerStatus_code": 1,
+                            "activityType_code": 6,
+                            "counselorComment": null,
+                            "managerComment": null,
+                            "staffComment": "asdsadasd",
+                            "student": null,
+                            "organization": {
+                                "id": 1,
+                                "organizationName": "Las Monjasfhfhg",
+                                "organizationInitials": "ACM2ssss",
+                                "isActive": 0,
+                                "counselors": [
+                                    {
+                                        "id": 6,
+                                        "counselorName": "Raymond Lopez",
+                                        "counselorEmail": "raymond.lopez@upr.edu",
+                                        "counselorPhone": "8909",
+                                        "counselorFaculty": "Ingenieria",
+                                        "counselorDepartment": "ICOM",
+                                        "counselorOffice": "S113",
+                                        "user_id": 15,
+                                        "isActive": 1
+                                    }
+                                ]
+                            },
+                            "facility": {
+                                "id": 5,
+                                "building": "Stefani",
+                                "space": "S-113",
+                                "facilityDepartment": "",
+                                "managers": [
+                                    {
+                                        "id": 5,
+                                        "managerName": "Bolo Maton",
+                                        "managerEmail": "bacalao@upr.edu",
+                                        "managerPhone": "9090",
+                                        "user_id": 17,
+                                        "isActive": 1
+                                    }
+                                ]
+                            },
+                            "status": {
+                                "code": 1,
+                                "description": "Pendiente"
+                            },
+                            "counselor_status": {
+                                "code": 2,
+                                "description": "Aprobado"
+                            },
+                            "manager_status": {
+                                "code": 1,
+                                "description": "Pendiente"
+                            },
+                            "type": {
+                                "code": 6,
+                                "description": "Académica"
+                            }
+                        },
+                        {
+                            "id": 7,
+                            "activityName": "Gran Convencion 2",
+                            "activityDescription": "De Profesores",
+                            "attendantsNumber": 4,
+                            "activityDate": "2018-01-20",
+                            "activityStart": "838:59:59",
+                            "activityEnd": "00:00:00",
+                            "hasFood": 1,
+                            "guestName": "asdas",
+                            "activityStatus_code": 1,
+                            "counselorStatus_code": 2,
+                            "managerStatus_code": 1,
+                            "activityType_code": 6,
+                            "counselorComment": null,
+                            "managerComment": null,
+                            "staffComment": "asdsadasd",
+                            "student": null,
+                            "organization": {
+                                "id": 1,
+                                "organizationName": "Las Monjasfhfhg",
+                                "organizationInitials": "ACM2ssss",
+                                "isActive": 0,
+                                "counselors": [
+                                    {
+                                        "id": 6,
+                                        "counselorName": "Raymond Lopez",
+                                        "counselorEmail": "raymond.lopez@upr.edu",
+                                        "counselorPhone": "8909",
+                                        "counselorFaculty": "Ingenieria",
+                                        "counselorDepartment": "ICOM",
+                                        "counselorOffice": "S113",
+                                        "user_id": 15,
+                                        "isActive": 1
+                                    }
+                                ]
+                            },
+                            "facility": {
+                                "id": 5,
+                                "building": "Stefani",
+                                "space": "S-113",
+                                "facilityDepartment": "",
+                                "managers": [
+                                    {
+                                        "id": 5,
+                                        "managerName": "Bolo Maton",
+                                        "managerEmail": "bacalao@upr.edu",
+                                        "managerPhone": "9090",
+                                        "user_id": 17,
+                                        "isActive": 1
+                                    }
+                                ]
+                            },
+                            "status": {
+                                "code": 1,
+                                "description": "Pendiente"
+                            },
+                            "counselor_status": {
+                                "code": 2,
+                                "description": "Aprobado"
+                            },
+                            "manager_status": {
+                                "code": 1,
+                                "description": "Pendiente"
+                            },
+                            "type": {
+                                "code": 6,
+                                "description": "Académica"
+                            }
+                        },
+                        {
+                            "id": 7,
+                            "activityName": "Gran Convencion 3",
+                            "activityDescription": "De Profesores",
+                            "attendantsNumber": 4,
+                            "activityDate": "2018-01-20",
+                            "activityStart": "838:59:59",
+                            "activityEnd": "00:00:00",
+                            "hasFood": 1,
+                            "guestName": "asdas",
+                            "activityStatus_code": 1,
+                            "counselorStatus_code": 2,
+                            "managerStatus_code": 1,
+                            "activityType_code": 6,
+                            "counselorComment": null,
+                            "managerComment": null,
+                            "staffComment": "asdsadasd",
+                            "student": null,
+                            "organization": {
+                                "id": 1,
+                                "organizationName": "Las Monjasfhfhg",
+                                "organizationInitials": "ACM2ssss",
+                                "isActive": 0,
+                                "counselors": [
+                                    {
+                                        "id": 6,
+                                        "counselorName": "Raymond Lopez",
+                                        "counselorEmail": "raymond.lopez@upr.edu",
+                                        "counselorPhone": "8909",
+                                        "counselorFaculty": "Ingenieria",
+                                        "counselorDepartment": "ICOM",
+                                        "counselorOffice": "S113",
+                                        "user_id": 15,
+                                        "isActive": 1
+                                    }
+                                ]
+                            },
+                            "facility": {
+                                "id": 5,
+                                "building": "Stefani",
+                                "space": "S-113",
+                                "facilityDepartment": "",
+                                "managers": [
+                                    {
+                                        "id": 5,
+                                        "managerName": "Bolo Maton",
+                                        "managerEmail": "bacalao@upr.edu",
+                                        "managerPhone": "9090",
+                                        "user_id": 17,
+                                        "isActive": 1
+                                    }
+                                ]
+                            },
+                            "status": {
+                                "code": 1,
+                                "description": "Pendiente"
+                            },
+                            "counselor_status": {
+                                "code": 2,
+                                "description": "Aprobado"
+                            },
+                            "manager_status": {
+                                "code": 1,
+                                "description": "Pendiente"
+                            },
+                            "type": {
+                                "code": 6,
+                                "description": "Académica"
+                            }
+                        },
+                        {
+                            "id": 7,
+                            "activityName": "Gran Convencion 4",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -189,7 +400,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 5",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -259,7 +470,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 6",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -329,7 +540,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 7",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -399,7 +610,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 8",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -469,7 +680,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 9",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -539,7 +750,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 10",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -609,7 +820,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 11",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -679,7 +890,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 12",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -749,7 +960,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 13",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -819,7 +1030,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 14",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -889,217 +1100,7 @@ class Activities extends Component {
                         },
                         {
                             "id": 7,
-                            "activityName": "Gran Convencion",
-                            "activityDescription": "De Profesores",
-                            "attendantsNumber": 4,
-                            "activityDate": "2018-01-20",
-                            "activityStart": "838:59:59",
-                            "activityEnd": "00:00:00",
-                            "hasFood": 1,
-                            "guestName": "asdas",
-                            "activityStatus_code": 1,
-                            "counselorStatus_code": 2,
-                            "managerStatus_code": 1,
-                            "activityType_code": 6,
-                            "counselorComment": null,
-                            "managerComment": null,
-                            "staffComment": "asdsadasd",
-                            "student": null,
-                            "organization": {
-                                "id": 1,
-                                "organizationName": "Las Monjasfhfhg",
-                                "organizationInitials": "ACM2ssss",
-                                "isActive": 0,
-                                "counselors": [
-                                    {
-                                        "id": 6,
-                                        "counselorName": "Raymond Lopez",
-                                        "counselorEmail": "raymond.lopez@upr.edu",
-                                        "counselorPhone": "8909",
-                                        "counselorFaculty": "Ingenieria",
-                                        "counselorDepartment": "ICOM",
-                                        "counselorOffice": "S113",
-                                        "user_id": 15,
-                                        "isActive": 1
-                                    }
-                                ]
-                            },
-                            "facility": {
-                                "id": 5,
-                                "building": "Stefani",
-                                "space": "S-113",
-                                "facilityDepartment": "",
-                                "managers": [
-                                    {
-                                        "id": 5,
-                                        "managerName": "Bolo Maton",
-                                        "managerEmail": "bacalao@upr.edu",
-                                        "managerPhone": "9090",
-                                        "user_id": 17,
-                                        "isActive": 1
-                                    }
-                                ]
-                            },
-                            "status": {
-                                "code": 1,
-                                "description": "Pendiente"
-                            },
-                            "counselor_status": {
-                                "code": 2,
-                                "description": "Aprobado"
-                            },
-                            "manager_status": {
-                                "code": 1,
-                                "description": "Pendiente"
-                            },
-                            "type": {
-                                "code": 6,
-                                "description": "Académica"
-                            }
-                        },
-                        {
-                            "id": 7,
-                            "activityName": "Gran Convencion",
-                            "activityDescription": "De Profesores",
-                            "attendantsNumber": 4,
-                            "activityDate": "2018-01-20",
-                            "activityStart": "838:59:59",
-                            "activityEnd": "00:00:00",
-                            "hasFood": 1,
-                            "guestName": "asdas",
-                            "activityStatus_code": 1,
-                            "counselorStatus_code": 2,
-                            "managerStatus_code": 1,
-                            "activityType_code": 6,
-                            "counselorComment": null,
-                            "managerComment": null,
-                            "staffComment": "asdsadasd",
-                            "student": null,
-                            "organization": {
-                                "id": 1,
-                                "organizationName": "Las Monjasfhfhg",
-                                "organizationInitials": "ACM2ssss",
-                                "isActive": 0,
-                                "counselors": [
-                                    {
-                                        "id": 6,
-                                        "counselorName": "Raymond Lopez",
-                                        "counselorEmail": "raymond.lopez@upr.edu",
-                                        "counselorPhone": "8909",
-                                        "counselorFaculty": "Ingenieria",
-                                        "counselorDepartment": "ICOM",
-                                        "counselorOffice": "S113",
-                                        "user_id": 15,
-                                        "isActive": 1
-                                    }
-                                ]
-                            },
-                            "facility": {
-                                "id": 5,
-                                "building": "Stefani",
-                                "space": "S-113",
-                                "facilityDepartment": "",
-                                "managers": [
-                                    {
-                                        "id": 5,
-                                        "managerName": "Bolo Maton",
-                                        "managerEmail": "bacalao@upr.edu",
-                                        "managerPhone": "9090",
-                                        "user_id": 17,
-                                        "isActive": 1
-                                    }
-                                ]
-                            },
-                            "status": {
-                                "code": 1,
-                                "description": "Pendiente"
-                            },
-                            "counselor_status": {
-                                "code": 2,
-                                "description": "Aprobado"
-                            },
-                            "manager_status": {
-                                "code": 1,
-                                "description": "Pendiente"
-                            },
-                            "type": {
-                                "code": 6,
-                                "description": "Académica"
-                            }
-                        },
-                        {
-                            "id": 7,
-                            "activityName": "Gran Convencion",
-                            "activityDescription": "De Profesores",
-                            "attendantsNumber": 4,
-                            "activityDate": "2018-01-20",
-                            "activityStart": "838:59:59",
-                            "activityEnd": "00:00:00",
-                            "hasFood": 1,
-                            "guestName": "asdas",
-                            "activityStatus_code": 1,
-                            "counselorStatus_code": 2,
-                            "managerStatus_code": 1,
-                            "activityType_code": 6,
-                            "counselorComment": null,
-                            "managerComment": null,
-                            "staffComment": "asdsadasd",
-                            "student": null,
-                            "organization": {
-                                "id": 1,
-                                "organizationName": "Las Monjasfhfhg",
-                                "organizationInitials": "ACM2ssss",
-                                "isActive": 0,
-                                "counselors": [
-                                    {
-                                        "id": 6,
-                                        "counselorName": "Raymond Lopez",
-                                        "counselorEmail": "raymond.lopez@upr.edu",
-                                        "counselorPhone": "8909",
-                                        "counselorFaculty": "Ingenieria",
-                                        "counselorDepartment": "ICOM",
-                                        "counselorOffice": "S113",
-                                        "user_id": 15,
-                                        "isActive": 1
-                                    }
-                                ]
-                            },
-                            "facility": {
-                                "id": 5,
-                                "building": "Stefani",
-                                "space": "S-113",
-                                "facilityDepartment": "",
-                                "managers": [
-                                    {
-                                        "id": 5,
-                                        "managerName": "Bolo Maton",
-                                        "managerEmail": "bacalao@upr.edu",
-                                        "managerPhone": "9090",
-                                        "user_id": 17,
-                                        "isActive": 1
-                                    }
-                                ]
-                            },
-                            "status": {
-                                "code": 1,
-                                "description": "Pendiente"
-                            },
-                            "counselor_status": {
-                                "code": 2,
-                                "description": "Aprobado"
-                            },
-                            "manager_status": {
-                                "code": 1,
-                                "description": "Pendiente"
-                            },
-                            "type": {
-                                "code": 6,
-                                "description": "Académica"
-                            }
-                        },
-                        {
-                            "id": 7,
-                            "activityName": "Gran Convencion",
+                            "activityName": "Gran Convencion 15",
                             "activityDescription": "De Profesores",
                             "attendantsNumber": 4,
                             "activityDate": "2018-01-20",
@@ -3060,6 +3061,13 @@ class Activities extends Component {
 
                     ];
 
+                    console.log('Pending length: ');
+                    console.log(pending.length / 5);
+
+                    const max = pending.length%2 === 0? pending.length / 5: Math.floor(pending.length / 5 + 1);
+
+                    this.setState({pendingActivitiesMaxPageNumber: max});
+
                     console.log('Cuantas actividades hay?');
                     console.log(pending.length);
 
@@ -3114,6 +3122,17 @@ class Activities extends Component {
         this.setState({activeKey: event});
     }
 
+    onNextClicked = () => {
+
+        console.log('this.state.pendingActivitiesMaxPageNumber');
+        console.log(this.state.pendingActivitiesMaxPageNumber);
+        this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber + 1});
+    }
+
+    onPreviousClicked = () => {
+        this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber - 1});
+    }
+
     render() {
         const tabsInstance = (
 
@@ -3133,7 +3152,25 @@ class Activities extends Component {
         );
 
 
-        //this.setState({pendingActivities: pending});
+        // let active = 7;
+        // let items = [];
+        // for (let number = 1; number <= 10; number++) {
+        //     items.push(
+        //         <Pagination.Item active={number === active}>{number}</Pagination.Item>
+        //     );
+        // }
+        //
+        // const paginationBasic = (
+        //     <div>
+        //         <Pagination bsSize="large">{items}</Pagination>
+        //         <br />
+        //
+        //         <Pagination bsSize="medium">{items}</Pagination>
+        //         <br />
+        //
+        //         <Pagination bsSize="small">{items}</Pagination>
+        //     </div>
+        // );
 
         let pendingActivities;
 
@@ -3141,8 +3178,26 @@ class Activities extends Component {
             pendingActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades pendientes.</p>
         } else {
 
+            const pageNumber = this.state.pendingActivitiesPageNumber;
+            console.log('Page Number');
+            console.log(pageNumber);
 
-            pendingActivities = this.state.pendingActivities.map(activity =>
+
+            const pageSize = 5;
+
+            let paginatedPendingActivities = this.state.pendingActivities.slice((pageNumber - 1) * pageSize, ((pageNumber - 1) * pageSize) + pageSize);
+
+            console.log('First Arg');
+            console.log((pageNumber - 1) * pageSize);
+
+
+            console.log('Second Arg');
+            console.log(((pageNumber - 1) * pageSize) + pageSize);
+
+            console.log('Paginated pending activities');
+            console.log(paginatedPendingActivities);
+
+            pendingActivities = paginatedPendingActivities.map(activity =>
 
                 <Col md={12}>
                     <Panel header={activity.activityName}>
@@ -3157,7 +3212,7 @@ class Activities extends Component {
                                 <Col md={4}><p>Organización:</p></Col><Col md={8}>
                                 <p> {activity.organization.organizationName}</p></Col>
                                 <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
-                                <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                {/*<Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>*/}
 
                             </Row>
                         </Col>
@@ -3229,6 +3284,15 @@ class Activities extends Component {
 
 
         console.log(this.state.activities);
+
+        console.log('this.state.pendingActivitiesMaxPageNumber');
+        console.log(this.state.pendingActivitiesMaxPageNumber);
+
+        console.log('this.state.pendingActivitiesPageNumber');
+        console.log(this.state.pendingActivitiesPageNumber);
+
+
+
         return (
             <div className="container">
                 <Col md={2}>
@@ -3257,7 +3321,26 @@ class Activities extends Component {
 
                         {this.state.activeKey === '1' ?
                             <div>
+                                <Row>
                                 {pendingActivities}
+                                </Row>
+
+                                <Row>
+                                <Pager>
+
+
+                                    <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
+                                    <Row>{this.state.pendingActivitiesPageNumber > 1 ?
+                                        <PageItem className="pull-left" onClick={() => this.onPreviousClicked()}>&larr;
+                                            Anterior</PageItem>
+                                        : null}
+                                    {this.state.pendingActivitiesPageNumber < this.state.pendingActivitiesMaxPageNumber ?
+                                        <PageItem className="pull-right"
+                                                  onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
+                                        : null}</Row>
+                                </Pager>
+                                </Row>
+
                             </div>
                             : null}
                         {this.state.activeKey === '2' ? approvedActivities : null}
@@ -3266,7 +3349,7 @@ class Activities extends Component {
                     </Col>
 
                     <Col md={3}>
-                        <Panel header='Actividades'>
+                        <Panel>
                             <ReactCenter><Link to="/request"><Button bsSize="medium">Nueva
                                 Solicitud</Button></Link></ReactCenter>
                             {/*<Checkbox><p>Request Title</p></Checkbox>*/}

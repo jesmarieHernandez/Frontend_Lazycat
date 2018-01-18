@@ -39,6 +39,7 @@ class App extends Component {
         this.props.cookies.remove('role', { path: '/' });
         this.props.cookies.remove('email', { path: '/' });
         this.props.cookies.remove('signedIn', { path: '/' });
+        this.props.cookies.remove('G_AUTHUSER_H', { path: '/' });
         console.log(this.props.history);
         this.props.history.push("/login");
         this.setState({

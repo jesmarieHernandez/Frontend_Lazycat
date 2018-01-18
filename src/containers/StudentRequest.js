@@ -100,7 +100,7 @@ class Request extends Component {
         console.log('Ok?');
 
         fetch(`http://localhost:8000/api/users/${this.props.cookies.get('email')}`).then(response => {
-        // fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
+        // fetch(`http://localhost:8000/api/users/${this.props.cookies.get('email')}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({studentInfo: results.students[0]});

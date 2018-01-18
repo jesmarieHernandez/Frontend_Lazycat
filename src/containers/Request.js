@@ -144,7 +144,7 @@ class Request extends Component {
         });
 
         fetch(`http://localhost:8000/api/users/${this.props.cookies.get('email')}`).then(response => {
-            // fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
+            // fetch(`http://localhost:8000/api/users/${this.props.cookies.get('email')}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({staffInfo: results.staff[0]});

@@ -123,6 +123,9 @@ class ManagerActivityDetail extends Component {
         fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log("DATA" + data);
+                if(Object.keys(data).length === 0){
+                    this.props.history.push(`/manager/activities/`);
+                }
                 this.setState({activity: data});
                 console.log(this.state.activity.id);
             }).catch(err => {

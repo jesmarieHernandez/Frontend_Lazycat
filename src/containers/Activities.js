@@ -27,7 +27,9 @@ class Activities extends Component {
             pendingActivitiesPageNumber: 1,
             pendingActivitiesMaxPageNumber: 1000,
             approvedActivitiesPageNumber: 1,
+            approvedActivitiesMaxPageNumber: 1000,
             deniedActivitiesPageNumber: 1,
+            deniedActivitiesMaxPageNumber: 1000
         }
 
         this.handleSelect = this.handleSelect.bind(this);
@@ -3064,7 +3066,7 @@ class Activities extends Component {
                     console.log('Pending length: ');
                     console.log(pending.length / 5);
 
-                    const max = pending.length%2 === 0? pending.length / 5: Math.floor(pending.length / 5 + 1);
+                    const max = pending.length % 2 === 0 ? pending.length / 5 : Math.floor(pending.length / 5 + 1);
 
                     this.setState({pendingActivitiesMaxPageNumber: max});
 
@@ -3124,13 +3126,44 @@ class Activities extends Component {
 
     onNextClicked = () => {
 
-        console.log('this.state.pendingActivitiesMaxPageNumber');
-        console.log(this.state.pendingActivitiesMaxPageNumber);
-        this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber + 1});
+
+        if (this.state.activeKey === '1') {
+            console.log('this.state.pendingActivitiesMaxPageNumber');
+            console.log(this.state.pendingActivitiesMaxPageNumber);
+            this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber + 1});
+        }
+
+        else if (this.state.activeKey === '2') {
+            console.log('this.state.approvedActivitiesMaxPageNumber');
+            console.log(this.state.approvedActivitiesMaxPageNumber);
+            this.setState({approvedActivitiesPageNumber: this.state.approvedActivitiesPageNumber + 1});
+        }
+        else if (this.state.activeKey === '3') {
+            console.log('this.state.deniedActivitiesMaxPageNumber');
+            console.log(this.state.deniedActivitiesMaxPageNumber);
+            this.setState({deniedActivitiesMaxPageNumber: this.state.deniedActivitiesMaxPageNumber + 1});
+        }
+
     }
 
     onPreviousClicked = () => {
-        this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber - 1});
+
+        if (this.state.activeKey === '1') {
+            console.log('this.state.pendingActivitiesMaxPageNumber');
+            console.log(this.state.pendingActivitiesMaxPageNumber);
+            this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber - 1});
+        }
+
+        else if (this.state.activeKey === '2') {
+            console.log('this.state.approvedActivitiesMaxPageNumber');
+            console.log(this.state.approvedActivitiesMaxPageNumber);
+            this.setState({approvedActivitiesPageNumber: this.state.approvedActivitiesPageNumber - 1});
+        }
+        else if (this.state.activeKey === '3') {
+            console.log('this.state.deniedActivitiesMaxPageNumber');
+            console.log(this.state.deniedActivitiesMaxPageNumber);
+            this.setState({deniedActivitiesMaxPageNumber: this.state.deniedActivitiesMaxPageNumber - 1});
+        }
     }
 
     render() {
@@ -3151,26 +3184,6 @@ class Activities extends Component {
             </div>
         );
 
-
-        // let active = 7;
-        // let items = [];
-        // for (let number = 1; number <= 10; number++) {
-        //     items.push(
-        //         <Pagination.Item active={number === active}>{number}</Pagination.Item>
-        //     );
-        // }
-        //
-        // const paginationBasic = (
-        //     <div>
-        //         <Pagination bsSize="large">{items}</Pagination>
-        //         <br />
-        //
-        //         <Pagination bsSize="medium">{items}</Pagination>
-        //         <br />
-        //
-        //         <Pagination bsSize="small">{items}</Pagination>
-        //     </div>
-        // );
 
         let pendingActivities;
 
@@ -3230,57 +3243,103 @@ class Activities extends Component {
             );
         }
 
-        let approvedActivities = this.state.approvedActivities.map(activity =>
+        let approvedActivities;
 
-            <Col md={12}>
+        if (this.state.approvedActivities.length === 0) {
+            approvedActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades aprovadas.</p>
+        } else {
 
-                <Panel header={activity.activityName}>
-                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                    <br/>
-                    <p><b>Description:</b> {activity.activityDescription}</p>
-                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                    <p><b>Facility:</b> {activity.facility.space}</p>
-                    <p><b>Status:</b> {activity.status.description}</p>
-                </Panel>
+            approvedActivities = this.state.approvedActivities.map(activity =>
 
-            </Col>
-        );
+                <Col md={12}>
+                    <Panel header={activity.activityName}>
+                        {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+                        {/*<br/>*/}
+                        <Col md={9}>
+                            <Row>
+
+                                <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
+                                <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p>
+                            </Col>
+                                <Col md={4}><p>Organización:</p></Col><Col md={8}>
+                                <p> {activity.organization.organizationName}</p></Col>
+                                <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                                {/*<Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>*/}
+
+                            </Row>
+                        </Col>
+                        <Col md={3}>
+                            <Row>
+                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                                    className="btn-info btn-large pull-right"
+                                    style={{width: '100px', marginBottom: '10px'}}
+                                >Detalles</Button></Link> </Col>
+                            </Row>
+                        </Col>
+
+                    </Panel>
+                </Col>
+            );
+
+        }
 
 
-        let deniedActivities = this.state.deniedActivities.map(activity =>
+        let deniedActivities;
 
-            <Col md={12}>
+        if (this.state.deniedActivities.length === 0) {
+            deniedActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades denegadas.</p>
+        } else {
 
-                <Panel header={activity.activityName}>
-                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                    <br/>
-                    <p><b>Description:</b> {activity.activityDescription}</p>
-                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                    <p><b>Facility:</b> {activity.facility.space}</p>
-                    <p><b>Status:</b> {activity.status.description}</p>
-                </Panel>
+            deniedActivities = this.state.deniedActivities.map(activity =>
 
-            </Col>
-        );
+                <Col md={12}>
+                    <Panel header={activity.activityName}>
+                        {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+                        {/*<br/>*/}
+                        <Col md={9}>
+                            <Row>
 
+                                <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
+                                <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p>
+                            </Col>
+                                <Col md={4}><p>Organización:</p></Col><Col md={8}>
+                                <p> {activity.organization.organizationName}</p></Col>
+                                <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                                {/*<Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>*/}
 
-        const activities = this.state.activities.map(activity =>
+                            </Row>
+                        </Col>
+                        <Col md={3}>
+                            <Row>
+                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                                    className="btn-info btn-large pull-right"
+                                    style={{width: '100px', marginBottom: '10px'}}
+                                >Detalles</Button></Link> </Col>
+                            </Row>
+                        </Col>
 
-            <Col md={12}>
-                <Panel header={activity.activityName}>
-                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                    <br/>
-                    <p><b>Description:</b> {activity.activityDescription}</p>
-                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                    <p><b>Facility:</b> {activity.facility.space}</p>
-                    <p><b>Status:</b> {activity.status.description}</p>
-                    <Link to={`/activities/edit`}><Button className="btn-info">Edit</Button></Link>
-                    <Button className="btn-success" style={{marginLeft: "20px"}}>Approve</Button>
-                    <Button className="btn-danger" style={{marginLeft: "20px"}}>Decline</Button>
-                </Panel>
+                    </Panel>
+                </Col>
+            );
+        }
 
-            </Col>
-        );
+        // const activities = this.state.activities.map(activity =>
+        //
+        //     <Col md={12}>
+        //         <Panel header={activity.activityName}>
+        //             <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
+        //             <br/>
+        //             <p><b>Description:</b> {activity.activityDescription}</p>
+        //             <p><b>Organization:</b> {activity.organization.organizationName}</p>
+        //             <p><b>Facility:</b> {activity.facility.space}</p>
+        //             <p><b>Status:</b> {activity.status.description}</p>
+        //             <Link to={`/activities/edit`}><Button className="btn-info">Edit</Button></Link>
+        //             <Button className="btn-success" style={{marginLeft: "20px"}}>Approve</Button>
+        //             <Button className="btn-danger" style={{marginLeft: "20px"}}>Decline</Button>
+        //         </Panel>
+        //
+        //     </Col>
+        // );
 
 
         console.log(this.state.activities);
@@ -3290,7 +3349,6 @@ class Activities extends Component {
 
         console.log('this.state.pendingActivitiesPageNumber');
         console.log(this.state.pendingActivitiesPageNumber);
-
 
 
         return (
@@ -3322,29 +3380,92 @@ class Activities extends Component {
                         {this.state.activeKey === '1' ?
                             <div>
                                 <Row>
-                                {pendingActivities}
+                                    {pendingActivities}
                                 </Row>
 
+                                {this.state.pendingActivities.length > 0 ?
                                 <Row>
-                                <Pager>
+                                    <Pager>
 
-
-                                    <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
-                                    <Row>{this.state.pendingActivitiesPageNumber > 1 ?
-                                        <PageItem className="pull-left" onClick={() => this.onPreviousClicked()}>&larr;
-                                            Anterior</PageItem>
-                                        : null}
-                                    {this.state.pendingActivitiesPageNumber < this.state.pendingActivitiesMaxPageNumber ?
-                                        <PageItem className="pull-right"
-                                                  onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
-                                        : null}</Row>
-                                </Pager>
+                                        <Row><ReactCenter>{this.state.pendingActivitiesPageNumber}
+                                            de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
+                                        <Row>{this.state.pendingActivitiesPageNumber > 1 ?
+                                            <PageItem className="pull-left"
+                                                      onClick={() => this.onPreviousClicked()}>&larr;
+                                                Anterior</PageItem>
+                                            : null}
+                                            {this.state.pendingActivitiesPageNumber < this.state.pendingActivitiesMaxPageNumber ?
+                                                <PageItem className="pull-right"
+                                                          onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
+                                                : null}</Row>
+                                    </Pager>
                                 </Row>
+                                    : null }
 
                             </div>
-                            : null}
-                        {this.state.activeKey === '2' ? approvedActivities : null}
-                        {this.state.activeKey === '3' ? deniedActivities : null}
+                            : null
+                        }
+
+                        {this.state.activeKey === '2' ?
+                            <div>
+                                <Row>
+                                    {approvedActivities}
+                                </Row>
+
+                                {this.state.approvedActivities.length > 0 ?
+
+                                <Row>
+                                    <Pager>
+
+                                        <Row><ReactCenter>{this.state.approvedActivitiesPageNumber}
+                                            de {this.state.approvedActivitiesMaxPageNumber}</ReactCenter></Row>
+                                        <Row>{this.state.approvedActivitiesPageNumber > 1 ?
+                                            <PageItem className="pull-left"
+                                                      onClick={() => this.onPreviousClicked()}>&larr;
+                                                Anterior</PageItem>
+                                            : null}
+                                            {this.state.approvedActivitiesPageNumber < this.state.approvedActivitiesMaxPageNumber ?
+                                                <PageItem className="pull-right"
+                                                          onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
+                                                : null}</Row>
+                                    </Pager>
+                                </Row>
+                                    : null }
+
+                            </div>
+                            : null
+                        }
+
+                        {this.state.activeKey === '3' ?
+                            <div>
+                                <Row>
+                                    {deniedActivities}
+                                </Row>
+
+                                {this.state.deniedActivities.length > 0 ?
+                                <Row>
+                                    <Pager>
+
+                                        <Row><ReactCenter>{this.state.deniedActivitiesPageNumber}
+                                            de {this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
+                                        <Row>{this.state.deniedActivitiesPageNumber > 1 ?
+                                            <PageItem className="pull-left"
+                                                      onClick={() => this.onPreviousClicked()}>&larr;
+                                                Anterior</PageItem>
+                                            : null}
+                                            {this.state.deniedActivitiesPageNumber < this.state.deniedActivitiesMaxPageNumber ?
+                                                <PageItem className="pull-right"
+                                                          onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
+                                                : null}</Row>
+                                    </Pager>
+                                </Row>
+                                    : null
+                                }
+
+                            </div>
+                            : null
+                        }
+
 
                     </Col>
 

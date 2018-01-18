@@ -36,24 +36,24 @@ class CounselorActivities extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:3001/api/pending').then(response => {
-            if (response.ok) {
-                console.log('/api/pending! :D');
-                response.json().then(results => {
-                    console.log('Total pending activities: ' + results);
-
-                    //console.log(this.state.activities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                console.log('Unable to fetch pending activities')
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+        // fetch('http://localhost:3001/api/pending').then(response => {
+        //     if (response.ok) {
+        //         console.log('/api/pending! :D');
+        //         response.json().then(results => {
+        //             console.log('Total pending activities: ' + results);
+        //
+        //             //console.log(this.state.activities);
+        //             //this.props.router.push(`/activities/${createdRequest._id}`);
+        //         });
+        //     } else {
+        //         console.log('Unable to fetch pending activities')
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
     }
 
     render() {

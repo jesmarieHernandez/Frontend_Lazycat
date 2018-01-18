@@ -12,6 +12,7 @@ import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 import {userTie} from 'react-icons-kit/icomoon/userTie';
 import DatePicker from 'react-bootstrap-date-picker';
 import TimePicker from 'react-bootstrap-time-picker';
+import AlertContainer from 'react-alert';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
@@ -264,6 +265,11 @@ class ManagerActivityDetail extends Component {
     //         //this.props.showError(`Error in sending data to server: ${err.message}`);
     //     });
     // }
+
+    showErrorAlert = (message) => {
+        this.msg.error(message, {time: 500, type: 'error'});
+        return;
+    }
 
     render() {
         // console.log('this.state.selectedType');
@@ -540,13 +546,36 @@ class ManagerActivityDetail extends Component {
                                         {
                                             (this.state.activity.counselor_status.code === 2) ?
                                                 (<div>
-                                                        <Col sm={12}>
-                                                            <Col componentClass={ControlLabel}>Observaciones: </Col>
-                                                            <FormControl name="commentary"
-                                                                         onChange={this.handleCommentChange}
-                                                                         value={this.state.commentary}
-                                                                         required/>
-                                                        </Col>
+                                                    <Col sm={12}>
+                                                        <Col componentClass={ControlLabel}>Observaciones: </Col>
+                                                        {
+                                                            (this.state.commentary.length >= 254) ?
+                                                                (<div>
+                                                                    <FormControl name="commentary"
+                                                                                 onChange={this.handleCommentChange}
+                                                                                 value={this.state.commentary}
+                                                                                 required/>
+                                                                    <HelpBlock style={errorHelpBlockStyle}>N&uacute;mero de
+                                                                        caract&eacute;res demasiado grande.</HelpBlock>                                                                </div>)
+                                                                    :
+                                                                (this.state.commentary.length < 254 && this.state.commentary.length !=0) ?
+                                                                    (<div>
+                                                                        <FormControl name="commentary"
+                                                                                     onChange={this.handleCommentChange}
+                                                                                     value={this.state.commentary}
+                                                                                     required/>
+                                                                        <HelpBlock style={errorHelpBlockStyle}>N&uacute;mero de
+                                                                            caract&eacute;res demasiado grande.</HelpBlock>                                                                </div>)
+                                                                    :
+                                                                (<div>
+                                                                    <FormControl name="commentary"
+                                                                                 onChange={this.handleCommentChange}
+                                                                                 value={this.state.commentary}
+                                                                                 required/>
+                                                                </div>)
+                                                        }
+
+                                                    </Col>
                                                     <br/>
                                                     <br/>
 
@@ -570,6 +599,7 @@ class ManagerActivityDetail extends Component {
                                                 (this.state.activity.counselor_status.code === 1) ?
                                                     (<div>
                                                         <ReactCenter>
+                                                            <AlertContainer ref={a => this.msg = a}/>
                                                             <Col md="1"><Link to={`/activities/`}><Button
                                                                 className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
                                                             <Col md="1"><Button className="btn-success"

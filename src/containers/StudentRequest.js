@@ -325,31 +325,39 @@ class Request extends Component {
 
     open() {
 
-        if (this.state.titleValue.length <= 50 /*&& this.state.titleValue.length >= 5 &&
-            /^[0-9]+$/.test(this.state.titleValue) === false && /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.titleValue) === false &&
-            this.state.descriptionValue.length <= 100 && this.state.descriptionValue.length >= 10  &&
-            /^[0-9]+$/.test(this.state.descriptionValue) === false && /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.descriptionValue) === false &&
-            this.state.guestValue.length > 0 && this.state.guestValue.length <= 50 &&
-            this.state.attendanceValue > 1 && this.state.attendanceValue < 10000 &&
+        if (this.state.titleValue.length <= 254 &&
+            this.state.titleValue.length >= 5 &&
+            /^[0-9]+$/.test(this.state.titleValue) === false &&
+            /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.titleValue) === false &&
+            this.state.descriptionValue.length <= 254 &&
+            this.state.descriptionValue.length >= 5  &&
+            /^[0-9]+$/.test(this.state.descriptionValue) === false &&
+            /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.descriptionValue) === false &&
+            this.state.guestValue.length >= 2 &&
+            this.state.guestValue.length <= 254 &&
+            /^[0-9]+$/.test(this.state.guestValue) === false &&
+            /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.guestValue) === false &&
+            this.state.attendanceValue > 1 &&
+            this.state.attendanceValue < 100000 &&
             this.state.datePicked === "2" &&
             this.state.startTimePicked === "2" &&
             this.state.endTimePicked === "2" &&
             this.state.facilityPicked === "2" &&
-            this.state.organizationPicked === "2"*/) {
+            this.state.organizationPicked === "2") {
             this.setState({showModal: true});
         }
 
         else {
 
             {
-                this.showErrorAlert()
+                this.showErrorAlert("Campos en el formulario llenados incorrectamente.")
             }
 
         }
     }
 
-    showErrorAlert = () => {
-        this.msg.error('Error in fields. Something is not right.', {time: 5000, type: 'error'});
+    showErrorAlert = (message) => {
+        this.msg.error(message, {time: 2000, type: 'error'});
 
     }
 
@@ -541,7 +549,7 @@ class Request extends Component {
                                                                 s&iacute;mbolos</HelpBlock>
                                                         </div>)
                                                         :
-                                                        (this.state.titleValue.length > 50) ?
+                                                        (this.state.titleValue.length > 254) ?
                                                             (<div>
                                                                 <FormControl name="requestTitle"
                                                                              value={this.state.titleValue}
@@ -553,7 +561,7 @@ class Request extends Component {
                                                                     grande</HelpBlock>
                                                             </div>)
                                                             :
-                                                            (this.state.titleValue.length < 4 && this.state.titleValue.length != 0) ?
+                                                            (this.state.titleValue.length < 5 && this.state.titleValue.length != 0) ?
                                                                 (<div>
                                                                     <FormControl name="requestTitle"
                                                                                  value={this.state.titleValue}
@@ -565,7 +573,7 @@ class Request extends Component {
                                                                         demasiado peque&ntilde;o</HelpBlock>
                                                                 </div>)
                                                                 :
-                                                                (this.state.titleValue.length <= 50 && this.state.titleValue.length >= 4 && this.state.titleValue.length != 0) ?
+                                                                (this.state.titleValue.length <= 254 && this.state.titleValue.length >=5) ?
                                                                     (<div>
                                                                         <FormControl name="requestTitle"
                                                                                      value={this.state.titleValue}
@@ -612,7 +620,7 @@ class Request extends Component {
                                                                 puede ser solo s&iacute;mbolos</HelpBlock>
                                                         </div>)
                                                         :
-                                                        (this.state.descriptionValue.length > 100) ?
+                                                        (this.state.descriptionValue.length > 254) ?
                                                             (<div>
                                                                 <FormControl name="activityDescription"
                                                                              value={this.state.activityDescription}
@@ -626,7 +634,7 @@ class Request extends Component {
                                                                     larga</HelpBlock>
                                                             </div>)
                                                             :
-                                                            (this.state.descriptionValue.length < 10 && this.state.descriptionValue.length != 0) ?
+                                                            (this.state.descriptionValue.length < 5 && this.state.descriptionValue.length != 0) ?
                                                                 (<div>
                                                                     <FormControl name="activityDescription"
                                                                                  value={this.state.activityDescription}
@@ -640,7 +648,7 @@ class Request extends Component {
                                                                         peque&ntilde;a</HelpBlock>
                                                                 </div>)
                                                                 :
-                                                                (this.state.descriptionValue.length <= 100 && this.state.descriptionValue.length >= 10 && this.state.descriptionValue.length != 0) ?
+                                                                (this.state.descriptionValue.length <= 254 && this.state.descriptionValue.length >= 5) ?
                                                                     (<div>
                                                                         <FormControl name="activityDescription"
                                                                                      value={this.state.activityDescription}
@@ -690,7 +698,7 @@ class Request extends Component {
                                                             puede ser solo s&iacute;mbolos</HelpBlock>
                                                     </div>)
                                                     :
-                                                    (this.state.guestValue.length < 1 && this.state.guestValue.length !=0) ?
+                                                    (this.state.guestValue.length < 2 && this.state.guestValue.length !=0) ?
                                                     (<div>
                                                         <FormControl name="activityGuest"
                                                                      value={this.state.activityGuest}
@@ -700,7 +708,7 @@ class Request extends Component {
                                                         <HelpBlock style={errorHelpBlockStyle}>Lista de invitados muy extensa</HelpBlock>
                                                     </div>)
                                                         :
-                                                    (this.state.guestValue.length > 50) ?
+                                                    (this.state.guestValue.length > 254) ?
 
                                                     (<div>
                                                         <FormControl name="activityGuest"
@@ -711,7 +719,7 @@ class Request extends Component {
                                                         <HelpBlock style={errorHelpBlockStyle}>Text too long</HelpBlock>
                                                     </div>)
                                                     :
-                                                    (this.state.guestValue.length <= 50 && this.state.guestValue.length >= 1 && this.state.guestValue.length != 0) ?
+                                                    (this.state.guestValue.length <= 254 && this.state.guestValue.length >= 2) ?
 
                                                         (<div>
                                                             <FormControl name="activityGuest"
@@ -733,7 +741,7 @@ class Request extends Component {
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Número de Asistentes</Col>
                                             <FormControl name="activityAssistant" value={this.state.activityAssistant}
-                                                         type="number" min="1" max="10000" start="1"
+                                                         type="number" min="1" max="100000" start="1"
                                                          onChange={this.handleChangeAttendance}/>
                                         </Col>
 

@@ -115,8 +115,8 @@ class StudentActivityDetail extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
-        // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
-        fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
+        // fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
+        fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log("DATA" + data);
 
@@ -136,7 +136,7 @@ class StudentActivityDetail extends Component {
             });
         })
 
-        fetch(`http://localhost:8000/api/activityType/`).then(response => {
+        fetch(`http://192.168.99.100/api/activityType/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Type:");

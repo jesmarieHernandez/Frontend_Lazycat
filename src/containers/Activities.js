@@ -45,9 +45,9 @@ class Activities extends Component {
                     this.setState({activities: results});
                     //this.props.router.push(`/activities/${createdRequest._id}`);
 
-                    const pending = this.state.activities.filter(function (obj) {
-                        return obj.status.code == 1;
-                    });
+                    // const pending = this.state.activities.filter(function (obj) {
+                    //     return obj.status.code == 1;
+                    // });
 
 
                     console.log('Pending length: ');
@@ -74,6 +74,7 @@ class Activities extends Component {
 
                     this.setState({deniedActivities: denied});
 
+                    console.log(this.state.activities);
 
                 });
             } else {
@@ -84,25 +85,6 @@ class Activities extends Component {
         }).catch(err => {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
-
-        // fetch('http://localhost:3001/api/pending').then(response => {
-        //     if (response.ok) {
-        //         console.log('/api/pending! :D');
-        //         response.json().then(results => {
-        //             console.log('Total pending activities: ' + results);
-        //
-        //             //console.log(this.state.activities);
-        //             //this.props.router.push(`/activities/${createdRequest._id}`);
-        //         });
-        //     } else {
-        //         console.log('Unable to fetch pending activities')
-        //         // response.json().then(error => {
-        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
-        //         // });
-        //     }
-        // }).catch(err => {
-        //     //this.props.showError(`Error in sending data to server: ${err.message}`);
-        // });
     }
 
     handleSelect(event) {
@@ -154,22 +136,24 @@ class Activities extends Component {
     }
 
     render() {
-        const tabsInstance = (
 
-            <div style={{backgroundColor: '#F8F8F8'}}>
-                <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;
-                        sticas</Link></NavItem>
-                    <NavItem> <Link to="/admin"><Icon icon={userTie}
-                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
-                </Nav>
-            </div>
-        );
+        const tabsInstance = (
+                    <div style={{backgroundColor: '#F8F8F8'}}>
+                        <Nav fluid>
+                            <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon
+                                icon={fileText2}
+                                style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
+                            <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon
+                                icon={iosPaw}
+                                style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                            <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon
+                                icon={statsDots}
+                                style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
+                            <NavItem> <Link to="/admin"><Icon icon={userTie}
+                                                              style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
+                        </Nav>
+                    </div>
+                    );
 
 
         let pendingActivities;

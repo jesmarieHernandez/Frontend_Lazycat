@@ -83,8 +83,8 @@ class Users extends Component {
     }
 
     componentDidMount() {
-        // fetch('http://localhost:8000/api/users').then(response => {
-        fetch('http://localhost:8000/api/users').then(response => {
+        // fetch('http://192.168.99.100/api/users').then(response => {
+        fetch('http://192.168.99.100/api/users').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);

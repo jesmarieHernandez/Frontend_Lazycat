@@ -125,134 +125,7 @@ class ActivityDetail extends Component {
         // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
         fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
             response.json().then(data => {
-                console.log("DATA");
-                console.log(data);
-
-                let activityData = [
-                    [{
-                        "id": 33,
-                        "activityName": "Venta 2",
-                        "activityDescription": "Descripcion 2",
-                        "attendantsNumber": 100,
-                        "activityDate": "2018-01-26",
-                        "activityStart": "14:00:00",
-                        "activityEnd": "17:00:00",
-                        "hasFood": null,
-                        "guestName": "None",
-                        "activityStatus_code": 3,
-                        "counselorStatus_code": 3,
-                        "managerStatus_code": 3,
-                        "activityType_code": 4,
-                        "counselorComment": "Nope",
-                        "managerComment": null,
-                        "staffComment": null,
-                        "student": {
-                            "id": 2,
-                            "studentName": "Heriberto Bourdon",
-                            "studentEmail": "heriberto.bourdon1@upr.edu",
-                            "studentNo": "894948484",
-                            "studentPhone": "7879876545",
-                            "studentAddress": "HC 67 Box 6789",
-                            "studentCity": "Bayamon",
-                            "studentCountry": "Puerto Rico",
-                            "studentZipCode": "00897",
-                            "user_id": 4,
-                            "isActive": 1
-                        },
-                        "organization": {
-                            "id": 1,
-                            "organizationName": "Association for No se que mas",
-                            "organizationInitials": "ACMe1PT",
-                            "isActive": 0,
-                            "counselors": [{
-                                "id": 2,
-                                "counselorName": "Luis Gonzalez",
-                                "counselorEmail": "luis.gonzalez76@upr.edu",
-                                "counselorPhone": "6547",
-                                "counselorFaculty": "Ingenieria",
-                                "counselorDepartment": "ICOM",
-                                "counselorOffice": "123",
-                                "user_id": 2,
-                                "isActive": 0
-                            }]
-                        },
-                        "facility": {
-                            "id": 2,
-                            "building": "Ingenieria Industrial",
-                            "space": "II-229",
-                            "facilityDepartment": "heeeey",
-                            "managers": [{
-                                "id": 2,
-                                "managerName": "Xaimarie Hernandez",
-                                "managerEmail": "xaimarie.hernandez@upr.edu",
-                                "managerPhone": "7865",
-                                "user_id": 6,
-                                "isActive": 0
-                            }]
-                        },
-                        "status": {"code": 3, "description": "Denegado"},
-                        "counselor_status": {"code": 3, "description": "Denegado"},
-                        "manager_status": {"code": 3, "description": "Denegado"},
-                        "type": {"code": 4, "description": "Venta"}
-                    }, {
-                        "id": 34,
-                        "activityName": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Cont",
-                        "activityDescription": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Cont",
-                        "attendantsNumber": 100,
-                        "activityDate": "2018-01-25",
-                        "activityStart": "09:30:00",
-                        "activityEnd": "11:30:00",
-                        "hasFood": 1,
-                        "guestName": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Cont",
-                        "activityStatus_code": 1,
-                        "counselorStatus_code": 2,
-                        "managerStatus_code": 1,
-                        "activityType_code": 4,
-                        "counselorComment": null,
-                        "managerComment": null,
-                        "staffComment": "jdakjdlksa",
-                        "student": null,
-                        "organization": {
-                            "id": 1,
-                            "organizationName": "Association for No se que mas",
-                            "organizationInitials": "ACMe1PT",
-                            "isActive": 0,
-                            "counselors": [{
-                                "id": 2,
-                                "counselorName": "Luis Gonzalez",
-                                "counselorEmail": "luis.gonzalez76@upr.edu",
-                                "counselorPhone": "6547",
-                                "counselorFaculty": "Ingenieria",
-                                "counselorDepartment": "ICOM",
-                                "counselorOffice": "123",
-                                "user_id": 2,
-                                "isActive": 0
-                            }]
-                        },
-                        "facility": {
-                            "id": 2,
-                            "building": "Ingenieria Industrial",
-                            "space": "II-229",
-                            "facilityDepartment": "heeeey",
-                            "managers": [{
-                                "id": 2,
-                                "managerName": "Xaimarie Hernandez",
-                                "managerEmail": "xaimarie.hernandez@upr.edu",
-                                "managerPhone": "7865",
-                                "user_id": 6,
-                                "isActive": 0
-                            }]
-                        },
-                        "status": {"code": 1, "description": "Pendiente"},
-                        "counselor_status": {"code": 2, "description": "Aprobado"},
-                        "manager_status": {"code": 1, "description": "Pendiente"},
-                        "type": {"code": 4, "description": "Venta"}
-                    }]
-                ]
-
-                if (Object.keys(data).length === 0) {
-                    this.props.history.push(`/activities/`);
-                }
+                console.log("DATA" + data);
                 this.setState({activity: data});
                 console.log(this.state.activity.id);
             }).catch(err => {
@@ -292,11 +165,7 @@ class ActivityDetail extends Component {
         //         hasFood: this.state.selectedOption ? 1 : 0
         //
         // };
-        console.log("On Approval!!!");
-        console.log(this.state.activity.type)
-        console.log(this.state.activity.type != null);
-        console.log(this.state.activity.staffComment != null);
-        console.log(this.state.activity.hasFood != null);
+
         if (this.state.activity.type != null && this.state.activity.staffComment != null && this.state.activity.hasFood != null) {
             console.log("Inside the if");
             this.setState({commentary: this.state.activity.staffComment});
@@ -306,7 +175,7 @@ class ActivityDetail extends Component {
 
 
         const activityUpdate = {
-            staffComment: this.state.commentary,
+            staffComment : this.state.commentary,
             activityType_code: this.state.selectedType,
             hasFood: this.state.selectedOption ? 1 : 0
 
@@ -428,7 +297,7 @@ class ActivityDetail extends Component {
                 console.log(response);
                 response.json().then(updatedRequest => {
                     console.log('Type request was updated successfully!');
-                    this.props.router.push(`/activities/${updatedRequest.id}`);
+                    this.props.history.push(`/activities/`);
                 })
             } else {
                 response.json().then(error => {
@@ -458,8 +327,7 @@ class ActivityDetail extends Component {
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
                                                                                                       style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;
-                        sticas</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -476,7 +344,7 @@ class ActivityDetail extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li><Link to={`/activities/`}>Actividades</Link></li>
+                        <li ><Link to={`/activities/`}>Actividades</Link></li>
                         <li className="active">Detalles de la Actividad</li>
                     </ol>
 
@@ -514,8 +382,7 @@ class ActivityDetail extends Component {
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>N&uacute;mero de Identificaci&oacute;
-                                                n</Col>
+                                            <Col componentClass={ControlLabel}>N&uacute;mero de Identificaci&oacute;n</Col>
                                             <FormControl name="studentIdentificationNumber"
                                                          value={this.state.activity.student.studentNo} disabled/>
                                         </Col>
@@ -565,39 +432,53 @@ class ActivityDetail extends Component {
                             }
                             <Panel header="Detalles de la Actividad">
                                 <FormGroup>
-                                    <Col sm={3}>
+                                    <Col sm={12}>
                                         <Col componentClass={ControlLabel}>Nombre</Col>
-                                        <FormControl name="requestTitle" value={this.state.activity.activityName}
-                                                     disabled/>
+                                        {/*<FormControl name="requestTitle" value={this.state.activity.activityName}*/}
+                                        {/*disabled/>*/}
+                                        <br/>
+                                        {this.state.activity.activityName}
                                     </Col>
+                                </FormGroup>
 
-                                    <Col sm={9}>
-                                        <Col componentClass={ControlLabel}>Direcci&oacute;n</Col>
-                                        <FormControl name="activityDescription"
-                                                     value={this.state.activity.activityDescription} disabled/>
+                                <Row></Row>
+
+                                <FormGroup style={{paddingTop: "20px"}}>
+                                    <Col sm={12}>
+                                        <Col componentClass={ControlLabel}>Descripci&oacute;n</Col>
+                                        {/*<FormControl name="activityDescription"*/}
+                                        {/*value={this.state.activity.activityDescription} disabled/>*/}
+                                        <br/>
+                                        {this.state.activity.activityDescription}
+                                    </Col>
+                                </FormGroup>
+
+                                <Row></Row>
+
+                                <FormGroup style={{paddingTop: "20px"}}>
+                                    <Col sm={12}>
+                                        <Col componentClass={ControlLabel}>Invitado(s)</Col>
+                                        {/*<FormControl name="activityGuest" value={this.state.activity.guestName}*/}
+                                        {/*disabled/>*/}
+                                        <br/>
+                                        {this.state.activity.guestName}
                                     </Col>
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <Col sm={3}>
-                                        <Col componentClass={ControlLabel}>Invitado(s)</Col>
-                                        <FormControl name="activityGuest" value={this.state.activity.guestName}
-                                                     disabled/>
-                                    </Col>
-
-                                    <Col sm={3}>
+                                    <Col sm={4}>
                                         <Col componentClass={ControlLabel}>N&uacute;mero de Asistentes</Col>
                                         <FormControl name="activityAssistant"
                                                      value={this.state.activity.attendantsNumber} disabled/>
                                     </Col>
 
-                                    <Col md={3}>
+                                    <Col md={4}>
                                         <Col componentClass={ControlLabel}>Espacio/Sal&oacute;n</Col>
                                         <FormControl name="selectFacilities" value={this.state.activity.facility.space}
                                                      disabled/>
                                     </Col>
 
-                                    <Col md={3}>
+                                    <Col md={4}>
                                         <Col componentClass={ControlLabel}>Edificio</Col>
                                         <FormControl name="facilityBuilding"
                                                      value={this.state.activity.facility.building} disabled/>
@@ -765,8 +646,7 @@ class ActivityDetail extends Component {
                                                 <Col sm={3}>
                                                     <Col componentClass={ControlLabel}>Permisos: </Col>
                                                     <Col>
-                                                        <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso
-                                                            de Comida?</Checkbox>{' '}
+                                                        <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso de Comida?</Checkbox>{' '}
                                                     </Col>
                                                 </Col>
                                                 <br/>
@@ -813,8 +693,7 @@ class ActivityDetail extends Component {
 
                                     <Row>
                                         <ReactCenter>
-                                            <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Atr&aacute;
-                                                s</Button></Link></Col>
+                                            <Col md="1"><Link to={`/activities/`}><Button className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
                                             {
                                                 ((this.state.activity.counselor_status.code === 3 || this.state.activity.manager_status.code === 3) && this.state.editDecision === true) ?
                                                     (<div>
@@ -862,7 +741,7 @@ class ActivityDetail extends Component {
 
                                 </FormGroup>
                             </Panel>
-                            <br/>
+                            <br />
 
                         </Col>
                     </Row>

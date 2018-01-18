@@ -23,6 +23,7 @@ class StudentActivities extends Component {
 
         fetch(`http://localhost:8000/api/activity/${this.props.cookies.get('email')}`).then(response => {
             if (response.ok) {
+                console.log('Colon');
                 response.json().then(results => {
                     console.log(':)');
                     console.log(results);

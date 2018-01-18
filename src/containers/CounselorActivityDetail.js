@@ -12,10 +12,11 @@ import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 import {userTie} from 'react-icons-kit/icomoon/userTie';
 import DatePicker from 'react-bootstrap-date-picker';
 import TimePicker from 'react-bootstrap-time-picker';
+import AlertContainer from 'react-alert';
 
 import {
     FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem, Label, Checkbox
+    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem, Label, Checkbox, HelpBlock
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
 
@@ -119,8 +120,8 @@ class CounselorActivityDetail extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
-        // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
-        fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
+        // fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
+        fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log("DATA" + data);
                 if(Object.keys(data).length === 0){
@@ -137,140 +138,99 @@ class CounselorActivityDetail extends Component {
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
             });
         })
-
-        fetch(`http://localhost:8000/api/activityType/`).then(response => {
-            if (response.ok) {
-                response.json().then(results => {
-                    console.log("Type:");
-                    console.log(results);
-                    this.setState({activityTypes: results});
-                    console.log('Asi son los activityTypes: ' + this.state.activityTypes);
-                });
-            } else {
-                console.log('Not ok');
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            console.log(err);
-            // this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
     }
 
     onApproval(event) {
         event.preventDefault();
 
-        // console.log('Selected status: ' + this.state.selectedStatus);
-
-        const activityUpdate = {
-            counselorComment: this.state.commentary,
-        };
-
-        // this.setState({managerDecision: 'approved'});
-        // console.log("DSCA Decision: " + this.state.dscaDecision);
-
-
-        console.log("Activity Update Object: " + activityUpdate);
-        fetch(`http://localhost:8000/api/counselorApproved/${this.state.activity.id}`, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(activityUpdate),
-        }).then(response => {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(updatedRequest => {
-                    console.log('Activity request was updated successfully!');
-                    console.log('Activity request ID: ' + updatedRequest.id);
-
-                    this.props.history.push(`/counselor/activities/`);
-                })
-            } else {
-                response.json().then(error => {
-                    //this.props.showError(`Failed to create request: ${error.message}`);
-                });
+        if(this.state.commentary.length >=254 || this.state.commentary.length === 0)
+            {
+                this.showErrorAlert("Campos en el formulario llenados incorrectamente.")
             }
-        }).catch(err => {
-            //this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+
+        else {
+            const activityUpdate = {
+                counselorComment: this.state.commentary,
+            };
+
+            // this.setState({managerDecision: 'approved'});
+            // console.log("DSCA Decision: " + this.state.dscaDecision);
+
+
+            console.log("Activity Update Object: " + activityUpdate);
+            fetch(`http://192.168.99.100/api/counselorApproved/${this.state.activity.id}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(activityUpdate),
+            }).then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    response.json().then(updatedRequest => {
+                        console.log('Activity request was updated successfully!');
+                        console.log('Activity request ID: ' + updatedRequest.id);
+
+                        this.props.history.push(`/counselor/activities/`);
+                    })
+                } else {
+                    response.json().then(error => {
+                        //this.props.showError(`Failed to create request: ${error.message}`);
+                    });
+                }
+            }).catch(err => {
+                //this.props.showError(`Error in sending data to server: ${err.message}`);
+            });
+        }
     }
 
     onDenied(event) {
         event.preventDefault();
 
-        // console.log('Selected status: ' + this.state.selectedStatus);
+        if(this.state.commentary.length >=254 || this.state.commentary.length === 0)
+        {
+            this.showErrorAlert("Campos en el formulario escritos incorrectamente.")
+        }
 
-        const activityUpdate = {
-            counselorComment: this.state.commentary,
-        };
+        else {
+            const activityUpdate = {
+                counselorComment: this.state.commentary,
+            };
 
-        // this.setState({dscaDecision: 'denied'});
+            // this.setState({dscaDecision: 'denied'});
 
-        console.log(activityUpdate);
-        fetch(`http://localhost:8000/api/counselorDenied/${this.state.activity.id}`, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(activityUpdate),
-        }).then(response => {
-            if (response.ok) {
-                console.log(response);
-                response.json().then(updatedRequest => {
-                    console.log('Activity request was updated successfully!');
-                    console.log('Activity request ID: ' + updatedRequest.id);
+            console.log(activityUpdate);
+            fetch(`http://192.168.99.100/api/counselorDenied/${this.state.activity.id}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(activityUpdate),
+            }).then(response => {
+                if (response.ok) {
+                    console.log(response);
+                    response.json().then(updatedRequest => {
+                        console.log('Activity request was updated successfully!');
+                        console.log('Activity request ID: ' + updatedRequest.id);
 
-                    this.props.history.push(`/counselor/activities/`);
-                })
-            } else {
-                response.json().then(error => {
-                    //this.props.showError(`Failed to create request: ${error.message}`);
-                });
-            }
-        }).catch(err => {
-            //this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+                        this.props.history.push(`/counselor/activities/`);
+                    })
+                } else {
+                    response.json().then(error => {
+                        //this.props.showError(`Failed to create request: ${error.message}`);
+                    });
+                }
+            }).catch(err => {
+                //this.props.showError(`Error in sending data to server: ${err.message}`);
+            });
+        }
     }
 
     handleCommentChange = (event) => {
         this.setState({commentary: event.target.value});
     }
 
-    // onEdit = (event) => {
-    //     event.preventDefault();
-    //     this.setState({editDecision: true});
-    //     console.log("Decision");
-    //     console.log(this.state.editDecision);
-    // }
+    showErrorAlert = (message) => {
+        this.msg.error(message, {time: 500, type: 'error'});
+        return;
+    }
 
-    // onSave = (event) => {
-    //     event.preventDefault();
-    //
-    //     const activityUpdate = {
-    //         activityType_code: this.state.selectedType,
-    //     };
-    //     console.log(activityUpdate);
-    //     console.log("Typeeeeeee");
-    //     console.log(this.state.selectedType);
-    //
-    //     fetch(`http://localhost:8000/api/updateType/${this.state.activity.id}`, {
-    //         method: 'PUT',
-    //         headers: {'Content-Type': 'application/json'},
-    //         body: JSON.stringify(activityUpdate),
-    //     }).then(response => {
-    //         if (response.ok) {
-    //             console.log(response);
-    //             response.json().then(updatedRequest => {
-    //                 console.log('Type request was updated successfully!');
-    //                 this.props.router.push(`/activities/${updatedRequest.id}`);
-    //             })
-    //         } else {
-    //             response.json().then(error => {
-    //                 //this.props.showError(`Failed to create request: ${error.message}`);
-    //             });
-    //         }
-    //     }).catch(err => {
-    //         //this.props.showError(`Error in sending data to server: ${err.message}`);
-    //     });
-    // }
 
     render() {
         // console.log('this.state.selectedType');
@@ -287,6 +247,20 @@ class CounselorActivityDetail extends Component {
                 </Nav>
             </div>
         );
+
+        var errorFormStyle = {
+            borderColor: '#B74442',
+            boxShadow: "0px 0px 8px #B74442"
+        };
+
+        var errorHelpBlockStyle = {
+            color: '#B74442'
+        };
+
+        var successFormStyle = {
+            borderColor: '#3C765B',
+            boxShadow: "0px 0px 8px #3C765B"
+        };
 
         return (
             <div className="container">
@@ -314,13 +288,13 @@ class CounselorActivityDetail extends Component {
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Email</Col>
+                                            <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
                                             <FormControl name="studentAddressZipCode"
                                                          value={this.state.activity.staff.staffEmail} disabled/>
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Telephone</Col>
+                                            <Col componentClass={ControlLabel}>Tel&eacute;fono</Col>
                                             <FormControl name="studentTelephone"
                                                          value={this.state.activity.staff.staffPhone} disabled/>
                                         </Col>
@@ -336,8 +310,7 @@ class CounselorActivityDetail extends Component {
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>N&uacute;mero de Identificaci&oacute;
-                                                n</Col>
+                                            <Col componentClass={ControlLabel}>N&uacute;mero de Identificaci&oacute;n</Col>
                                             <FormControl name="studentIdentificationNumber"
                                                          value={this.state.activity.student.studentNo} disabled/>
                                         </Col>
@@ -544,46 +517,82 @@ class CounselorActivityDetail extends Component {
                             <Panel header="Decisión de la Actividad">
 
                                 <FormGroup>
-                                        {(this.state.activity.counselor_status.code === 2 || this.state.activity.counselor_status.code === 3) ?
-                                            (<div>
-                                                <ReactCenter>
-                                                    <Col md="1"><Link to={`/activities/`}><Button
-                                                        className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
-                                                </ReactCenter>
-                                            </div>)
-                                            :
-                                            (<div>
-                                                <Row>
-                                                    <Col sm={12}>
-                                                        <Col componentClass={ControlLabel}>Observaciones: </Col>
-                                                        <FormControl name="commentary"
-                                                                     onChange={this.handleCommentChange}
-                                                                     value={this.state.commentary}
-                                                                     required/>
-                                                    </Col>
-                                                </Row>
-                                                <br/>
-                                                <br/>
+                                    {(this.state.activity.counselor_status.code === 2 || this.state.activity.counselor_status.code === 3) ?
+                                        (<div>
+                                                <Col sm={12}>
+                                                    <Col componentClass={ControlLabel}>Observaciones: </Col>
+                                                    <br/>
+                                                    {this.state.activity.counselorComment}
+                                                </Col>
+                                            <br/>
 
-                                                <Row>
-                                                    <ReactCenter>
-                                                        <Col md="1"><Link to={`/activities/`}>
-                                                            <Button
-                                                                    className="btn btn-primary">
-                                                                    Atr&aacute;s</Button>
-                                                        </Link></Col>
-                                                        <Col md="1"><Button className="btn-success"
-                                                                            onClick={this.onApproval}
-                                                                            style={{marginLeft: "10px"}}
-                                                                            required>Aprobar</Button></Col>
-                                                        <Col md="1"><Button className="btn-danger"
-                                                                            onClick={this.onDenied}
-                                                                            style={{marginLeft: "40px"}}
-                                                                            required>Denegar</Button></Col>
-                                                    </ReactCenter>
-                                                </Row>
-                                            </div>)
-                                        }
+                                            <Row></Row>
+
+                                            <ReactCenter>
+                                                <Col md="1"><Link to={`/activities/`}><Button
+                                                    className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
+                                                <br/>
+                                                <br/>
+                                            </ReactCenter>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <Row>
+                                                <Col sm={12}>
+                                                    <Col componentClass={ControlLabel}>Observaciones: </Col>
+                                                    {
+                                                        (this.state.commentary.length >= 254) ?
+                                                            (<div>
+                                                                <FormControl name="commentary"
+                                                                             onChange={this.handleCommentChange}
+                                                                             value={this.state.commentary}
+                                                                             style={errorFormStyle}
+                                                                             required/>
+                                                                <HelpBlock style={errorHelpBlockStyle}>N&uacute;mero de
+                                                                    caract&eacute;res demasiado grande.</HelpBlock>
+                                                            </div>)
+                                                            :
+                                                            (this.state.commentary.length <= 254 && this.state.commentary.length != 0) ?
+                                                                (<div>
+                                                                    <FormControl name="commentary"
+                                                                                 onChange={this.handleCommentChange}
+                                                                                 value={this.state.commentary}
+                                                                                 style={successFormStyle}
+                                                                                 required/>
+                                                                </div>)
+                                                                :
+                                                            (<div>
+                                                                <FormControl name="commentary"
+                                                                             onChange={this.handleCommentChange}
+                                                                             value={this.state.commentary}
+                                                                             required/>
+                                                            </div>)
+                                                    }
+                                                </Col>
+                                            </Row>
+                                            <br/>
+                                            <br/>
+
+                                            <Row>
+                                                <ReactCenter>
+                                                    <AlertContainer ref={a => this.msg = a}/>
+                                                    <Col md="1"><Link to={`/activities/`}>
+                                                        <Button
+                                                            className="btn btn-primary">
+                                                            Atr&aacute;s</Button>
+                                                    </Link></Col>
+                                                    <Col md="1"><Button className="btn-success"
+                                                                        onClick={this.onApproval}
+                                                                        style={{marginLeft: "10px"}}
+                                                                        required>Aprobar</Button></Col>
+                                                    <Col md="1"><Button className="btn-danger"
+                                                                        onClick={this.onDenied}
+                                                                        style={{marginLeft: "40px"}}
+                                                                        required>Denegar</Button></Col>
+                                                </ReactCenter>
+                                            </Row>
+                                        </div>)
+                                    }
                                 </FormGroup>
                             </Panel>
                             <br/>

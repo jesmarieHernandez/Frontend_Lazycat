@@ -20,8 +20,6 @@ import {
 import ReactCenter from "react-center";
 
 
-const PAGE_SIZE = 10;
-
 class EditActivity extends Component {
     constructor(props, context) {
         super(props, context);
@@ -115,8 +113,8 @@ class EditActivity extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
-        fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
-        // fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
+        // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({activity: data[0]});

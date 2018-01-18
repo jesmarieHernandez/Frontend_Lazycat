@@ -20,8 +20,6 @@ import {
 import ReactCenter from "react-center";
 
 
-const PAGE_SIZE = 10;
-
 class StudentActivityDetail extends Component {
     constructor(props, context) {
         super(props, context);
@@ -125,6 +123,11 @@ class StudentActivityDetail extends Component {
                 if(Object.keys(data).length === 0){
                     this.props.history.push(`/student/activities/`);
                 }
+
+                else if (data.student.studentEmail !== this.props.cookies.get('email')){
+                    this.props.history.push(`/student/activities/`);
+                }
+
                 this.setState({activity: data});
                 console.log(this.state.activity.id);
             }).catch(err => {

@@ -126,6 +126,10 @@ class CounselorActivityDetail extends Component {
                 if(Object.keys(data).length === 0){
                     this.props.history.push(`/counselor/activities/`);
                 }
+
+                else if (data.organization.counselors[0].counselorEmail !== this.props.cookies.get('email')){
+                    this.props.history.push(`/counselor/activities/`);
+                }
                 this.setState({activity: data});
                 console.log(this.state.activity.id);
             }).catch(err => {

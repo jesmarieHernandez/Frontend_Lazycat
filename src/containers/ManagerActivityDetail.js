@@ -19,9 +19,6 @@ import {
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
 
-
-const PAGE_SIZE = 10;
-
 class ManagerActivityDetail extends Component {
     constructor(props, context) {
         super(props, context);
@@ -126,6 +123,10 @@ class ManagerActivityDetail extends Component {
                 if(Object.keys(data).length === 0){
                     this.props.history.push(`/manager/activities/`);
                 }
+                else if (data.facility.managers[0].managerEmail !== this.props.cookies.get('email')){
+                    this.props.history.push(`/manager/activities/`);
+                }
+
                 this.setState({activity: data});
                 console.log(this.state.activity.id);
             }).catch(err => {

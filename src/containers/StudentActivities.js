@@ -75,13 +75,32 @@ class StudentActivities extends Component {
         const activities = this.state.activities.map(activity =>
 
             <Col md={12}>
-            <Panel  header={activity.activityName}>
-                <td><Link to={`/student/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                <p>Description: {activity.activityDescription}</p>
-                <p>Organization: {activity.organization.organizationName}</p>
-                <p>Facility: {activity.facility.building + '-' + activity.facility.space}</p>
-                <p>Status: {activity.status.description}</p>
-            </Panel>
+                <Panel header={activity.activityName}>
+                    {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+                    {/*<br/>*/}
+                    <Col md={9}>
+                        <Row>
+
+                            <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
+                            <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p>
+                        </Col>
+                            <Col md={4}><p>Organización:</p></Col><Col md={8}>
+                            <p> {activity.organization.organizationName}</p></Col>
+                            <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                            <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+
+                        </Row>
+                    </Col>
+                    <Col md={3}>
+                        <Row>
+                            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                                className="btn-info btn-large pull-right"
+                                style={{width: '100px', marginBottom: '10px'}}
+                            >Detalles</Button></Link> </Col>
+                        </Row>
+                    </Col>
+
+                </Panel>
             </Col>
         );
 

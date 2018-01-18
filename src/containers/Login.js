@@ -28,7 +28,7 @@ export default class Login extends Component {
         }
         else if (userType_code === '2') {
             console.log('STAFF');
-            this.props.history.push("/staff/activities");
+            this.props.history.push("/activities");
             return;
         }
         else if (userType_code === '3') {
@@ -69,7 +69,7 @@ export default class Login extends Component {
                     }
                     else if (results.userType_code === 2) {
                         console.log('STAFF');
-                        this.props.history.push("/staff/activities");
+                        this.props.history.push("/activities");
                         return;
                     }
                     else if (results.userType_code === 3) {

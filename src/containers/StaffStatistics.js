@@ -1,17 +1,22 @@
 /**
- * Created by jesma on 12/16/2017.
- */
-/**
  * Created by jesma on 12/11/2017.
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import 'isomorphic-fetch';
 /*
  import {Link} from 'react-router';
  */
 import {Link} from "react-router-dom";
-import {Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col} from 'react-bootstrap';
+import {Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Nav, NavItem, Row, Label, PageHeader} from 'react-bootstrap';
 import {Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis} from "recharts";
+import ReactCenter from 'react-center';
+import Icon from 'react-icons-kit';
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
+import {userTie} from 'react-icons-kit/icomoon/userTie';
+
 
 const PAGE_SIZE = 10;
 
@@ -20,17 +25,18 @@ class StaffStatistics extends Component {
         super(props, context);
 
         this.state = {
+            activeKey: "1",
             pending: 0,
-            cancelled: 0,
-            celebrated: 0
+            denied: 0,
+            approved: 0
         }
     }
 
     componentDidMount() {
-        fetch('/api/pending').then(response => {
+        fetch('http://192.168.99.100/api/pending').then(response => {
             if (response.ok) {
                 response.json().then(count => {
-                    this.setState({pending: count});
+                    this.setState({pending: count[0].pending});
                 });
             } else {
                 // response.json().then(error => {
@@ -41,10 +47,11 @@ class StaffStatistics extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('/api/cancelled').then(response => {
+        fetch('http://192.168.99.100/api/denied').then(response => {
             if (response.ok) {
                 response.json().then(count => {
-                    this.setState({cancelled: count});
+                    console.log(count);
+                    this.setState({denied: count[0].Denied});
                 });
             } else {
                 // response.json().then(error => {
@@ -55,10 +62,10 @@ class StaffStatistics extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('/api/celebrated').then(response => {
+        fetch('http://192.168.99.100/api/approved').then(response => {
             if (response.ok) {
                 response.json().then(count => {
-                    this.setState({celebrated: count});
+                    this.setState({approved: count[0].approved});
                 });
             } else {
                 // response.json().then(error => {
@@ -87,23 +94,37 @@ class StaffStatistics extends Component {
         });
     }
 
+    handleSelect = (event) => {
+        // event.preventDefault();
+        console.log(event);
+        this.setState({activeKey: event});
+    }
 
 
     render() {
         const tabsInstance = (
-            <div>
-                <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/request">Solicitud</Link></li>
-                    <li><Link to="/activities">Actividades</Link></li>
-                    <li><Link to="/stats">Stats</Link></li>
-                    <li><Link to="/admin">Admin</Link></li>
-                </ul>
+
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie}
+                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
+                </Nav>
             </div>
-        );
+        )
 
         let data = [
-            {name: 'Activities', pending: this.state.pending, celebrated: this.state.celebrated, cancelled: this.state.cancelled},
+            {
+                name: 'Activities',
+                pending: this.state.pending,
+                approved: this.state.approved,
+                denied: this.state.denied
+            },
         ];
 
         return (
@@ -115,29 +136,131 @@ class StaffStatistics extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li className="active">Stats</li>
+                        <li className="active">Estad&iacute;sticas</li>
                     </ol>
 
-                    <Col md={7}>
-                        <Panel  header="Monthly Activities">
-                            <BarChart width={400} height={200} data={data}>
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="pending" fill="#8884d8" />
-                                <Bar dataKey="approved" fill="#82ca9d" />
-                                <Bar dataKey="denied"  fill="#823333" />
-                            </BarChart>
-                        </Panel>
+                    <Col md={12}>
+
+                        <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
+                            <NavItem eventKey="1" href="/home">Estad&iacute;sticas por Clasificaci&oacute;n</NavItem>
+                            <NavItem eventKey="2" title="Item">Estad&iacute;sticas por Horario</NavItem>
+                            <NavItem eventKey="3" title="Item">Representaci&oacute;n Gr&aacute;fica</NavItem>
+                        </Nav>
+                        <br/>
+
+                        {this.state.activeKey === "1" ?
+                            <Row>
+                                <Col md={12}>
+                                    <Table bordered condensed striped>
+                                        <thead>
+                                        <tr>
+                                            <ReactCenter>
+                                                <th rowSpan="2" style={{paddingTop: "20px", borderBottom: '0px'}}>
+                                                    Edificio
+                                                </th>
+                                            </ReactCenter>
+                                            <th
+                                                style={{paddingTop: "20px",
+                                                    borderBottom: '0px'}}>Espacio</th>
+                                            <th
+                                                colSpan="10"
+                                                style={{paddingTop: "10px",
+                                                    paddingLeft: "200px",
+                                                    paddingBottom: "10px"}}>Clasificaci&oacute;n
+                                            </th>
+                                            <th
+                                                style={{paddingTop: "20px",
+                                                    borderBottom: '0px'}}>TOTAL</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Acad.</th>
+                                            <th>Arte</th>
+                                            <th>Civica</th>
+                                            <th>Deport.</th>
+                                            <th>Educ.</th>
+                                            <th>Prof.</th>
+                                            <th>Reca.</th>
+                                            <th>Reli.</th>
+                                            <th>Social</th>
+                                            <th>Poli.</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td>Centro de Estudiantes</td>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                            <td>5</td>
+                                            <td>6</td>
+                                            <td>7</td>
+                                            <td>8</td>
+                                            <td>9</td>
+                                            <td>10</td>
+                                            <td>11</td>
+                                            <td>12</td>
+                                        </tr>
+                                        </tbody>
+                                    </Table>
+                                </Col>
+                            </Row>
+                            :
+                            this.state.activeKey === "2" ?
+                                <Row>
+                                    <Col md={12}>
+                                        <Table bordered condensed striped>
+                                            <thead>
+                                            <tr>
+                                                <th style={{paddingTop: "20px",
+                                                    borderBottom: '0px'}}>Edificio</th>
+                                                <th
+                                                    style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Espacio</th>
+                                                <th
+                                                    style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Diurno</th>
+                                                <th
+                                                    style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>Nocturno</th>
+                                                <th
+                                                    style={{paddingTop: "20px",
+                                                        borderBottom: '0px'}}>TOTAL</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <tr>
+                                                <td>Centro de Estudiantes</td>
+                                                <td>1</td>
+                                                <td>2</td>
+                                                <td>3</td>
+                                                <td>4</td>
+                                            </tr>
+                                            </tbody>
+                                        </Table>
+                                    </Col>
+                                </Row>
+                                :
+                                <ReactCenter>
+                                    <BarChart width={600} height={300} data={data}>
+                                        <XAxis dataKey="name"/>
+                                        <YAxis />
+                                        <CartesianGrid strokeDasharray="3 3"/>
+                                        <Tooltip />
+                                        <Legend />
+                                        <Bar dataKey="pending" fill="#8884d8"/>
+                                        <Bar dataKey="approved" fill="#82ca9d"/>
+                                        <Bar dataKey="denied" fill="#823333"/>
+                                    </BarChart>
+                                </ReactCenter>
+                        }
                     </Col>
 
-                    <Col md={5}>
-                        <Panel collapse header='Filter'>
-                            <p>Activity stats for the last month</p>
-                        </Panel>
-                    </Col>
                 </Col>
             </div>
         )

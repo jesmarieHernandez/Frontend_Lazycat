@@ -28,7 +28,7 @@ export default class Login extends Component {
         }
         else if (userType_code === '2') {
             console.log('STAFF');
-            this.props.history.push("/activities");
+            this.props.history.push("/staff/activities");
             return;
         }
         else if (userType_code === '3') {
@@ -50,8 +50,8 @@ export default class Login extends Component {
 
     responseGoogle = (response) => {
 
-        fetch(`http://localhost:8000/api/users/${response.w3.U3}`).then(response => {
-        // fetch(`http://localhost:8000/api/users/${response.w3.U3}`).then(response => {
+        fetch(`http://192.168.99.100/api/users/${response.w3.U3}`).then(response => {
+        // fetch(`http://192.168.99.100/api/users/${response.w3.U3}`).then(response => {
 
             if (response.ok) {
                 response.json().then(results => {
@@ -69,7 +69,7 @@ export default class Login extends Component {
                     }
                     else if (results.userType_code === 2) {
                         console.log('STAFF');
-                        this.props.history.push("/activities");
+                        this.props.history.push("/staff/activities");
                         return;
                     }
                     else if (results.userType_code === 3) {

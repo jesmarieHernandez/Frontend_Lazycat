@@ -31,8 +31,8 @@ import CounselorActivities from "./containers/CounselorActivities";
 import CounselorActivityDetail from "./containers/CounselorActivityDetail";
 import ManagerActivities from "./containers/ManagerActivities";
 import ManagerActivityDetail from "./containers/ManagerActivityDetail";
-import StaffActivities from "./containers/StaffActivities";
-import StaffStatistics from "./containers/StaffStatistics";
+// import StaffActivities from "./containers/StaffActivities";
+// import StaffStatistics from "./containers/StaffStatistics";
 import EditActivity from "./containers/EditActivity"
 
 export default ({childProps}) => {
@@ -65,8 +65,21 @@ export default ({childProps}) => {
         <CounselorRoute path="/counselor/activities/:id" exact component={CounselorActivityDetail} props={childProps}/>
         <ManagerRoute path="/manager/activities" exact component={ManagerActivities} props={childProps}/>
         <ManagerRoute path="/manager/activities/:id" exact component={ManagerActivityDetail} props={childProps}/>
-        <StaffRoute path="/staff/activities" exact component={StaffActivities} props={childProps}/>
-        <StaffRoute path="/staff/statistics" exact component={StaffStatistics} props={childProps}/>
+        {/*<StaffRoute path="/staff/request" exact component={Request} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/activities" exact component={Activities} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/activities/edit" exact component={EditActivity} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/activities/:id" exact component={ActivityDetail} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/stats" exact component={Stats} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin" exact component={Admin} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/facilities" exact component={Facilities} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/facilities/create" exact component={NewFacilities} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/facilities/:id" exact component={FacilitiesDetail} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/organizations" exact component={Organizations} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/organizations/create" exact component={NewOrganization} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/organizations/:id" exact component={OrganizationDetail} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/users/" exact component={Users} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/users/create" exact component={NewUser} props={childProps}/>*/}
+        {/*<StaffRoute path="/staff/admin/users/:id" exact component={UserDetail} props={childProps}/>*/}
 
         {/* Finally, catch all unmatched routes */}
         <UnauthenticatedRoute component={Login} props={childProps}/>

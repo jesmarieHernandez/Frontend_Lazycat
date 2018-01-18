@@ -10,6 +10,7 @@ import {
     Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Nav, NavItem, HelpBlock
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
+import AlertContainer from 'react-alert';
 import Icon from 'react-icons-kit';
 import {statsDots} from 'react-icons-kit/icomoon/statsDots';
 import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
@@ -90,11 +91,46 @@ class NewUser extends Component {
 
             let newUser;
             newUser = {
-                role: form.userRole.value,
-                adminName: form.adminName.value,
-                adminEmail: form.adminEmail.value,
-                adminTelephone: form.adminTelephone.value
+                // role: form.userRole.value,
+                staffName: form.adminName.value,
+                staffEmail: form.adminEmail.value,
+                staffPhone: form.adminTelephone.value
             }
+
+            if (this.state.adminNameValue.length <= 100 &&
+                /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === true &&
+                this.state.adminEmailValue.length <= 100 &&
+                /^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.adminEmailValue) === true &&
+                /^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.adminPhoneValue) === true) {
+
+                fetch('http://192.168.99.100/api/admin', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(newUser),
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Culiooooooooo');
+                        console.log(response);
+                        response.json().then(createdUser => {
+                            console.log('New user was created successfully!');
+                            console.log('User ID: ' + createdUser._id);
+
+                            this.props.history.push(`/admin/users/`);
+                        })
+                    } else {
+                        response.json().then(error => {
+                            //this.props.showError(`Failed to create request: ${error.message}`);
+                        });
+                    }
+                }).catch(err => {
+                    //this.props.showError(`Error in sending data to server: ${err.message}`);
+                });
+            }
+
+            else {
+                this.showErrorAlert("Campos en el formulario llenados incorrectamente.")
+            }
+
 
         } else if (this.state.selectedUserRole.name === 'Staff') {
 
@@ -106,28 +142,38 @@ class NewUser extends Component {
                 staffPhone: form.staffTelephone.value
             }
 
-            fetch('http://192.168.99.100/api/staff', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(newUser),
-            }).then(response => {
-                if (response.ok) {
-                    console.log('Culiooooooooo');
-                    console.log(response);
-                    response.json().then(createdUser => {
-                        console.log('New user was created successfully!');
-                        console.log('User ID: ' + createdUser._id);
+            if (this.state.staffNameValue.length <= 100 &&
+                /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === true &&
+                this.state.staffEmailValue.length <= 100 &&
+                /^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.staffEmailValue) === true &&
+                /^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.staffPhoneValue) === true) {
+                fetch('http://192.168.99.100/api/staff', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(newUser),
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Culiooooooooo');
+                        console.log(response);
+                        response.json().then(createdUser => {
+                            console.log('New user was created successfully!');
+                            console.log('User ID: ' + createdUser._id);
 
-                        this.props.history.push(`/admin/users/`);
-                    })
-                } else {
-                    response.json().then(error => {
-                        //this.props.showError(`Failed to create request: ${error.message}`);
-                    });
-                }
-            }).catch(err => {
-                //this.props.showError(`Error in sending data to server: ${err.message}`);
-            });
+                            this.props.history.push(`/admin/users/`);
+                        })
+                    } else {
+                        response.json().then(error => {
+                            //this.props.showError(`Failed to create request: ${error.message}`);
+                        });
+                    }
+                }).catch(err => {
+                    //this.props.showError(`Error in sending data to server: ${err.message}`);
+                });
+            }
+
+            else {
+                this.showErrorAlert("Campos en el formulario llenados incorrectamente.")
+            }
 
         } else if (this.state.selectedUserRole.name === 'Student') {
             console.log('puasdas');
@@ -145,28 +191,48 @@ class NewUser extends Component {
                 studentEmail: form.studentEmail.value
             }
 
-            fetch('http://192.168.99.100/api/students', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(newUser),
-            }).then(response => {
-                if (response.ok) {
-                    console.log('Culiooooooooo');
-                    console.log(response);
-                    response.json().then(createdUser => {
-                        console.log('New user was created successfully!');
-                        console.log('User ID: ' + createdUser._id);
+            if (
+                (this.state.studentNameValue.length <= 100) &&
+                (/^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === true) &&
+                (/^([0-9]{9})$/.test(this.state.studentIdentificationNoValue) === true) &&
+                (this.state.studentIdentificationNoValue.length === 9) &&
+                (this.state.studentAddressValue.length >= 10) &&
+                (this.state.studentAddressValue.length <= 254) &&
+                (/^[0-9]+$/.test(this.state.studentAddressValue) === false) &&
+                (/^[`!@#\$%&\*()_+\{}\|:"<>?~,./;'\]a-zA-Z]+$/.test(this.state.studentAddressValue) === false) &&
+                (this.state.studentCityValue.length >= 3) &&
+                (this.state.studentCityValue.length < 20) &&
+                (/^[a-zA-Z\s?]+$/.test(this.state.studentCityValue) === true) &&
+                (/^([0-9]{5})$/.test(this.state.studentZipCodeValue) === true) &&
+                (/^(([0-9]{10}))$/.test(this.state.studentPhoneValue) === true) &&
+                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.studentEmailValue) === true)) {
+                fetch('http://192.168.99.100/api/students', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(newUser),
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Culiooooooooo');
+                        console.log(response);
+                        response.json().then(createdUser => {
+                            console.log('New user was created successfully!');
+                            console.log('User ID: ' + createdUser._id);
 
-                        this.props.history.push(`/admin/users/`);
-                    })
-                } else {
-                    response.json().then(error => {
-                        //this.props.showError(`Failed to create request: ${error.message}`);
-                    });
-                }
-            }).catch(err => {
-                //this.props.showError(`Error in sending data to server: ${err.message}`);
-            });
+                            this.props.history.push(`/admin/users/`);
+                        })
+                    } else {
+                        response.json().then(error => {
+                            //this.props.showError(`Failed to create request: ${error.message}`);
+                        });
+                    }
+                }).catch(err => {
+                    //this.props.showError(`Error in sending data to server: ${err.message}`);
+                });
+            }
+
+            else {
+                this.showErrorAlert("Campos en el formulario llenados incorrectamente.")
+            }
 
         } else if (this.state.selectedUserRole.name === 'Counselor') {
             const form = document.forms.newCounselor;
@@ -183,29 +249,48 @@ class NewUser extends Component {
                 counselorPhone: this.state.counselorPhoneValue
             }
 
-            fetch('http://192.168.99.100/api/counselors', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(newUser),
-            }).then(response => {
-                if (response.ok) {
-                    console.log('Culiooooooooo');
-                    console.log(response);
-                    response.json().then(createdUser => {
-                        console.log('New user was created successfully!');
-                        console.log('User ID: ' + createdUser._id);
+            if (
+                (this.state.counselorNameValue.length <= 100) &&
+                (/^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === true) &&
+                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.counselorEmailValue) === true) &&
+                (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.counselorPhoneValue) === true) &&
+                (/^([a-zA-Z\s?])+$/.test(this.state.counselorFacultyValue) === true) &&
+                (this.state.counselorFacultyValue.length <= 100) &&
+                (this.state.counselorFacultyValue.length != 0) &&
+                (/^([a-zA-Z\s?])+$/.test(this.state.counselorDepartmentValue) === true) &&
+                (this.state.counselorDepartmentValue.length <= 100) &&
+                (this.state.counselorDepartmentValue.length != 0) &&
+                (/^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.counselorOfficeValue) === false) &&
+                (this.state.counselorOfficeValue.length < 15) &&
+                (this.state.counselorOfficeValue.length != 0)) {
+                fetch('http://192.168.99.100/api/counselors', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(newUser),
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Culiooooooooo');
+                        console.log(response);
+                        response.json().then(createdUser => {
+                            console.log('New user was created successfully!');
+                            console.log('User ID: ' + createdUser._id);
 
-                        this.props.history.push(`/admin/users/`);
-                    })
-                } else {
-                    response.json().then(error => {
-                        //this.props.showError(`Failed to create request: ${error.message}`);
-                    });
-                }
-            }).catch(err => {
-                //this.props.showError(`Error in sending data to server: ${err.message}`);
-            });
+                            this.props.history.push(`/admin/users/`);
+                        })
+                    } else {
+                        response.json().then(error => {
+                            //this.props.showError(`Failed to create request: ${error.message}`);
+                        });
+                    }
+                }).catch(err => {
+                    //this.props.showError(`Error in sending data to server: ${err.message}`);
+                });
 
+            }
+
+            else {
+                this.showErrorAlert("Campos en el formulario llenados incorrectamente.")
+            }
         }
 
         else if (this.state.selectedUserRole.name === 'Facilities Manager') {
@@ -217,31 +302,44 @@ class NewUser extends Component {
                 managerPhone: form.managerTelephone.value
             }
 
+            if (
+                (this.state.managerNameValue.length <= 100) &&
+                (/^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.managerNameValue) === false) &&
+                (this.state.managerNameValue.length != 0) &&
+                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.managerEmailValue) === true) &&
+                (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.managerPhoneValue) === true)) {
+                fetch('http://192.168.99.100/api/managers', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(newUser),
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Culiooooooooo');
+                        console.log(response);
+                        response.json().then(createdUser => {
+                            console.log('New user was created successfully!');
+                            console.log('User ID: ' + createdUser._id);
+
+                            this.props.history.push(`/admin/users/`);
+                        })
+                    } else {
+                        response.json().then(error => {
+                            //this.props.showError(`Failed to create request: ${error.message}`);
+                        });
+                    }
+                }).catch(err => {
+                    //this.props.showError(`Error in sending data to server: ${err.message}`);
+                });
+
+            }
+
+            else {
+                this.showErrorAlert("Campos en el formulario llenados incorrectamente.")
+            }
+
             console.log('El gallo claudio');
             console.log(newUser);
 
-            fetch('http://192.168.99.100/api/managers', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(newUser),
-            }).then(response => {
-                if (response.ok) {
-                    console.log('Culiooooooooo');
-                    console.log(response);
-                    response.json().then(createdUser => {
-                        console.log('New user was created successfully!');
-                        console.log('User ID: ' + createdUser._id);
-
-                        this.props.history.push(`/admin/users/`);
-                    })
-                } else {
-                    response.json().then(error => {
-                        //this.props.showError(`Failed to create request: ${error.message}`);
-                    });
-                }
-            }).catch(err => {
-                //this.props.showError(`Error in sending data to server: ${err.message}`);
-            });
         }
 
 
@@ -338,6 +436,20 @@ class NewUser extends Component {
         this.setState({managerPhoneValue: e.target.value})
     }
 
+    showSuccessAlert = () => {
+        console.log("Success Alert");
+        this.msg.success('Nueva organizaci&oacute;n creada', {
+            time: 10000000,
+            type: 'success',
+            position: 'bottom center'
+        });
+        console.log("Success Alert 2");
+    }
+
+    showErrorAlert = (message) => {
+        this.msg.error(message, {timeout: 2000, type: 'error'});
+        return;
+    }
 
     onUserRoleSelected = (event) => {
         event.preventDefault();
@@ -367,7 +479,8 @@ class NewUser extends Component {
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
                                                                                                       style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;
+                        sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -396,7 +509,7 @@ class NewUser extends Component {
                     <Col sm={4}>
                         <Col componentClass={ControlLabel}>Nombre</Col>
                         {
-                            (this.state.adminNameValue.length > 50) ?
+                            (this.state.adminNameValue.length > 100) ?
                                 (<div>
                                     <FormControl name="adminName" onChange={this.handleAdminNameValue}
                                                  style={errorFormStyle} placeholder="Ex. Maria Cruz" required/>
@@ -410,7 +523,7 @@ class NewUser extends Component {
                                         <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre y apellido</HelpBlock>
                                     </div>)
                                     :
-                                    (this.state.adminNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === true) ?
+                                    (this.state.adminNameValue.length <= 100 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.adminNameValue) === true) ?
                                         (<div>
                                             <FormControl name="adminName" onChange={this.handleAdminNameValue}
                                                          style={successFormStyle} placeholder="Ex. Maria Cruz"
@@ -428,7 +541,7 @@ class NewUser extends Component {
                     <Col sm={4}>
                         <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
                         {
-                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.adminEmailValue) === false && this.state.adminEmailValue.length != 0) ?
+                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.adminEmailValue) === false && this.state.adminEmailValue.length != 0) ?
                                 (<div>
                                     <FormControl name="adminEmail" onChange={this.handleAdminEmailValue}
                                                  style={errorFormStyle} placeholder="Ex. maria.cruz@upr.edu" required/>
@@ -436,17 +549,28 @@ class NewUser extends Component {
                                         @upr.edu</HelpBlock>
                                 </div>)
                                 :
-                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.adminEmailValue) === true) ?
+                                (this.state.adminEmailValue.length > 100) ?
                                     (<div>
-                                        <FormControl name="adminEmail" onChange={this.handleAdminEmailValue}
-                                                     style={successFormStyle} placeholder="Ex. maria.cruz@upr.edu"
-                                                     required/>
+                                        <FormControl name="adminEmail"
+                                                     onChange={this.handleAdminEmailValue}
+                                                     style={errorFormStyle}
+                                                     placeholder="Ex. maria.cruz@upr.edu" required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Correo muy largo</HelpBlock>
                                     </div>)
                                     :
-                                    (<div>
-                                        <FormControl name="adminEmail" onChange={this.handleAdminEmailValue}
-                                                     placeholder="Ex. maria.cruz@upr.edu" required/>
-                                    </div>)
+                                    (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.adminEmailValue) === true && this.state.adminEmailValue.length <= 100) ?
+                                        (<div>
+                                            <FormControl name="adminEmail"
+                                                         onChange={this.handleAdminEmailValue}
+                                                         style={successFormStyle}
+                                                         placeholder="Ex. maria.cruz@upr.edu"
+                                                         required/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="adminEmail" onChange={this.handleAdminEmailValue}
+                                                         placeholder="Ex. maria.cruz@upr.edu" required/>
+                                        </div>)
                         }
                     </Col>
 
@@ -487,7 +611,7 @@ class NewUser extends Component {
                     <Col sm={4}>
                         <Col componentClass={ControlLabel}>Nombre</Col>
                         {
-                            (this.state.staffNameValue.length > 50) ?
+                            (this.state.staffNameValue.length > 100) ?
                                 (<div>
                                     <FormControl name="staffName" style={errorFormStyle}
                                                  onChange={this.handleStaffNameValue} placeholder="Ex. Juan Velez"
@@ -503,7 +627,7 @@ class NewUser extends Component {
                                         <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre y apellido</HelpBlock>
                                     </div>)
                                     :
-                                    (this.state.staffNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === true) ?
+                                    (this.state.staffNameValue.length <= 100 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.staffNameValue) === true) ?
                                         (<div>
                                             <FormControl name="staffName" style={successFormStyle}
                                                          onChange={this.handleStaffNameValue}
@@ -530,17 +654,25 @@ class NewUser extends Component {
                                         @upr.edu</HelpBlock>
                                 </div>)
                                 :
-                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.staffEmailValue) === true) ?
+                                (this.state.staffEmailValue.length > 100) ?
                                     (<div>
-                                        <FormControl name="staffEmail" onChange={this.handleStaffEmailValue}
-                                                     style={successFormStyle} placeholder="Ex. juan.velex@upr.edu"
-                                                     required/>
+                                        <FormControl name="staffEmail" style={errorFormStyle}
+                                                     onChange={this.handleStaffEmailValue}
+                                                     placeholder="Ex. juan.velex@upr.edu" required/>
+                                        <HelpBlock style={errorHelpBlockStyle}>Correo muy largo</HelpBlock>
                                     </div>)
                                     :
-                                    (<div>
-                                        <FormControl name="staffEmail" onChange={this.handleStaffEmailValue}
-                                                     placeholder="Ex. juan.velex@upr.edu" required/>
-                                    </div>)
+                                    (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.staffEmailValue) === true && this.state.staffEmailValue.length <= 100) ?
+                                        (<div>
+                                            <FormControl name="staffEmail" onChange={this.handleStaffEmailValue}
+                                                         style={successFormStyle} placeholder="Ex. juan.velex@upr.edu"
+                                                         required/>
+                                        </div>)
+                                        :
+                                        (<div>
+                                            <FormControl name="staffEmail" onChange={this.handleStaffEmailValue}
+                                                         placeholder="Ex. juan.velex@upr.edu" required/>
+                                        </div>)
                         }
                     </Col>
 
@@ -578,7 +710,7 @@ class NewUser extends Component {
                         <Col sm={4}>
                             <Col componentClass={ControlLabel}>Nombre</Col>
                             {
-                                (this.state.studentNameValue.length > 50) ?
+                                (this.state.studentNameValue.length > 100) ?
                                     (<div>
                                         <FormControl name="studentName" style={errorFormStyle}
                                                      onChange={this.handleStudentNameValue}
@@ -597,7 +729,7 @@ class NewUser extends Component {
                                                 apellido</HelpBlock>
                                         </div>)
                                         :
-                                        (this.state.studentNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === true) ?
+                                        (this.state.studentNameValue.length <= 100 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.studentNameValue) === true) ?
                                             (<div>
                                                 <FormControl name="studentName" style={successFormStyle}
                                                              onChange={this.handleStudentNameValue}
@@ -623,7 +755,8 @@ class NewUser extends Component {
                                                      style={errorFormStyle} placeholder="Ex. 7875557656"
                                                      required/>
                                         <HelpBlock style={errorHelpBlockStyle}>Escriba el n&uacute;mero de
-                                            identificaci&oacute;n de 9 d&iacute;gitos sin espacios o gui&oacute;n</HelpBlock>
+                                            identificaci&oacute;n de 9 d&iacute;gitos sin espacios o gui&oacute;
+                                            n</HelpBlock>
                                     </div>)
                                     :
                                     (/^([0-9]{9})$/.test(this.state.studentIdentificationNoValue) === false && this.state.studentIdentificationNoValue.length != 0) ?
@@ -668,7 +801,7 @@ class NewUser extends Component {
                                             a</HelpBlock>
                                     </div>)
                                     :
-                                    (this.state.studentAddressValue.length > 200 && this.state.studentAddressValue.length != 0) ?
+                                    (this.state.studentAddressValue.length > 254 && this.state.studentAddressValue.length != 0) ?
                                         (<div>
                                             <FormControl style={errorFormStyle} name="studentAddress1"
                                                          onChange={this.handleStudentAddressValue}
@@ -693,10 +826,11 @@ class NewUser extends Component {
                                                                  placeholder="Ex. HC 61 Box 5467"
                                                                  required/>
                                                     <HelpBlock style={errorHelpBlockStyle}>Direcci&oacute;n no deben ser
+                                                        solo
                                                         s&iacute;mbolos</HelpBlock>
                                                 </div>)
                                                 :
-                                                (this.state.studentAddressValue.length >= 10 && this.state.studentAddressValue.length < 200 &&
+                                                (this.state.studentAddressValue.length >= 10 && this.state.studentAddressValue.length <= 254 &&
                                                 /^[0-9]+$/.test(this.state.studentAddressValue) === false &&
                                                 /^[`!@#\$%&\*()_+\{}\|:"<>?~,./;'\]a-zA-Z]+$/.test(this.state.studentAddressValue) === false) ?
                                                     (<div>
@@ -725,7 +859,7 @@ class NewUser extends Component {
                                     (<div>
                                         <FormControl name="studentAddressCity" onChange={this.handleStudentCityValue}
                                                      style={errorFormStyle} placeholder="Ex. Bayamon" required/>
-                                        <HelpBlock style={errorHelpBlockStyle}> Escriba solo texto</HelpBlock>
+                                        <HelpBlock style={errorHelpBlockStyle}>Escriba solo texto</HelpBlock>
                                     </div>)
                                     :
                                     (this.state.studentCityValue.length <= 3 && this.state.studentCityValue.length != 0) ?
@@ -763,37 +897,37 @@ class NewUser extends Component {
 
                         <Col sm={3}>
                             <Col componentClass={ControlLabel}>Pa&iacute;s</Col>
-{/*                            {
-                                (/^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
-                                    (<div>
-                                        <FormControl name="studentAddressCountry" style={errorFormStyle}
-                                                     onChange={this.handleStudentCountryValue}
-                                                     placeholder="Ex. Puerto Rico" required/>
-                                        <HelpBlock style={errorHelpBlockStyle}>Escriba solo texto</HelpBlock>
-                                    </div>)
-                                    :
-                                    (/^(Puerto Rico)|(PR)|(pr)|(Pr)|(pR)$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
-                                        (<div>
-                                            <FormControl name="studentAddressCountry" style={errorFormStyle}
-                                                         onChange={this.handleStudentCountryValue}
-                                                         placeholder="Ex. Puerto Rico" required/>
-                                            <HelpBlock style={errorHelpBlockStyle}>Pa&iacute;s debe ser Puerto Rico o
-                                                PR</HelpBlock>
-                                        </div>)
-                                        :
-                                        (/^(Puerto Rico)|(PR)|(pr)|(Pr)|(pR)$/.test(this.state.studentCountryValue) === true && /^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === true) ?
-                                            (<div>
-                                                <FormControl name="studentAddressCountry" style={successFormStyle}
-                                                             onChange={this.handleStudentCountryValue}
-                                                             placeholder="Ex. Puerto Rico" required/>
-                                            </div>)
-                                            :
-                                            (<div>
-                                                <FormControl name="studentAddressCountry"
-                                                             onChange={this.handleStudentCountryValue}
-                                                             placeholder="Ex. Puerto Rico" value="Puerto Rico" disabled/>
-                                            </div>)
-                            }*/}
+                            {/*                            {
+                             (/^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
+                             (<div>
+                             <FormControl name="studentAddressCountry" style={errorFormStyle}
+                             onChange={this.handleStudentCountryValue}
+                             placeholder="Ex. Puerto Rico" required/>
+                             <HelpBlock style={errorHelpBlockStyle}>Escriba solo texto</HelpBlock>
+                             </div>)
+                             :
+                             (/^(Puerto Rico)|(PR)|(pr)|(Pr)|(pR)$/.test(this.state.studentCountryValue) === false && this.state.studentCountryValue.length != 0) ?
+                             (<div>
+                             <FormControl name="studentAddressCountry" style={errorFormStyle}
+                             onChange={this.handleStudentCountryValue}
+                             placeholder="Ex. Puerto Rico" required/>
+                             <HelpBlock style={errorHelpBlockStyle}>Pa&iacute;s debe ser Puerto Rico o
+                             PR</HelpBlock>
+                             </div>)
+                             :
+                             (/^(Puerto Rico)|(PR)|(pr)|(Pr)|(pR)$/.test(this.state.studentCountryValue) === true && /^[a-zA-Z\s?]+$/.test(this.state.studentCountryValue) === true) ?
+                             (<div>
+                             <FormControl name="studentAddressCountry" style={successFormStyle}
+                             onChange={this.handleStudentCountryValue}
+                             placeholder="Ex. Puerto Rico" required/>
+                             </div>)
+                             :
+                             (<div>
+                             <FormControl name="studentAddressCountry"
+                             onChange={this.handleStudentCountryValue}
+                             placeholder="Ex. Puerto Rico" value="Puerto Rico" disabled/>
+                             </div>)
+                             }*/}
                             <FormControl name="studentAddressCountry" value="Puerto Rico" disabled/>
                         </Col>
 
@@ -838,7 +972,8 @@ class NewUser extends Component {
                                                      onChange={this.handleStudentPhoneValue}
                                                      placeholder="Ex. 7875467890"
                                                      required/>
-                                        <HelpBlock style={errorHelpBlockStyle}>Tel&aacute;fono debe ser de 10 d&iacute;gitos</HelpBlock>
+                                        <HelpBlock style={errorHelpBlockStyle}>Tel&aacute;fono debe ser de 10 d&iacute;
+                                            gitos</HelpBlock>
                                     </div>)
                                     :
                                     (/^(([0-9]{10}))$/.test(this.state.studentPhoneValue) === true) ?
@@ -862,7 +997,7 @@ class NewUser extends Component {
                         <Col sm={4}>
                             <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
                             {
-                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.studentEmailValue) === false && this.state.studentEmailValue.length != 0) ?
+                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.studentEmailValue) === false && this.state.studentEmailValue.length != 0) ?
                                     (<div>
                                         <FormControl name="studentEmail" style={errorFormStyle}
                                                      onChange={this.handleStudentEmailValue}
@@ -871,7 +1006,7 @@ class NewUser extends Component {
                                             @upr.edu</HelpBlock>
                                     </div>)
                                     :
-                                    (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.studentEmailValue) === true) ?
+                                    (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.studentEmailValue) === true) ?
                                         (<div>
                                             <FormControl name="studentEmail" style={successFormStyle}
                                                          onChange={this.handleStudentEmailValue}
@@ -903,32 +1038,30 @@ class NewUser extends Component {
                                                  placeholder="Ex. Raymond Lopez"
                                                  onChange={this.handleCounselorNameValue} style={errorFormStyle}
                                                  required/>
-                                    <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre con los dos
+                                    <HelpBlock style={errorHelpBlockStyle}>Escriba el nombre con los
                                         apellidos</HelpBlock>
                                 </div>)
                                 :
-                                (this.state.counselorNameValue.length < 50 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === true) ?
-                                    (<div>
-                                        <FormControl name="organizationCounselorName"
-                                                     placeholder="Ex. Raymond Lopez"
-                                                     onChange={this.handleCounselorNameValue} style={successFormStyle}
-                                                     required/>
-                                    </div>)
-                                    :
-                                    (
-                                        (this.state.counselorNameValue.length > 50) ?
+                                (
+                                    (this.state.counselorNameValue.length > 100) ?
+                                        (<div>
+                                            <FormControl name="organizationCounselorName"
+                                                         placeholder="Ex. Raymond Lopez"
+                                                         onChange={this.handleCounselorNameValue}
+                                                         style={errorFormStyle}
+                                                         required/>
+                                            <HelpBlock style={errorHelpBlockStyle}>Nombre muy
+                                                largo</HelpBlock>
+
+                                        </div>)
+                                        :
+                                        (this.state.counselorNameValue.length <= 100 && /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.counselorNameValue) === true) ?
                                             (<div>
                                                 <FormControl name="organizationCounselorName"
                                                              placeholder="Ex. Raymond Lopez"
                                                              onChange={this.handleCounselorNameValue}
-                                                             style={{
-                                                                 borderColor: '#B74442',
-                                                                 boxShadow: "0px 0px 8px #B74442"
-                                                             }}
+                                                             style={successFormStyle}
                                                              required/>
-                                                <HelpBlock style={{color: '#B74442'}}>Nombre muy
-                                                    largo</HelpBlock>
-
                                             </div>)
                                             :
                                             (<div>
@@ -937,14 +1070,14 @@ class NewUser extends Component {
                                                              onChange={this.handleCounselorNameValue}
                                                              required/>
                                             </div>)
-                                    )
+                                )
                         }
                     </Col>
 
                     <Col sm={4}>
                         <Col componentClass={ControlLabel}>Correo Electr&oacute;nico</Col>
                         {
-                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.counselorEmailValue) === false && this.state.counselorEmailValue.length != 0) ?
+                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.counselorEmailValue) === false && this.state.counselorEmailValue.length != 0) ?
                                 (<div>
                                     <FormControl name="organizationCounselorEmail"
                                                  placeholder="Ex. raymond.lopez@upr.edu"
@@ -954,7 +1087,7 @@ class NewUser extends Component {
                                         @upr.edu</HelpBlock>
                                 </div>)
                                 :
-                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.counselorEmailValue) === true) ?
+                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.counselorEmailValue) === true) ?
                                     (<div>
                                         <FormControl name="organizationCounselorEmail"
                                                      placeholder="Ex. raymond.lopez@upr.edu"
@@ -1006,11 +1139,12 @@ class NewUser extends Component {
                     <Col sm={4}>
                         <Col componentClass={ControlLabel}>Facultad</Col>
                         {
-                            (this.state.counselorFacultyValue.length >= 50) ?
+                            (this.state.counselorFacultyValue.length > 100) ?
                                 (<div>
                                     <FormControl name="organizationCounselorFaculty"
                                                  placeholder="Ex. Ingenieria"
-                                                 onChange={this.handleCounselorFacultyValue} style={errorFormStyle}
+                                                 onChange={this.handleCounselorFacultyValue}
+                                                 style={errorFormStyle}
                                                  required/>
                                     <HelpBlock style={errorHelpBlockStyle}>Nombre de la facultad muy
                                         largo</HelpBlock>
@@ -1020,12 +1154,13 @@ class NewUser extends Component {
                                     (<div>
                                         <FormControl name="organizationCounselorFaculty"
                                                      placeholder="Ex. Ingenieria"
-                                                     onChange={this.handleCounselorFacultyValue} style={errorFormStyle}
+                                                     onChange={this.handleCounselorFacultyValue}
+                                                     style={errorFormStyle}
                                                      required/>
                                         <HelpBlock style={errorHelpBlockStyle}>Solo texto</HelpBlock>
                                     </div>)
                                     :
-                                    (/^([a-zA-Z\s?])+$/.test(this.state.counselorFacultyValue) === true && this.state.counselorFacultyValue.length <= 50 && this.state.counselorFacultyValue.length != 0 ) ?
+                                    (/^([a-zA-Z\s?])+$/.test(this.state.counselorFacultyValue) === true && this.state.counselorFacultyValue.length <= 100 && this.state.counselorFacultyValue.length != 0 ) ?
                                         (<div>
                                             <FormControl name="organizationCounselorFaculty"
                                                          placeholder="Ex. Ingenieria"
@@ -1045,7 +1180,7 @@ class NewUser extends Component {
                     <Col sm={4}>
                         <Col componentClass={ControlLabel}>Departamento</Col>
                         {
-                            (this.state.counselorDepartmentValue.length >= 50) ?
+                            (this.state.counselorDepartmentValue.length > 100) ?
                                 (<div>
                                     <FormControl name="organizationCounselorDepartment"
                                                  placeholder="Ex. Ingenieria de Computadoras"
@@ -1066,7 +1201,7 @@ class NewUser extends Component {
 
                                     </div>)
                                     :
-                                    (/^([a-zA-Z\s?])+$/.test(this.state.counselorDepartmentValue) === true && this.state.counselorDepartmentValue.length <= 50 && this.state.counselorDepartmentValue.length != 0 ) ?
+                                    (/^([a-zA-Z\s?])+$/.test(this.state.counselorDepartmentValue) === true && this.state.counselorDepartmentValue.length <= 100 && this.state.counselorDepartmentValue.length != 0 ) ?
                                         (<div>
                                             <FormControl name="organizationCounselorDepartment"
                                                          placeholder="Ex. Ingenieria de Computadoras"
@@ -1153,7 +1288,7 @@ class NewUser extends Component {
                                         apellidos</HelpBlock>
                                 </div>)
                                 :
-                                (this.state.managerNameValue.length > 50) ?
+                                (this.state.managerNameValue.length > 100) ?
                                     (<div>
                                         <FormControl name="managerName" style={errorFormStyle}
                                                      onChange={this.handleManagerNameValue}
@@ -1161,7 +1296,7 @@ class NewUser extends Component {
                                         <HelpBlock style={errorHelpBlockStyle}>Nombre muy largo</HelpBlock>
                                     </div>)
                                     :
-                                    (this.state.managerNameValue.length < 50 &&
+                                    (this.state.managerNameValue.length <= 100 &&
                                     /^([a-zA-Z]{2,})\s(([a-zA-Z]*?.?)?\s?)*?([a-zA-Z]{2,})\s?[a-zA-Z]*\s*?$/.test(this.state.managerNameValue) === true) ?
                                         (<div>
                                             <FormControl name="managerName" style={successFormStyle}
@@ -1179,7 +1314,7 @@ class NewUser extends Component {
                     <Col sm={4}>
                         <Col componentClass={ControlLabel} required>Correo Electr&oacute;nico</Col>
                         {
-                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.managerEmailValue) === false
+                            (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.managerEmailValue) === false
                             && this.state.managerEmailValue.length != 0) ?
                                 (<div>
                                     <FormControl name="managerEmail" style={errorFormStyle}
@@ -1189,7 +1324,7 @@ class NewUser extends Component {
                                         @upr.edu</HelpBlock>
                                 </div>)
                                 :
-                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu|ece.upr.edu|uprm.edu)+$/.test(this.state.managerEmailValue) === true) ?
+                                (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.managerEmailValue) === true) ?
                                     (<div>
                                         <FormControl name="managerEmail" style={successFormStyle}
                                                      onChange={this.handleManagerEmailValue}
@@ -1279,6 +1414,7 @@ class NewUser extends Component {
                 </Col>
 
                 <Col md={2}></Col>
+                <AlertContainer ref={a => this.msg = a}/>
             </div>
         )
     }

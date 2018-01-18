@@ -15,8 +15,26 @@ import TimePicker from 'react-bootstrap-time-picker';
 import AlertContainer from 'react-alert';
 
 import {
-    FormGroup, FormControl, ControlLabel, ButtonToolbar, Button,
-    Panel, Form, Col, Alert, Radio, Well, MenuItem, DropdownButton, Jumbotron, Row, Nav, NavItem, Label, Checkbox
+    FormGroup,
+    FormControl,
+    ControlLabel,
+    ButtonToolbar,
+    Button,
+    Panel,
+    Form,
+    Col,
+    Alert,
+    Radio,
+    Well,
+    MenuItem,
+    DropdownButton,
+    Jumbotron,
+    Row,
+    Nav,
+    NavItem,
+    Label,
+    Checkbox,
+    HelpBlock,
 } from 'react-bootstrap';
 import ReactCenter from "react-center";
 
@@ -131,25 +149,6 @@ class ManagerActivityDetail extends Component {
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
             });
         })
-
-        fetch(`http://192.168.99.100/api/activityType/`).then(response => {
-            if (response.ok) {
-                response.json().then(results => {
-                    console.log("Type:");
-                    console.log(results);
-                    this.setState({activityTypes: results});
-                    console.log('Asi son los activityTypes: ' + this.state.activityTypes);
-                });
-            } else {
-                console.log('Not ok');
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            console.log(err);
-            // this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
     }
 
     onApproval(event) {
@@ -286,6 +285,21 @@ class ManagerActivityDetail extends Component {
                 </Nav>
             </div>
         );
+
+        var errorFormStyle = {
+            borderColor: '#B74442',
+            boxShadow: "0px 0px 8px #B74442"
+        };
+
+        var errorHelpBlockStyle = {
+            color: '#B74442'
+        };
+
+        var successFormStyle = {
+            borderColor: '#3C765B',
+            boxShadow: "0px 0px 8px #3C765B"
+        };
+
 
         return (
             <div className="container">
@@ -544,7 +558,7 @@ class ManagerActivityDetail extends Component {
                                 <FormGroup>
                                     <Row>
                                         {
-                                            (this.state.activity.counselor_status.code === 2) ?
+                                            (this.state.activity.counselor_status.code === 2 && this.state.activity.manager_status.code === 1) ?
                                                 (<div>
                                                     <Col sm={12}>
                                                         <Col componentClass={ControlLabel}>Observaciones: </Col>
@@ -554,27 +568,29 @@ class ManagerActivityDetail extends Component {
                                                                     <FormControl name="commentary"
                                                                                  onChange={this.handleCommentChange}
                                                                                  value={this.state.commentary}
+                                                                                 style={errorFormStyle}
                                                                                  required/>
-                                                                    <HelpBlock style={errorHelpBlockStyle}>N&uacute;mero de
-                                                                        caract&eacute;res demasiado grande.</HelpBlock>                                                                </div>)
+                                                                    <HelpBlock style={errorHelpBlockStyle}>N&uacute;mero
+                                                                        de
+                                                                        caract&eacute;res demasiado grande.</HelpBlock>
+                                                                </div>)
+                                                                :
+                                                                (this.state.commentary.length < 254 && this.state.commentary.length != 0) ?
+                                                                    (<div>
+                                                                        <FormControl name="commentary"
+                                                                                     onChange={this.handleCommentChange}
+                                                                                     value={this.state.commentary}
+                                                                                     style={successFormStyle}
+                                                                                     required/>
+                                                                    </div>)
                                                                     :
-                                                                (this.state.commentary.length < 254 && this.state.commentary.length !=0) ?
                                                                     (<div>
                                                                         <FormControl name="commentary"
                                                                                      onChange={this.handleCommentChange}
                                                                                      value={this.state.commentary}
                                                                                      required/>
-                                                                        <HelpBlock style={errorHelpBlockStyle}>N&uacute;mero de
-                                                                            caract&eacute;res demasiado grande.</HelpBlock>                                                                </div>)
-                                                                    :
-                                                                (<div>
-                                                                    <FormControl name="commentary"
-                                                                                 onChange={this.handleCommentChange}
-                                                                                 value={this.state.commentary}
-                                                                                 required/>
-                                                                </div>)
+                                                                    </div>)
                                                         }
-
                                                     </Col>
                                                     <br/>
                                                     <br/>
@@ -598,20 +614,47 @@ class ManagerActivityDetail extends Component {
                                                 :
                                                 (this.state.activity.counselor_status.code === 1) ?
                                                     (<div>
+                                                        <Col sm={12}>
+                                                            <Col componentClass={ControlLabel}>Observaciones: </Col>
+                                                            <FormControl name="commentary"
+                                                                         onChange={this.handleCommentChange}
+                                                                         value={this.state.commentary}
+                                                                         disabled/>
+                                                        </Col>
+                                                        <br/>
+                                                        <br/>
+
+                                                        <Row></Row>
+                                                        <br/>
                                                         <ReactCenter>
-                                                            <AlertContainer ref={a => this.msg = a}/>
                                                             <Col md="1"><Link to={`/activities/`}><Button
                                                                 className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
                                                             <Col md="1"><Button className="btn-success"
                                                                                 onClick={this.onApproval}
-                                                                                style={{marginLeft: "40px"}} disabled>Aprobar</Button></Col>
+                                                                                style={{marginLeft: "10px"}} disabled>Aprobar</Button></Col>
                                                             <Col md="1"><Button className="btn-danger"
                                                                                 onClick={this.onDenied}
-                                                                                style={{marginLeft: "140px"}} disabled>Denegar</Button></Col>
+                                                                                style={{marginLeft: "40px"}} disabled>Denegar</Button></Col>
                                                         </ReactCenter>
                                                     </div>)
                                                     :
                                                     (<div>
+                                                        <Col sm={12}>
+                                                            <Col componentClass={ControlLabel}>Observaciones: </Col>
+                                                            <br/>
+                                                            {this.state.activity.managerComment}
+                                                        </Col>
+                                                        <br/>
+
+                                                        <Row></Row>
+                                                        <AlertContainer ref={a => this.msg = a}/>
+
+                                                        <ReactCenter>
+                                                            <Col md="1"><Link to={`/activities/`}><Button
+                                                                className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
+                                                            <br/>
+                                                            <br/>
+                                                        </ReactCenter>
                                                     </div>)
                                         }
                                     </Row>

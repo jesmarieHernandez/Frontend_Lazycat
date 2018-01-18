@@ -168,13 +168,8 @@ class ActivityDetail extends Component {
         //         hasFood: this.state.selectedOption ? 1 : 0
         //
         // };
-        console.log("On Approval!!!");
-        console.log(this.state.activity.type)
-        console.log(this.state.activity.type != null);
-        console.log(this.state.activity.staffComment != null);
-        console.log(this.state.activity.hasFood != null);
-        if (this.state.activity.type != null && this.state.activity.staffComment != null && this.state.activity.hasFood != null)
-        {
+
+        if (this.state.activity.type != null && this.state.activity.staffComment != null && this.state.activity.hasFood != null) {
             console.log("Inside the if");
             this.setState({commentary: this.state.activity.staffComment});
             this.setState({selectedType: this.state.activity.activityType_code});
@@ -183,7 +178,7 @@ class ActivityDetail extends Component {
 
 
         const activityUpdate = {
-            staffComment : this.state.commentary,
+            staffComment: this.state.commentary,
             activityType_code: this.state.selectedType,
             hasFood: this.state.selectedOption ? 1 : 0
 
@@ -305,7 +300,7 @@ class ActivityDetail extends Component {
                 console.log(response);
                 response.json().then(updatedRequest => {
                     console.log('Type request was updated successfully!');
-                    this.props.router.push(`/activities/${updatedRequest.id}`);
+                    this.props.router.push(`/activities/`);
                 })
             } else {
                 response.json().then(error => {
@@ -341,6 +336,7 @@ class ActivityDetail extends Component {
                 </Nav>
             </div>
         );
+
 
         return (
             <div className="container">
@@ -390,7 +386,8 @@ class ActivityDetail extends Component {
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>N&uacute;mero de Identificaci&oacute;n</Col>
+                                            <Col componentClass={ControlLabel}>N&uacute;mero de Identificaci&oacute;
+                                                n</Col>
                                             <FormControl name="studentIdentificationNumber"
                                                          value={this.state.activity.student.studentNo} disabled/>
                                         </Col>
@@ -440,39 +437,53 @@ class ActivityDetail extends Component {
                             }
                             <Panel header="Detalles de la Actividad">
                                 <FormGroup>
-                                    <Col sm={3}>
+                                    <Col sm={12}>
                                         <Col componentClass={ControlLabel}>Nombre</Col>
-                                        <FormControl name="requestTitle" value={this.state.activity.activityName}
-                                                     disabled/>
+                                        {/*<FormControl name="requestTitle" value={this.state.activity.activityName}*/}
+                                        {/*disabled/>*/}
+                                        <br/>
+                                        {this.state.activity.activityName}
                                     </Col>
+                                </FormGroup>
 
-                                    <Col sm={9}>
-                                        <Col componentClass={ControlLabel}>Direcci&oacute;n</Col>
-                                        <FormControl name="activityDescription"
-                                                     value={this.state.activity.activityDescription} disabled/>
+                                <Row></Row>
+
+                                <FormGroup style={{paddingTop: "20px"}}>
+                                    <Col sm={12}>
+                                        <Col componentClass={ControlLabel}>Descripci&oacute;n</Col>
+                                        {/*<FormControl name="activityDescription"*/}
+                                        {/*value={this.state.activity.activityDescription} disabled/>*/}
+                                        <br/>
+                                        {this.state.activity.activityDescription}
+                                    </Col>
+                                </FormGroup>
+
+                                <Row></Row>
+
+                                <FormGroup style={{paddingTop: "20px"}}>
+                                    <Col sm={12}>
+                                        <Col componentClass={ControlLabel}>Invitado(s)</Col>
+                                        {/*<FormControl name="activityGuest" value={this.state.activity.guestName}*/}
+                                        {/*disabled/>*/}
+                                        <br/>
+                                        {this.state.activity.guestName}
                                     </Col>
                                 </FormGroup>
 
                                 <FormGroup>
-                                    <Col sm={3}>
-                                        <Col componentClass={ControlLabel}>Invitado(s)</Col>
-                                        <FormControl name="activityGuest" value={this.state.activity.guestName}
-                                                     disabled/>
-                                    </Col>
-
-                                    <Col sm={3}>
+                                    <Col sm={4}>
                                         <Col componentClass={ControlLabel}>N&uacute;mero de Asistentes</Col>
                                         <FormControl name="activityAssistant"
                                                      value={this.state.activity.attendantsNumber} disabled/>
                                     </Col>
 
-                                    <Col md={3}>
+                                    <Col md={4}>
                                         <Col componentClass={ControlLabel}>Espacio/Sal&oacute;n</Col>
                                         <FormControl name="selectFacilities" value={this.state.activity.facility.space}
                                                      disabled/>
                                     </Col>
 
-                                    <Col md={3}>
+                                    <Col md={4}>
                                         <Col componentClass={ControlLabel}>Edificio</Col>
                                         <FormControl name="facilityBuilding"
                                                      value={this.state.activity.facility.building} disabled/>
@@ -598,7 +609,7 @@ class ActivityDetail extends Component {
                             <Panel header="Decisi&oacute;n de la Actividad">
                                 <FormGroup>
                                     {/* Show already placed category and commentary by the DSCA Staff/Admin */}
-                                    {(this.state.activity.status.code === 2 || this.state.activity.status.code === 3) || this.state.activity.type != null ?
+                                    {(this.state.activity.status.code === 2 || this.state.activity.status.code === 3) && this.state.activity.type != null ?
                                         (<div>
                                             <Col sm={3}>
                                                 <Col componentClass={ControlLabel}>Categor&iacute;a: </Col>
@@ -640,7 +651,8 @@ class ActivityDetail extends Component {
                                                 <Col sm={3}>
                                                     <Col componentClass={ControlLabel}>Permisos: </Col>
                                                     <Col>
-                                                        <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso de Comida?</Checkbox>{' '}
+                                                        <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso
+                                                            de Comida?</Checkbox>{' '}
                                                     </Col>
                                                 </Col>
                                                 <br/>
@@ -665,7 +677,8 @@ class ActivityDetail extends Component {
 
                                                     <Col sm={6}>
                                                         <Col componentClass={ControlLabel}>Comentario: </Col>
-                                                        <FormControl name="commentary" onChange={this.handleCommentChange}
+                                                        <FormControl name="commentary"
+                                                                     onChange={this.handleCommentChange}
                                                                      value={this.state.commentary}
                                                                      required/>
                                                     </Col>
@@ -673,7 +686,8 @@ class ActivityDetail extends Component {
                                                     <Col sm={3}>
                                                         <Col componentClass={ControlLabel}>Permisos: </Col>
                                                         <Col>
-                                                            <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso de Comida?</Checkbox>{' '}
+                                                            <Checkbox name="yesValue" onClick={this.boxToogle} inline>Permiso
+                                                                de Comida?</Checkbox>{' '}
                                                         </Col>
                                                     </Col>
                                                     <br/>
@@ -706,22 +720,26 @@ class ActivityDetail extends Component {
                                                             </div>)
                                                             :
                                                             (this.state.activity.counselor_status.code === 2 && this.state.activity.manager_status.code === 2) ?
-                                                            (<div>
-                                                                <Col md="1"><Button className="btn-success"
-                                                                                    onClick={this.onApproval}
-                                                                                    style={{marginLeft: "40px"}} required>Aprobar</Button></Col>
-                                                                <Col md="1"><Button className="btn-danger"
-                                                                                    onClick={this.onDenied}
-                                                                                    style={{marginLeft: "140px"}} required>Denegar</Button></Col>
-                                                            </div>)
+                                                                (<div>
+                                                                    <Col md="1"><Button className="btn-success"
+                                                                                        onClick={this.onApproval}
+                                                                                        style={{marginLeft: "40px"}}
+                                                                                        required>Aprobar</Button></Col>
+                                                                    <Col md="1"><Button className="btn-danger"
+                                                                                        onClick={this.onDenied}
+                                                                                        style={{marginLeft: "140px"}}
+                                                                                        required>Denegar</Button></Col>
+                                                                </div>)
                                                                 :
                                                                 (<div>
                                                                     <Col md="1"><Button className="btn-success"
                                                                                         onClick={this.onApproval}
-                                                                                        style={{marginLeft: "40px"}} disabled>Aprobar</Button></Col>
+                                                                                        style={{marginLeft: "40px"}}
+                                                                                        disabled>Aprobar</Button></Col>
                                                                     <Col md="1"><Button className="btn-danger"
                                                                                         onClick={this.onDenied}
-                                                                                        style={{marginLeft: "140px"}} disabled>Denegar</Button></Col>
+                                                                                        style={{marginLeft: "140px"}}
+                                                                                        disabled>Denegar</Button></Col>
                                                                 </div>)
                                             }
                                         </ReactCenter>

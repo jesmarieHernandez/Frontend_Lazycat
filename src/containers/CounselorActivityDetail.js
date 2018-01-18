@@ -131,25 +131,6 @@ class CounselorActivityDetail extends Component {
                 //this.props.showError(`Error in sending data to server: ${err.message}`);
             });
         })
-
-        fetch(`http://192.168.99.100/api/activityType/`).then(response => {
-            if (response.ok) {
-                response.json().then(results => {
-                    console.log("Type:");
-                    console.log(results);
-                    this.setState({activityTypes: results});
-                    console.log('Asi son los activityTypes: ' + this.state.activityTypes);
-                });
-            } else {
-                console.log('Not ok');
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            console.log(err);
-            // this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
     }
 
     onApproval(event) {
@@ -157,7 +138,7 @@ class CounselorActivityDetail extends Component {
 
         if(this.state.commentary.length >=254 || this.state.commentary.length === 0)
             {
-                this.showErrorAlert("Campos en el formulario escritos incorrectamente.")
+                this.showErrorAlert("Campos en el formulario llenados incorrectamente.")
             }
 
         else {
@@ -531,17 +512,14 @@ class CounselorActivityDetail extends Component {
                                 <FormGroup>
                                     {(this.state.activity.counselor_status.code === 2 || this.state.activity.counselor_status.code === 3) ?
                                         (<div>
-                                            <Row>
                                                 <Col sm={12}>
                                                     <Col componentClass={ControlLabel}>Observaciones: </Col>
                                                     <br/>
-                                                    {/*<FormControl name="commentary"*/}
-                                                    {/*value={this.state.activity.counselorComment}*/}
-                                                    {/*disabled/>*/}
                                                     {this.state.activity.counselorComment}
                                                 </Col>
-                                            </Row>
                                             <br/>
+
+                                            <Row></Row>
 
                                             <ReactCenter>
                                                 <Col md="1"><Link to={`/activities/`}><Button

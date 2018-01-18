@@ -59,9 +59,6 @@ class Activities extends Component {
 
                     this.setState({deniedActivities: denied});
 
-
-
-
                 });
             } else {
                 // response.json().then(error => {
@@ -111,8 +108,6 @@ class Activities extends Component {
             </div>
         );
 
-
-
         //this.setState({pendingActivities: pending});
 
         let pendingActivities;
@@ -123,33 +118,61 @@ class Activities extends Component {
 
 
             pendingActivities = this.state.pendingActivities.map(activity =>
-
                 <Col md={12}>
-                    <Panel header={activity.activityName}>
-                        <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                        <br/>
-                        <p><b>Description:</b> {activity.activityDescription}</p>
-                        <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                        <p><b>Facility:</b> {activity.facility.space}</p>
-                        <p><b>Status:</b> {activity.status.description}</p>
+                    <Link to={`/activities/${activity.id}`}><Panel header={activity.activityName}>
+                        <Col md={6}>
+                            <Row>
+
+                                <Col md={6}><p>Título:</p></Col><Col md={6}><p> {activity.activityName}</p></Col>
+                                <Col md={6}><p>Descripción:</p></Col><Col md={6}><p> {activity.activityDescription}</p>
+                            </Col>
+                                <Col md={6}><p>Organización:</p></Col><Col md={6}>
+                                <p> {activity.organization.organizationName}</p></Col>
+                                <Col md={6}><p>Facilidades:</p></Col><Col md={6}><p> {activity.facility.space}</p></Col>
+                                <Col md={6}><p>Estado:</p></Col><Col md={6}><p> {activity.status.description}</p></Col>
+
+                            </Row>
+                        </Col>
+                        <Col md={6}>
+                            <Row>
+                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                                    className="btn-info btn-large pull-right"
+                                    style={{width: '100px', marginBottom: '10px'}}
+                                >Detalles</Button></Link> </Col>
+                            </Row>
+                        </Col>
                     </Panel>
+                    </Link>
                 </Col>
             );
         }
 
         let approvedActivities = this.state.approvedActivities.map(activity =>
-
             <Col md={12}>
+                <Link to={`/activities/${activity.id}`}><Panel header={activity.activityName}>
+                    <Col md={6}>
+                        <Row>
 
-                <Panel header={activity.activityName}>
-                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                    <br/>
-                    <p><b>Description:</b> {activity.activityDescription}</p>
-                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                    <p><b>Facility:</b> {activity.facility.space}</p>
-                    <p><b>Status:</b> {activity.status.description}</p>
+                            <Col md={6}><p>Título:</p></Col><Col md={6}><p> {activity.activityName}</p></Col>
+                            <Col md={6}><p>Descripción:</p></Col><Col md={6}><p> {activity.activityDescription}</p>
+                        </Col>
+                            <Col md={6}><p>Organización:</p></Col><Col md={6}>
+                            <p> {activity.organization.organizationName}</p></Col>
+                            <Col md={6}><p>Facilidades:</p></Col><Col md={6}><p> {activity.facility.space}</p></Col>
+                            <Col md={6}><p>Estado:</p></Col><Col md={6}><p> {activity.status.description}</p></Col>
+
+                        </Row>
+                    </Col>
+                    <Col md={6}>
+                        <Row>
+                            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                                className="btn-info btn-large pull-right"
+                                style={{width: '100px', marginBottom: '10px'}}
+                            >Detalles</Button></Link> </Col>
+                        </Row>
+                    </Col>
                 </Panel>
-
+                </Link>
             </Col>
         );
 
@@ -157,42 +180,33 @@ class Activities extends Component {
 
 
         let deniedActivities = this.state.deniedActivities.map(activity =>
-
             <Col md={12}>
+                <Link to={`/activities/${activity.id}`}><Panel header={activity.activityName}>
+                    <Col md={6}>
+                        <Row>
 
-                <Panel header={activity.activityName}>
-                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                    <br/>
-                    <p><b>Description:</b> {activity.activityDescription}</p>
-                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                    <p><b>Facility:</b> {activity.facility.space}</p>
-                    <p><b>Status:</b> {activity.status.description}</p>
+                            <Col md={6}><p>Título:</p></Col><Col md={6}><p> {activity.activityName}</p></Col>
+                            <Col md={6}><p>Descripción:</p></Col><Col md={6}><p> {activity.activityDescription}</p>
+                        </Col>
+                            <Col md={6}><p>Organización:</p></Col><Col md={6}>
+                            <p> {activity.organization.organizationName}</p></Col>
+                            <Col md={6}><p>Facilidades:</p></Col><Col md={6}><p> {activity.facility.space}</p></Col>
+                            <Col md={6}><p>Estado:</p></Col><Col md={6}><p> {activity.status.description}</p></Col>
+
+                        </Row>
+                    </Col>
+                    <Col md={6}>
+                        <Row>
+                            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                                className="btn-info btn-large pull-right"
+                                style={{width: '100px', marginBottom: '10px'}}
+                            >Detalles</Button></Link> </Col>
+                        </Row>
+                    </Col>
                 </Panel>
-
+                </Link>
             </Col>
         );
-
-
-        const activities = this.state.activities.map(activity =>
-
-            <Col md={12}>
-                <Panel header={activity.activityName}>
-                    <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-                    <br/>
-                    <p><b>Description:</b> {activity.activityDescription}</p>
-                    <p><b>Organization:</b> {activity.organization.organizationName}</p>
-                    <p><b>Facility:</b> {activity.facility.space}</p>
-                    <p><b>Status:</b> {activity.status.description}</p>
-                    <Link to={`/activities/edit`}><Button className="btn-info">Edit</Button></Link>
-                    <Button className="btn-success" style={{marginLeft: "20px"}}>Approve</Button>
-                    <Button className="btn-danger" style={{marginLeft: "20px"}}>Decline</Button>
-                </Panel>
-
-            </Col>
-        );
-
-
-
 
         console.log(this.state.activities);
         return (
@@ -207,6 +221,7 @@ class Activities extends Component {
                             <li/>
                             <li className="active">Actividades</li>
                         </ol>
+
                         <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
                             <NavItem eventKey="1" href="/home">Pendientes
                                 {this.state.pendingActivities.length > 0 ?<Badge style={{background: 'red', marginLeft: '10px'}}>

@@ -40,8 +40,8 @@ class CreateOrganization extends Component {
     }
 
     componentDidMount() {
-        // fetch('http://192.168.99.100/api/organization_types/').then(response => {
-        fetch('http://192.168.99.100/api/organization_types').then(response => {
+        // fetch('http://localhost:8000/api/organization_types/').then(response => {
+        fetch('http://localhost:8000/api/organization_types').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Organization Types");
@@ -107,8 +107,8 @@ class CreateOrganization extends Component {
         console.log('Esto es lo que necesita que se cree');
         console.log(newOrganization);
 
-        // fetch('http://192.168.99.100/api/organizations', {
-        fetch('http://192.168.99.100/api/organizations', {
+        // fetch('http://localhost:8000/api/organizations', {
+        fetch('http://localhost:8000/api/organizations', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),
@@ -190,11 +190,11 @@ class CreateOrganization extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>

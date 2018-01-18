@@ -82,9 +82,9 @@ export default class Home extends Component {
         const tabsInstance = (
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Request</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2} style={{paddingRight: "20px"}} />Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw} style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots} style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie} style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                     </Nav>
             </div>
@@ -99,7 +99,7 @@ export default class Home extends Component {
 
 
                 {/*{this.props.isAuthenticated ? this.renderNotes() : this.renderLander()}*/}
-                {/*<Jumbotron><h3>Activities</h3></Jumbotron>*/}
+                {/*<Jumbotron><h3>Actividades</h3></Jumbotron>*/}
 
 
                 <Col md={2}>
@@ -111,7 +111,7 @@ export default class Home extends Component {
                         <Col md={12}>
                             <ol className="breadcrumb">
                                 <li/>
-                                <li className="active">Activities</li>
+                                <li className="active">Actividades</li>
                             </ol>
                         </Col>
                     </Row>

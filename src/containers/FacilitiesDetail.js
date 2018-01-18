@@ -42,8 +42,8 @@ class FacilitiesDetail extends Component {
         console.log("The ID: ");
         console.log(id);
 
-        // fetch(`http://192.168.99.100/api/facilities/${id}`).then(response => {
-        fetch(`http://192.168.99.100/api/facilities/${id}`).then(response => {
+        // fetch(`http://localhost:8000/api/facilities/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/facilities/${id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({facilitiesId: data.id});
@@ -52,8 +52,8 @@ class FacilitiesDetail extends Component {
                 this.setState({facilityDepartmentValue: data.facilityDepartment});
 
                 // TODO Fetch facilities activities
-                // fetch(`http://192.168.99.100/api/activityByFacility/${id}`).then(response => {
-                fetch(`http://192.168.99.100/api/activityByFacility/${id}`).then(response => {
+                // fetch(`http://localhost:8000/api/activityByFacility/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/activityByFacility/${id}`).then(response => {
                     response.json().then(data => {
 
 
@@ -69,8 +69,8 @@ class FacilitiesDetail extends Component {
                 });
 
 
-                // fetch(`http://192.168.99.100/api/facilities/managers/${id}`).then(response => {
-                fetch(`http://192.168.99.100/api/facilities/managers/${id}`).then(response => {
+                // fetch(`http://localhost:8000/api/facilities/managers/${id}`).then(response => {
+                fetch(`http://localhost:8000/api/facilities/managers/${id}`).then(response => {
                     response.json().then(data => {
 
                         this.setState({facilitiesManagers: data});
@@ -91,7 +91,7 @@ class FacilitiesDetail extends Component {
             });
         })
 
-        fetch(`http://192.168.99.100/api/users`).then(response => {
+        fetch(`http://localhost:8000/api/users`).then(response => {
             response.json().then(data => {
 
                 this.setState({managers: data.managers});
@@ -129,7 +129,7 @@ class FacilitiesDetail extends Component {
         console.log('manager_id: ' + managerId);
         console.log('organization_id: ' + this.state.facilitiesId);
 
-        fetch(`http://192.168.99.100/api/facilities/${facilitiesId}/addManager/${managerId}`, {
+        fetch(`http://localhost:8000/api/facilities/${facilitiesId}/addManager/${managerId}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'}
         }).then(response => {
@@ -139,7 +139,7 @@ class FacilitiesDetail extends Component {
                 response.json().then(newMembership => {
 
                     console.log('New membership was created');
-                    fetch(`http://192.168.99.100/api/facilities/managers/${facilitiesId}`).then(response => {
+                    fetch(`http://localhost:8000/api/facilities/managers/${facilitiesId}`).then(response => {
                         response.json().then(data => {
                             this.setState({facilitiesManagers: data});
 
@@ -166,14 +166,14 @@ class FacilitiesDetail extends Component {
         console.log('El managerId');
         console.log(managerId);
 
-        fetch(`http://192.168.99.100/api/facilities/managers/${this.state.facilitiesId}/${managerId}`, {
+        fetch(`http://localhost:8000/api/facilities/managers/${this.state.facilitiesId}/${managerId}`, {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json'},
         }).then(response => {
             if (response.ok) {
                 response.json().then(removedManager => {
 
-                    fetch(`http://192.168.99.100/api/facilities/managers/${this.state.facilitiesId}`).then(response => {
+                    fetch(`http://localhost:8000/api/facilities/managers/${this.state.facilitiesId}`).then(response => {
                         response.json().then(data => {
                             this.setState({facilitiesManagers: data});
 
@@ -216,8 +216,8 @@ class FacilitiesDetail extends Component {
 
         };
 
-        // fetch('http://192.168.99.100/api/organizations', {
-        fetch(`http://192.168.99.100/api/facilities/${this.state.facilitiesId}`, {
+        // fetch('http://localhost:8000/api/organizations', {
+        fetch(`http://localhost:8000/api/facilities/${this.state.facilitiesId}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),

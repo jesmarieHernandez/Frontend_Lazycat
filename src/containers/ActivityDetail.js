@@ -125,8 +125,8 @@ class ActivityDetail extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
-        // fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
-        fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
+        // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log("DATA" + data);
                 this.setState({activity: data});
@@ -137,7 +137,7 @@ class ActivityDetail extends Component {
             });
         })
 
-        fetch(`http://192.168.99.100/api/activityType/`).then(response => {
+        fetch(`http://localhost:8000/api/activityType/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Type:");
@@ -190,7 +190,7 @@ class ActivityDetail extends Component {
 
 
         console.log("Activity Update Object: " + activityUpdate);
-        fetch(`http://192.168.99.100/api/adminApproved/${this.state.activity.id}`, {
+        fetch(`http://localhost:8000/api/adminApproved/${this.state.activity.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
@@ -227,7 +227,7 @@ class ActivityDetail extends Component {
         this.setState({dscaDecision: 'denied'});
 
         console.log(activityUpdate);
-        fetch(`http://192.168.99.100/api/adminDenied/${this.state.activity.id}`, {
+        fetch(`http://localhost:8000/api/adminDenied/${this.state.activity.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
@@ -291,7 +291,7 @@ class ActivityDetail extends Component {
         console.log("Typeeeeeee");
         console.log(this.state.selectedType);
 
-        fetch(`http://192.168.99.100/api/updateType/${this.state.activity.id}`, {
+        fetch(`http://localhost:8000/api/updateType/${this.state.activity.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),

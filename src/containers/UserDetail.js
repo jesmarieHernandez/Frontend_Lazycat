@@ -98,8 +98,8 @@ class UserDetail extends Component {
     componentDidMount() {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
-        // fetch(`http://192.168.99.100/api/admin/users/${id}`).then(response => {
-        fetch(`http://192.168.99.100/api/users/${this.props.match.params.id}`).then(response => {
+        // fetch(`http://localhost:8000/api/admin/users/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/users/${this.props.match.params.id}`).then(response => {
             response.json().then(data => {
                 console.log(data);
                 this.setState({user: data});
@@ -189,7 +189,7 @@ class UserDetail extends Component {
                 staffPhone: form.staffTelephone.value
             }
 
-            fetch(`http://192.168.99.100/api/staff/${this.state.staffId}`, {
+            fetch(`http://localhost:8000/api/staff/${this.state.staffId}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -227,7 +227,7 @@ class UserDetail extends Component {
                 studentEmail: form.studentEmail.value
             }
 
-            fetch(`http://192.168.99.100/api/students/${this.state.studentId}`, {
+            fetch(`http://localhost:8000/api/students/${this.state.studentId}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -262,7 +262,7 @@ class UserDetail extends Component {
                 counselorPhone: form.organizationCounselorTelephone.value
             }
 
-            fetch(`http://192.168.99.100/api/counselors/${this.state.counselorId}`, {
+            fetch(`http://localhost:8000/api/counselors/${this.state.counselorId}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -295,7 +295,7 @@ class UserDetail extends Component {
                 managerPhone: this.state.managerPhoneValue
             }
 
-            fetch(`http://192.168.99.100/api/managers/${this.state.managerId}`, {
+            fetch(`http://localhost:8000/api/managers/${this.state.managerId}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -429,11 +429,11 @@ class UserDetail extends Component {
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon icon={fileText2}
-                                                                                                   style={{paddingRight: "20px"}}/>Request</Link></NavItem>
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
-                                                                                                      style={{paddingRight: "20px"}}/>Activities</Link></NavItem>
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Statistics</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>

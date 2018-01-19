@@ -183,7 +183,7 @@ class StudentActivityDetail extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li ><Link to={`/activities/`}>Actividades</Link></li>
+                        <li ><Link to={`/student/activities/`}>Actividades</Link></li>
                         <li className="active">Detalles de la Actividad</li>
                     </ol>
 

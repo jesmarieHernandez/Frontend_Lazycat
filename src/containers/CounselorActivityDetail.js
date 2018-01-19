@@ -169,6 +169,17 @@ class CounselorActivityDetail extends Component {
                         console.log('Activity request was updated successfully!');
                         console.log('Activity request ID: ' + updatedRequest.id);
 
+                        fetch(`http://136.145.216.150:4000/email/${this.state.activity.facility.managers[0].managerEmail}`).then(response => {
+                            response.json().then(data => {
+                                console.log("DATA" + data);
+                                this.setState({activity: data});
+                                console.log(this.state.activity.id);
+                            }).catch(err => {
+                                console.log(err)
+                                //this.props.showError(`Error in sending data to server: ${err.message}`);
+                            });
+                        })
+
                         this.props.history.push(`/counselor/activities/`);
                     })
                 } else {
@@ -208,6 +219,17 @@ class CounselorActivityDetail extends Component {
                     response.json().then(updatedRequest => {
                         console.log('Activity request was updated successfully!');
                         console.log('Activity request ID: ' + updatedRequest.id);
+
+                        fetch(`http://136.145.216.150:4000/email/${this.state.activity.student.students[0].studentEmail}`).then(response => {
+                            response.json().then(data => {
+                                console.log("DATA" + data);
+                                this.setState({activity: data});
+                                console.log(this.state.activity.id);
+                            }).catch(err => {
+                                console.log(err)
+                                //this.props.showError(`Error in sending data to server: ${err.message}`);
+                            });
+                        })
 
                         this.props.history.push(`/counselor/activities/`);
                     })

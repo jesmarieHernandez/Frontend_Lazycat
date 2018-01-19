@@ -200,6 +200,52 @@ class ActivityDetail extends Component {
                     console.log('Activity request was updated successfully!');
                     console.log('Activity request ID: ' + updatedRequest.id);
 
+                    fetch(`http://136.145.216.150:4000/email/${this.state.activity.student.studentEmail}`).then(response => {
+                        response.json().then(data => {
+                            console.log("DATA" + data);
+                            this.setState({activity: data});
+                            console.log(this.state.activity.id);
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    })
+
+
+                    this.props.history.push(`/activities/`);
+                })
+            } else {
+                response.json().then(error => {
+                    //this.props.showError(`Failed to create request: ${error.message}`);
+                });
+            }
+        }).catch(err => {
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        });
+
+
+            fetch(`http://dev.uprm.edu/dsca/v1/api/adminApproved/${this.state.activity.id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(activityUpdate),
+        }).then(response => {
+            if (response.ok) {
+                console.log(response);
+                response.json().then(updatedRequest => {
+                    console.log('Activity request was updated successfully!');
+                    console.log('Activity request ID: ' + updatedRequest.id);
+
+                    fetch(`http://136.145.216.150:4000/email/${this.state.activity.student.studentEmail}`).then(response => {
+                        response.json().then(data => {
+                            console.log("DATA" + data);
+                            this.setState({activity: data});
+                            console.log(this.state.activity.id);
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    })
+
                     this.props.history.push(`/activities/`);
                 })
             } else {

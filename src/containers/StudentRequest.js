@@ -219,6 +219,17 @@ class Request extends Component {
                     this.setState({showModal: false});
                     console.log(':D');
                     console.log(this);
+
+                    fetch(`http://136.145.216.150:4000/email/${this.state.counselorInformation.counselorEmail}`).then(response => {
+                        response.json().then(data => {
+                            console.log("DATA" + data);
+                            this.setState({activity: data});
+                            console.log(this.state.activity.id);
+                        }).catch(err => {
+                            console.log(err)
+                            //this.props.showError(`Error in sending data to server: ${err.message}`);
+                        });
+                    })
                     // this.props.history.push(`/student/activities/${createdRequest._id}`);
                     this.props.history.push(`/student/activities/${createdRequest.id}`);
 

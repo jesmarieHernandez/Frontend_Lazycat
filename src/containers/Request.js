@@ -234,6 +234,7 @@ class Request extends Component {
                     this.setState({showModal: false});
                     console.log(':D');
                     console.log(this);
+
                     this.props.history.push(`/activities/${createdRequest.id}`);
 
                 })

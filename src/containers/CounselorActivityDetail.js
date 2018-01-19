@@ -124,13 +124,13 @@ class CounselorActivityDetail extends Component {
         fetch(`http://dev.uprm.edu/dsca/v1/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log("DATA" + data);
-                if(Object.keys(data).length === 0){
-                    this.props.history.push(`/counselor/activities/`);
-                }
-
-                else if (data.organization.counselors[0].counselorEmail !== this.props.cookies.get('email')){
-                    this.props.history.push(`/counselor/activities/`);
-                }
+                // if(Object.keys(data).length === 0){
+                //     this.props.history.push(`/counselor/activities/`);
+                // }
+                //
+                // else if (data.organization.counselors[0].counselorEmail !== this.props.cookies.get('email')){
+                //     this.props.history.push(`/counselor/activities/`);
+                // }
                 this.setState({activity: data});
                 console.log(this.state.activity.id);
             }).catch(err => {
@@ -520,7 +520,7 @@ class CounselorActivityDetail extends Component {
                                     {(this.state.activity.counselor_status.code === 2 || this.state.activity.counselor_status.code === 3) ?
                                         (<div>
                                                 <Col sm={12}>
-                                                    <Col componentClass={ControlLabel}>Observaciones: </Col>
+                                                    <Col componentClass={ControlLabel} required>Observaciones: </Col>
                                                     <br/>
                                                     {this.state.activity.counselorComment}
                                                 </Col>

@@ -143,7 +143,7 @@ export default class Login extends Component {
                     <Col md="12">
                         <Row>
                             <ReactCenter>
-                                <img src={sampLogo} style={{height: 200}}/>
+                                <img src="https://image.ibb.co/cMPJUG/SAMP.png" style={{height: 200}}/>
                             </ReactCenter>
                         </Row>
                         <Row>

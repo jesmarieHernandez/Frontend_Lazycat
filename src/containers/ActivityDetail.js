@@ -119,6 +119,8 @@ class ActivityDetail extends Component {
     }
 
     componentDidMount() {
+
+        console.log('HOLAAAaAA');
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
@@ -175,7 +177,7 @@ class ActivityDetail extends Component {
 
 
         const activityUpdate = {
-            staffComment : this.state.commentary,
+            staffComment : this.state.staffComment,
             activityType_code: this.state.selectedType,
             hasFood: this.state.selectedOption ? 1 : 0
 
@@ -216,7 +218,7 @@ class ActivityDetail extends Component {
         console.log('Selected status: ' + this.state.selectedStatus);
 
         const activityUpdate = {
-            staffComment: this.state.commentary,
+            staffComment: this.state.staffComment,
             activityType_code: this.state.selectedType,
             hasFood: this.state.selectedOption ? 1 : 0
         };
@@ -604,7 +606,7 @@ class ActivityDetail extends Component {
                             <Panel header="Decisi&oacute;n de la Actividad">
                                 <FormGroup>
                                     {/* Show already placed category and commentary by the DSCA Staff/Admin */}
-                                    {(this.state.activity.status.code === 2 || this.state.activity.status.code === 3) || this.state.activity.type != null ?
+                                    {(this.state.activity.status.code === 2 || this.state.activity.status.code === 3) && this.state.activity.type !== null ?
                                         (<div>
                                             <Col sm={3}>
                                                 <Col componentClass={ControlLabel}>Categor&iacute;a: </Col>
@@ -614,7 +616,7 @@ class ActivityDetail extends Component {
                                             </Col>
 
                                             <Col sm={9}>
-                                                <Col componentClass={ControlLabel}>Comentario: </Col>
+                                                <Col componentClass={ControlLabel}>Observaciones: </Col>
                                                 <FormControl name="commentary"
                                                              value={this.state.activity.staffComment}
                                                              disabled/>
@@ -639,7 +641,7 @@ class ActivityDetail extends Component {
                                                 <Col sm={6}>
                                                     <Col componentClass={ControlLabel}>Comentario: </Col>
                                                     <FormControl name="commentary" onChange={this.handleCommentChange}
-                                                                 value={this.state.commentary}
+                                                                 value={this.state.staffComment}
                                                                  required/>
                                                 </Col>
 

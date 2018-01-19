@@ -72,8 +72,15 @@ class ManagerActivities extends Component {
             </div>
         );
 
+        console.log('Las actividades del counselor');
+        console.log(this.state.activities);
 
-        const activities = this.state.activities.map(activity =>
+        const filteredActivities = this.state.activities.filter(function (manager) {
+
+            return manager.counselorStatus_code === 2;
+        });
+
+        const activities = filteredActivities.map(activity =>
 
             <Col md={12}>
                 <Panel header={activity.activityName}>

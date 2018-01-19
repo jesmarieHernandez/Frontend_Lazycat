@@ -120,8 +120,8 @@ class CounselorActivityDetail extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
-        // fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
-        fetch(`http://192.168.99.100/api/activities/${id}`).then(response => {
+        // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
+        fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log("DATA" + data);
                 if(Object.keys(data).length === 0){
@@ -158,7 +158,7 @@ class CounselorActivityDetail extends Component {
 
 
             console.log("Activity Update Object: " + activityUpdate);
-            fetch(`http://192.168.99.100/api/counselorApproved/${this.state.activity.id}`, {
+            fetch(`http://localhost:8000/api/counselorApproved/${this.state.activity.id}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(activityUpdate),
@@ -198,7 +198,7 @@ class CounselorActivityDetail extends Component {
             // this.setState({dscaDecision: 'denied'});
 
             console.log(activityUpdate);
-            fetch(`http://192.168.99.100/api/counselorDenied/${this.state.activity.id}`, {
+            fetch(`http://localhost:8000/api/counselorDenied/${this.state.activity.id}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(activityUpdate),
@@ -272,7 +272,7 @@ class CounselorActivityDetail extends Component {
                 <Col md={10}>
                     <ol className="breadcrumb">
                         <li/>
-                        <li ><Link to={`/activities/`}>Actividades</Link></li>
+                        <li ><Link to={`/counselor/activities/`}>Actividades</Link></li>
                         <li className="active">Detalles de la Actividad</li>
                     </ol>
 
@@ -529,7 +529,7 @@ class CounselorActivityDetail extends Component {
                                             <Row></Row>
 
                                             <ReactCenter>
-                                                <Col md="1"><Link to={`/activities/`}><Button
+                                                <Col md="1"><Link to={`/counselor/activities/`}><Button
                                                     className="btn btn-primary">Atr&aacute;s</Button></Link></Col>
                                                 <br/>
                                                 <br/>
@@ -576,7 +576,7 @@ class CounselorActivityDetail extends Component {
                                             <Row>
                                                 <ReactCenter>
                                                     <AlertContainer ref={a => this.msg = a}/>
-                                                    <Col md="1"><Link to={`/activities/`}>
+                                                    <Col md="1"><Link to={`/counselor/activities/`}>
                                                         <Button
                                                             className="btn btn-primary">
                                                             Atr&aacute;s</Button>

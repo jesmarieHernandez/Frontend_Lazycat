@@ -51,8 +51,8 @@ export default class Login extends Component {
 
     responseGoogle = (response) => {
 
-        fetch(`http://192.168.99.100/api/users/${response.w3.U3}`).then(response => {
-        // fetch(`http://192.168.99.100/api/users/${response.w3.U3}`).then(response => {
+        fetch(`http://localhost:8000/api/users/${response.w3.U3}`).then(response => {
+        // fetch(`http://localhost:8000/api/users/${response.w3.U3}`).then(response => {
 
             if (response.ok) {
                 response.json().then(results => {

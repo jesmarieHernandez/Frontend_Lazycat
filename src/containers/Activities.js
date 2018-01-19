@@ -45,15 +45,18 @@ class Activities extends Component {
                     this.setState({activities: results});
                     //this.props.router.push(`/activities/${createdRequest._id}`);
 
-                    // const pending = this.state.activities.filter(function (obj) {
-                    //     return obj.status.code == 1;
-                    // });
+                    const pending = this.state.activities.filter(function (obj) {
+                        return obj.status.code == 1;
+                    });
 
 
                     console.log('Pending length: ');
                     console.log(pending.length / 5);
 
-                    const max = pending.length % 2 === 0 ? pending.length / 5 : Math.floor(pending.length / 5 + 1);
+                    let max = pending.length % 2 === 0 ? pending.length / 5 : Math.floor(pending.length / 5 + 1);
+                    if (pending.length < 5) {
+                        max = 0;
+                    }
 
                     this.setState({pendingActivitiesMaxPageNumber: max});
 
@@ -357,7 +360,6 @@ class Activities extends Component {
                                 {this.state.pendingActivities.length > 0 ?
                                 <Row>
                                     <Pager>
-
                                         <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} &nbsp;
                                             de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
                                         <Row>{this.state.pendingActivitiesPageNumber > 1 ?

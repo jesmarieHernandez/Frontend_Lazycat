@@ -124,7 +124,7 @@ class Request extends Component {
                     });
 
                     // fetch(`http://localhost:8000/api/facilities/`).then(response => {
-                    fetch(`http://localhost:8000/api/facilities/`).then(response => {
+                    fetch(`http://localhost:8000/api/facilitiesWithManagers/`).then(response => {
                         if (response.ok) {
                             response.json().then(results => {
                                 //console.log(results);
@@ -923,7 +923,7 @@ class Request extends Component {
 
                                 <Panel header="Detalles de la Organizaci&oacute;n">
                                     <FormGroup>
-                                        <Col md={4}>
+                                        <Col md={8}>
                                             <Col componentClass={ControlLabel}>Organización</Col>
 
                                             <FormControl componentClass="select" name="selectOrganization"
@@ -934,7 +934,7 @@ class Request extends Component {
                                             </FormControl>
                                         </Col>
 
-                                        <Col sm={2}>
+                                        <Col sm={4}>
                                             <Col componentClass={ControlLabel}>Siglas</Col>
                                             <FormControl name="organizationInitials"
                                                          value={this.state.selectedOrganization.organizationInitials}

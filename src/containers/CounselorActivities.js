@@ -83,7 +83,7 @@ class CounselorActivities extends Component {
                             <Col md={4}><p>Organización:</p></Col><Col md={8}>
                             <p> {activity.organization.organizationName}</p></Col>
                             <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
-                            <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                            <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
 
                         </Row>
                     </Col>

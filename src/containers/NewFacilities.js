@@ -70,7 +70,7 @@ class CreateFacilities extends Component {
         console.log(newFacilities);
 
         // fetch('http://localhost:3001/api/admin/facilities', {
-        fetch('http://localhost:8000/api/facilities', {
+        fetch('http://dev.uprm.edu/dsca/v1/api/facilities', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newFacilities),

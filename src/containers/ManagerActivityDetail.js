@@ -135,8 +135,8 @@ class ManagerActivityDetail extends Component {
         console.log('this.props.params.id: ' + this.props.match.params.id);
         let id = this.props.match.params.id;
         console.log("The id: " + id);
-        // fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
-        fetch(`http://localhost:8000/api/activities/${id}`).then(response => {
+        // fetch(`http://dev.uprm.edu/dsca/v1/api/activities/${id}`).then(response => {
+        fetch(`http://dev.uprm.edu/dsca/v1/api/activities/${id}`).then(response => {
             response.json().then(data => {
                 console.log("DATA" + data);
                 if(Object.keys(data).length === 0){
@@ -169,7 +169,7 @@ class ManagerActivityDetail extends Component {
 
 
         console.log("Activity Update Object: " + activityUpdate);
-        fetch(`http://localhost:8000/api/managerApproved/${this.state.activity.id}`, {
+        fetch(`http://dev.uprm.edu/dsca/v1/api/managerApproved/${this.state.activity.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
@@ -204,7 +204,7 @@ class ManagerActivityDetail extends Component {
         // this.setState({dscaDecision: 'denied'});
 
         console.log(activityUpdate);
-        fetch(`http://localhost:8000/api/managerDenied/${this.state.activity.id}`, {
+        fetch(`http://dev.uprm.edu/dsca/v1/api/managerDenied/${this.state.activity.id}`, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityUpdate),
@@ -248,7 +248,7 @@ class ManagerActivityDetail extends Component {
     //     console.log("Typeeeeeee");
     //     console.log(this.state.selectedType);
     //
-    //     fetch(`http://localhost:8000/api/updateType/${this.state.activity.id}`, {
+    //     fetch(`http://dev.uprm.edu/dsca/v1/api/updateType/${this.state.activity.id}`, {
     //         method: 'PUT',
     //         headers: {'Content-Type': 'application/json'},
     //         body: JSON.stringify(activityUpdate),

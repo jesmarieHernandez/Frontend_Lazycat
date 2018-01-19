@@ -24,7 +24,7 @@ class ManagerActivities extends Component {
 
     componentDidMount() {
 
-        fetch(`http://192.168.99.100/api/activity/${this.props.cookies.get('email')}`).then(response => {
+        fetch(`http://dev.uprm.edu/dsca/v1/api/activity/${this.props.cookies.get('email')}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});

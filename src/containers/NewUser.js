@@ -96,7 +96,7 @@ class NewUser extends Component {
 
     componentDidMount() {
         console.log('Ok?');
-        fetch(`http://localhost:8000/api/users/${this.props.cookies.get('email')}`).then(response => {
+        fetch(`http://dev.uprm.edu/dsca/v1/api/users/${this.props.cookies.get('email')}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log('Ok? in');
@@ -151,7 +151,7 @@ onSubmit = (event) => {
             /^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.adminEmailValue) === true &&
             /^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.adminPhoneValue) === true) {
 
-            fetch('http://localhost:8000/api/admin', {
+            fetch('http://dev.uprm.edu/dsca/v1/api/admin', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -195,7 +195,7 @@ onSubmit = (event) => {
             this.state.staffEmailValue.length <= 100 &&
             /^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.staffEmailValue) === true &&
             /^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.staffPhoneValue) === true) {
-            fetch('http://localhost:8000/api/staff', {
+            fetch('http://dev.uprm.edu/dsca/v1/api/staff', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -254,7 +254,7 @@ onSubmit = (event) => {
             (/^([0-9]{5})$/.test(this.state.studentZipCodeValue) === true) &&
             (/^(([0-9]{10}))$/.test(this.state.studentPhoneValue) === true) &&
             (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.studentEmailValue) === true)) {
-            fetch('http://localhost:8000/api/students', {
+            fetch('http://dev.uprm.edu/dsca/v1/api/students', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -311,7 +311,7 @@ onSubmit = (event) => {
             (/^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.counselorOfficeValue) === false) &&
             (this.state.counselorOfficeValue.length < 15) &&
             (this.state.counselorOfficeValue.length != 0)) {
-            fetch('http://localhost:8000/api/counselors', {
+            fetch('http://dev.uprm.edu/dsca/v1/api/counselors', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),
@@ -356,7 +356,7 @@ onSubmit = (event) => {
             (this.state.managerNameValue.length != 0) &&
             (/^[a-zA-Z]+\.?[a-zA-Z]+[0-9]*?@(upr.edu)+$/.test(this.state.managerEmailValue) === true) &&
             (/^(((x)?[0-9]{4})|([0-9]{10}))$/.test(this.state.managerPhoneValue) === true)) {
-            fetch('http://localhost:8000/api/managers', {
+            fetch('http://dev.uprm.edu/dsca/v1/api/managers', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(newUser),

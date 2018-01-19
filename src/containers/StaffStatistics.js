@@ -33,7 +33,7 @@ class StaffStatistics extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8000/api/pending').then(response => {
+        fetch('http://dev.uprm.edu/dsca/v1/api/pending').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     this.setState({pending: count[0].pending});
@@ -47,7 +47,7 @@ class StaffStatistics extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:8000/api/denied').then(response => {
+        fetch('http://dev.uprm.edu/dsca/v1/api/denied').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     console.log(count);
@@ -62,7 +62,7 @@ class StaffStatistics extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:8000/api/approved').then(response => {
+        fetch('http://dev.uprm.edu/dsca/v1/api/approved').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     this.setState({approved: count[0].approved});

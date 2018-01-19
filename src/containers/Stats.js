@@ -100,7 +100,7 @@ class Stats extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:8000/api/pending').then(response => {
+        fetch('http://dev.uprm.edu/dsca/v1/api/pending').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     this.setState({pending: count[0].pending});
@@ -114,7 +114,7 @@ class Stats extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:8000/api/denied').then(response => {
+        fetch('http://dev.uprm.edu/dsca/v1/api/denied').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     console.log(count);
@@ -129,7 +129,7 @@ class Stats extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:8000/api/approved').then(response => {
+        fetch('http://dev.uprm.edu/dsca/v1/api/approved').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     this.setState({approved: count[0].approved});
@@ -160,7 +160,7 @@ class Stats extends Component {
 
         console.log("dateRange");
         console.log(dateRange);
-        fetch('http://192.168.99.100/api/report', {
+        fetch('http://dev.uprm.edu/dsca/v1/api/report', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(dateRange),
@@ -203,7 +203,7 @@ class Stats extends Component {
 
         console.log("dateRange");
         console.log(dateRange);
-        fetch('http://192.168.99.100/api/request', {
+        fetch('http://dev.uprm.edu/dsca/v1/api/request', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(dateRange),
@@ -244,7 +244,7 @@ class Stats extends Component {
 
         console.log("dateRange");
         console.log(dateRange);
-        fetch('http://192.168.99.100/api/pending', {
+        fetch('http://dev.uprm.edu/dsca/v1/api/pending', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(dateRange),
@@ -269,7 +269,7 @@ class Stats extends Component {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://192.168.99.100/api/approved', {
+        fetch('http://dev.uprm.edu/dsca/v1/api/approved', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(dateRange),
@@ -294,7 +294,7 @@ class Stats extends Component {
             //this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://192.168.99.100/api/denied', {
+        fetch('http://dev.uprm.edu/dsca/v1/api/denied', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(dateRange),

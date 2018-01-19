@@ -40,8 +40,8 @@ class CreateOrganization extends Component {
     }
 
     componentDidMount() {
-        // fetch('http://localhost:8000/api/organization_types/').then(response => {
-        fetch('http://localhost:8000/api/organization_types').then(response => {
+        // fetch('http://dev.uprm.edu/dsca/v1/api/organization_types/').then(response => {
+        fetch('http://dev.uprm.edu/dsca/v1/api/organization_types').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Organization Types");
@@ -107,8 +107,8 @@ class CreateOrganization extends Component {
         console.log('Esto es lo que necesita que se cree');
         console.log(newOrganization);
 
-        // fetch('http://localhost:8000/api/organizations', {
-        fetch('http://localhost:8000/api/organizations', {
+        // fetch('http://dev.uprm.edu/dsca/v1/api/organizations', {
+        fetch('http://dev.uprm.edu/dsca/v1/api/organizations', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(newOrganization),

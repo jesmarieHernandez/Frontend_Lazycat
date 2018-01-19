@@ -25,13 +25,13 @@ class Organizations extends Component {
     }
 
     componentDidMount() {
-        // fetch('http://localhost:8000/api/organizations').then(response => {
+        // fetch('http://dev.uprm.edu/dsca/v1/api/organizations').then(response => {
 
         console.log('componentDidMount');
-        fetch('http://localhost:8000/api/organizations').then(response => {
+        fetch('http://dev.uprm.edu/dsca/v1/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {
-                    console.log('http://localhost:8000/api/organizations');
+                    console.log('http://dev.uprm.edu/dsca/v1/api/organizations');
                     console.log(results);
                     this.setState({organizations: results});
                 });

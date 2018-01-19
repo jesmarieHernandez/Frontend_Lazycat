@@ -21,7 +21,7 @@ class ManagerActivities extends Component {
 
     componentDidMount() {
 
-        fetch(`http://localhost:8000/api/activity/${this.props.cookies.get('email')}`).then(response => {
+        fetch(`http://192.168.99.100/api/activity/${this.props.cookies.get('email')}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
@@ -73,7 +73,7 @@ class ManagerActivities extends Component {
 
             <Col md={12}>
                 <Panel header={activity.activityName}>
-                    {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+                    {/*<td><Link to={`/manager/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
                     {/*<br/>*/}
                     <Col md={9}>
                         <Row>
@@ -90,7 +90,7 @@ class ManagerActivities extends Component {
                     </Col>
                     <Col md={3}>
                         <Row>
-                            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                            <Col md={12}><Link to={`/manager/activities/${activity.id}`}><Button
                                 className="btn-info btn-large pull-right"
                                 style={{width: '100px', marginBottom: '10px'}}
                             >Detalles</Button></Link> </Col>

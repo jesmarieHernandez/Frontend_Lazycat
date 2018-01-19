@@ -38,16 +38,16 @@ class Activities extends Component {
 
     componentDidMount() {
 
-        // fetch('http://localhost:8000/api/activities').then(response => {
-        fetch('http://localhost:8000/api/activities').then(response => {
+        // fetch('http://192.168.99.100/api/activities').then(response => {
+        fetch('http://192.168.99.100/api/activities').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
                     //this.props.router.push(`/activities/${createdRequest._id}`);
 
-                    // const pending = this.state.activities.filter(function (obj) {
-                    //     return obj.status.code == 1;
-                    // });
+                    const pending = this.state.activities.filter(function (obj) {
+                        return obj.status.code == 1;
+                    });
 
 
                     console.log('Pending length: ');
@@ -293,25 +293,6 @@ class Activities extends Component {
                 </Col>
             );
         }
-
-        // const activities = this.state.activities.map(activity =>
-        //
-        //     <Col md={12}>
-        //         <Panel header={activity.activityName}>
-        //             <td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>
-        //             <br/>
-        //             <p><b>Description:</b> {activity.activityDescription}</p>
-        //             <p><b>Organization:</b> {activity.organization.organizationName}</p>
-        //             <p><b>Facility:</b> {activity.facility.space}</p>
-        //             <p><b>Status:</b> {activity.status.description}</p>
-        //             <Link to={`/activities/edit`}><Button className="btn-info">Edit</Button></Link>
-        //             <Button className="btn-success" style={{marginLeft: "20px"}}>Approve</Button>
-        //             <Button className="btn-danger" style={{marginLeft: "20px"}}>Decline</Button>
-        //         </Panel>
-        //
-        //     </Col>
-        // );
-
 
         console.log(this.state.activities);
 

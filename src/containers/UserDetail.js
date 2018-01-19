@@ -217,7 +217,7 @@ class UserDetail extends Component {
             const form = document.forms.newStudent;
             let newUser;
             newUser = {
-                studentName: form.requesterName.value,
+                studentName: form.studentName.value,
                 studentNo: form.studentIdentificationNumber.value,
                 studentAddress: form.studentAddress1.value,
                 studentCity: form.studentAddressCity.value,

@@ -6,6 +6,11 @@ import {Link} from "react-router-dom";
 import {Modal} from 'react-bootstrap'
 import AlertContainer from 'react-alert';
 import ReactCenter from 'react-center';
+import Icon from 'react-icons-kit';
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 
 
 import {
@@ -230,7 +235,7 @@ class Request extends Component {
     }
 
     onOrganizationSelected(event) {
-        this.setState({organizationPicked: true});
+        this.setState({organizationPicked: '2'});
         event.preventDefault();
         console.log('Change happened');
         const selectedOrganization = this.state.organizations.filter(function (organization) {
@@ -246,7 +251,7 @@ class Request extends Component {
     }
 
     onFacilitiesSelected(event) {
-        this.setState({facilityPicked: true});
+        this.setState({facilityPicked: '2'});
         event.preventDefault();
         console.log('Change happened');
         console.log('Aqui se va a la puta: ');
@@ -325,6 +330,24 @@ class Request extends Component {
 
     open() {
 
+        console.log(this.state.guestValue.length >= 2);
+        console.log(this.state.guestValue.length <= 254);
+        console.log(/^[0-9]+$/.test(this.state.guestValue) === false);
+        console.log(/^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.guestValue) === false);
+        console.log(this.state.guestValue.length >= 2);
+        console.log(this.state.guestValue.length <= 254);
+        console.log(/^[0-9]+$/.test(this.state.guestValue) === false);
+        console.log(/^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.guestValue) === false);
+        console.log(this.state.attendanceValue > 1);
+        console.log(this.state.attendanceValue < 100000);
+        console.log(this.state.datePicked === "2");
+        console.log(this.state.startTimePicked === "2");
+        console.log(this.state.endTimePicked === "2");
+        console.log(this.state.facilityPicked === "2");
+        console.log(this.state.organizationPicked === "2");
+
+
+
         if (this.state.titleValue.length <= 254 &&
             this.state.titleValue.length >= 5 &&
             /^[0-9]+$/.test(this.state.titleValue) === false &&
@@ -341,9 +364,9 @@ class Request extends Component {
             this.state.attendanceValue < 100000 &&
             this.state.datePicked === "2" &&
             this.state.startTimePicked === "2" &&
-            this.state.endTimePicked === "2" &&
-            this.state.facilityPicked === "2" &&
-            this.state.organizationPicked === "2") {
+            this.state.endTimePicked === "2"
+
+        ) {
             this.setState({showModal: true});
         }
 
@@ -408,10 +431,10 @@ class Request extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/student/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/student/request"><ReactCenter>Solicitud</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><Icon icon={fileText2}
+                                                                                                   style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><Icon icon={iosPaw}
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -676,7 +699,7 @@ class Request extends Component {
                                         <Col sm={3}>
                                             <Col componentClass={ControlLabel}>Invitado(s)</Col>
                                             {
-                                                (/^[0-9]+$/.test(this.state.guestvalue) === true) ?
+                                                (/^[0-9]+$/.test(this.state.guestValue) === true) ?
                                                     (<div>
                                                         <FormControl name="activityGuest"
                                                                      value={this.state.activityGuest}

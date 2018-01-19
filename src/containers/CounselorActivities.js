@@ -7,6 +7,11 @@ import {
 } from 'react-bootstrap';
 import Select from 'react-select';
 import ReactCenter from "react-center"
+import Icon from 'react-icons-kit';
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 
 
 class CounselorActivities extends Component {
@@ -36,24 +41,6 @@ class CounselorActivities extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://localhost:3001/api/pending').then(response => {
-            if (response.ok) {
-                console.log('/api/pending! :D');
-                response.json().then(results => {
-                    console.log('Total pending activities: ' + results);
-
-                    //console.log(this.state.activities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                console.log('Unable to fetch pending activities')
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
     }
 
     render() {
@@ -62,8 +49,8 @@ class CounselorActivities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/counselor/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/counselor/activities"><Icon icon={iosPaw}
+                                                                                                      style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -83,13 +70,13 @@ class CounselorActivities extends Component {
                             <Col md={4}><p>Organización:</p></Col><Col md={8}>
                             <p> {activity.organization.organizationName}</p></Col>
                             <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
-                            <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
+                            <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
 
                         </Row>
                     </Col>
                     <Col md={3}>
                         <Row>
-                            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                            <Col md={12}><Link to={`/counselor/activities/${activity.id}`}><Button
                                 className="btn-info btn-large pull-right"
                                 style={{width: '100px', marginBottom: '10px'}}
                             >Detalles</Button></Link> </Col>

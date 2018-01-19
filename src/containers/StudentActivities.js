@@ -7,6 +7,11 @@ import {
 } from 'react-bootstrap';
 import Select from 'react-select';
 import ReactCenter from "react-center";
+import Icon from 'react-icons-kit';
+import {statsDots} from 'react-icons-kit/icomoon/statsDots';
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
+import {home} from 'react-icons-kit/icomoon/home';
+import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 
 
 class StudentActivities extends Component {
@@ -65,10 +70,10 @@ class StudentActivities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/student/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/student/request"><ReactCenter>Solicitud</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><Icon icon={fileText2}
+                                                                                                           style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><Icon icon={iosPaw}
+                                                                                                              style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -93,7 +98,7 @@ class StudentActivities extends Component {
                     </Col>
                     <Col md={3}>
                         <Row>
-                            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+                            <Col md={12}><Link to={`/student/activities/${activity.id}`}><Button
                                 className="btn-info btn-large pull-right"
                                 style={{width: '100px', marginBottom: '10px'}}
                             >Detalles</Button></Link> </Col>

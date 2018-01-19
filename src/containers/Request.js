@@ -102,7 +102,7 @@ class Request extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.99.100/api/organizations').then(response => {
+        fetch('http://localhost:8000/api/organizations').then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({organizations: results});
@@ -120,7 +120,7 @@ class Request extends Component {
             // this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch(`http://192.168.99.100/api/facilities/`).then(response => {
+        fetch(`http://localhost:8000/api/facilities/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     //console.log(results);
@@ -141,8 +141,8 @@ class Request extends Component {
             // this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch(`http://192.168.99.100/api/users/${this.props.cookies.get('email')}`).then(response => {
-            // fetch(`http://192.168.99.100/api/users/${this.props.authentication.email}`).then(response => {
+        fetch(`http://localhost:8000/api/users/${this.props.cookies.get('email')}`).then(response => {
+            // fetch(`http://localhost:8000/api/users/${this.props.authentication.email}`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({staffInfo: results.staff[0]});
@@ -158,7 +158,7 @@ class Request extends Component {
                         // this.props.showError(`Error in sending data to server: ${err.message}`);
                     });
 
-        fetch(`http://192.168.99.100/api/activityType/`).then(response => {
+        fetch(`http://localhost:8000/api/activityType/`).then(response => {
             if (response.ok) {
                 response.json().then(results => {
                     console.log("Type:");
@@ -221,7 +221,7 @@ class Request extends Component {
         };
 
         console.log(activityRequest);
-        fetch('http://192.168.99.100/api/adminStore', {
+        fetch('http://localhost:8000/api/adminStore', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(activityRequest),
@@ -1044,7 +1044,7 @@ class Request extends Component {
 
                                 <Panel header="Detalles de la Organizaci&oacute;n">
                                     <FormGroup>
-                                        <Col md={4}>
+                                        <Col md={8}>
                                             <Col componentClass={ControlLabel}>Organizaci&oacute;n</Col>
                                             {
                                                 (this.state.organizationPicked === '1') ?
@@ -1085,7 +1085,7 @@ class Request extends Component {
 
                                         </Col>
 
-                                        <Col sm={2}>
+                                        <Col sm={4}>
                                             <Col componentClass={ControlLabel}>Siglas</Col>
                                             <FormControl name="organizationInitials"
                                                          value={this.state.selectedOrganization.organizationInitials}

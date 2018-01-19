@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
+import Icon from 'react-icons-kit';
+
+import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
 import {
     Button, Glyphicon, Table, Panel, Pagination, Jumbotron, Col, Row, Checkbox, Breadcrumb,
     BreadcrumbItem, Nav, NavItem
@@ -62,8 +65,9 @@ class ManagerActivities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link
-                        to="/manager/activities"><ReactCenter>Actividades</ReactCenter></Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/manager/activities"><Icon
+                        icon={iosPaw}
+                        style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                 </Nav>
             </div>
         );
@@ -84,7 +88,7 @@ class ManagerActivities extends Component {
                             <Col md={4}><p>Organización:</p></Col><Col md={8}>
                             <p> {activity.organization.organizationName}</p></Col>
                             <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
-                            <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                            <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
 
                         </Row>
                     </Col>

@@ -100,7 +100,7 @@ class Stats extends Component {
     }
 
     componentDidMount() {
-        fetch('http://192.168.99.100/api/pending').then(response => {
+        fetch('http://localhost:8000/api/pending').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     this.setState({pending: count[0].pending});
@@ -114,7 +114,7 @@ class Stats extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://192.168.99.100/api/denied').then(response => {
+        fetch('http://localhost:8000/api/denied').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     console.log(count);
@@ -129,7 +129,7 @@ class Stats extends Component {
             this.props.showError(`Error in sending data to server: ${err.message}`);
         });
 
-        fetch('http://192.168.99.100/api/approved').then(response => {
+        fetch('http://localhost:8000/api/approved').then(response => {
             if (response.ok) {
                 response.json().then(count => {
                     this.setState({approved: count[0].approved});

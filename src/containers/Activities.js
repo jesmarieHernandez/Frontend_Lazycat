@@ -338,7 +338,7 @@ class Activities extends Component {
                                     {pendingActivities}
                                 </Row>
 
-                                {this.state.pendingActivities.length > 0 ?
+                                {this.state.pendingActivities.length > 0  && this.state.pendingActivitiesMaxPageNumber !== 0?
                                 <Row>
                                     <Pager>
                                         <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} &nbsp;
@@ -366,7 +366,7 @@ class Activities extends Component {
                                     {approvedActivities}
                                 </Row>
 
-                                {this.state.approvedActivities.length > 0 ?
+                                {this.state.approvedActivities.length > 0 && this.state.approvedActivitiesMaxPageNumber !== 0 ?
 
                                 <Row>
                                     <Pager>
@@ -396,7 +396,7 @@ class Activities extends Component {
                                     {deniedActivities}
                                 </Row>
 
-                                {this.state.deniedActivities.length > 0 ?
+                                {this.state.deniedActivities.length > 0 &&  this.state.deniedActivitiesMaxPageNumber !== 0 ?
                                 <Row>
                                     <Pager>
 

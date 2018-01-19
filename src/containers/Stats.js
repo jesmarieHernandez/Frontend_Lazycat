@@ -86,62 +86,62 @@ class Stats extends Component {
             }],
 
             pendingStatus: [{
-                pending: ''
+                pending: 0
             }],
 
             approvedStatus: [{
-                approved: ''
+                approved: 0
             }],
 
             deniedStatus: [{
-                denied: ''
+                denied: 0
             }]
         }
     }
 
     componentDidMount() {
-        fetch('http://dev.uprm.edu/dsca/v1/api/pending').then(response => {
-            if (response.ok) {
-                response.json().then(count => {
-                    this.setState({pending: count[0].pending});
-                });
-            } else {
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
-
-        fetch('http://dev.uprm.edu/dsca/v1/api/denied').then(response => {
-            if (response.ok) {
-                response.json().then(count => {
-                    console.log(count);
-                    this.setState({denied: count[0].Denied});
-                });
-            } else {
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
-
-        fetch('http://dev.uprm.edu/dsca/v1/api/approved').then(response => {
-            if (response.ok) {
-                response.json().then(count => {
-                    this.setState({approved: count[0].approved});
-                });
-            } else {
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
-        });
+        // fetch('http://dev.uprm.edu/dsca/v1/api/pending').then(response => {
+        //     if (response.ok) {
+        //         response.json().then(count => {
+        //             this.setState({pending: count[0].pending});
+        //         });
+        //     } else {
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
+        //
+        // fetch('http://dev.uprm.edu/dsca/v1/api/denied').then(response => {
+        //     if (response.ok) {
+        //         response.json().then(count => {
+        //             console.log(count);
+        //             this.setState({denied: count[0].Denied});
+        //         });
+        //     } else {
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
+        //
+        // fetch('http://dev.uprm.edu/dsca/v1/api/approved').then(response => {
+        //     if (response.ok) {
+        //         response.json().then(count => {
+        //             this.setState({approved: count[0].approved});
+        //         });
+        //     } else {
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
 
     }
 
@@ -170,11 +170,10 @@ class Stats extends Component {
                 response.json().then(createdStats => {
                     // console.log('Activity request was created successfully!');
                     // console.log('Activity request ID: ' + createdRequest.id);
-                    console.log(':D');
+                    console.log('createdStats');
+                    console.log(createdStats);
                     // console.log(this);
                     this.setState({statisticsReport: createdStats});
-                    console.log(this.state.statisticsReport);
-                    console.log(this.state.statisticsReport[0].building);
                     this.props.history.push(`/stats/`);
 
                 })
@@ -250,13 +249,13 @@ class Stats extends Component {
             body: JSON.stringify(dateRange),
         }).then(response => {
             if (response.ok) {
-                console.log(response);
                 response.json().then(pendingStats => {
                     // console.log('Activity request was created successfully!');
                     // console.log('Activity request ID: ' + createdRequest.id);
-                    console.log(':D');
+                    console.log('pendingStats');
                     // console.log(this);
                     this.setState({pendingStatus: pendingStats});
+                    console.log(pendingStats);
                     this.props.history.push(`/stats/`);
 
                 })
@@ -437,7 +436,7 @@ class Stats extends Component {
                             <NavItem eventKey="1" href="/home">Facilidades Usadas</NavItem>
                             <NavItem eventKey="2" title="Item">Facilidades Solicitadas</NavItem>
                             <NavItem eventKey="3" title="Item">Actividades por Horario</NavItem>
-                            <NavItem eventKey="4" title="Item">Representaci&oacute;n Gr&aacute;fica</NavItem>
+                            <NavItem eventKey="4" title="Item">Actividades por Estado</NavItem>
                         </Nav>
                         <br/>
                             <FormGroup style={{paddingLeft: "300px"}}>
@@ -474,60 +473,64 @@ class Stats extends Component {
                             </Row>
                             <br/>
 
-                            <Row>
-                                <Col md={12}>
-                                    <Table bordered condensed striped>
-                                        <thead>
-                                        <tr>
-                                            <ReactCenter>
-                                                <th rowSpan="2" style={{paddingTop: "20px", borderBottom: '0px'}}>
-                                                    Edificio
-                                                </th>
-                                            </ReactCenter>
-                                            <th
-                                                style={{
-                                                    paddingTop: "20px",
-                                                    borderBottom: '0px'
-                                                }}>Espacio
-                                            </th>
-                                            <th
-                                                colSpan="10"
-                                                style={{
-                                                    paddingTop: "10px",
-                                                    paddingLeft: "200px",
-                                                    paddingBottom: "10px"
-                                                }}>Clasificaci&oacute;n
-                                            </th>
-                                            <th
-                                                style={{
-                                                    paddingTop: "20px",
-                                                    borderBottom: '0px'
-                                                }}>Total
-                                            </th>
-                                        </tr>
-                                        </thead>
+                            {this.state.statisticsReport.length === 0 ?
 
-                                        <tbody>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th>Acad.</th>
-                                            <th>Arte</th>
-                                            <th>Civica</th>
-                                            <th>Deport.</th>
-                                            <th>Educ.</th>
-                                            <th>Prof.</th>
-                                            <th>Reca.</th>
-                                            <th>Reli.</th>
-                                            <th>Social</th>
-                                            <th>Poli.</th>
-                                            <th></th>
-                                        </tr>
-                                        {tableUsed}
-                                        </tbody>
-                                    </Table>
-                                </Col>
-                            </Row>
+                                <Row>
+                                    <Col md={12}>
+                                        <Table bordered condensed striped>
+                                            <thead>
+                                            <tr>
+                                                <ReactCenter>
+                                                    <th rowSpan="2" style={{paddingTop: "20px", borderBottom: '0px'}}>
+                                                        Edificio
+                                                    </th>
+                                                </ReactCenter>
+                                                <th
+                                                    style={{
+                                                        paddingTop: "20px",
+                                                        borderBottom: '0px'
+                                                    }}>Espacio
+                                                </th>
+                                                <th
+                                                    colSpan="10"
+                                                    style={{
+                                                        paddingTop: "10px",
+                                                        paddingLeft: "200px",
+                                                        paddingBottom: "10px"
+                                                    }}>Clasificaci&oacute;n
+                                                </th>
+                                                <th
+                                                    style={{
+                                                        paddingTop: "20px",
+                                                        borderBottom: '0px'
+                                                    }}>Total
+                                                </th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Acad.</th>
+                                                <th>Arte</th>
+                                                <th>Civica</th>
+                                                <th>Deport.</th>
+                                                <th>Educ.</th>
+                                                <th>Prof.</th>
+                                                <th>Reca.</th>
+                                                <th>Reli.</th>
+                                                <th>Social</th>
+                                                <th>Poli.</th>
+                                                <th></th>
+                                            </tr>
+                                            {tableUsed}
+                                            </tbody>
+                                        </Table>
+                                    </Col>
+                                </Row>
+                                : null
+                            }
                         </div>)
                             :
                             this.state.activeKey === "2" ?
@@ -542,7 +545,8 @@ class Stats extends Component {
                                         </FormGroup>
                                     </Row>
                                     <br/>
-                                <Row>
+                                        {this.state.statisticsRequest.length === 0 ?
+                                        <Row>
                                     <Col md={12}>
                                         <Table bordered condensed striped>
                                             <thead>
@@ -596,6 +600,7 @@ class Stats extends Component {
                                         </Table>
                                     </Col>
                                 </Row>
+                                            : null }
                                 </div>)
                                 :
                                 this.state.activeKey === "3" ?
@@ -610,7 +615,10 @@ class Stats extends Component {
                                             </FormGroup>
                                         </Row>
                                         <br/>
-                                    <Row>
+
+                                            {this.state.statisticsReport.length === 0 ?
+
+                                            <Row>
                                         <Col md={12}>
                                             <Table bordered condensed striped>
                                                 <thead>
@@ -647,6 +655,7 @@ class Stats extends Component {
                                             </Table>
                                         </Col>
                                     </Row>
+                                                : null }
                                     </div>)
                                     :
                                     (<div>
@@ -661,16 +670,24 @@ class Stats extends Component {
                                         </Row>
                                         <br/>
                                     <ReactCenter>
-                                        <BarChart width={600} height={300} data={data}>
-                                            <XAxis dataKey="name"/>
-                                            <YAxis />
-                                            <CartesianGrid strokeDasharray="3 3"/>
-                                            <Tooltip />
-                                            <Legend />
-                                            <Bar dataKey="pending" fill="#8884d8"/>
-                                            <Bar dataKey="approved" fill="#82ca9d"/>
-                                            <Bar dataKey="denied" fill="#823333"/>
-                                        </BarChart>
+                                        <Col md={12}>
+                                            <Panel header="Actividades por Estado">
+                                                {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+                                                {/*<br/>*/}
+                                                <Col md={9}>
+                                                    <Row>
+
+                                                        <Col md={4}><p>Pendientes:</p></Col><Col md={8}><p> {this.state.pendingStatus[0].pending}</p></Col>
+                                                        <Col md={4}><p>Aprovadas:</p></Col><Col md={8}><p> {this.state.approvedStatus[0].approved}</p></Col>
+                                                        <Col md={4}><p>Denegadas:</p></Col><Col md={8}><p> {this.state.deniedStatus[0].denied}</p></Col>
+
+
+                                                    </Row>
+                                                </Col>
+
+
+                                            </Panel>
+                                        </Col>
                                     </ReactCenter>
                                     </div>)
                         }

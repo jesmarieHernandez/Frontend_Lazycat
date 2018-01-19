@@ -698,14 +698,14 @@ class Request extends Component {
                                                             puede ser solo s&iacute;mbolos</HelpBlock>
                                                     </div>)
                                                     :
-                                                    (this.state.guestValue.length < 2 && this.state.guestValue.length !=0) ?
+                                                    (this.state.guestValue.length <= 2 && this.state.guestValue.length !=0) ?
                                                     (<div>
                                                         <FormControl name="activityGuest"
                                                                      value={this.state.activityGuest}
                                                                      placeholder="Ex. None" type="text"
                                                                      style={errorFormStyle}
                                                                      onChange={this.handleChangeGuest} required/>
-                                                        <HelpBlock style={errorHelpBlockStyle}>Lista de invitados muy extensa</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Lista de invitados muy corta</HelpBlock>
                                                     </div>)
                                                         :
                                                     (this.state.guestValue.length > 254) ?
@@ -716,7 +716,7 @@ class Request extends Component {
                                                                      placeholder="Ex. None" type="text"
                                                                      style={errorFormStyle}
                                                                      onChange={this.handleChangeGuest} required/>
-                                                        <HelpBlock style={errorHelpBlockStyle}>Text too long</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Texto muy largo</HelpBlock>
                                                     </div>)
                                                     :
                                                     (this.state.guestValue.length <= 254 && this.state.guestValue.length >= 2) ?
@@ -758,8 +758,7 @@ class Request extends Component {
                                                             <option hidden>select</option>
                                                             {facilitiesOptions}
                                                         </FormControl>
-                                                        <HelpBlock style={errorHelpBlockStyle}>Pick a
-                                                            facility</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Escoja un espacio</HelpBlock>
                                                     </div>)
                                                     :
                                                     (this.state.facilityPicked === '2') ?
@@ -806,7 +805,7 @@ class Request extends Component {
                                                                     style={errorFormStyle}
                                                                     minDate={(new Date()).toISOString()}
                                                                     required/>
-                                                        <HelpBlock style={errorHelpBlockStyle}>Pick a date</HelpBlock>
+                                                        <HelpBlock style={errorHelpBlockStyle}>Escoja una fecha</HelpBlock>
                                                     </div>)
                                                     :
                                                     (this.state.datePicked === '2') ?

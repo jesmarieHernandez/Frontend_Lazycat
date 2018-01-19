@@ -398,7 +398,6 @@ class Request extends Component {
             this.state.organizationPicked === "2" &&
             this.state.typePicked === "2" &&
             this.state.commentary.length <= 254 &&
-            this.state.commentary.length >= 5 &&
             /^[0-9]+$/.test(this.state.commentary) === false &&
             /^[`!@#\$%\^&\*()_+{}\|:"<>?~,./;'[\]\\]+$/.test(this.state.commentary) === false) {
             this.setState({showModal: true});
@@ -469,8 +468,7 @@ class Request extends Component {
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon icon={iosPaw}
                                                                                                       style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                     <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon icon={statsDots}
-                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;
-                        sticas</Link></NavItem>
+                                                                                                  style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
                     <NavItem> <Link to="/admin"><Icon icon={userTie}
                                                       style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
                 </Nav>
@@ -728,6 +726,20 @@ class Request extends Component {
                                                                     invitados muy extensa</HelpBlock>
                                                             </div>)
                                                             :
+                                                            (this.state.guestValue.length <= 2 && this.state.guestValue.length !== 0) ?
+
+                                                                (<div>
+                                                                    <FormControl name="activityGuest"
+                                                                                 value={this.state.activityGuest}
+                                                                                 placeholder="Ex. None" type="text"
+                                                                                 style={errorFormStyle}
+                                                                                 onChange={this.handleChangeGuest}
+                                                                                 required/>
+                                                                    <HelpBlock style={errorHelpBlockStyle}>Lista de
+                                                                        invitados muy corta</HelpBlock>
+                                                                </div>)
+                                                                :
+
                                                             (this.state.guestValue.length <= 254 && this.state.guestValue.length >=2 && this.state.guestValue.length != 0) ?
 
                                                                 (<div>

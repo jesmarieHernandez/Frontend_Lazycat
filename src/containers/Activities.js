@@ -69,7 +69,15 @@ class Activities extends Component {
                         return obj.status.code == 2;
                     });
 
+                    let maxApproved = approved.length % 2 === 0 ? approved.length / 5 : Math.floor(approved.length / 5 + 1);
+                    if (approved.length < 5) {
+                        maxApproved = 0;
+                    }
+
+
                     this.setState({approvedActivities: approved});
+                    this.setState({approvedActivitiesMaxPageNumber: maxApproved});
+
 
                     const denied = this.state.activities.filter(function (obj) {
                         return obj.status.code == 3;
@@ -165,24 +173,12 @@ class Activities extends Component {
             pendingActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades pendientes.</p>
         } else {
 
-            const pageNumber = this.state.pendingActivitiesPageNumber;
-            console.log('Page Number');
-            console.log(pageNumber);
-
+            const pendingPageNumber = this.state.pendingActivitiesPageNumber;
 
             const pageSize = 5;
 
-            let paginatedPendingActivities = this.state.pendingActivities.slice((pageNumber - 1) * pageSize, ((pageNumber - 1) * pageSize) + pageSize);
+            let paginatedPendingActivities = this.state.pendingActivities.slice((pendingPageNumber - 1) * pageSize, ((pendingPageNumber - 1) * pageSize) + pageSize);
 
-            console.log('First Arg');
-            console.log((pageNumber - 1) * pageSize);
-
-
-            console.log('Second Arg');
-            console.log(((pageNumber - 1) * pageSize) + pageSize);
-
-            console.log('Paginated pending activities');
-            console.log(paginatedPendingActivities);
 
             pendingActivities = paginatedPendingActivities.map(activity =>
 
@@ -223,7 +219,13 @@ class Activities extends Component {
             approvedActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades aprovadas.</p>
         } else {
 
-            approvedActivities = this.state.approvedActivities.map(activity =>
+            const pageSize = 5;
+            const approvedPageNumber = this.state.approvedActivitiesPageNumber;
+            let paginatedApprovedActivities = this.state.approvedActivities.slice((approvedPageNumber - 1) * pageSize, ((approvedPageNumber - 1) * pageSize) + pageSize);
+
+
+
+            approvedActivities = paginatedApprovedActivities.map(activity =>
 
                 <Col md={12}>
                     <Panel header={activity.activityName}>
@@ -264,7 +266,12 @@ class Activities extends Component {
             deniedActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades denegadas.</p>
         } else {
 
-            deniedActivities = this.state.deniedActivities.map(activity =>
+            const pageSize = 5;
+            const deniedPageNumber = this.state.deniedActivitiesPageNumber;
+            let paginatedDeniedActivities = this.state.deniedActivities.slice((deniedPageNumber - 1) * pageSize, ((deniedPageNumber - 1) * pageSize) + pageSize);
+
+
+            deniedActivities = paginatedDeniedActivities.map(activity =>
 
                 <Col md={12}>
                     <Panel header={activity.activityName}>

@@ -91,7 +91,7 @@ class Users extends Component {
                     this.setState({users: results});
                     this.setState({counselors: results.counselors});
 
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
                 });
             } else {
                 // response.json().then(error => {

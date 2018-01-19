@@ -82,7 +82,7 @@ class CreateFacilities extends Component {
                     console.log(createdFacilities);
 
                     /*
-                     this.props.router.push(`/admin/facilities/${createdFacilities._id}/`);
+                     this.props.history.push(`/admin/facilities/${createdFacilities._id}/`);
                      */
                     this.props.history.push(`/admin/facilities/`);
 

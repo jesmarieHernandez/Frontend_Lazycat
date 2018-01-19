@@ -28,7 +28,7 @@ class ManagerActivities extends Component {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
                 });
             } else {
                 // response.json().then(error => {
@@ -46,7 +46,7 @@ class ManagerActivities extends Component {
         //             console.log('Total pending activities: ' + results);
         //
         //             //console.log(this.state.activities);
-        //             //this.props.router.push(`/activities/${createdRequest._id}`);
+        //             //this.props.history.push(`/activities/${createdRequest._id}`);
         //         });
         //     } else {
         //         console.log('Unable to fetch pending activities')

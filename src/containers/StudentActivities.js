@@ -34,7 +34,7 @@ class StudentActivities extends Component {
                     console.log(results);
                     this.setState({activities: results});
                     console.log(this.state.activities);
-                    //this.props.router.push(`/activities/${createdRequest.id}`);
+                    //this.props.history.push(`/activities/${createdRequest.id}`);
                 });
             } else {
                 // response.json().then(error => {
@@ -52,7 +52,7 @@ class StudentActivities extends Component {
         //             console.log('Total pending activities: ' + results);
         //
         //             //console.log(this.state.activities);
-        //             //this.props.router.push(`/activities/${createdRequest._id}`);
+        //             //this.props.history.push(`/activities/${createdRequest._id}`);
         //         });
         //     } else {
         //         console.log('Unable to fetch pending activities')
@@ -85,15 +85,41 @@ class StudentActivities extends Component {
                     {/*<br/>*/}
                     <Col md={9}>
                         <Row>
+                            <Row>
+                                <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                            </Row>
+                            <hr />
+                            <Row>
+                                <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                            </Row>
+                            <hr />
 
-                            <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
-                            <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p>
-                        </Col>
-                            <Col md={4}><p>Organización:</p></Col><Col md={8}>
-                            <p> {activity.organization.organizationName}</p></Col>
-                            <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
-                            <Col md={4}><p>Estado:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                            <Row>
+                                <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                            </Row>
+                            <hr />
 
+                            <Row>
+                                <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
+                            </Row>
                         </Row>
                     </Col>
                     <Col md={3}>

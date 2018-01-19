@@ -152,7 +152,7 @@ class OrganizationDetail extends Component {
                     console.log(results);
                     this.setState({organizationTypes: results});
                     console.log(this.state.organizationTypes);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
                 });
             } else {
                 // response.json().then(error => {
@@ -189,7 +189,7 @@ class OrganizationDetail extends Component {
 
                     // this.setState({organizationRoles: organizationRoles});
                     this.setState({organizationRoles: results});
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
                 });
             } else {
                 // response.json().then(error => {

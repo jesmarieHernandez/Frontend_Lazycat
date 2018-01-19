@@ -30,7 +30,7 @@ class CounselorActivities extends Component {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
                 });
             } else {
                 // response.json().then(error => {

@@ -82,7 +82,7 @@ class StaffStatistics extends Component {
                     //console.log(results);
                     this.setState({facilities: results});
                     console.log(this.state.facilities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
                 });
             } else {
                 // response.json().then(error => {

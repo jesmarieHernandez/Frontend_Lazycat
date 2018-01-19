@@ -128,7 +128,7 @@ class Request extends Component {
                     console.log('Asi salen las facilities: ');
 
                     console.log(this.state.facilities);
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
                 });
             } else {
                 console.log('Not ok');

@@ -237,7 +237,7 @@ class ActivityDetail extends Component {
                     console.log('Activity request was updated successfully!');
                     console.log('Activity request ID: ' + updatedRequest.id);
 
-                    this.props.router.push(`/activities/`);
+                    this.props.history.push(`/activities/`);
                 })
             } else {
                 response.json().then(error => {

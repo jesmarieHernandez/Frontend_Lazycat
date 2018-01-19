@@ -44,7 +44,7 @@ class Activities extends Component {
             if (response.ok) {
                 response.json().then(results => {
                     this.setState({activities: results});
-                    //this.props.router.push(`/activities/${createdRequest._id}`);
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
 
 
 
@@ -208,14 +208,28 @@ class Activities extends Component {
                                 <Row>
                                     <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
                                 </Row>
+                                <hr />
                                 <Row>
                                     <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
                                 </Row>
                                 <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                                </Row>
+                                <hr />
+
+                                <Row>
                                     <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
                                 </Row>
                                 <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                                </Row>
+                                <hr />
+
+                                <Row>
                                     <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                </Row>
+                                <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -265,14 +279,28 @@ class Activities extends Component {
                                 <Row>
                                     <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
                                 </Row>
+                                <hr />
                                 <Row>
                                     <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
                                 </Row>
                                 <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                                </Row>
+                                <hr />
+
+                                <Row>
                                     <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
                                 </Row>
                                 <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                                </Row>
+                                <hr />
+
+                                <Row>
                                     <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                </Row>
+                                <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -303,7 +331,8 @@ class Activities extends Component {
 
 
 
-            readyForDecisionActivities = paginatedApprovedActivities.map(activity =>
+            // readyForDecisionActivities = paginatedApprovedActivities.map(activity =>
+            readyForDecisionActivities = this.state.readyForDecisionActivities.map(activity =>
 
                 <Col md={12}>
                     <Panel header={activity.activityName}>
@@ -323,14 +352,28 @@ class Activities extends Component {
                                 <Row>
                                     <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
                                 </Row>
+                                <hr />
                                 <Row>
                                     <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
                                 </Row>
                                 <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                                </Row>
+                                <hr />
+
+                                <Row>
                                     <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
                                 </Row>
                                 <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                                </Row>
+                                <hr />
+
+                                <Row>
                                     <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                </Row>
+                                <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -369,27 +412,41 @@ class Activities extends Component {
                         {/*<br/>*/}
                         <Col md={9}>
                             <Row>
-                            <Row>
-                                <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
-                            </Row>
                                 <Row>
-                                <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
+                                    <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
                                 </Row>
                                 <Row>
-                                <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
                                 </Row>
                                 <Row>
-                                <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
+                                    <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
                                 </Row>
                                 <Row>
-                                <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
+                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                                </Row>
+                                <hr />
+                                <Row>
+                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
-                            </Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                                </Row>
+                                <hr />
+
+                                <Row>
+                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
+                                </Row>
+                                <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                                </Row>
+                                <hr />
+
+                                <Row>
+                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                </Row>
+                                <Row>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
+                                </Row>
                             </Row>
                         </Col>
                         <Col md={3}>

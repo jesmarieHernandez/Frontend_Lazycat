@@ -154,7 +154,7 @@ class EditActivity extends Component {
                     console.log('Activity request was updated successfully!');
                     console.log('Activity request ID: ' + updatedRequest._id);
 
-                    this.props.router.push(`/activities/${updatedRequest._id}`);
+                    this.props.history.push(`/activities/${updatedRequest._id}`);
                 })
             } else {
                 response.json().then(error => {
@@ -191,7 +191,7 @@ class EditActivity extends Component {
                     console.log('Activity request was updated successfully!');
                     console.log('Activity request ID: ' + updatedRequest._id);
 
-                    this.props.router.push(`/activities/${updatedRequest._id}`);
+                    this.props.history.push(`/activities/${updatedRequest._id}`);
                 })
             } else {
                 response.json().then(error => {
@@ -214,7 +214,7 @@ class EditActivity extends Component {
      response.json().then(approvedActivity => {
      console.log('Activity request status: ' + approvedActivity.status);
 
-     this.props.router.push(`/activities/${approvedActivity._id}`);
+     this.props.history.push(`/activities/${approvedActivity._id}`);
      })
      } else {
      response.json().then(error => {
@@ -237,7 +237,7 @@ class EditActivity extends Component {
      response.json().then(deniedActivity => {
      console.log('Activity request status: ' + deniedActivity.status);
 
-     this.props.router.push(`/activities/${deniedActivity._id}`);
+     this.props.history.push(`/activities/${deniedActivity._id}`);
      })
      } else {
      response.json().then(error => {

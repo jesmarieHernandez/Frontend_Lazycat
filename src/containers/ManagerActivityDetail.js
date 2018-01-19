@@ -257,7 +257,7 @@ class ManagerActivityDetail extends Component {
     //             console.log(response);
     //             response.json().then(updatedRequest => {
     //                 console.log('Type request was updated successfully!');
-    //                 this.props.router.push(`/activities/${updatedRequest.id}`);
+    //                 this.props.history.push(`/activities/${updatedRequest.id}`);
     //             })
     //         } else {
     //             response.json().then(error => {

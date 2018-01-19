@@ -473,8 +473,6 @@ class Stats extends Component {
                             </Row>
                             <br/>
 
-                            {this.state.statisticsReport.length === 0 ?
-
                                 <Row>
                                     <Col md={12}>
                                         <Table bordered condensed striped>
@@ -529,8 +527,7 @@ class Stats extends Component {
                                         </Table>
                                     </Col>
                                 </Row>
-                                : null
-                            }
+
                         </div>)
                             :
                             this.state.activeKey === "2" ?
@@ -545,7 +542,6 @@ class Stats extends Component {
                                         </FormGroup>
                                     </Row>
                                     <br/>
-                                        {this.state.statisticsRequest.length === 0 ?
                                         <Row>
                                     <Col md={12}>
                                         <Table bordered condensed striped>
@@ -600,7 +596,6 @@ class Stats extends Component {
                                         </Table>
                                     </Col>
                                 </Row>
-                                            : null }
                                 </div>)
                                 :
                                 this.state.activeKey === "3" ?
@@ -616,7 +611,6 @@ class Stats extends Component {
                                         </Row>
                                         <br/>
 
-                                            {this.state.statisticsReport.length === 0 ?
 
                                             <Row>
                                         <Col md={12}>
@@ -655,7 +649,6 @@ class Stats extends Component {
                                             </Table>
                                         </Col>
                                     </Row>
-                                                : null }
                                     </div>)
                                     :
                                     (<div>

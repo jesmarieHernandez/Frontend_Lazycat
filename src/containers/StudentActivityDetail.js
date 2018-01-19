@@ -255,7 +255,7 @@ class StudentActivityDetail extends Component {
                                     </Col>
 
                                     <Col sm={9}>
-                                        <Col componentClass={ControlLabel}>Direcci&oacute;n</Col>
+                                        <Col componentClass={ControlLabel}>Descripci&oacute;n</Col>
                                         <FormControl name="activityDescription"
                                                      value={this.state.activity.activityDescription} disabled/>
                                     </Col>

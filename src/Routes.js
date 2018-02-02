@@ -19,7 +19,7 @@ import Facilities from "./containers/Facilities";
 import FacilitiesDetail from "./containers/FacilitiesDetail";
 import NewFacilities from "./containers/NewFacilities";
 import Organizations from "./containers/Organizations";
-import NewOrganization from "./containers/NewOrganizationv";
+import NewOrganization from "./containers/NewOrganization";
 import OrganizationDetail from "./containers/OrganizationDetail";
 import Users from "./containers/Users";
 import NewUser from "./containers/NewUser";

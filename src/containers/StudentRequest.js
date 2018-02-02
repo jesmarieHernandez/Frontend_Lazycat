@@ -557,7 +557,7 @@ class Request extends Component {
                                 <Panel header="Detalles de la Actividad">
                                     <FormGroup>
                                         <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>Nombre de la actividad</Col>
+                                            <Col componentClass={ControlLabel}>Nombre de la actividad*</Col>
                                             {
                                                 (/^[0-9]+$/.test(this.state.titleValue) === true) ?
                                                     (<div>
@@ -628,7 +628,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col sm={9}>
-                                            <Col componentClass={ControlLabel}>Descripci&oacute;n</Col>
+                                            <Col componentClass={ControlLabel}>Descripci&oacute;n*</Col>
                                             {
                                                 (/^[0-9]+$/.test(this.state.descriptionValue) === true) ?
                                                     (<div>
@@ -716,7 +716,7 @@ class Request extends Component {
                                                                      value={this.state.activityGuest}
                                                                      placeholder="Ex. None" type="text"
                                                                      style={errorFormStyle}
-                                                                     onChange={this.handleChangeGuest} required/>
+                                                                     onChange={this.handleChangeGuest} />
                                                         <HelpBlock style={errorHelpBlockStyle}>Lista de invitados no
                                                             puede ser solo n&uacute;meros</HelpBlock>
                                                     </div>)
@@ -727,7 +727,7 @@ class Request extends Component {
                                                                      value={this.state.activityGuest}
                                                                      placeholder="Ex. None" type="text"
                                                                      style={errorFormStyle}
-                                                                     onChange={this.handleChangeGuest} required/>
+                                                                     onChange={this.handleChangeGuest} />
                                                         <HelpBlock style={errorHelpBlockStyle}>Lista de invitados no
                                                             puede ser solo s&iacute;mbolos</HelpBlock>
                                                     </div>)
@@ -738,7 +738,7 @@ class Request extends Component {
                                                                      value={this.state.activityGuest}
                                                                      placeholder="Ex. None" type="text"
                                                                      style={errorFormStyle}
-                                                                     onChange={this.handleChangeGuest} required/>
+                                                                     onChange={this.handleChangeGuest} />
                                                         <HelpBlock style={errorHelpBlockStyle}>Lista de invitados muy corta</HelpBlock>
                                                     </div>)
                                                         :
@@ -749,7 +749,7 @@ class Request extends Component {
                                                                      value={this.state.activityGuest}
                                                                      placeholder="Ex. None" type="text"
                                                                      style={errorFormStyle}
-                                                                     onChange={this.handleChangeGuest} required/>
+                                                                     onChange={this.handleChangeGuest} />
                                                         <HelpBlock style={errorHelpBlockStyle}>Texto muy largo</HelpBlock>
                                                     </div>)
                                                     :
@@ -760,27 +760,27 @@ class Request extends Component {
                                                                          value={this.state.activityGuest}
                                                                          placeholder="Ex. None" type="text"
                                                                          style={successFormStyle}
-                                                                         onChange={this.handleChangeGuest} required/>
+                                                                         onChange={this.handleChangeGuest} />
                                                         </div>)
                                                         :
                                                         (<div>
                                                             <FormControl name="activityGuest"
                                                                          value={this.state.activityGuest}
                                                                          placeholder="Ex. None" type="text"
-                                                                         onChange={this.handleChangeGuest} required/>
+                                                                         onChange={this.handleChangeGuest} />
                                                         </div>)
                                             }
                                         </Col>
 
                                         <Col sm={3}>
-                                            <Col componentClass={ControlLabel}>Número de Asistentes</Col>
+                                            <Col componentClass={ControlLabel}>Número de Asistentes*</Col>
                                             <FormControl name="activityAssistant" value={this.state.activityAssistant}
                                                          type="number" min="1" max="100000" start="1"
                                                          onChange={this.handleChangeAttendance}/>
                                         </Col>
 
                                         <Col md={3}>
-                                            <Col componentClass={ControlLabel}>Espacio/Salón</Col>
+                                            <Col componentClass={ControlLabel}>Espacio/Salón*</Col>
                                             {
                                                 (this.state.facilityPicked === '1') ?
                                                     (<div>
@@ -820,7 +820,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col md={3}>
-                                            <Col componentClass={ControlLabel}>Edificio</Col>
+                                            <Col componentClass={ControlLabel}>Edificio*</Col>
                                             <FormControl name="facilityBuilding"
                                                          value={this.state.selectedFacilities.building} required
                                                          disabled/>
@@ -829,7 +829,7 @@ class Request extends Component {
 
                                     <FormGroup>
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Fecha</Col>
+                                            <Col componentClass={ControlLabel}>Fecha*</Col>
                                             {
                                                 (this.state.datePicked === '1') ?
                                                     (<div>
@@ -863,7 +863,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Horario de Comienzo</Col>
+                                            <Col componentClass={ControlLabel}>Horario de Comienzo*</Col>
                                             {
                                                 (this.state.startTimePicked === '1') ?
                                                     <div>
@@ -906,7 +906,7 @@ class Request extends Component {
                                         </Col>
 
                                         <Col sm={4}>
-                                            <Col componentClass={ControlLabel}>Horario de Finalización</Col>
+                                            <Col componentClass={ControlLabel}>Horario de Finalización*</Col>
                                             {
                                                 (this.state.endTimePicked === '1') ?
                                                     (<div>
@@ -957,7 +957,7 @@ class Request extends Component {
                                 <Panel header="Detalles de la Organizaci&oacute;n">
                                     <FormGroup>
                                         <Col md={8}>
-                                            <Col componentClass={ControlLabel}>Organización</Col>
+                                            <Col componentClass={ControlLabel}>Organización*</Col>
 
                                             <FormControl componentClass="select" name="selectOrganization"
                                                          onChange={this.onOrganizationSelected}
@@ -1029,10 +1029,23 @@ class Request extends Component {
 
                                 <Col md={12}>
                                     <AlertContainer ref={a => this.msg = a}/>
-                                    <ReactCenter>
-                                        <Button bsStyle="primary" type="button"
-                                                         onClick={this.open}>Someter</Button>
-                                    </ReactCenter>
+                                    <Row>
+                                        <Col md={12}>
+                                            <ReactCenter>
+
+                                                <p>* Indica que el campo es requerido</p>
+                                            </ReactCenter>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                    <Col md={12}>
+                                        <ReactCenter>
+                                            <Button bsStyle="primary" type="button"
+                                                    onClick={this.open}>Someter</Button>
+                                        </ReactCenter>
+                                    </Col>
+                                    </Row>
+
                                     <Modal show={this.state.showModal} onHide={this.close}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>¿Someter solicitud?</Modal.Title>

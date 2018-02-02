@@ -671,7 +671,7 @@ class Stats extends Component {
                                                     <Row>
 
                                                         <Col md={4}><p>Pendientes:</p></Col><Col md={8}><p> {this.state.pendingStatus[0].pending}</p></Col>
-                                                        <Col md={4}><p>Aprovadas:</p></Col><Col md={8}><p> {this.state.approvedStatus[0].approved}</p></Col>
+                                                        <Col md={4}><p>Aprobadas:</p></Col><Col md={8}><p> {this.state.approvedStatus[0].approved}</p></Col>
                                                         <Col md={4}><p>Denegadas:</p></Col><Col md={8}><p> {this.state.deniedStatus[0].denied}</p></Col>
 
 

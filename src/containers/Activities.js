@@ -203,6 +203,9 @@ class Activities extends Component {
                                     <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
                                 </Row>
                                 <Row>
+                                    <Col md={4}><p>Fecha:</p></Col><Col md={8}><p> {activity.activityDate}</p> </Col>
+                                </Row>
+                                <Row>
                                     <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
                                 </Row>
                                 <Row>

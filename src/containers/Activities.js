@@ -12,6 +12,7 @@ import {statsDots} from 'react-icons-kit/icomoon/statsDots';
 import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
 import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 import {userTie} from 'react-icons-kit/icomoon/userTie';
+import activitiesList from './activity_list';
 
 class Activities extends Component {
 
@@ -43,9 +44,11 @@ class Activities extends Component {
         fetch('http://dev.uprm.edu/dsca/v1/api/activities').then(response => {
             if (response.ok) {
                 response.json().then(results => {
-                    this.setState({activities: results});
-                    //this.props.history.push(`/activities/${createdRequest._id}`);
 
+                    //TODO put it back
+                    //this.setState({activities: results});
+                    this.setState({activities: activitiesList});
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
 
 
                     const pending = this.state.activities.filter(function (obj) {
@@ -157,22 +160,22 @@ class Activities extends Component {
     render() {
 
         const tabsInstance = (
-                    <div style={{backgroundColor: '#F8F8F8'}}>
-                        <Nav fluid>
-                            <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon
-                                icon={fileText2}
-                                style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
-                            <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon
-                                icon={iosPaw}
-                                style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
-                            <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon
-                                icon={statsDots}
-                                style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
-                            <NavItem> <Link to="/admin"><Icon icon={userTie}
-                                                              style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
-                        </Nav>
-                    </div>
-                    );
+            <div style={{backgroundColor: '#F8F8F8'}}>
+                <Nav fluid>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/request"><Icon
+                        icon={fileText2}
+                        style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/activities"><Icon
+                        icon={iosPaw}
+                        style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}> <Link to="/stats"><Icon
+                        icon={statsDots}
+                        style={{paddingRight: "20px"}}/>Estad&iacute;sticas</Link></NavItem>
+                    <NavItem> <Link to="/admin"><Icon icon={userTie}
+                                                      style={{paddingRight: "20px"}}/>Admin</Link></NavItem>
+                </Nav>
+            </div>
+        );
 
 
         let pendingActivities;
@@ -200,39 +203,48 @@ class Activities extends Component {
                                     <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
+                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}>
+                                    <p> {activity.activityDescription}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Fecha:</p></Col><Col md={8}><p> {activity.activityDate}</p> </Col>
+                                    <Col md={4}><p>Fecha:</p></Col><Col md={8}><p> {activity.activityDate}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
+                                    <Col md={4}><p>Organización:</p></Col><Col md={8}>
+                                    <p> {activity.organization.organizationName}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
+                                </Col>
                                 </Row>
-                                <hr />
+                                <hr/>
                                 <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
+                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
+                                    <p> {activity.counselor_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.counselorComment}</p></Col>
                                 </Row>
-                                <hr />
+                                <hr/>
 
                                 <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
+                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
+                                    <p> {activity.manager_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.managerComment}</p></Col>
                                 </Row>
-                                <hr />
+                                <hr/>
 
                                 <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
+                                    <p> {activity.status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.staffComment}</p></Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -261,7 +273,6 @@ class Activities extends Component {
             let paginatedApprovedActivities = this.state.approvedActivities.slice((approvedPageNumber - 1) * pageSize, ((approvedPageNumber - 1) * pageSize) + pageSize);
 
 
-
             approvedActivities = paginatedApprovedActivities.map(activity =>
 
                 <Col md={12}>
@@ -274,36 +285,45 @@ class Activities extends Component {
                                     <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
+                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}>
+                                    <p> {activity.activityDescription}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
+                                    <Col md={4}><p>Organización:</p></Col><Col md={8}>
+                                    <p> {activity.organization.organizationName}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
+                                </Col>
                                 </Row>
-                                <hr />
+                                <hr/>
                                 <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
+                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
+                                    <p> {activity.counselor_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.counselorComment}</p></Col>
                                 </Row>
-                                <hr />
+                                <hr/>
 
                                 <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
+                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
+                                    <p> {activity.manager_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.managerComment}</p></Col>
                                 </Row>
-                                <hr />
+                                <hr/>
 
                                 <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
+                                    <p> {activity.status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.staffComment}</p></Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -325,13 +345,13 @@ class Activities extends Component {
         let readyForDecisionActivities;
 
         if (this.state.readyForDecisionActivities.length === 0) {
-            readyForDecisionActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades listas para decision.</p>
+            readyForDecisionActivities =
+                <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades listas para decision.</p>
         } else {
 
             const pageSize = 5;
             const approvedPageNumber = this.state.readyForDecisionActivities;
             let paginatedApprovedActivities = this.state.readyForDecisionActivities.slice((approvedPageNumber - 1) * pageSize, ((approvedPageNumber - 1) * pageSize) + pageSize);
-
 
 
             // readyForDecisionActivities = paginatedApprovedActivities.map(activity =>
@@ -347,36 +367,45 @@ class Activities extends Component {
                                     <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
+                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}>
+                                    <p> {activity.activityDescription}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
+                                    <Col md={4}><p>Organización:</p></Col><Col md={8}>
+                                    <p> {activity.organization.organizationName}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
+                                </Col>
                                 </Row>
-                                <hr />
+                                <hr/>
                                 <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
+                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
+                                    <p> {activity.counselor_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.counselorComment}</p></Col>
                                 </Row>
-                                <hr />
+                                <hr/>
 
                                 <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
+                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
+                                    <p> {activity.manager_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.managerComment}</p></Col>
                                 </Row>
-                                <hr />
+                                <hr/>
 
                                 <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
+                                    <p> {activity.status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.staffComment}</p></Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -419,36 +448,45 @@ class Activities extends Component {
                                     <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
+                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}>
+                                    <p> {activity.activityDescription}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
+                                    <Col md={4}><p>Organización:</p></Col><Col md={8}>
+                                    <p> {activity.organization.organizationName}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
+                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
+                                </Col>
                                 </Row>
-                                <hr />
+                                <hr/>
                                 <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
+                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
+                                    <p> {activity.counselor_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.counselorComment}</p></Col>
                                 </Row>
-                                <hr />
+                                <hr/>
 
                                 <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
+                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
+                                    <p> {activity.manager_status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.managerComment}</p></Col>
                                 </Row>
-                                <hr />
+                                <hr/>
 
                                 <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
+                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
+                                    <p> {activity.status.description}</p></Col>
                                 </Row>
                                 <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
+                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                    <p> {activity.staffComment}</p></Col>
                                 </Row>
                             </Row>
                         </Col>
@@ -503,10 +541,11 @@ class Activities extends Component {
                                 <Badge style={{background: 'red', marginLeft: '10px'}}>
                                     {this.state.deniedActivities.length}</Badge> :
                                 null}</NavItem>
-                            <NavItem eventKey="4" title="Item">Listas para decision {this.state.readyForDecisionActivities.length > 0 ?
-                                <Badge style={{background: 'red', marginLeft: '10px'}}>
-                                    {this.state.readyForDecisionActivities.length}</Badge> :
-                                null}</NavItem>
+                            <NavItem eventKey="4" title="Item">Listas para
+                                decision {this.state.readyForDecisionActivities.length > 0 ?
+                                    <Badge style={{background: 'red', marginLeft: '10px'}}>
+                                        {this.state.readyForDecisionActivities.length}</Badge> :
+                                    null}</NavItem>
                         </Nav>
                         <br/>
                         {/*{activities}*/}
@@ -518,22 +557,22 @@ class Activities extends Component {
                                 </Row>
 
                                 {this.state.pendingActivities.length > 5 ?
-                                <Row>
-                                    <Pager>
-                                        <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} &nbsp;
-                                            de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
-                                        <Row>{this.state.pendingActivitiesPageNumber > 1 ?
-                                            <PageItem className="pull-left"
-                                                      onClick={() => this.onPreviousClicked()}>&larr;
-                                                Anterior</PageItem>
-                                            : null}
-                                            {this.state.pendingActivitiesPageNumber < this.state.pendingActivitiesMaxPageNumber ?
-                                                <PageItem className="pull-right"
-                                                          onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
-                                                : null}</Row>
-                                    </Pager>
-                                </Row>
-                                    : null }
+                                    <Row>
+                                        <Pager>
+                                            <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} &nbsp;
+                                                de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
+                                            <Row>{this.state.pendingActivitiesPageNumber > 1 ?
+                                                <PageItem className="pull-left"
+                                                          onClick={() => this.onPreviousClicked()}>&larr;
+                                                    Anterior</PageItem>
+                                                : null}
+                                                {this.state.pendingActivitiesPageNumber < this.state.pendingActivitiesMaxPageNumber ?
+                                                    <PageItem className="pull-right"
+                                                              onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
+                                                    : null}</Row>
+                                        </Pager>
+                                    </Row>
+                                    : null}
 
                             </div>
                             : null
@@ -545,25 +584,25 @@ class Activities extends Component {
                                     {approvedActivities}
                                 </Row>
 
-                                {this.state.approvedActivities.length > 5  ?
+                                {this.state.approvedActivities.length > 5 ?
 
-                                <Row>
-                                    <Pager>
+                                    <Row>
+                                        <Pager>
 
-                                        <Row><ReactCenter>{this.state.approvedActivitiesPageNumber} &nbsp;
-                                            de {this.state.approvedActivitiesMaxPageNumber}</ReactCenter></Row>
-                                        <Row>{this.state.approvedActivitiesPageNumber > 1 ?
-                                            <PageItem className="pull-left"
-                                                      onClick={() => this.onPreviousClicked()}>&larr;
-                                                Anterior</PageItem>
-                                            : null}
-                                            {this.state.approvedActivitiesPageNumber < this.state.approvedActivitiesMaxPageNumber ?
-                                                <PageItem className="pull-right"
-                                                          onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
-                                                : null}</Row>
-                                    </Pager>
-                                </Row>
-                                    : null }
+                                            <Row><ReactCenter>{this.state.approvedActivitiesPageNumber} &nbsp;
+                                                de {this.state.approvedActivitiesMaxPageNumber}</ReactCenter></Row>
+                                            <Row>{this.state.approvedActivitiesPageNumber > 1 ?
+                                                <PageItem className="pull-left"
+                                                          onClick={() => this.onPreviousClicked()}>&larr;
+                                                    Anterior</PageItem>
+                                                : null}
+                                                {this.state.approvedActivitiesPageNumber < this.state.approvedActivitiesMaxPageNumber ?
+                                                    <PageItem className="pull-right"
+                                                              onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
+                                                    : null}</Row>
+                                        </Pager>
+                                    </Row>
+                                    : null}
 
                             </div>
                             : null
@@ -575,23 +614,23 @@ class Activities extends Component {
                                     {deniedActivities}
                                 </Row>
 
-                                {this.state.deniedActivities.length > 5  ?
-                                <Row>
-                                    <Pager>
+                                {this.state.deniedActivities.length > 5 ?
+                                    <Row>
+                                        <Pager>
 
-                                        <Row><ReactCenter>{this.state.deniedActivitiesPageNumber} &nbsp;
-                                            de {this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
-                                        <Row>{this.state.deniedActivitiesPageNumber > 1 ?
-                                            <PageItem className="pull-left"
-                                                      onClick={() => this.onPreviousClicked()}>&larr;
-                                                Anterior</PageItem>
-                                            : null}
-                                            {this.state.deniedActivitiesPageNumber < this.state.deniedActivitiesMaxPageNumber ?
-                                                <PageItem className="pull-right"
-                                                          onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
-                                                : null}</Row>
-                                    </Pager>
-                                </Row>
+                                            <Row><ReactCenter>{this.state.deniedActivitiesPageNumber} &nbsp;
+                                                de {this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
+                                            <Row>{this.state.deniedActivitiesPageNumber > 1 ?
+                                                <PageItem className="pull-left"
+                                                          onClick={() => this.onPreviousClicked()}>&larr;
+                                                    Anterior</PageItem>
+                                                : null}
+                                                {this.state.deniedActivitiesPageNumber < this.state.deniedActivitiesMaxPageNumber ?
+                                                    <PageItem className="pull-right"
+                                                              onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
+                                                    : null}</Row>
+                                        </Pager>
+                                    </Row>
                                     : null
                                 }
 
@@ -605,23 +644,23 @@ class Activities extends Component {
                                     {readyForDecisionActivities}
                                 </Row>
 
-                                {this.state.readyForDecisionActivities.length > 5  ?
-                                <Row>
-                                    <Pager>
+                                {this.state.readyForDecisionActivities.length > 5 ?
+                                    <Row>
+                                        <Pager>
 
-                                        <Row><ReactCenter>{this.state.deniedActivitiesPageNumber} &nbsp;
-                                            de {this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
-                                        <Row>{this.state.deniedActivitiesPageNumber > 1 ?
-                                            <PageItem className="pull-left"
-                                                      onClick={() => this.onPreviousClicked()}>&larr;
-                                                Anterior</PageItem>
-                                            : null}
-                                            {this.state.deniedActivitiesPageNumber < this.state.deniedActivitiesMaxPageNumber ?
-                                                <PageItem className="pull-right"
-                                                          onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
-                                                : null}</Row>
-                                    </Pager>
-                                </Row>
+                                            <Row><ReactCenter>{this.state.deniedActivitiesPageNumber} &nbsp;
+                                                de {this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
+                                            <Row>{this.state.deniedActivitiesPageNumber > 1 ?
+                                                <PageItem className="pull-left"
+                                                          onClick={() => this.onPreviousClicked()}>&larr;
+                                                    Anterior</PageItem>
+                                                : null}
+                                                {this.state.deniedActivitiesPageNumber < this.state.deniedActivitiesMaxPageNumber ?
+                                                    <PageItem className="pull-right"
+                                                              onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
+                                                    : null}</Row>
+                                        </Pager>
+                                    </Row>
                                     : null
                                 }
 

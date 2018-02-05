@@ -346,7 +346,7 @@ class Activities extends Component {
 
         if (this.state.readyForDecisionActivities.length === 0) {
             readyForDecisionActivities =
-                <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades listas para decision.</p>
+                <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades completadas.</p>
         } else {
 
             const pageSize = 5;
@@ -526,57 +526,61 @@ class Activities extends Component {
                             <li className="active">Actividades</li>
                         </ol>
                         <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
-                            <NavItem eventKey="1" href="/home">Pendientes
-                                {this.state.pendingActivities.length > 0 ?
+
+                            <NavItem eventKey="1" title="Item">Completadas {this.state.readyForDecisionActivities.length > 0 ?
                                     <Badge style={{background: 'red', marginLeft: '10px'}}>
-                                        {this.state.pendingActivities.length}</Badge> :
+                                        {this.state.readyForDecisionActivities.length}</Badge> :
                                     null}
                             </NavItem>
-
                             <NavItem eventKey="2" title="Item">Aprobadas {this.state.approvedActivities.length > 0 ?
-                                <Badge style={{background: 'red', marginLeft: '10px'}}>
+                                <Badge style={{background: 'green', marginLeft: '10px'}}>
                                     {this.state.approvedActivities.length}</Badge> :
                                 null}</NavItem>
                             <NavItem eventKey="3" title="Item">Denegadas {this.state.deniedActivities.length > 0 ?
-                                <Badge style={{background: 'red', marginLeft: '10px'}}>
+                                <Badge style={{background: 'green', marginLeft: '10px'}}>
                                     {this.state.deniedActivities.length}</Badge> :
                                 null}</NavItem>
-                            <NavItem eventKey="4" title="Item">Listas para
-                                decision {this.state.readyForDecisionActivities.length > 0 ?
-                                    <Badge style={{background: 'red', marginLeft: '10px'}}>
-                                        {this.state.readyForDecisionActivities.length}</Badge> :
-                                    null}</NavItem>
+
+
+                            <NavItem eventKey="4" href="/home">Pendientes
+                                {this.state.pendingActivities.length > 0 ?
+                                    <Badge style={{background: 'orange', marginLeft: '10px'}}>
+                                        {this.state.pendingActivities.length}</Badge> :
+                                    null}
+                            </NavItem>
                         </Nav>
                         <br/>
                         {/*{activities}*/}
-
                         {this.state.activeKey === '1' ?
                             <div>
                                 <Row>
-                                    {pendingActivities}
+                                    {readyForDecisionActivities}
                                 </Row>
 
-                                {this.state.pendingActivities.length > 5 ?
+                                {this.state.readyForDecisionActivities.length > 5 ?
                                     <Row>
                                         <Pager>
-                                            <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} &nbsp;
-                                                de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
-                                            <Row>{this.state.pendingActivitiesPageNumber > 1 ?
+
+                                            <Row><ReactCenter>{this.state.deniedActivitiesPageNumber} &nbsp;
+                                                de {this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
+                                            <Row>{this.state.deniedActivitiesPageNumber > 1 ?
                                                 <PageItem className="pull-left"
                                                           onClick={() => this.onPreviousClicked()}>&larr;
                                                     Anterior</PageItem>
                                                 : null}
-                                                {this.state.pendingActivitiesPageNumber < this.state.pendingActivitiesMaxPageNumber ?
+                                                {this.state.deniedActivitiesPageNumber < this.state.deniedActivitiesMaxPageNumber ?
                                                     <PageItem className="pull-right"
                                                               onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
                                                     : null}</Row>
                                         </Pager>
                                     </Row>
-                                    : null}
+                                    : null
+                                }
 
                             </div>
                             : null
                         }
+
 
                         {this.state.activeKey === '2' ?
                             <div>
@@ -641,32 +645,31 @@ class Activities extends Component {
                         {this.state.activeKey === '4' ?
                             <div>
                                 <Row>
-                                    {readyForDecisionActivities}
+                                    {pendingActivities}
                                 </Row>
 
-                                {this.state.readyForDecisionActivities.length > 5 ?
+                                {this.state.pendingActivities.length > 5 ?
                                     <Row>
                                         <Pager>
-
-                                            <Row><ReactCenter>{this.state.deniedActivitiesPageNumber} &nbsp;
-                                                de {this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
-                                            <Row>{this.state.deniedActivitiesPageNumber > 1 ?
+                                            <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} &nbsp;
+                                                de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
+                                            <Row>{this.state.pendingActivitiesPageNumber > 1 ?
                                                 <PageItem className="pull-left"
                                                           onClick={() => this.onPreviousClicked()}>&larr;
                                                     Anterior</PageItem>
                                                 : null}
-                                                {this.state.deniedActivitiesPageNumber < this.state.deniedActivitiesMaxPageNumber ?
+                                                {this.state.pendingActivitiesPageNumber < this.state.pendingActivitiesMaxPageNumber ?
                                                     <PageItem className="pull-right"
                                                               onClick={() => this.onNextClicked()}>Siguiente &rarr;</PageItem>
                                                     : null}</Row>
                                         </Pager>
                                     </Row>
-                                    : null
-                                }
+                                    : null}
 
                             </div>
                             : null
                         }
+
 
 
                     </Col>

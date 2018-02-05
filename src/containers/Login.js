@@ -57,7 +57,7 @@ export default class Login extends Component {
             if (response.ok) {
                 response.json().then(results => {
 
-                    console.log('Response is successful');
+                    console.log('We didnt fuck up');
 
                     this.props.cookies.set('role', results.userType_code, { path: '/'});
                     this.props.cookies.set('email', results.userEmail, { path: '/' });
@@ -103,7 +103,7 @@ export default class Login extends Component {
                 // response.json().then(error => {
                 //     this.props.showError(`Failed to add issue: ${error.message}`);
                 // });
-                console.log('HMMMMM');
+                console.log('We fucked up');
                 //
                 // if(results.userType_code === 1) {
                 //     console.log('ADMIN');

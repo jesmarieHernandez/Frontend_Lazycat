@@ -3,7 +3,7 @@ import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
 
-    Button, Panel, Pager, PageItem, Col, Row, Nav, NavItem, Badge, Grid, Image, Thumbnail
+    Button, Panel, Pager, PageItem, Col, Row, Nav, NavItem, Badge, Image,
 
 } from 'react-bootstrap';
 import ReactCenter from 'react-center';
@@ -113,9 +113,9 @@ class Activities extends Component {
     onNextClicked = () => {
 
         if (this.state.activeKey === '1') {
-            console.log('this.state.pendingActivitiesMaxPageNumber');
-            console.log(this.state.pendingActivitiesMaxPageNumber);
-            this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber + 1});
+            console.log('this.state.readyForDecisionActivitiesMaxNumber');
+            console.log(this.state.readyForDecisionActivitiesMaxNumber);
+            this.setState({readyForDecisionActivitiesPageNumber: this.state.readyForDecisionActivitiesPageNumber - 1});
         }
 
         else if (this.state.activeKey === '2') {

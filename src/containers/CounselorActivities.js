@@ -113,7 +113,7 @@ class CounselorActivities extends Component {
 
             // Denied Activities
             const denied = this.state.activities.filter(function (obj) {
-                return obj.counselorStatus_code == 2;
+                return obj.counselorStatus_code == 3;
             });
             this.setState({deniedActivities: denied});
             this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});

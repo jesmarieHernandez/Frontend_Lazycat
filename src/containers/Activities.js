@@ -3,7 +3,7 @@ import 'isomorphic-fetch';
 import {Link} from "react-router-dom";
 import {
 
-    Button, Panel, Pager, PageItem, Col, Row, Nav, NavItem, Badge
+    Button, Panel, Pager, PageItem, Col, Row, Nav, NavItem, Badge, Grid, Image, Thumbnail
 
 } from 'react-bootstrap';
 import ReactCenter from 'react-center';
@@ -194,72 +194,93 @@ class Activities extends Component {
             pendingActivities = paginatedPendingActivities.map(activity =>
 
                 <Col md={12}>
-                    <Panel header={activity.activityName}>
+                    {/*<Panel header={activity.activityName + '   ' + activity.activityDate}>*/}
+                    <Panel>
                         {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
                         {/*<br/>*/}
-                        <Col md={9}>
+                        <Col md={12}>
+
                             <Row>
-                                <Row>
-                                    <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}>
-                                    <p> {activity.activityDescription}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Fecha:</p></Col><Col md={8}><p> {activity.activityDate}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}>
-                                    <p> {activity.organization.organizationName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
+                                <Col md={2}>
+                                    <p><Image style={{height: '50px'}}
+                                              src="https://cdn0.iconfinder.com/data/icons/human-resources-and-strategy/80/Human_resource_strategy-07-512.png"
+                                              circle/></p>
+                                    <p style={{marginLeft: '10px'}}>{activity.organization.organizationInitials}</p>
                                 </Col>
-                                </Row>
-                                <hr/>
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                <Col md={8}>
+                                    <p> <Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link></p>
+                                    <p> <Link to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link></p>
+                                    <p> {activity.activityDate}</p>
+                                </Col>
+
+                                {/*<Row>*/}
+                                {/*<Col md={4}><p>Título:</p></Col><Col md={12}><p> {activity.activityName}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                {/*<Col md={4}><p>Descripción:</p></Col><Col md={8}>*/}
+                                {/*<p> {activity.activityDescription}</p></Col>*/}
+
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                {/*<Col md={4}><p>Fecha:</p></Col><Col md={8}><p> {activity.activityDate}</p></Col>*/}
+
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                {/*<Col md={4}><p>Organización:</p></Col><Col md={8}>*/}
+                                {/*<p> {activity.organization.organizationName}</p></Col>*/}
+
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                {/*<Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>*/}
+                                {/*</Row>*/}
+
+                                <Col md={2}>
+                                    <Link to={`/activities/${activity.id}`}><Button
+                                        className="btn-info btn-large pull-right"
+                                        style={{width: '100px', marginBottom: '10px'}}
+                                    >Ver detalles</Button></Link>
+                                </Col>
                             </Row>
-                        </Col>
-                        <Col md={3}>
+
+
+                            <hr/>
+
+
                             <Row>
-                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
-                                    className="btn-info btn-large pull-right"
-                                    style={{width: '100px', marginBottom: '10px'}}
-                                >Detalles</Button></Link> </Col>
+                                <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
+                                <p> {activity.counselor_status.description}</p></Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                <p> {activity.counselorComment}</p></Col>
+                            </Row>
+                            <hr/>
+
+                            <Row>
+                                <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
+                                <p> {activity.manager_status.description}</p></Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                <p> {activity.managerComment}</p></Col>
+                            </Row>
+                            <hr/>
+
+                            <Row>
+                                <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
+                                <p> {activity.status.description}</p></Col>
+                            </Row>
+                            <Row>
+                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+                                <p> {activity.staffComment}</p></Col>
                             </Row>
                         </Col>
 
                     </Panel>
-                </Col>
-            );
+            </Col >
+        );
         }
 
         let approvedActivities;
@@ -275,69 +296,69 @@ class Activities extends Component {
 
             approvedActivities = paginatedApprovedActivities.map(activity =>
 
-                <Col md={12}>
-                    <Panel header={activity.activityName}>
-                        {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
-                        {/*<br/>*/}
-                        <Col md={9}>
-                            <Row>
-                                <Row>
-                                    <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}>
-                                    <p> {activity.activityDescription}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}>
-                                    <p> {activity.organization.organizationName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
-                                </Col>
-                                </Row>
-                                <hr/>
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+            <Col md={12}>
+            <Panel header={activity.organization.organizationInitials + ': ' + activity.activityName}>
+            {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+            {/*<br/>*/}
+            <Col md={9}>
+            <Row>
+            <Row>
+            <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Descripción:</p></Col><Col md={8}>
+            <p> {activity.activityDescription}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Organización:</p></Col><Col md={8}>
+            <p> {activity.organization.organizationName}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
+            </Col>
+            </Row>
+            <hr/>
+            <Row>
+            <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
+            <p> {activity.counselor_status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.counselorComment}</p></Col>
+            </Row>
+            <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+            <Row>
+            <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
+            <p> {activity.manager_status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.managerComment}</p></Col>
+            </Row>
+            <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
-                            </Row>
-                        </Col>
-                        <Col md={3}>
-                            <Row>
-                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
-                                    className="btn-info btn-large pull-right"
-                                    style={{width: '100px', marginBottom: '10px'}}
-                                >Detalles</Button></Link> </Col>
-                            </Row>
-                        </Col>
+            <Row>
+            <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
+            <p> {activity.status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.staffComment}</p></Col>
+            </Row>
+            </Row>
+            </Col>
+            <Col md={3}>
+            <Row>
+            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+            className="btn-info btn-large pull-right"
+            style={{width: '100px', marginBottom: '10px'}}
+            >Detalles</Button></Link> </Col>
+            </Row>
+            </Col>
 
-                    </Panel>
-                </Col>
+            </Panel>
+            </Col>
             );
 
         }
@@ -357,69 +378,69 @@ class Activities extends Component {
             // readyForDecisionActivities = paginatedApprovedActivities.map(activity =>
             readyForDecisionActivities = this.state.readyForDecisionActivities.map(activity =>
 
-                <Col md={12}>
-                    <Panel header={activity.activityName}>
-                        {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
-                        {/*<br/>*/}
-                        <Col md={9}>
-                            <Row>
-                                <Row>
-                                    <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}>
-                                    <p> {activity.activityDescription}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}>
-                                    <p> {activity.organization.organizationName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
-                                </Col>
-                                </Row>
-                                <hr/>
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+            <Col md={12}>
+            <Panel header={activity.organization.organizationInitials + ': ' + activity.activityName}>
+            {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+            {/*<br/>*/}
+            <Col md={9}>
+            <Row>
+            <Row>
+            <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Descripción:</p></Col><Col md={8}>
+            <p> {activity.activityDescription}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Organización:</p></Col><Col md={8}>
+            <p> {activity.organization.organizationName}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
+            </Col>
+            </Row>
+            <hr/>
+            <Row>
+            <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
+            <p> {activity.counselor_status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.counselorComment}</p></Col>
+            </Row>
+            <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+            <Row>
+            <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
+            <p> {activity.manager_status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.managerComment}</p></Col>
+            </Row>
+            <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
-                            </Row>
-                        </Col>
-                        <Col md={3}>
-                            <Row>
-                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
-                                    className="btn-info btn-large pull-right"
-                                    style={{width: '100px', marginBottom: '10px'}}
-                                >Detalles</Button></Link> </Col>
-                            </Row>
-                        </Col>
+            <Row>
+            <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
+            <p> {activity.status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.staffComment}</p></Col>
+            </Row>
+            </Row>
+            </Col>
+            <Col md={3}>
+            <Row>
+            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+            className="btn-info btn-large pull-right"
+            style={{width: '100px', marginBottom: '10px'}}
+            >Detalles</Button></Link> </Col>
+            </Row>
+            </Col>
 
-                    </Panel>
-                </Col>
+            </Panel>
+            </Col>
             );
 
         }
@@ -438,69 +459,69 @@ class Activities extends Component {
 
             deniedActivities = paginatedDeniedActivities.map(activity =>
 
-                <Col md={12}>
-                    <Panel header={activity.activityName}>
-                        {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
-                        {/*<br/>*/}
-                        <Col md={9}>
-                            <Row>
-                                <Row>
-                                    <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}>
-                                    <p> {activity.activityDescription}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}>
-                                    <p> {activity.organization.organizationName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
-                                </Col>
-                                </Row>
-                                <hr/>
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+            <Col md={12}>
+            <Panel header={activity.organization.organizationInitials + ': ' + activity.activityName}>
+            {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
+            {/*<br/>*/}
+            <Col md={9}>
+            <Row>
+            <Row>
+            <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Descripción:</p></Col><Col md={8}>
+            <p> {activity.activityDescription}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Organización:</p></Col><Col md={8}>
+            <p> {activity.organization.organizationName}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p>
+            </Col>
+            </Row>
+            <hr/>
+            <Row>
+            <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
+            <p> {activity.counselor_status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.counselorComment}</p></Col>
+            </Row>
+            <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+            <Row>
+            <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
+            <p> {activity.manager_status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.managerComment}</p></Col>
+            </Row>
+            <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
-                            </Row>
-                        </Col>
-                        <Col md={3}>
-                            <Row>
-                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
-                                    className="btn-info btn-large pull-right"
-                                    style={{width: '100px', marginBottom: '10px'}}
-                                >Detalles</Button></Link> </Col>
-                            </Row>
-                        </Col>
+            <Row>
+            <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
+            <p> {activity.status.description}</p></Col>
+            </Row>
+            <Row>
+            <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
+            <p> {activity.staffComment}</p></Col>
+            </Row>
+            </Row>
+            </Col>
+            <Col md={3}>
+            <Row>
+            <Col md={12}><Link to={`/activities/${activity.id}`}><Button
+            className="btn-info btn-large pull-right"
+            style={{width: '100px', marginBottom: '10px'}}
+            >Detalles</Button></Link> </Col>
+            </Row>
+            </Col>
 
-                    </Panel>
-                </Col>
+            </Panel>
+            </Col>
             );
         }
 
@@ -527,10 +548,11 @@ class Activities extends Component {
                         </ol>
                         <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
 
-                            <NavItem eventKey="1" title="Item">Completadas {this.state.readyForDecisionActivities.length > 0 ?
-                                    <Badge style={{background: 'red', marginLeft: '10px'}}>
-                                        {this.state.readyForDecisionActivities.length}</Badge> :
-                                    null}
+                            <NavItem eventKey="1"
+                                     title="Item">Completadas {this.state.readyForDecisionActivities.length > 0 ?
+                                <Badge style={{background: 'red', marginLeft: '10px'}}>
+                                    {this.state.readyForDecisionActivities.length}</Badge> :
+                                null}
                             </NavItem>
                             <NavItem eventKey="2" title="Item">Aprobadas {this.state.approvedActivities.length > 0 ?
                                 <Badge style={{background: 'green', marginLeft: '10px'}}>
@@ -671,7 +693,6 @@ class Activities extends Component {
                         }
 
 
-
                     </Col>
 
                     <Col md={3}>
@@ -687,11 +708,11 @@ class Activities extends Component {
                 </Col>
             </div>
         )
-    }
-}
+        }
+        }
 
-Activities.contextTypes = {
-    initialState: React.PropTypes.object,
-};
+        Activities.contextTypes = {
+            initialState: React.PropTypes.object,
+        };
 
-export default Activities;
+        export default Activities;

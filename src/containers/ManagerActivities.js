@@ -5,7 +5,7 @@ import Icon from 'react-icons-kit';
 
 import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
 import {
-    Button, Panel, Pager, PageItem, Col, Row, Nav, NavItem, Badge
+    Button, Panel, Pager, PageItem, Col, Row, Nav, NavItem, Badge, Image,
 
 } from 'react-bootstrap';
 import ReactCenter from 'react-center';
@@ -18,12 +18,11 @@ class ManagerActivities extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            activities: [],
             activeKey: "1",
+            activities: [],
             pendingActivities: [],
             approvedActivities: [],
             deniedActivities: [],
-            readyForDecisionActivities: [],
             pendingActivitiesPageNumber: 1,
             pendingActivitiesMaxPageNumber: 1000,
             approvedActivitiesPageNumber: 1,

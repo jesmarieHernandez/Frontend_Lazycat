@@ -24,9 +24,6 @@ class CounselorActivities extends Component {
             pendingActivities: [],
             approvedActivities: [],
             deniedActivities: [],
-            readyForDecisionActivities: [],
-            readyForDecisionActivitiesPageNumber: 1,
-            readyForDecisionActivitiesMaxPageNumber: 1000,
             pendingActivitiesPageNumber: 1,
             pendingActivitiesMaxPageNumber: 1000,
             approvedActivitiesPageNumber: 1,
@@ -533,7 +530,7 @@ class CounselorActivities extends Component {
                             <li className="active">Actividades</li>
                         </ol>
                         <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={this.handleSelect}>
-                            <NavItem eventKey="1" href="/home">Pendientes
+                            <NavItem eventKey="1" href="/home">Nuevas
                                 {this.state.pendingActivities.length > 0 ?
                                     <Badge style={{background: 'red', marginLeft: '10px'}}>
                                         {this.state.pendingActivities.length}</Badge> :

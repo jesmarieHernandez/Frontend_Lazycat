@@ -26,6 +26,8 @@ class Activities extends Component {
             approvedActivities: [],
             deniedActivities: [],
             readyForDecisionActivities: [],
+            readyForDecisionActivitiesPageNumber: 1,
+            readyForDecisionActivitiesMaxPageNumber: 1000,
             pendingActivitiesPageNumber: 1,
             pendingActivitiesMaxPageNumber: 1000,
             approvedActivitiesPageNumber: 1,
@@ -35,6 +37,7 @@ class Activities extends Component {
         }
 
         this.handleSelect = this.handleSelect.bind(this);
+        this.calculateMaxPageNumber = this.calculateMaxPageNumber.bind(this);
 
     }
 
@@ -50,53 +53,38 @@ class Activities extends Component {
                     this.setState({activities: activitiesList});
                     //this.props.history.push(`/activities/${createdRequest._id}`);
 
-
+                    // Pending Activities
                     const pending = this.state.activities.filter(function (obj) {
                         return ((obj.counselorStatus_code == 2 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1) || (obj.counselorStatus_code == 1 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1));
                     });
 
+                    this.setState({pendingActivities: pending});
+                    this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
+
+
+                    // Approved Activities
+                    const approved = this.state.activities.filter(function (obj) {
+                        return obj.counselorStatus_code == 2 && obj.managerStatus_code == 2 && obj.activityStatus_code == 2;
+                    });
+                    this.setState({approvedActivities: approved});
+                    this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
+
+
+                    // Ready for Decision Activities
                     const readyForDecision = this.state.activities.filter(function (obj) {
                         return ((obj.counselorStatus_code == 2 && obj.managerStatus_code == 2 && obj.activityStatus_code == 1) );
                     });
 
                     this.setState({readyForDecisionActivities: readyForDecision});
-
-                    console.log('Pending length: ');
-                    console.log(pending.length / 5);
-
-                    let max = pending.length % 5 === 0 ? pending.length / 5 : Math.floor(pending.length / 5 + 1);
-                    if (pending.length < 5) {
-                        max = 0;
-                    }
-
-                    this.setState({pendingActivitiesMaxPageNumber: max});
-
-                    console.log('Cuantas actividades hay?');
-                    console.log(pending.length);
-
-                    this.setState({pendingActivities: pending});
-
-                    const approved = this.state.activities.filter(function (obj) {
-                        return obj.counselorStatus_code == 2 && obj.managerStatus_code == 2 && obj.activityStatus_code == 2;
-                    });
-
-                    let maxApproved = approved.length % 5 === 0 ? approved.length / 5 : Math.floor(approved.length / 5 + 1);
-                    if (approved.length < 5) {
-                        maxApproved = 0;
-                    }
+                    this.setState({readyForDecisionActivitiesMaxPageNumber: this.calculateMaxPageNumber(readyForDecision, 5)});
 
 
-                    this.setState({approvedActivities: approved});
-                    this.setState({approvedActivitiesMaxPageNumber: maxApproved});
-
-
+                    // Denied Activities
                     const denied = this.state.activities.filter(function (obj) {
                         return obj.activityStatus_code == 3;
                     });
-
                     this.setState({deniedActivities: denied});
-
-                    console.log(this.state.activities);
+                    this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
 
                 });
             } else {
@@ -109,6 +97,13 @@ class Activities extends Component {
         });
     }
 
+    calculateMaxPageNumber(activitiesArray, pageSize){
+        let max = activitiesArray.length % pageSize === 0 ? activitiesArray.length / pageSize : Math.floor(activitiesArray.length / pageSize + 1);
+        if (activitiesArray.length < pageSize) {
+            max = 0;
+        }
+        return max;
+    }
     handleSelect(event) {
         // event.preventDefault();
         console.log(event);
@@ -134,15 +129,20 @@ class Activities extends Component {
             console.log(this.state.deniedActivitiesMaxPageNumber);
             this.setState({deniedActivitiesMaxPageNumber: this.state.deniedActivitiesMaxPageNumber + 1});
         }
+        else if (this.state.activeKey === '4') {
+            console.log('this.state.pendingActivitiesMaxPageNumber');
+            console.log(this.state.pendingActivitiesMaxPageNumber);
+            this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber + 1});
+        }
 
     }
 
     onPreviousClicked = () => {
 
         if (this.state.activeKey === '1') {
-            console.log('this.state.pendingActivitiesMaxPageNumber');
-            console.log(this.state.pendingActivitiesMaxPageNumber);
-            this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber - 1});
+            console.log('this.state.readyForDecisionActivitiesMaxNumber');
+            console.log(this.state.readyForDecisionActivitiesMaxNumber);
+            this.setState({readyForDecisionActivitiesPageNumber: this.state.readyForDecisionActivitiesPageNumber - 1});
         }
 
         else if (this.state.activeKey === '2') {
@@ -154,6 +154,11 @@ class Activities extends Component {
             console.log('this.state.deniedActivitiesMaxPageNumber');
             console.log(this.state.deniedActivitiesMaxPageNumber);
             this.setState({deniedActivitiesMaxPageNumber: this.state.deniedActivitiesMaxPageNumber - 1});
+        }
+        else if (this.state.activeKey === '4') {
+            console.log('this.state.pendingActivitiesMaxPageNumber');
+            console.log(this.state.pendingActivitiesMaxPageNumber);
+            this.setState({pendingActivitiesPageNumber: this.state.pendingActivitiesPageNumber - 1});
         }
     }
 

@@ -13,11 +13,16 @@ export default class Login extends Component {
         this.state = {
             isLoading: false,
             email: "",
-            password: ""
+            password: "",
+            loginFailed: 'false',
+            userNotRegistered: 'true'
+
         };
     }
 
     componentDidMount() {
+       // alert('Necesita acceder a su cuenta de UPR para poder acceder al sistema');
+        // alert('Usted no aparece registrado en el sistema. Favor de pasar por el Departamento de Actividades Sociales y Culturales');
         console.log(this.props.cookies);
         let userType_code = this.props.cookies.get('role');
         console.log(userType_code);
@@ -51,6 +56,8 @@ export default class Login extends Component {
 
     responseGoogle = (response) => {
 
+
+        //TODO verificar respuesta de google, si el proceso de login no se completa, tirar alerta
         fetch(`http://dev.uprm.edu/dsca/v1/api/users/${response.w3.U3}`).then(response => {
         // fetch(`http://dev.uprm.edu/dsca/v1/api/users/${response.w3.U3}`).then(response => {
 
@@ -100,10 +107,14 @@ export default class Login extends Component {
                     }
                 });
             } else {
+
+                //TODO Add logic to handle a failure in Login: a) user doesnt finish the google login, b) the user finishes the user login, but isnt registered to the system
+                //
                 // response.json().then(error => {
                 //     this.props.showError(`Failed to add issue: ${error.message}`);
                 // });
-                console.log('We fucked up');
+                //alert('Necesita acceder a su cuenta de UPR para poder acceder al sistema');
+                alert('Usted no aparece registrado en el sistema. Favor de pasar por el Departamento de Actividades Sociales y Culturales');
                 //
                 // if(results.userType_code === 1) {
                 //     console.log('ADMIN');
@@ -146,6 +157,11 @@ export default class Login extends Component {
                                 <img src="https://image.ibb.co/cMPJUG/SAMP.png" style={{height: 200}}/>
                             </ReactCenter>
                         </Row>
+                        {/*{*/}
+                            {/*this.state.userNotRegistered ? <p>Usted no aparece registrado en el sistema. Favor de pasar por el Departamento de Actividades Sociales y Culturales</p>*/}
+                                {/*:*/}
+                                {/*null*/}
+                        {/*}*/}
                         <Row>
                             <ReactCenter><h3 style={{fontFamily: 'Helvetica'}}>Plataforma de Actividades</h3></ReactCenter>
                             <ReactCenter><h3 style={{fontFamily: 'Helvetica'}}>Departamento de Actividades Sociales y Culturales</h3></ReactCenter>

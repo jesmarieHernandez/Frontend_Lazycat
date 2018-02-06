@@ -357,78 +357,7 @@ class CounselorActivities extends Component {
 
         }
 
-/*        let readyForDecisionActivities;
 
-        if (this.state.readyForDecisionActivities.length === 0) {
-            readyForDecisionActivities = <p style={{color: 'grey', marginLeft: '20px'}}>No hay actividades listas para decision.</p>
-        } else {
-
-            const pageSize = 5;
-            const approvedPageNumber = this.state.readyForDecisionActivities;
-            let paginatedApprovedActivities = this.state.readyForDecisionActivities.slice((approvedPageNumber - 1) * pageSize, ((approvedPageNumber - 1) * pageSize) + pageSize);
-
-
-
-            // readyForDecisionActivities = paginatedApprovedActivities.map(activity =>
-            readyForDecisionActivities = this.state.readyForDecisionActivities.map(activity =>
-
-                <Col md={12}>
-                    <Panel header={activity.activityName}>
-                        {/!*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*!/}
-                        {/!*<br/>*!/}
-                        <Col md={9}>
-                            <Row>
-                                <Row>
-                                    <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
-                                </Row>
-                                <hr />
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr />
-
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr />
-
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
-                                </Row>
-                            </Row>
-                        </Col>
-                        <Col md={3}>
-                            <Row>
-                                <Col md={12}><Link to={`/activities/${activity.id}`}><Button
-                                    className="btn-info btn-large pull-right"
-                                    style={{width: '100px', marginBottom: '10px'}}
-                                >Detalles</Button></Link> </Col>
-                            </Row>
-                        </Col>
-
-                    </Panel>
-                </Col>
-            );
-
-        }*/
 
 
         let deniedActivities;

@@ -73,7 +73,35 @@ class StudentActivities extends Component {
                 // });
             }
         }).catch(err => {
-            this.props.showError(`Error in sending data to server: ${err.message}`);
+            //this.props.showError(`Error in sending data to server: ${err.message}`);
+            //TODO put it back
+            //this.setState({activities: results});
+            this.setState({activities: activitiesList});
+            //this.props.history.push(`/activities/${createdRequest._id}`);
+
+            // Pending Activities
+            const pending = this.state.activities.filter(function (obj) {
+                return ((obj.counselorStatus_code == 1));
+            });
+
+            this.setState({pendingActivities: pending});
+            this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
+
+
+            // Approved Activities
+            const approved = this.state.activities.filter(function (obj) {
+                return ((obj.counselorStatus_code == 2));
+            });
+            this.setState({approvedActivities: approved});
+            this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
+
+
+            // Denied Activities
+            const denied = this.state.activities.filter(function (obj) {
+                return obj.counselorStatus_code == 2;
+            });
+            this.setState({deniedActivities: denied});
+            this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
         });
 
         // fetch('http://localhost:3001/api/pending').then(response => {

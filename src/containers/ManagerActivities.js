@@ -483,7 +483,7 @@ class ManagerActivities extends Component {
                                     <Row>
                                         <Pager>
                                             <Row><ReactCenter>{this.state.pendingActivitiesPageNumber} &nbsp;
-                                                de {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
+                                                de &nbsp; {this.state.pendingActivitiesMaxPageNumber}</ReactCenter></Row>
                                             <Row>{this.state.pendingActivitiesPageNumber > 1 ?
                                                 <PageItem className="pull-left"
                                                           onClick={() => this.onPreviousClicked()}>&larr;
@@ -513,7 +513,7 @@ class ManagerActivities extends Component {
                                         <Pager>
 
                                             <Row><ReactCenter>{this.state.approvedActivitiesPageNumber} &nbsp;
-                                                de {this.state.approvedActivitiesMaxPageNumber}</ReactCenter></Row>
+                                                de &nbsp;{this.state.approvedActivitiesMaxPageNumber}</ReactCenter></Row>
                                             <Row>{this.state.approvedActivitiesPageNumber > 1 ?
                                                 <PageItem className="pull-left"
                                                           onClick={() => this.onPreviousClicked()}>&larr;
@@ -542,7 +542,7 @@ class ManagerActivities extends Component {
                                         <Pager>
 
                                             <Row><ReactCenter>{this.state.deniedActivitiesPageNumber} &nbsp;
-                                                de {this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
+                                                de&nbsp;{this.state.deniedActivitiesMaxPageNumber}</ReactCenter></Row>
                                             <Row>{this.state.deniedActivitiesPageNumber > 1 ?
                                                 <PageItem className="pull-left"
                                                           onClick={() => this.onPreviousClicked()}>&larr;

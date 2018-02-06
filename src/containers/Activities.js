@@ -191,8 +191,14 @@ class Activities extends Component {
             let paginatedPendingActivities = this.state.pendingActivities.slice((pendingPageNumber - 1) * pageSize, ((pendingPageNumber - 1) * pageSize) + pageSize);
 
 
-            pendingActivities = paginatedPendingActivities.map(activity =>
 
+            pendingActivities = paginatedPendingActivities.map(activity => {
+
+                let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+
+                return (
                 <Col md={12}>
                     {/*<Panel header={activity.activityName + '   ' + activity.activityDate}>*/}
                     <Panel>
@@ -210,31 +216,14 @@ class Activities extends Component {
 
 
                                 <Col md={8}>
-                                    <p> <Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link></p>
-                                    <p> <Link to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link></p>
-                                    <p> {activity.activityDate}</p>
+                                    <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link
+                                        to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
+                                    </p>
+                                    <p><Link
+                                        to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link>
+                                    </p>
+                                    <p> {activityDate}</p>
                                 </Col>
-
-                                {/*<Row>*/}
-                                {/*<Col md={4}><p>Título:</p></Col><Col md={12}><p> {activity.activityName}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
-                                {/*<Col md={4}><p>Descripción:</p></Col><Col md={8}>*/}
-                                {/*<p> {activity.activityDescription}</p></Col>*/}
-
-                                {/*</Row>*/}
-                                {/*<Row>*/}
-                                {/*<Col md={4}><p>Fecha:</p></Col><Col md={8}><p> {activity.activityDate}</p></Col>*/}
-
-                                {/*</Row>*/}
-                                {/*<Row>*/}
-                                {/*<Col md={4}><p>Organización:</p></Col><Col md={8}>*/}
-                                {/*<p> {activity.organization.organizationName}</p></Col>*/}
-
-                                {/*</Row>*/}
-                                {/*<Row>*/}
-                                {/*<Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>*/}
-                                {/*</Row>*/}
 
                                 <Col md={2}>
                                     <Link to={`/activities/${activity.id}`}><Button
@@ -279,7 +268,8 @@ class Activities extends Component {
                         </Col>
 
                     </Panel>
-            </Col >
+                </Col>
+                )}
         );
         }
 

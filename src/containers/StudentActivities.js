@@ -11,8 +11,7 @@ import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 import activitiesList from './activity_list';
 import 'rc-steps/assets/index.css';
 import 'rc-steps/assets/iconfont.css';
-import Steps, { Step } from 'rc-steps';
-
+import Steps, {Step} from 'rc-steps';
 
 
 class StudentActivities extends Component {
@@ -112,13 +111,14 @@ class StudentActivities extends Component {
 
     }
 
-    calculateMaxPageNumber(activitiesArray, pageSize){
+    calculateMaxPageNumber(activitiesArray, pageSize) {
         let max = activitiesArray.length % pageSize === 0 ? activitiesArray.length / pageSize : Math.floor(activitiesArray.length / pageSize + 1);
         if (activitiesArray.length < pageSize) {
             max = 0;
         }
         return max;
     }
+
     handleSelect(event) {
         // event.preventDefault();
         console.log(event);
@@ -171,70 +171,16 @@ class StudentActivities extends Component {
 
             <div style={{backgroundColor: '#F8F8F8'}}>
                 <Nav fluid>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><Icon icon={fileText2}
-                                                                                                           style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
-                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><Icon icon={iosPaw}
-                                                                                                              style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/request"><Icon
+                        icon={fileText2}
+                        style={{paddingRight: "20px"}}/>Solicitud</Link></NavItem>
+                    <NavItem style={{borderBottom: '1px solid #ECECEC'}}><Link to="/student/activities"><Icon
+                        icon={iosPaw}
+                        style={{paddingRight: "20px"}}/>Actividades</Link></NavItem>
                 </Nav>
             </div>
         );
-        const activities = this.state.activities.map(activity =>
 
-            <Col md={12}>
-                <Panel header={activity.activityName}>
-                    {/*<td><Link to={`/activities/${activity.id}`}>{activity.activityName}</Link></td>*/}
-                    {/*<br/>*/}
-                    <Col md={9}>
-                        <Row>
-                            <Row>
-                                <Col md={4}><p>Título:</p></Col><Col md={8}><p> {activity.activityName}</p></Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}><p>Descripción:</p></Col><Col md={8}><p> {activity.activityDescription}</p> </Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}><p>Organización:</p></Col><Col md={8}> <p> {activity.organization.organizationName}</p></Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}><p>Facilidades:</p></Col><Col md={8}><p> {activity.facility.space}</p></Col>
-                            </Row>
-                            <hr />
-                            <Row>
-                                <Col md={4}><p>Estado consejero:</p></Col><Col md={8}><p> {activity.counselor_status.description}</p></Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.counselorComment}</p></Col>
-                            </Row>
-                            <hr />
-
-                            <Row>
-                                <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}><p> {activity.manager_status.description}</p></Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.managerComment}</p></Col>
-                            </Row>
-                            <hr />
-
-                            <Row>
-                                <Col md={4}><p>Estado administrador:</p></Col><Col md={8}><p> {activity.status.description}</p></Col>
-                            </Row>
-                            <Row>
-                                <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}><p> {activity.staffComment}</p></Col>
-                            </Row>
-                        </Row>
-                    </Col>
-                    <Col md={3}>
-                        <Row>
-                            <Col md={12}><Link to={`/student/activities/${activity.id}`}><Button
-                                className="btn-info btn-large pull-right"
-                                style={{width: '100px', marginBottom: '10px'}}
-                            >Detalles</Button></Link> </Col>
-                        </Row>
-                    </Col>
-
-                </Panel>
-            </Col>
-        );
 
         let pendingActivities;
 
@@ -249,86 +195,103 @@ class StudentActivities extends Component {
             let paginatedPendingActivities = this.state.pendingActivities.slice((pendingPageNumber - 1) * pageSize, ((pendingPageNumber - 1) * pageSize) + pageSize);
 
 
-
             pendingActivities = paginatedPendingActivities.map(activity => {
 
-                let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+                    // Activity Date Stuff
+                    let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+                    let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
 
-                return (
-                    <Col md={12}>
-                        <Panel>
-                            <Col md={12}>
-                                <Row>
-                                    <Col md={2}>
-                                        <p><Image style={{height: '50px'}}
-                                                  src="https://cdn0.iconfinder.com/data/icons/human-resources-and-strategy/80/Human_resource_strategy-07-512.png"
-                                                  circle/></p>
-                                        <p style={{marginLeft: '10px'}}>{activity.organization.organizationInitials}</p>
-                                    </Col>
+                    // Activity status workflow stuff
+                    let activityStep;
+
+                    if (activity.activityStatus_code === 1) {
+                        activityStep = 3;
+                    }
+
+                    if (activity.managerStatus_code === 1) {
+                        activityStep = 2;
+                    }
+
+                    if (activity.counselorStatus_code === 1) {
+                        activityStep = 1;
+                    }
+
+                    return (
+                        <Col md={12}>
+                            <Panel>
+                                <Col md={12}>
+                                    <Row>
+                                        <Col md={2}>
+                                            <p><Image style={{height: '50px'}}
+                                                      src="https://cdn0.iconfinder.com/data/icons/human-resources-and-strategy/80/Human_resource_strategy-07-512.png"
+                                                      circle/></p>
+                                            <p style={{marginLeft: '10px'}}>{activity.organization.organizationInitials}</p>
+                                        </Col>
 
 
-                                    <Col md={8}>
-                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link
-                                            to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
-                                        </p>
-                                        <p><Link
-                                            to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link>
-                                        </p>
-                                        <p> {activityDate}</p>
-                                    </Col>
+                                        <Col md={8}>
+                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en
+                                                <Link
+                                                    to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
+                                            </p>
+                                            <p><Link
+                                                to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link>
+                                            </p>
+                                            <p> {activityDate}</p>
+                                        </Col>
 
-                                    <Col md={2}>
-                                        <Link to={`/activities/${activity.id}`}><Button
-                                            className="btn-info btn-large pull-right"
-                                            style={{width: '100px', marginBottom: '10px'}}
-                                        >Ver detalles</Button></Link>
-                                    </Col>
-                                </Row>
+                                        <Col md={2}>
+                                            <Link to={`/activities/${activity.id}`}><Button
+                                                className="btn-info btn-large pull-right"
+                                                style={{width: '100px', marginBottom: '10px'}}
+                                            >Ver detalles</Button></Link>
+                                        </Col>
+                                    </Row>
 
-                                <hr/>
+                                    <hr/>
 
-                                <Steps current={2} status="error">
-                                    <Step title="Solicitud" />
-                                    <Step title="Consejero" description={activity.counselorComment} />
-                                    <Step title="Facilidades" description={activity.managerComment} />
-                                    <Step title="Administrador" description={activity.staffComment} />
-                                    {/*<Step title="待运行" description={description} />*/}
-                                </Steps>
+                                    <Steps current={activityStep}>
+                                        <Step title="Solicitud"/>
+                                        <Step title="Consejero" description={activity.counselorComment}/>
+                                        <Step title="Facilidades" description={activity.managerComment}/>
+                                        <Step title="Administrador" description={activity.staffComment}/>
+                                        {/*<Step title="待运行" description={description} />*/}
+                                    </Steps>
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.counselor_status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.counselorComment}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<hr/>*/}
+                                    {/*</Row>*/}
+                                    {/*<hr/>*/}
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.manager_status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.managerComment}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<hr/>*/}
+                                    {/*</Row>*/}
+                                    {/*<hr/>*/}
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.staffComment}</p></Col>*/}
-                                {/*</Row>*/}
-                            </Col>
+                                    {/*</Row>*/}
+                                </Col>
 
-                        </Panel>
-                    </Col>
-                )}
+                            </Panel>
+                        </Col>
+                    )
+                }
             );
 
 
@@ -345,85 +308,87 @@ class StudentActivities extends Component {
             let paginatedApprovedActivities = this.state.approvedActivities.slice((approvedPageNumber - 1) * pageSize, ((approvedPageNumber - 1) * pageSize) + pageSize);
 
 
-            approvedActivities = paginatedApprovedActivities.map(activity =>{
+            approvedActivities = paginatedApprovedActivities.map(activity => {
 
-                let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+                    let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+                    let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
 
-                return (
-                    <Col md={12}>
-                        <Panel>
-                            <Col md={12}>
-                                <Row>
-                                    <Col md={2}>
-                                        <p><Image style={{height: '50px'}}
-                                                  src="https://cdn0.iconfinder.com/data/icons/human-resources-and-strategy/80/Human_resource_strategy-07-512.png"
-                                                  circle/></p>
-                                        <p style={{marginLeft: '10px'}}>{activity.organization.organizationInitials}</p>
-                                    </Col>
+                    return (
+                        <Col md={12}>
+                            <Panel>
+                                <Col md={12}>
+                                    <Row>
+                                        <Col md={2}>
+                                            <p><Image style={{height: '50px'}}
+                                                      src="https://cdn0.iconfinder.com/data/icons/human-resources-and-strategy/80/Human_resource_strategy-07-512.png"
+                                                      circle/></p>
+                                            <p style={{marginLeft: '10px'}}>{activity.organization.organizationInitials}</p>
+                                        </Col>
 
 
-                                    <Col md={8}>
-                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link
-                                            to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
-                                        </p>
-                                        <p><Link
-                                            to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link>
-                                        </p>
-                                        <p> {activityDate}</p>
-                                    </Col>
+                                        <Col md={8}>
+                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en
+                                                <Link
+                                                    to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
+                                            </p>
+                                            <p><Link
+                                                to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link>
+                                            </p>
+                                            <p> {activityDate}</p>
+                                        </Col>
 
-                                    <Col md={2}>
-                                        <Link to={`/activities/${activity.id}`}><Button
-                                            className="btn-info btn-large pull-right"
-                                            style={{width: '100px', marginBottom: '10px'}}
-                                        >Ver detalles</Button></Link>
-                                    </Col>
-                                </Row>
+                                        <Col md={2}>
+                                            <Link to={`/activities/${activity.id}`}><Button
+                                                className="btn-info btn-large pull-right"
+                                                style={{width: '100px', marginBottom: '10px'}}
+                                            >Ver detalles</Button></Link>
+                                        </Col>
+                                    </Row>
 
-                                <hr/>
+                                    <hr/>
 
-                                <Steps current={2} status="error">
-                                    <Step title="Solicitud" />
-                                    <Step title="Consejero" description={activity.counselorComment} />
-                                    <Step title="Facilidades" description={activity.managerComment} />
-                                    <Step title="Administrador" description={activity.staffComment} />
-                                    {/*<Step title="待运行" description={description} />*/}
-                                </Steps>
+                                    <Steps current={4}>
+                                        <Step title="Solicitud"/>
+                                        <Step title="Consejero" description={activity.counselorComment}/>
+                                        <Step title="Facilidades" description={activity.managerComment}/>
+                                        <Step title="Administrador" description={activity.staffComment}/>
+                                        {/*<Step title="待运行" description={description} />*/}
+                                    </Steps>
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.counselor_status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.counselorComment}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<hr/>*/}
+                                    {/*</Row>*/}
+                                    {/*<hr/>*/}
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.manager_status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.managerComment}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<hr/>*/}
+                                    {/*</Row>*/}
+                                    {/*<hr/>*/}
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.staffComment}</p></Col>*/}
-                                {/*</Row>*/}
-                            </Col>
+                                    {/*</Row>*/}
+                                </Col>
 
-                        </Panel>
-                    </Col>
-                )}
+                            </Panel>
+                        </Col>
+                    )
+                }
             );
 
         }
@@ -441,83 +406,99 @@ class StudentActivities extends Component {
 
             deniedActivities = paginatedDeniedActivities.map(activity => {
 
-                let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+                    let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+                    let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
 
-                return (
-                    <Col md={12}>
-                        <Panel>
-                            <Col md={12}>
-                                <Row>
-                                    <Col md={2}>
-                                        <p><Image style={{height: '50px'}}
-                                                  src="https://cdn0.iconfinder.com/data/icons/human-resources-and-strategy/80/Human_resource_strategy-07-512.png"
-                                                  circle/></p>
-                                        <p style={{marginLeft: '10px'}}>{activity.organization.organizationInitials}</p>
-                                    </Col>
+                    let activityStep;
+
+                    if (activity.activityStatus_code === 3) {
+                        activityStep = 3;
+                    }
+
+                    if (activity.managerStatus_code === 3) {
+                        activityStep = 2;
+                    }
+
+                    if (activity.counselorStatus_code === 3) {
+                        activityStep = 1;
+                    }
+
+                    return (
+                        <Col md={12}>
+                            <Panel>
+                                <Col md={12}>
+                                    <Row>
+                                        <Col md={2}>
+                                            <p><Image style={{height: '50px'}}
+                                                      src="https://cdn0.iconfinder.com/data/icons/human-resources-and-strategy/80/Human_resource_strategy-07-512.png"
+                                                      circle/></p>
+                                            <p style={{marginLeft: '10px'}}>{activity.organization.organizationInitials}</p>
+                                        </Col>
 
 
-                                    <Col md={8}>
-                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link
-                                            to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
-                                        </p>
-                                        <p><Link
-                                            to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link>
-                                        </p>
-                                        <p> {activityDate}</p>
-                                    </Col>
+                                        <Col md={8}>
+                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en
+                                                <Link
+                                                    to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
+                                            </p>
+                                            <p><Link
+                                                to={`/admin/organizations/${activity.organization.id}`}>{activity.organization.organizationName}</Link>
+                                            </p>
+                                            <p> {activityDate}</p>
+                                        </Col>
 
-                                    <Col md={2}>
-                                        <Link to={`/activities/${activity.id}`}><Button
-                                            className="btn-info btn-large pull-right"
-                                            style={{width: '100px', marginBottom: '10px'}}
-                                        >Ver detalles</Button></Link>
-                                    </Col>
-                                </Row>
+                                        <Col md={2}>
+                                            <Link to={`/activities/${activity.id}`}><Button
+                                                className="btn-info btn-large pull-right"
+                                                style={{width: '100px', marginBottom: '10px'}}
+                                            >Ver detalles</Button></Link>
+                                        </Col>
+                                    </Row>
 
-                                <hr/>
+                                    <hr/>
 
-                                <Steps current={2} status="error">
-                                    <Step title="Solicitud" />
-                                    <Step title="Consejero" description={activity.counselorComment} />
-                                    <Step title="Facilidades" description={activity.managerComment} />
-                                    <Step title="Administrador" description={activity.staffComment} />
-                                    {/*<Step title="待运行" description={description} />*/}
-                                </Steps>
+                                    <Steps current={activityStep} status="error">
+                                        <Step title="Solicitud"/>
+                                        <Step title="Consejero" description={activity.counselorComment}/>
+                                        <Step title="Facilidades" description={activity.managerComment}/>
+                                        <Step title="Administrador" description={activity.staffComment}/>
+                                        {/*<Step title="待运行" description={description} />*/}
+                                    </Steps>
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.counselor_status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.counselorComment}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<hr/>*/}
+                                    {/*</Row>*/}
+                                    {/*<hr/>*/}
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.manager_status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.managerComment}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<hr/>*/}
+                                    {/*</Row>*/}
+                                    {/*<hr/>*/}
 
-                                {/*<Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.status.description}</p></Col>*/}
-                                {/*</Row>*/}
-                                {/*<Row>*/}
+                                    {/*</Row>*/}
+                                    {/*<Row>*/}
                                     {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
                                     {/*<p> {activity.staffComment}</p></Col>*/}
-                                {/*</Row>*/}
-                            </Col>
+                                    {/*</Row>*/}
+                                </Col>
 
-                        </Panel>
-                    </Col>
-                )}
+                            </Panel>
+                        </Col>
+                    )
+                }
             );
         }
 

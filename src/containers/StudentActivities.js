@@ -9,6 +9,10 @@ import Icon from 'react-icons-kit';
 import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
 import {fileText2} from 'react-icons-kit/icomoon/fileText2';
 import activitiesList from './activity_list';
+import 'rc-steps/assets/index.css';
+import 'rc-steps/assets/iconfont.css';
+import Steps, { Step } from 'rc-steps';
+
 
 
 class StudentActivities extends Component {
@@ -42,10 +46,11 @@ class StudentActivities extends Component {
                     //TODO put it back
                     //this.setState({activities: results});
                     this.setState({activities: activitiesList});
+                    //this.props.history.push(`/activities/${createdRequest._id}`);
 
                     // Pending Activities
                     const pending = this.state.activities.filter(function (obj) {
-                        return ((obj.counselorStatus_code == 2 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1) || (obj.counselorStatus_code == 1 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1));
+                        return ((obj.activityStatus_code == 1));
                     });
 
                     this.setState({pendingActivities: pending});
@@ -54,10 +59,11 @@ class StudentActivities extends Component {
 
                     // Approved Activities
                     const approved = this.state.activities.filter(function (obj) {
-                        return obj.counselorStatus_code == 2 && obj.managerStatus_code == 2 && obj.activityStatus_code == 2;
+                        return ((obj.activityStatus_code == 2));
                     });
                     this.setState({approvedActivities: approved});
                     this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
+
 
                     // Denied Activities
                     const denied = this.state.activities.filter(function (obj) {
@@ -81,7 +87,7 @@ class StudentActivities extends Component {
 
             // Pending Activities
             const pending = this.state.activities.filter(function (obj) {
-                return ((obj.counselorStatus_code == 1));
+                return ((obj.activityStatus_code == 1));
             });
 
             this.setState({pendingActivities: pending});
@@ -90,7 +96,7 @@ class StudentActivities extends Component {
 
             // Approved Activities
             const approved = this.state.activities.filter(function (obj) {
-                return ((obj.counselorStatus_code == 2));
+                return ((obj.activityStatus_code == 2));
             });
             this.setState({approvedActivities: approved});
             this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
@@ -98,30 +104,12 @@ class StudentActivities extends Component {
 
             // Denied Activities
             const denied = this.state.activities.filter(function (obj) {
-                return obj.counselorStatus_code == 2;
+                return obj.activityStatus_code == 3;
             });
             this.setState({deniedActivities: denied});
             this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
         });
 
-        // fetch('http://localhost:3001/api/pending').then(response => {
-        //     if (response.ok) {
-        //         console.log('/api/pending! :D');
-        //         response.json().then(results => {
-        //             console.log('Total pending activities: ' + results);
-        //
-        //             //console.log(this.state.activities);
-        //             //this.props.history.push(`/activities/${createdRequest._id}`);
-        //         });
-        //     } else {
-        //         console.log('Unable to fetch pending activities')
-        //         // response.json().then(error => {
-        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
-        //         // });
-        //     }
-        // }).catch(err => {
-        //     this.props.showError(`Error in sending data to server: ${err.message}`);
-        // });
     }
 
     calculateMaxPageNumber(activitiesArray, pageSize){
@@ -300,34 +288,42 @@ class StudentActivities extends Component {
 
                                 <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                <Steps current={2} status="error">
+                                    <Step title="Solicitud" />
+                                    <Step title="Consejero" description={activity.counselorComment} />
+                                    <Step title="Facilidades" description={activity.managerComment} />
+                                    <Step title="Administrador" description={activity.staffComment} />
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>
@@ -387,34 +383,42 @@ class StudentActivities extends Component {
 
                                 <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                <Steps current={2} status="error">
+                                    <Step title="Solicitud" />
+                                    <Step title="Consejero" description={activity.counselorComment} />
+                                    <Step title="Facilidades" description={activity.managerComment} />
+                                    <Step title="Administrador" description={activity.staffComment} />
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>
@@ -473,34 +477,42 @@ class StudentActivities extends Component {
 
                                 <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                <Steps current={2} status="error">
+                                    <Step title="Solicitud" />
+                                    <Step title="Consejero" description={activity.counselorComment} />
+                                    <Step title="Facilidades" description={activity.managerComment} />
+                                    <Step title="Administrador" description={activity.staffComment} />
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>

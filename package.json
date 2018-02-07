@@ -9,7 +9,7 @@
     "prop-types": "^15.6.0",
     "react": "^15.6.1",
     "react-alert": "^2.4.0",
-    "react-bootstrap": "^0.32.1",
+    "react-bootstrap": "^0.30.6",
     "react-bootstrap-date-picker": "^5.1.0",
     "react-bootstrap-time-picker": "^1.0.3",
     "react-center": "^1.1.1",

@@ -64,21 +64,20 @@ export default class Login extends Component {
             if (response.ok) {
                 response.json().then(results => {
 
-                    console.log('We didnt fuck up');
 
                     this.props.cookies.set('role', results.userType_code, { path: '/'});
                     this.props.cookies.set('email', results.userEmail, { path: '/' });
                     this.props.cookies.set('signedIn', 'true', { path: '/'});
 
-                    console.log('User Type Code');
-                    console.log(results.userType_code);
-
-                    console.log('Los props');
-                    console.log(this.props);
-
-
-                    console.log('userType_code');
-                    console.log(typeof results.userType_code);
+                    // console.log('User Type Code');
+                    // console.log(results.userType_code);
+                    //
+                    // console.log('Los props');
+                    // console.log(this.props);
+                    //
+                    //
+                    // console.log('userType_code');
+                    // console.log(typeof results.userType_code);
                     if(results.userType_code === 1) {
                         console.log('ADMIN');
                         console.log(this.props.cookies.get('role'));

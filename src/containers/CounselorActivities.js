@@ -10,7 +10,9 @@ import Icon from 'react-icons-kit';
 import {iosPaw} from 'react-icons-kit/ionicons/iosPaw';
 
 import activitiesList from './activity_list';
-
+import 'rc-steps/assets/index.css';
+import 'rc-steps/assets/iconfont.css';
+import Steps, {Step} from 'rc-steps';
 
 
 class CounselorActivities extends Component {
@@ -198,8 +200,24 @@ class CounselorActivities extends Component {
 
             pendingActivities = paginatedPendingActivities.map(activity => {
 
+                // Date formatting stuff
                 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+
+                // Activity status workflow stuff
+                let activityStep;
+
+                if (activity.activityStatus_code === 1) {
+                    activityStep = 3;
+                }
+
+                if (activity.managerStatus_code === 1) {
+                    activityStep = 2;
+                }
+
+                if (activity.counselorStatus_code === 1) {
+                    activityStep = 1;
+                }
 
                 return (
                     <Col md={12}>
@@ -234,34 +252,42 @@ class CounselorActivities extends Component {
 
                                 <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                <Steps current={1}>
+                                    <Step title="Solicitud"/>
+                                    <Step title="Consejero" description={activity.counselorComment}/>
+                                    <Step title="Facilidades" description={activity.managerComment}/>
+                                    <Step title="Administrador" description={activity.staffComment}/>
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>
@@ -284,8 +310,33 @@ class CounselorActivities extends Component {
 
             approvedActivities = paginatedApprovedActivities.map(activity =>{
 
+                // Date formatting stuff
                 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+
+                // Activity status workflow stuff
+                let activityStep;
+
+                if (activity.counselorStatus_code === 2 && activity.activityStatus_code === 2) {
+                    activityStep = 4;
+                }
+                if (activity.counselorStatus_code === 2 && activity.managerStatus_code === 1) {
+                    activityStep = 2;
+                }
+                if (activity.counselorStatus_code === 2 &&  activity.managerStatus_code === 2 && activity.activityStatus_code === 1) {
+                    activityStep = 3;
+                }
+
+
+
+
+                // if (activity.managerStatus_code === 1) {
+                //     activityStep = 2;
+                // }
+                //
+                // if (activity.counselorStatus_code === 1) {
+                //     activityStep = 1;
+                // }
 
                 return (
                     <Col md={12}>
@@ -320,34 +371,42 @@ class CounselorActivities extends Component {
 
                                 <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                <Steps current={activityStep}>
+                                    <Step title="Solicitud"/>
+                                    <Step title="Consejero" description={activity.counselorComment}/>
+                                    <Step title="Facilidades" description={activity.managerComment}/>
+                                    <Step title="Administrador" description={activity.staffComment}/>
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>
@@ -373,8 +432,25 @@ class CounselorActivities extends Component {
 
             deniedActivities = paginatedDeniedActivities.map(activity => {
 
+                // Date formatting stuff
+
                 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+
+                // Activity status workflow stuff
+                let activityStep;
+
+                if (activity.activityStatus_code === 3) {
+                    activityStep = 3;
+                }
+
+                if (activity.managerStatus_code === 3) {
+                    activityStep = 2;
+                }
+
+                if (activity.counselorStatus_code === 3) {
+                    activityStep = 1;
+                }
 
                 return (
                     <Col md={12}>
@@ -409,34 +485,42 @@ class CounselorActivities extends Component {
 
                                 <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                <Steps current={activityStep}>
+                                    <Step title="Solicitud"/>
+                                    <Step title="Consejero" description={activity.counselorComment}/>
+                                    <Step title="Facilidades" description={activity.managerComment}/>
+                                    <Step title="Administrador" description={activity.staffComment}/>
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>

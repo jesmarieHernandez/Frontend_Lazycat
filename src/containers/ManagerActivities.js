@@ -11,6 +11,9 @@ import {
 import ReactCenter from 'react-center';
 
 import activitiesList from './activity_list';
+import 'rc-steps/assets/index.css';
+import 'rc-steps/assets/iconfont.css';
+import Steps, {Step} from 'rc-steps';
 
 class ManagerActivities extends Component {
 
@@ -44,77 +47,107 @@ class ManagerActivities extends Component {
 
     componentDidMount() {
 
-        fetch(`http://dev.uprm.edu/dsca/v1/api/activity/${this.props.cookies.get('email')}`).then(response => {
-            if (response.ok) {
-                response.json().then(results => {
+        console.log('Did this happen?');
+        //TODO put it back
+        //this.setState({activities: results});
+        //this.setState({activities: activitiesList});
 
-                    //TODO put it back
-                    //this.setState({activities: results});
-                    this.setState({activities: activitiesList});
-                    //this.props.history.push(`/activities/${createdRequest._id}`);
+        //this.props.history.push(`/activities/${createdRequest._id}`);
 
-                    // Pending Activities
-                    const pending = this.state.activities.filter(function (obj) {
-                        return ((obj.counselorStatus_code == 0));
-                    });
-
-                    this.setState({pendingActivities: pending});
-                    this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
-
-
-                    // Approved Activities
-                    const approved = this.state.activities.filter(function (obj) {
-                        return ((obj.counselorStatus_code == 2));
-                    });
-                    this.setState({approvedActivities: approved});
-                    this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
-
-
-                    // Denied Activities
-                    const denied = this.state.activities.filter(function (obj) {
-                        return obj.counselorStatus_code == 2;
-                    });
-                    this.setState({deniedActivities: denied});
-                    this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
-
-                    //this.props.history.push(`/activities/${createdRequest._id}`);
-                });
-            } else {
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            //this.props.showError(`Error in sending data to server: ${err.message}`);
-            //TODO put it back
-            //this.setState({activities: results});
-            this.setState({activities: activitiesList});
-            //this.props.history.push(`/activities/${createdRequest._id}`);
-
-            // Pending Activities
-            const pending = this.state.activities.filter(function (obj) {
-                return ((obj.managerStatus_code == 1));
-            });
-
-            this.setState({pendingActivities: pending});
-            this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
-
-
-            // Approved Activities
-            const approved = this.state.activities.filter(function (obj) {
-                return ((obj.managerStatus_code == 2));
-            });
-            this.setState({approvedActivities: approved});
-            this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
-
-
-            // Denied Activities
-            const denied = this.state.activities.filter(function (obj) {
-                return obj.managerStatus_code == 3;
-            });
-            this.setState({deniedActivities: denied});
-            this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
+        // Pending Activities
+        const pending = activitiesList.filter(function (obj) {
+            return ((obj.counselorStatus_code == 2 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1));
         });
+
+        console.log('pending');
+        console.log(pending);
+        this.setState({pendingActivities: pending});
+        this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
+
+
+        // Approved Activities
+        const approved = activitiesList.filter(function (obj) {
+            return ((obj.managerStatus_code == 2 && (obj.activityStatus_code == 1 || obj.activityStatus_code == 2)));
+        });
+        this.setState({approvedActivities: approved});
+        this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
+
+
+        // Denied Activities
+        const denied = activitiesList.filter(function (obj) {
+            return (obj.managerStatus_code == 3 || (obj.activityStatus_code == 3));
+        });
+        this.setState({deniedActivities: denied});
+        this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
+
+
+        // fetch(`http://dev.uprm.edu/dsca/v1/api/activity/${this.props.cookies.get('email')}`).then(response => {
+        //     if (response.ok) {
+        //         response.json().then(results => {
+        //
+        //             //TODO put it back
+        //             //this.setState({activities: results});
+        //             this.setState({activities: activitiesList});
+        //             //this.props.history.push(`/activities/${createdRequest._id}`);
+        //
+        //             // Pending Activities
+        //             const pending = this.state.activities.filter(function (obj) {
+        //                 return ((obj.managerStatus_code == 1 && obj.activityStatus_code == 1));
+        //             });
+        //
+        //             this.setState({pendingActivities: pending});
+        //             this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
+        //
+        //
+        //             // Approved Activities
+        //             const approved = this.state.activities.filter(function (obj) {
+        //                 return ((obj.managerStatus_code == 2 && (obj.activityStatus_code == 1 || obj.activityStatus_code == 2)));
+        //             });
+        //             this.setState({approvedActivities: approved});
+        //             this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
+        //
+        //
+        //             // Denied Activities
+        //             const denied = this.state.activities.filter(function (obj) {
+        //                 return (obj.managerStatus_code == 3 || (obj.activityStatus_code == 3));
+        //             });
+        //             this.setState({deniedActivities: denied});
+        //             this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
+        //
+        //             //this.props.history.push(`/activities/${createdRequest._id}`);
+        //         });
+        //     } else {
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     //this.props.showError(`Error in sending data to server: ${err.message}`);
+        //
+        //     // Pending Activities
+        //     const pending = this.state.activities.filter(function (obj) {
+        //         return ((obj.managerStatus_code == 1 && obj.activityStatus_code == 1));
+        //     });
+        //
+        //     this.setState({pendingActivities: pending});
+        //     this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
+        //
+        //
+        //     // Approved Activities
+        //     const approved = this.state.activities.filter(function (obj) {
+        //         return ((obj.managerStatus_code == 2 && (obj.activityStatus_code == 1 || obj.activityStatus_code == 2)));
+        //     });
+        //     this.setState({approvedActivities: approved});
+        //     this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
+        //
+        //
+        //     // Denied Activities
+        //     const denied = this.state.activities.filter(function (obj) {
+        //         return (obj.managerStatus_code == 3 || (obj.activityStatus_code == 3));
+        //     });
+        //     this.setState({deniedActivities: denied});
+        //     this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
+        // });
 
     }
 
@@ -194,10 +227,24 @@ class ManagerActivities extends Component {
 
 
 
+            console.log("this.state.pendingActivities");
+            console.log(this.state.pendingActivities);
             pendingActivities = paginatedPendingActivities.map(activity => {
 
+                // Activity date stuff
                 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+
+                // Activity status workflow stuff
+                let activityStep;
+
+                if (activity.activityStatus_code === 1) {
+                    activityStep = 3;
+                }
+
+                if (activity.managerStatus_code === 1) {
+                    activityStep = 2;
+                }
 
                 return (
                     <Col md={12}>
@@ -231,35 +278,42 @@ class ManagerActivities extends Component {
                                 </Row>
 
                                 <hr/>
+                                <Steps current={activityStep}>
+                                    <Step title="Solicitud"/>
+                                    <Step title="Consejero" description={activity.counselorComment}/>
+                                    <Step title="Facilidades" description={activity.managerComment}/>
+                                    <Step title="Administrador" description={activity.staffComment}/>
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>
@@ -279,10 +333,22 @@ class ManagerActivities extends Component {
             let paginatedApprovedActivities = this.state.approvedActivities.slice((approvedPageNumber - 1) * pageSize, ((approvedPageNumber - 1) * pageSize) + pageSize);
 
 
+            console.log(this.state.approvedActivities);
             approvedActivities = paginatedApprovedActivities.map(activity =>{
 
+                //
                 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+
+                // Activity status workflow stuff
+                let activityStep;
+
+                if (activity.managerStatus_code === 2 && activity.activityStatus_code === 1) {
+                    activityStep = 3;
+                }
+                if (activity.activityStatus_code === 2) {
+                    activityStep = 4;
+                }
 
                 return (
                     <Col md={12}>
@@ -317,34 +383,42 @@ class ManagerActivities extends Component {
 
                                 <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                <Steps current={activityStep}>
+                                    <Step title="Solicitud"/>
+                                    <Step title="Consejero" description={activity.counselorComment}/>
+                                    <Step title="Facilidades" description={activity.managerComment}/>
+                                    <Step title="Administrador" description={activity.staffComment}/>
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>
@@ -368,8 +442,20 @@ class ManagerActivities extends Component {
 
             deniedActivities = paginatedDeniedActivities.map(activity => {
 
+                // Data
                 let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 let activityDate = new Date(activity.activityDate).toLocaleDateString('es-PR', options);
+
+                // Activity status workflow stuff
+                let activityStep;
+
+                if (activity.activityStatus_code === 3) {
+                    activityStep = 3;
+                }
+
+                if (activity.managerStatus_code === 3) {
+                    activityStep = 2;
+                }
 
                 return (
                     <Col md={12}>
@@ -404,34 +490,44 @@ class ManagerActivities extends Component {
 
                                 <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselor_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.counselorComment}</p></Col>
-                                </Row>
-                                <hr/>
+                                <Steps current={activityStep} status="error">
+                                    <Step title="Solicitud"/>
+                                    <Step title="Consejero" description={activity.counselorComment}/>
+                                    <Step title="Facilidades" description={activity.managerComment}/>
+                                    <Step title="Administrador" description={activity.staffComment}/>
+                                    {/*<Step title="待运行" description={description} />*/}
+                                </Steps>
 
-                                <Row>
-                                    <Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>
-                                    <p> {activity.manager_status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.managerComment}</p></Col>
-                                </Row>
-                                <hr/>
 
-                                <Row>
-                                    <Col md={4}><p>Estado administrador:</p></Col><Col md={8}>
-                                    <p> {activity.status.description}</p></Col>
-                                </Row>
-                                <Row>
-                                    <Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>
-                                    <p> {activity.staffComment}</p></Col>
-                                </Row>
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselor_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.counselorComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado facilidades:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.manager_status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.managerComment}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<hr/>*/}
+
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Estado administrador:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.status.description}</p></Col>*/}
+                                {/*</Row>*/}
+                                {/*<Row>*/}
+                                    {/*<Col md={4}><p>Comentario consejero:</p></Col><Col md={8}>*/}
+                                    {/*<p> {activity.staffComment}</p></Col>*/}
+                                {/*</Row>*/}
                             </Col>
 
                         </Panel>

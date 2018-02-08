@@ -258,7 +258,7 @@ class CounselorActivities extends Component {
 
 
                                     <Col md={8}>
-                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link
+                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en &nbsp; <Link
                                             to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
                                         </p>
                                         <p><Link
@@ -377,7 +377,7 @@ class CounselorActivities extends Component {
 
 
                                     <Col md={8}>
-                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link
+                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en &nbsp;<Link
                                             to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
                                         </p>
                                         <p><Link
@@ -491,7 +491,7 @@ class CounselorActivities extends Component {
 
 
                                     <Col md={8}>
-                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en <Link
+                                        <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en &nbsp;<Link
                                             to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
                                         </p>
                                         <p><Link
@@ -510,7 +510,7 @@ class CounselorActivities extends Component {
 
                                 <hr/>
 
-                                <Steps current={activityStep}>
+                                <Steps current={activityStep} status="error">
                                     <Step title="Solicitud"/>
                                     <Step title="Consejero" description={activity.counselorComment}/>
                                     <Step title="Facilidades" description={activity.managerComment}/>

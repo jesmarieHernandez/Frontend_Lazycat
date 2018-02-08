@@ -256,7 +256,7 @@ class StudentActivities extends Component {
 
 
                                         <Col md={8}>
-                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en
+                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en &nbsp;
                                                 <Link
                                                     to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
                                             </p>
@@ -353,7 +353,7 @@ class StudentActivities extends Component {
 
 
                                         <Col md={8}>
-                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en
+                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en &nbsp;
                                                 <Link
                                                     to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
                                             </p>
@@ -463,7 +463,7 @@ class StudentActivities extends Component {
 
 
                                         <Col md={8}>
-                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en
+                                            <p><Link to={`/activities/${activity.id}`}>{activity.activityName} </Link> en &nbsp;
                                                 <Link
                                                     to={`/admin/facilities/${activity.facility.id}`}>{activity.facility.space}</Link>
                                             </p>

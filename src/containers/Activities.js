@@ -43,58 +43,83 @@ class Activities extends Component {
 
     componentDidMount() {
 
-        // fetch('http://dev.uprm.edu/dsca/v1/api/activities').then(response => {
-        fetch('http://dev.uprm.edu/dsca/v1/api/activities').then(response => {
-            if (response.ok) {
-                response.json().then(results => {
 
-                    //TODO put it back
-                    //this.setState({activities: results});
-                    this.setState({activities: activitiesList});
-                    //this.props.history.push(`/activities/${createdRequest._id}`);
-
-                    // Pending Activities
-                    const pending = this.state.activities.filter(function (obj) {
-                        return ((obj.counselorStatus_code == 2 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1) || (obj.counselorStatus_code == 1 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1));
-                    });
-
-                    this.setState({pendingActivities: pending});
-                    this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
-
-
-                    // Approved Activities
-                    const approved = this.state.activities.filter(function (obj) {
-                        return obj.counselorStatus_code == 2 && obj.managerStatus_code == 2 && obj.activityStatus_code == 2;
-                    });
-                    this.setState({approvedActivities: approved});
-                    this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
-
-
-                    // Ready for Decision Activities
-                    const readyForDecision = this.state.activities.filter(function (obj) {
-                        return ((obj.counselorStatus_code == 2 && obj.managerStatus_code == 2 && obj.activityStatus_code == 1) );
-                    });
-
-                    this.setState({readyForDecisionActivities: readyForDecision});
-                    this.setState({readyForDecisionActivitiesMaxPageNumber: this.calculateMaxPageNumber(readyForDecision, 5)});
-
-
-                    // Denied Activities
-                    const denied = this.state.activities.filter(function (obj) {
-                        return obj.activityStatus_code == 3;
-                    });
-                    this.setState({deniedActivities: denied});
-                    this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
-
-                });
-            } else {
-                // response.json().then(error => {
-                //     this.props.showError(`Failed to add issue: ${error.message}`);
-                // });
-            }
-        }).catch(err => {
-            //this.props.showError(`Error in sending data to server: ${err.message}`);
+        // Pending Activities
+        const pending = activitiesList.filter(function (obj) {
+            return ((obj.activityStatus_code == 1));
         });
+
+        console.log('pending');
+        console.log(pending);
+        this.setState({pendingActivities: pending});
+        this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
+
+
+        // Approved Activities
+        const approved = activitiesList.filter(function (obj) {
+            return ((obj.activityStatus_code == 2));
+        });
+        this.setState({approvedActivities: approved});
+        this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
+
+
+        // Denied Activities
+        const denied = activitiesList.filter(function (obj) {
+            return (obj.activityStatus_code == 3);
+        });
+        this.setState({deniedActivities: denied});
+        this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
+        // fetch('http://dev.uprm.edu/dsca/v1/api/activities').then(response => {
+        //     if (response.ok) {
+        //         response.json().then(results => {
+        //
+        //             //TODO put it back
+        //             //this.setState({activities: results});
+        //             this.setState({activities: activitiesList});
+        //             //this.props.history.push(`/activities/${createdRequest._id}`);
+        //
+        //             // Pending Activities
+        //             const pending = this.state.activities.filter(function (obj) {
+        //                 return ((obj.counselorStatus_code == 2 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1) || (obj.counselorStatus_code == 1 && obj.managerStatus_code == 1 && obj.activityStatus_code == 1));
+        //             });
+        //
+        //             this.setState({pendingActivities: pending});
+        //             this.setState({pendingActivitiesMaxPageNumber: this.calculateMaxPageNumber(pending, 5)});
+        //
+        //
+        //             // Approved Activities
+        //             const approved = this.state.activities.filter(function (obj) {
+        //                 return obj.counselorStatus_code == 2 && obj.managerStatus_code == 2 && obj.activityStatus_code == 2;
+        //             });
+        //             this.setState({approvedActivities: approved});
+        //             this.setState({approvedActivitiesMaxPageNumber: this.calculateMaxPageNumber(approved, 5)});
+        //
+        //
+        //             // Ready for Decision Activities
+        //             const readyForDecision = this.state.activities.filter(function (obj) {
+        //                 return ((obj.counselorStatus_code == 2 && obj.managerStatus_code == 2 && obj.activityStatus_code == 1) );
+        //             });
+        //
+        //             this.setState({readyForDecisionActivities: readyForDecision});
+        //             this.setState({readyForDecisionActivitiesMaxPageNumber: this.calculateMaxPageNumber(readyForDecision, 5)});
+        //
+        //
+        //             // Denied Activities
+        //             const denied = this.state.activities.filter(function (obj) {
+        //                 return obj.activityStatus_code == 3;
+        //             });
+        //             this.setState({deniedActivities: denied});
+        //             this.setState({deniedActivitiesMaxPageNumber: this.calculateMaxPageNumber(denied, 5)});
+        //
+        //         });
+        //     } else {
+        //         // response.json().then(error => {
+        //         //     this.props.showError(`Failed to add issue: ${error.message}`);
+        //         // });
+        //     }
+        // }).catch(err => {
+        //     //this.props.showError(`Error in sending data to server: ${err.message}`);
+        // });
     }
 
     calculateMaxPageNumber(activitiesArray, pageSize){
